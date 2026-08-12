@@ -1,0 +1,91 @@
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
+import { CartProvider } from './contexts/CartContext';
+import { WishlistProvider } from './contexts/WishlistContext';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import HomePage from './pages/HomePage';
+import CategoriesPage from './pages/CategoriesPage';
+import CategoryDetailPage from './pages/CategoryDetailPage';
+import ProductDetailPage from './pages/ProductDetailPage';
+import ShoppingPlansPage from './pages/ShoppingPlansPage';
+import SearchPage from './pages/SearchPage';
+import CartPage from './pages/CartPage';
+import CheckoutPage from './pages/CheckoutPage';
+import OrdersPage from './pages/OrdersPage';
+import WishlistPage from './pages/WishlistPage';
+import ProfilePage from './pages/ProfilePage';
+import NeedsPage from './pages/NeedsPage';
+import CouponsPage from './pages/CouponsPage';
+import MessagesPage from './pages/MessagesPage';
+import LegalPage from './pages/LegalPage';
+
+function App() {
+  return (
+    <AuthProvider>
+      <CartProvider>
+        <WishlistProvider>
+          <BrowserRouter>
+          <Routes>
+            {/* Home */}
+            <Route path="/" element={<HomePage />} />
+
+            {/* Auth */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+
+            {/* Categories — list semua produk */}
+            <Route path="/categories" element={<CategoriesPage />} />
+            {/* Category detail — filtered by slug */}
+            <Route path="/categories/:slug" element={<CategoryDetailPage />} />
+
+            {/* Product detail */}
+            <Route path="/products/:slug" element={<ProductDetailPage />} />
+
+            {/* Shopping Plans */}
+            <Route path="/plans" element={<ShoppingPlansPage />} />
+
+            {/* Search */}
+            <Route path="/search" element={<SearchPage />} />
+
+            {/* Needs / Need-Based Search */}
+            <Route path="/needs" element={<NeedsPage />} />
+
+            {/* Cart & Checkout */}
+            <Route path="/cart" element={<CartPage />} />
+            <Route path="/checkout" element={<CheckoutPage />} />
+
+            {/* Orders */}
+            <Route path="/orders" element={<OrdersPage />} />
+
+            {/* Kupon */}
+            <Route path="/coupons" element={<CouponsPage />} />
+
+            {/* Pesan dengan penjual */}
+            <Route path="/messages" element={<MessagesPage />} />
+
+            {/* Halaman footer (syarat, privasi, pengiriman, kontak) */}
+            <Route path="/terms" element={<LegalPage />} />
+            <Route path="/privacy" element={<LegalPage />} />
+            <Route path="/shipping" element={<LegalPage />} />
+            <Route path="/contact" element={<LegalPage />} />
+
+            {/* Wishlist */}
+            <Route path="/wishlist" element={<WishlistPage />} />
+
+            {/* Profile */}
+            <Route path="/profile" element={<ProfilePage />} />
+
+            {/* Compare — placeholder */}
+            <Route path="/compare" element={<div className="p-8 text-center text-gray-500 font-sans">Compare — coming soon</div>} />
+
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </BrowserRouter>
+        </WishlistProvider>
+      </CartProvider>
+    </AuthProvider>
+  );
+}
+
+export default App;

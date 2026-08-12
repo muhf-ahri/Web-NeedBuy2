@@ -1,0 +1,33 @@
+import apiClient from './client';
+import type { ApiResponse, Product, PaginatedResponse, ProductDetail } from '../types';
+
+export interface GetProductsParams {
+  page?: number;
+  limit?: number;
+  // categorySlug goes in URL path, not here
+  q?: string;
+  minPrice?: number;
+  maxPrice?: number;
+  sort?: 'newest' | 'price_asc' | 'price_desc' | 'rating' | 'sold';
+  onSale?: boolean;
+}
+
+export const getProducts = async (params?: GetProductsParams): Promise<PaginatedResponse<Product>> => {
+  const res = await apiClient.get<ApiResponse<PaginatedResponse<Product>>>('/products', { params });
+  // Backend returns { success, data: [...], meta } → normalize to { data: [...], meta }
+  return { data: res.data.data as unknown as Product[], meta: (res.data as any).meta };
+};
+
+export const getProductBySlug = async (slug: string): Promise<ProductDetail> => {
+  const res = await apiClient.get<ApiResponse<ProductDetail>>(`/products/${slug}`);
+  return res.data.data;
+};
+
+export const getProductsByCategory = async (
+  categorySlug: string,
+  params?: Omit<GetProductsParams, 'categorySlug'>
+): Promise<PaginatedResponse<Product>> => {
+  const res = await apiClient.get<ApiResponse<PaginatedResponse<Product>>>(`/products/category/${categorySlug}`, { params });
+  // Backend returns { success, data: [...], meta } → normalize to { data: [...], meta }
+  return { data: res.data.data as unknown as Product[], meta: (res.data as any).meta };
+};
