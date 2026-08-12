@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Icon, { type IconName } from '../ui/Icon';
 import SearchSuggestions from '../ui/SearchSuggestions';
 import { useCart } from '../../contexts/CartContext';
+import { useAuth } from '../../contexts/AuthContext';
 
 interface NavbarProps {
   avatarUrl?: string;
@@ -31,6 +32,8 @@ const QUICK_ACTIONS: Array<{ to: string; label: string; icon: IconName }> = [
 
 const Navbar: React.FC<NavbarProps> = ({ avatarUrl }) => {
   const { cartCount } = useCart();
+  const { user } = useAuth();
+  const isSeller = user?.role === 'SELLER' || user?.role === 'ADMIN';
   const location = useLocation();
   const navigate = useNavigate();
   const [searchOpen, setSearchOpen] = useState(false);
@@ -144,7 +147,7 @@ const Navbar: React.FC<NavbarProps> = ({ avatarUrl }) => {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onKeyDown={handleSearchKeyDown}
-                  placeholder="Cari produk..."
+                  placeholder="Cari produk atau toko..."
                   className="flex-1 bg-transparent outline-none text-sm text-[#101319] placeholder-[#737686] px-2 py-1.5 min-w-0"
                 />
                 {searchQuery && (
@@ -187,6 +190,20 @@ const Navbar: React.FC<NavbarProps> = ({ avatarUrl }) => {
               />
             )}
           </div>
+
+          {/* Pintasan ke dashboard toko — hanya muncul untuk pemilik toko.
+              Di mobile ikut tampil sebagai ikon saja supaya tidak menggeser
+              search dan cart. */}
+          {isSeller && (
+            <Link
+              to="/seller/dashboard"
+              className="inline-flex items-center gap-1.5 px-2 md:px-3 py-1.5 rounded-full bg-[#004ac6] text-white text-[13px] font-semibold hover:bg-[#003a9e] transition-colors duration-200 shrink-0"
+              aria-label="Dashboard Seller"
+            >
+              <Icon name="dashboard" size={16} className="text-white" />
+              <span className="hidden md:inline">Dashboard Seller</span>
+            </Link>
+          )}
 
           {/* Wishlist — desktop saja, di mobile sudah ada di quick actions */}
           <Link

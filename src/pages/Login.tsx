@@ -4,27 +4,26 @@ import LoginForm from '../components/forms/LoginForm';
 import Divider from '../components/ui/Divider';
 import SocialLogin from '../components/forms/SocialLogin';
 import HeroPanel from '../components/HeroPanel';
-import { login, setAuthTokens } from '../api/auth';
+import { useAuth } from '../contexts/AuthContext';
 
 const Login: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleLogin = async (email: string, password: string) => {
     setLoading(true);
     setError(null);
     try {
-      const res = await login({ email, password });
-      if (res.data.success) {
-        setAuthTokens(res.data.data);
+      // Lewat AuthContext, bukan api/auth langsung: context yang menyimpan
+      // token SEKALIGUS mengisi state `user`. Kalau hanya token yang ditulis,
+      // penjaga route /seller/* masih melihat "belum login" dan memantulkan
+      // seller balik ke halaman ini.
+      const user = await login({ email, password });
 
-        if (res.data.data.user.role === 'SELLER') {
-          navigate('/plans');
-        } else {
-          navigate('/');
-        }
-      }
+      // Seller (dan admin) langsung mendarat di dashboard toko.
+      navigate(user.role === 'SELLER' || user.role === 'ADMIN' ? '/seller/dashboard' : '/');
     } catch (err: any) {
       setError(err.message || 'Login gagal');
     } finally {

@@ -63,6 +63,24 @@ export interface Order {
   payment: OrderPayment | null;
 }
 
+/**
+ * Order dilihat dari sisi penjual: tahu pembelinya siapa, dan TIDAK pernah
+ * membawa `snapToken`/`snapRedirectUrl` — itu kredensial pembayaran milik
+ * pembeli. Server yang memangkasnya lewat skema respons terpisah.
+ */
+export interface SellerOrder
+  extends Omit<Order, 'seller' | 'payment'> {
+  user: { id: string; name: string; email: string };
+  payment: { id: string; status: string; method: string | null; paidAt: string | null } | null;
+}
+
+export interface OrdersMeta {
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
+}
+
 export interface Review {
   id: string;
   rating: number;
@@ -86,6 +104,27 @@ export const getOrders = (params?: GetOrdersParams) =>
 /** GET /orders/:id - Get order detail */
 export const getOrder = (id: string) =>
   apiClient.get<ApiResponse<Order>>(`/orders/${id}`);
+
+/**
+ * GET /sellers/me/orders — order yang masuk ke toko sendiri.
+ *
+ * Beda endpoint dari `/orders` (itu order sebagai PEMBELI). Filter `status`,
+ * pencarian `q`, dan paginasi semuanya dikerjakan server; `q` juga mencari di
+ * nama/email pembeli dan nama produk yang tidak seluruhnya ada di client.
+ */
+export const getSellerOrders = async (
+  params?: GetOrdersParams
+): Promise<{ items: SellerOrder[]; meta: OrdersMeta }> => {
+  const res = await apiClient.get<ApiResponse<SellerOrder[]> & { meta: OrdersMeta }>(
+    '/sellers/me/orders',
+    { params }
+  );
+  return { items: res.data.data, meta: res.data.meta };
+};
+
+/** GET /sellers/me/orders/:id — detail satu order toko sendiri */
+export const getSellerOrder = (id: string) =>
+  apiClient.get<ApiResponse<SellerOrder>>(`/sellers/me/orders/${id}`);
 
 /** PATCH /orders/:id/status - Update order status (SHIPPED, DELIVERED, COMPLETED) */
 export const updateOrderStatus = (id: string, status: 'SHIPPED' | 'DELIVERED' | 'COMPLETED') =>

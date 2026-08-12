@@ -21,6 +21,7 @@ import MessagesPage from './pages/MessagesPage';
 import LegalPage from './pages/LegalPage';
 
 // Seller pages
+import RequireSeller from './components/RequireSeller';
 import SellerDashboard from './pages/seller/DashboardPage';
 import SellerProducts from './pages/seller/ProductsPage';
 import SellerOrders from './pages/seller/OrdersPage';
@@ -84,13 +85,56 @@ function App() {
               {/* Profile */}
               <Route path="/profile" element={<ProfilePage />} />
 
-              {/* Seller routes */}
-              <Route path="/seller/dashboard" element={<SellerDashboard />} />
-              <Route path="/seller/products" element={<SellerProducts />} />
-              <Route path="/seller/orders" element={<SellerOrders />} />
-              <Route path="/seller/chats" element={<SellerChats />} />
-              <Route path="/seller/analytics" element={<SellerAnalytics />} />
-              <Route path="/seller/settings" element={<SellerSettings />} />
+              {/* Seller routes — hanya untuk role SELLER/ADMIN */}
+              <Route path="/seller" element={<Navigate to="/seller/dashboard" replace />} />
+              <Route
+                path="/seller/dashboard"
+                element={
+                  <RequireSeller>
+                    <SellerDashboard />
+                  </RequireSeller>
+                }
+              />
+              <Route
+                path="/seller/products"
+                element={
+                  <RequireSeller>
+                    <SellerProducts />
+                  </RequireSeller>
+                }
+              />
+              <Route
+                path="/seller/orders"
+                element={
+                  <RequireSeller>
+                    <SellerOrders />
+                  </RequireSeller>
+                }
+              />
+              <Route
+                path="/seller/chats"
+                element={
+                  <RequireSeller>
+                    <SellerChats />
+                  </RequireSeller>
+                }
+              />
+              <Route
+                path="/seller/analytics"
+                element={
+                  <RequireSeller>
+                    <SellerAnalytics />
+                  </RequireSeller>
+                }
+              />
+              <Route
+                path="/seller/settings"
+                element={
+                  <RequireSeller>
+                    <SellerSettings />
+                  </RequireSeller>
+                }
+              />
 
               {/* Compare — placeholder */}
               <Route path="/compare" element={<div className="p-8 text-center text-gray-500 font-sans">Compare — coming soon</div>} />

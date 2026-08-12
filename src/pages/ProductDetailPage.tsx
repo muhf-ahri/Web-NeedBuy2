@@ -5,7 +5,7 @@ import Icon from '../components/ui/Icon';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import { formatRupiah } from '../utils/currency';
-import { getProductBySlug } from '../api/products';
+import { getProductBySlug, recordProductView } from '../api/products';
 import { addToCart } from '../api/cart';
 import { useCart } from '../contexts/CartContext';
 import { useAuth } from '../contexts/AuthContext';
@@ -35,6 +35,14 @@ const ProductDetailPage: React.FC = () => {
       .catch((err) => setError(err.message ?? 'Gagal memuat produk'))
       .finally(() => setLoading(false));
   }, [slug]);
+
+  // Catat kunjungan — ini yang mengisi card "Product Views" di dashboard
+  // seller. Kegagalannya sengaja diabaikan: statistik tidak boleh membuat
+  // halaman produk gagal tampil.
+  useEffect(() => {
+    if (!product?.id) return;
+    recordProductView(product.id).catch(() => {});
+  }, [product?.id]);
 
   const handleToggleWishlist = () => {
     if (!product) return;

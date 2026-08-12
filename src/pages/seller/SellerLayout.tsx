@@ -5,6 +5,7 @@ import Sidebar from '../../components/ui/Sidebar';
 import NotificationBell from '../../components/ui/NotificationBell';
 import ProfileDropdown from '../../components/ui/ProfileDropdown';
 import type { SidebarItem } from '../../components/ui/Sidebar';
+import { useAuth } from '../../contexts/AuthContext';
 
 interface SellerLayoutProps {
   children: React.ReactNode;
@@ -20,6 +21,8 @@ const navItems: SidebarItem[] = [
 ];
 
 const SellerLayout: React.FC<SellerLayoutProps> = ({ children }) => {
+  const { user } = useAuth();
+
   return (
     <div className="min-h-screen bg-[#f8f9fb]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
       {/* Header Seller */}
@@ -33,7 +36,7 @@ const SellerLayout: React.FC<SellerLayoutProps> = ({ children }) => {
           {/* Right side: Notification + Profile */}
           <div className="flex items-center gap-3">
             <NotificationBell />
-            <ProfileDropdown sellerName="Seller Name" />
+            <ProfileDropdown sellerName={user?.name ?? 'Seller'} />
             <Link
               to="/"
               className="hidden sm:inline-flex text-sm text-[#004ac6] hover:underline transition-colors"

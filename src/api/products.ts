@@ -6,6 +6,8 @@ export interface GetProductsParams {
   limit?: number;
   // categorySlug goes in URL path, not here
   q?: string;
+  /** Batasi ke produk satu toko — dipakai saat membuka toko dari hasil pencarian. */
+  sellerId?: string;
   minPrice?: number;
   maxPrice?: number;
   sort?: 'newest' | 'price_asc' | 'price_desc' | 'rating' | 'sold';
@@ -31,3 +33,11 @@ export const getProductsByCategory = async (
   // Backend returns { success, data: [...], meta } → normalize to { data: [...], meta }
   return { data: res.data.data as unknown as Product[], meta: (res.data as any).meta };
 };
+
+/**
+ * POST /products/:id/view — catat satu kunjungan produk.
+ * Sumber data card "Product Views" di dashboard seller. Boleh dipanggil tanpa
+ * login; kalau ada token, pengunjungnya ikut tercatat sebagai unique visitor.
+ */
+export const recordProductView = (id: string) =>
+  apiClient.post<ApiResponse<{ recorded: boolean }>>(`/products/${id}/view`);

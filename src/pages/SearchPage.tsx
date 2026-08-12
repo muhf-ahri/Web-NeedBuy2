@@ -7,6 +7,7 @@ import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import { formatRupiah } from '../utils/currency';
 import { getProducts, type GetProductsParams } from '../api/products';
+import { getSeller, searchSellers, type Seller } from '../api/sellers';
 import type { Product } from '../types';
 import { getAccessToken } from '../api/auth';
 import { useCart as useCartContext } from '../contexts/CartContext';
@@ -22,6 +23,22 @@ const SORT_OPTIONS = [
   { label: 'Terlaris', value: 'sold' },
 ] as const;
 
+/** Logo toko, dengan inisial nama sebagai cadangan kalau tokonya belum punya logo. */
+const StoreLogo: React.FC<{ store: Seller; size: number }> = ({ store, size }) => (
+  <div
+    className="shrink-0 overflow-hidden rounded-xl border border-[#e0e3e5] bg-[#dbe1ff] flex items-center justify-center"
+    style={{ width: size, height: size }}
+  >
+    {store.logoUrl ? (
+      <img src={store.logoUrl} alt="" className="h-full w-full object-cover" />
+    ) : (
+      <span className="font-bold text-[#004ac6]" style={{ fontSize: size / 2.6 }}>
+        {store.storeName.charAt(0).toUpperCase()}
+      </span>
+    )}
+  </div>
+);
+
 const SearchPage: React.FC = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -30,6 +47,8 @@ const SearchPage: React.FC = () => {
   const [query, setQuery] = useState(initialQuery);
   const [input, setInput] = useState(initialQuery);
   const qFromUrl = searchParams.get('q') ?? '';
+  /** Diisi saat user mengklik sebuah toko di hasil pencarian. */
+  const sellerFromUrl = searchParams.get('seller');
 
   // Sinkronkan state dengan URL. handleSubmit hanya navigate, dan komponen ini
   // tidak di-remount saat search param berubah — tanpa efek ini, pencarian ulang
@@ -41,6 +60,9 @@ const SearchPage: React.FC = () => {
   const [sort, setSort] = useState<string>('Relevansi');
   const [suggestOpen, setSuggestOpen] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
+  const [stores, setStores] = useState<Seller[]>([]);
+  const [openedStore, setOpenedStore] = useState<Seller | null>(null);
+  const [storesError, setStoresError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { savedIds: wishlistIds, toggle: toggleWishlistContext } = useWishlistContext();
@@ -48,8 +70,38 @@ const SearchPage: React.FC = () => {
   const isAuthed = !!getAccessToken();
 
   const fetchResults = useCallback(async () => {
+    // Mode "buka toko": produk dibatasi ke satu toko, kata kunci tidak dipakai.
+    if (sellerFromUrl) {
+      setLoading(true);
+      setError(null);
+      try {
+        const params: GetProductsParams = { sellerId: sellerFromUrl, limit: 50, page: 1 };
+        if (sort !== 'Relevansi') {
+          const opt = SORT_OPTIONS.find((o) => o.label === sort);
+          if (opt?.value) params.sort = opt.value;
+        }
+        const [productRes, sellerRes] = await Promise.all([
+          getProducts(params),
+          getSeller(sellerFromUrl),
+        ]);
+        setProducts(productRes.data);
+        setOpenedStore(sellerRes.data.data);
+        setStores([]);
+        setStoresError(null);
+      } catch (err: any) {
+        setError(err.message ?? 'Gagal memuat produk toko');
+      } finally {
+        setLoading(false);
+      }
+      return;
+    }
+
+    setOpenedStore(null);
+
     if (!query.trim()) {
       setProducts([]);
+      setStores([]);
+      setStoresError(null);
       setLoading(false);
       return;
     }
@@ -65,14 +117,37 @@ const SearchPage: React.FC = () => {
         const opt = SORT_OPTIONS.find((o) => o.label === sort);
         if (opt?.value) params.sort = opt.value;
       }
-      const res = await getProducts(params);
-      setProducts(res.data);
+      // Toko dicari lewat endpoint terpisah: pencarian produk hanya cocok ke
+      // nama/deskripsi produk, jadi nama toko tidak akan pernah ketemu di sana.
+      const [productRes, storeRes] = await Promise.allSettled([
+        getProducts(params),
+        searchSellers(query.trim(), 6),
+      ]);
+
+      if (productRes.status === 'fulfilled') {
+        setProducts(productRes.value.data);
+      } else {
+        setProducts([]);
+        setError(productRes.reason?.message ?? 'Gagal memuat hasil pencarian');
+      }
+
+      // Gagalnya pencarian toko tidak menjatuhkan hasil produk, TAPI juga tidak
+      // ditelan diam-diam: versi sebelumnya memakai `.catch(() => [])`, sehingga
+      // bagian Toko yang error terlihat persis sama dengan "tidak ada toko yang
+      // cocok" — tidak mungkin dibedakan user maupun saat menelusuri masalah.
+      if (storeRes.status === 'fulfilled') {
+        setStores(storeRes.value.items);
+        setStoresError(null);
+      } else {
+        setStores([]);
+        setStoresError(storeRes.reason?.message ?? 'Gagal memuat daftar toko');
+      }
     } catch (err: any) {
       setError(err.message ?? 'Gagal memuat hasil pencarian');
     } finally {
       setLoading(false);
     }
-  }, [query, sort]);
+  }, [query, sort, sellerFromUrl]);
 
   useEffect(() => {
     fetchResults();
@@ -135,7 +210,7 @@ const SearchPage: React.FC = () => {
             onFocus={() => setSuggestOpen(true)}
             onBlur={() => setSuggestOpen(false)}
             onKeyDown={(e) => { if (e.key === 'Escape') setSuggestOpen(false); }}
-            placeholder="Cari produk..."
+            placeholder="Cari produk atau toko..."
             className="w-full pl-12 pr-12 py-3 bg-[#f2f4f6] rounded-full text-sm outline-none focus:ring-2 focus:ring-[#004ac6]/20 focus:bg-white border border-transparent focus:border-[#004ac6] transition"
           />
           {input && (
@@ -159,14 +234,95 @@ const SearchPage: React.FC = () => {
           </div>
         )}
 
+        {/* Header toko yang sedang dibuka */}
+        {openedStore && (
+          <div className="mb-6 flex items-start gap-4 rounded-2xl border border-[#e0e3e5] bg-[#f8f9fb] p-5">
+            <StoreLogo store={openedStore} size={64} />
+            <div className="min-w-0 flex-1">
+              <div className="flex flex-wrap items-center gap-2">
+                <h2 className="text-[18px] font-bold text-[#191c1e]">{openedStore.storeName}</h2>
+                {openedStore.vacationMode && (
+                  <span className="rounded-full bg-[#fff4e0] px-2 py-0.5 text-[11px] font-semibold text-[#b45309]">
+                    Sedang libur
+                  </span>
+                )}
+              </div>
+              {openedStore.description && (
+                <p className="mt-1 text-[13px] text-[#434655]">{openedStore.description}</p>
+              )}
+              <p className="mt-1.5 text-[12px] text-[#737686]">
+                <Icon name="star" size={12} className="inline text-[#f59e0b]" />{' '}
+                {Number(openedStore.rating).toFixed(1)} · {openedStore._count?.products ?? 0} produk
+              </p>
+            </div>
+            <button
+              onClick={() => navigate('/search')}
+              className="shrink-0 text-[12px] text-[#004ac6] hover:underline"
+            >
+              Tutup
+            </button>
+          </div>
+        )}
+
+        {/* Pencarian toko gagal — ditampilkan, bukan disembunyikan sebagai
+            "tidak ada hasil". */}
+        {!openedStore && !loading && storesError && (
+          <div className="mb-6 rounded-2xl border border-[#ffe0b0] bg-[#fff4e0] px-4 py-3">
+            <p className="text-[13px] text-[#b45309]">Pencarian toko gagal: {storesError}</p>
+          </div>
+        )}
+
+        {/* Toko yang cocok dengan kata kunci */}
+        {!openedStore && !loading && stores.length > 0 && (
+          <section className="mb-7">
+            <h2 className="mb-3 text-[13px] font-bold uppercase tracking-wide text-[#737686]">
+              Toko ({stores.length})
+            </h2>
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              {stores.map((store) => (
+                <button
+                  key={store.id}
+                  onClick={() => navigate(`/search?seller=${store.id}`)}
+                  className="flex items-start gap-3 rounded-2xl border border-[#e0e3e5] bg-white p-4 text-left transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
+                >
+                  <StoreLogo store={store} size={48} />
+                  <div className="min-w-0 flex-1">
+                    <div className="flex flex-wrap items-center gap-1.5">
+                      <span className="truncate text-[14px] font-semibold text-[#191c1e]">
+                        {store.storeName}
+                      </span>
+                      {store.vacationMode && (
+                        <span className="rounded-full bg-[#fff4e0] px-1.5 py-0.5 text-[10px] font-semibold text-[#b45309]">
+                          Libur
+                        </span>
+                      )}
+                    </div>
+                    <p className="mt-0.5 line-clamp-2 text-[12px] text-[#737686]">
+                      {store.description || 'Toko ini belum menulis deskripsi.'}
+                    </p>
+                    <p className="mt-1 text-[11px] text-[#737686]">
+                      <Icon name="star" size={11} className="inline text-[#f59e0b]" />{' '}
+                      {Number(store.rating).toFixed(1)} · {store._count?.products ?? 0} produk
+                    </p>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </section>
+        )}
+
         {/* Toolbar */}
         <div className="flex items-center justify-between mb-5 gap-3 flex-wrap">
           <p className="text-[13px] text-[#737686]">
-            {query.trim()
+            {openedStore
               ? loading
-                ? 'Mencari...'
-                : `${products.length} produk untuk "${query}"`
-              : 'Ketik kata kunci untuk mencari produk'}
+                ? 'Memuat produk toko...'
+                : `${products.length} produk di toko ini`
+              : query.trim()
+                ? loading
+                  ? 'Mencari...'
+                  : `${products.length} produk untuk "${query}"`
+                : 'Ketik kata kunci untuk mencari produk atau nama toko'}
           </p>
           <div className="relative shrink-0">
             <select
@@ -193,11 +349,20 @@ const SearchPage: React.FC = () => {
               </div>
             ))}
           </div>
+        ) : openedStore && products.length === 0 ? (
+          <div className="text-center py-20">
+            <Icon name="product" size={48} className="text-[#c3c6d7] mx-auto mb-4" />
+            <p className="text-[#737686]">Toko ini belum menayangkan produk apa pun.</p>
+          </div>
         ) : query.trim() && products.length === 0 ? (
           <div className="text-center py-20">
             <Icon name="search" size={48} className="text-[#c3c6d7] mx-auto mb-4" />
             <p className="text-[#737686]">Tidak ada produk yang cocok dengan "{query}".</p>
-            <p className="text-[12px] text-[#c3c6d7] mt-1">Coba kata kunci lain.</p>
+            <p className="text-[12px] text-[#c3c6d7] mt-1">
+              {stores.length > 0
+                ? 'Tapi ada toko yang cocok — lihat di bagian Toko di atas.'
+                : 'Coba kata kunci lain.'}
+            </p>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">

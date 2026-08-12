@@ -17,7 +17,7 @@ interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
   isLoading: boolean;
-  login: (data: LoginPayload) => Promise<void>;
+  login: (data: LoginPayload) => Promise<User>;
   register: (data: RegisterPayload) => Promise<void>;
   logout: () => Promise<void>;
   refreshUser: () => Promise<void>;
@@ -56,17 +56,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setUser(response.data.data);
       }
     } catch {
-      clearAuth();
-      setUser(null);
+      // JANGAN cabut sesi di sini. Gagalnya /auth/me paling sering karena
+      // jaringan/server sedang tidak bisa dihubungi, bukan karena token mati —
+      // dan menghapus token pada kasus itu melempar user yang baru saja login
+      // balik ke halaman login. Sesi yang benar-benar kedaluwarsa sudah
+      // ditangani interceptor di api/client.ts lewat event `auth:expired`.
     }
   }, []);
 
-  const login = async (data: LoginPayload) => {
+  // Mengembalikan user supaya pemanggil bisa langsung bercabang berdasarkan
+  // role tanpa perlu request /auth/me kedua.
+  const login = async (data: LoginPayload): Promise<User> => {
     const response = await apiLogin(data);
-    if (response.data.success) {
-      setAuthTokens(response.data.data);
-      setUser(response.data.data.user);
-    }
+    setAuthTokens(response.data.data);
+    setUser(response.data.data.user);
+    return response.data.data.user;
   };
 
   const register = async (data: RegisterPayload) => {
