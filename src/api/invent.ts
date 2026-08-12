@@ -1,3 +1,4 @@
+// src/api/invent.ts
 import apiClient from './client';
 import type { ApiResponse } from '../types';
 
@@ -96,3 +97,16 @@ export function productStatus(product: InventProduct): ProductStatus {
   if (!product.isActive) return 'Draft';
   return product.stock === 0 ? 'Out of Stock' : 'Active';
 }
+
+/**
+ * POST /invent/:id/images — upload satu atau lebih gambar untuk produk.
+ * FormData harus berisi field 'images' (array file).
+ */
+export const uploadInventImages = (id: string, formData: FormData) =>
+  apiClient.post<ApiResponse<{ images: { url: string }[] }>>(
+    `/invent/${id}/images`,
+    formData,
+    {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    }
+  );
