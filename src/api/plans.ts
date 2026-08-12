@@ -15,6 +15,8 @@ export interface ShoppingPlanItem {
 export interface ShoppingPlan {
   id: string;
   needId: string | null;
+  /** Nama grup belanja, mis. "Kamar". Null untuk plan lama / hasil AI. */
+  name: string | null;
   budget: string;
   total: string;
   remaining: string;
@@ -25,6 +27,7 @@ export interface ShoppingPlan {
 export interface ShoppingPlanSummary {
   id: string;
   needId: string | null;
+  name: string | null;
   budget: string;
   total: string;
   remaining: string;
@@ -70,17 +73,20 @@ export const getPlans = async (params?: GetPlansParams): Promise<PaginatedRespon
 export const getPlan = (id: string) =>
   apiClient.get<ApiResponse<ShoppingPlan>>(`/shopping-plans/${id}`);
 
-/** POST /shopping-plans - Create shopping plan */
+/** POST /shopping-plans - Create shopping plan / grup belanja */
 export const createPlan = (data: {
-  budget: number;
+  /** Nama grup, mis. "Kamar". Kosongkan untuk rencana hasil AI. */
+  name?: string;
+  /** 0 atau tidak diisi = grup tanpa anggaran. */
+  budget?: number;
   needId?: string;
   fromRecommendations?: boolean;
   maxItems?: number;
 }) => apiClient.post<ApiResponse<ShoppingPlan>>('/shopping-plans', data);
 
-/** PATCH /shopping-plans/:id - Update plan budget */
-export const updatePlan = (id: string, budget: number) =>
-  apiClient.patch<ApiResponse<ShoppingPlan>>(`/shopping-plans/${id}`, { budget });
+/** PATCH /shopping-plans/:id - Update nama dan/atau anggaran */
+export const updatePlan = (id: string, data: { name?: string; budget?: number }) =>
+  apiClient.patch<ApiResponse<ShoppingPlan>>(`/shopping-plans/${id}`, data);
 
 /** DELETE /shopping-plans/:id - Delete shopping plan */
 export const deletePlan = (id: string) =>

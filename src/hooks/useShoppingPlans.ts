@@ -63,7 +63,7 @@ export const useCreatePlan = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const create = useCallback(async (data: { budget: number; needId?: string; fromRecommendations?: boolean; maxItems?: number }) => {
+  const create = useCallback(async (data: { name?: string; budget?: number; needId?: string; fromRecommendations?: boolean; maxItems?: number }) => {
     setLoading(true);
     setError(null);
     try {

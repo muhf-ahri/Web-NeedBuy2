@@ -9,10 +9,10 @@ import {
   getNeeds, createNeed, processNeed, getRecommendations,
   confirmNeed, type Need, type Recommendation, type ClarificationItem,
 } from '../api/needs';
-import { getCategories } from '../api/categories';
 import { getAccessToken } from '../api/auth';
 import { useCart as useCartContext } from '../contexts/CartContext';
 import { addToCart } from '../api/cart';
+import { createPlan } from '../api/plans';
 
 const LABEL_STYLE: Record<Recommendation['label'], { label: string; cls: string }> = {
   BEST_MATCH: { label: 'Paling Cocok', cls: 'bg-[#004ac6] text-white' },
@@ -87,6 +87,9 @@ const NeedsPage: React.FC = () => {
     setError(null);
     try {
       await confirmNeed(needId, {});
+      // Konfirmasi saja tidak menghasilkan apa pun — rekomendasi baru ada
+      // setelah pipeline matching dijalankan.
+      await processNeed(needId);
       await fetchNeeds();
       setShowCreate(false);
       setParsed(null);
@@ -98,13 +101,14 @@ const NeedsPage: React.FC = () => {
     }
   };
 
+  // Tanpa categoryId, server menurunkan kategori dari kalimat user sendiri.
+  // Versi sebelumnya mengirim kategori root PERTAMA apa pun yang dicari user —
+  // "olahraga" pun diproses sebagai "Elektronik", jadi hasilnya selalu kosong.
   const handleProcess = async (needId: string) => {
     setBusy('process');
     setError(null);
     try {
-      const cats = await getCategories();
-      const first = cats.find((c) => !c.parentId);
-      await processNeed(needId, first?.id);
+      await processNeed(needId);
       await fetchNeeds();
       await openRecommendations(needId);
     } catch (err: any) {
@@ -125,6 +129,28 @@ const NeedsPage: React.FC = () => {
       setError(err.message ?? 'Gagal muat rekomendasi, coba lagi ya');
     } finally {
       setRecLoading(false);
+    }
+  };
+
+  // Alur lama halaman Rencana Belanja: rekomendasi AI dirangkum jadi satu
+  // rencana. Sekarang tinggal di sini, karena /plans dipakai untuk grup belanja
+  // yang disusun sendiri oleh user.
+  const handleMakePlan = async (need: Need) => {
+    setBusy(`plan-${need.id}`);
+    setError(null);
+    try {
+      const res = await createPlan({
+        name: need.goal ?? need.rawInput.slice(0, 60),
+        budget: Number(need.budget) || 0,
+        needId: need.id,
+        fromRecommendations: true,
+        maxItems: 5,
+      });
+      navigate('/plans', { state: { planId: res.data.data.id } });
+    } catch (err: any) {
+      setError(err.message ?? 'Gagal bikin rencana belanja, coba lagi ya');
+    } finally {
+      setBusy(null);
     }
   };
 
@@ -316,6 +342,14 @@ const NeedsPage: React.FC = () => {
                       className="px-4 py-1.5 rounded-full bg-[#004ac6] hover:bg-[#003ea8] text-white text-[12px] font-semibold transition-colors disabled:opacity-40"
                     >
                       Lihat Rekomendasi
+                    </button>
+                    <button
+                      onClick={() => handleMakePlan(need)}
+                      disabled={need.status === 'DRAFT' || busy === `plan-${need.id}`}
+                      className="flex items-center gap-1.5 px-4 py-1.5 rounded-full border border-[#004ac6] text-[#004ac6] text-[12px] font-semibold hover:bg-[#dbe1ff]/40 transition-colors disabled:opacity-40"
+                    >
+                      {busy === `plan-${need.id}` ? <Icon name="clock" size={12} className="animate-spin" /> : <Icon name="spark" size={12} className="" />}
+                      Jadikan Rencana
                     </button>
                   </div>
                 </div>
