@@ -12,6 +12,7 @@ import { payWithSnap } from '../utils/snap';
 import { getAccessToken } from '../api/auth';
 import { validateAddressForm, EMPTY_ADDRESS_FORM, type AddressFormData } from '../utils/address';
 import { useCart as useCartContext } from '../contexts/CartContext';
+import { getWallet } from '../api/wallet';
 
 const CheckoutPage: React.FC = () => {
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ const CheckoutPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('MIDTRANS');
+  const [walletBalance, setWalletBalance] = useState(0);
 
   // Success / payment state
   const [createdOrders, setCreatedOrders] = useState<CreatedOrderPayment[] | null>(null);
@@ -44,7 +46,15 @@ const CheckoutPage: React.FC = () => {
     setLoading(true);
     setError(null);
     try {
-      const [addrRes, previewRes] = await Promise.allSettled([getAddresses(), previewCheckout(0, cartItemIds)]);
+      const [addrRes, previewRes, walletRes] = await Promise.allSettled([
+        getAddresses(),
+        previewCheckout(0, cartItemIds),
+        getWallet(),
+      ]);
+
+      // Saldo gagal dimuat bukan alasan menggagalkan checkout — NeedPay-nya
+      // saja yang tidak bisa dipilih.
+      setWalletBalance(walletRes.status === 'fulfilled' ? Number(walletRes.value.balance) : 0);
 
       if (addrRes.status === 'fulfilled') {
         const list = addrRes.value.data.data;
@@ -238,6 +248,8 @@ const CheckoutPage: React.FC = () => {
   if (createdOrders) {
     const hasOnline = createdOrders.some((o) => o.paymentMethod === 'MIDTRANS');
     const allCod = createdOrders.every((o) => o.paymentMethod === 'COD');
+    // Order NeedPay sudah lunas begitu dibuat — jangan disuruh bayar lagi.
+    const allNeedPay = createdOrders.every((o) => o.paymentMethod === 'NEEDPAY');
     const allPaidReady = !hasOnline;
 
     return (
@@ -248,9 +260,11 @@ const CheckoutPage: React.FC = () => {
             <Icon name="check" size={56} className="text-[#15803d] mx-auto mb-3" />
             <h1 className="text-[26px] font-bold text-[#191c1e]">Checkout Berhasil!</h1>
             <p className="text-[14px] text-[#737686] mt-1">
-              {allCod
-                ? `${createdOrders.length} pesanan dibuat. Pembayaran dilakukan saat barang tiba (COD).`
-                : `${createdOrders.length} pesanan berhasil dibuat. Kamu bisa membayar kapan saja dari halaman Pesanan.`}
+              {allNeedPay
+                ? `${createdOrders.length} pesanan dibuat dan sudah dibayar pakai saldo NeedPay.`
+                : allCod
+                  ? `${createdOrders.length} pesanan dibuat. Pembayaran dilakukan saat barang tiba (COD).`
+                  : `${createdOrders.length} pesanan berhasil dibuat. Kamu bisa membayar kapan saja dari halaman Pesanan.`}
             </p>
           </div>
 
@@ -269,14 +283,20 @@ const CheckoutPage: React.FC = () => {
                     <p className="text-[12px] text-[#737686]">
                       {order.paymentMethod === 'COD'
                         ? 'Bayar saat barang tiba (COD)'
-                        : order.paymentError
-                          ? 'Token pembayarannya belum dibuat'
-                          : 'Nunggu pembayaran online'}
+                        : order.paymentMethod === 'NEEDPAY'
+                          ? 'Lunas pakai saldo NeedPay'
+                          : order.paymentError
+                            ? 'Token pembayarannya belum dibuat'
+                            : 'Nunggu pembayaran online'}
                     </p>
                   </div>
                   <div className="text-right">
                     <p className="text-[14px] font-bold text-[#004ac6]">
-                      {order.paymentMethod === 'COD' ? 'COD' : 'Bayar Online'}
+                      {order.paymentMethod === 'COD'
+                        ? 'COD'
+                        : order.paymentMethod === 'NEEDPAY'
+                          ? 'NeedPay'
+                          : 'Bayar Online'}
                     </p>
                   </div>
                 </div>
@@ -314,6 +334,10 @@ const CheckoutPage: React.FC = () => {
   }
 
   const canCheckout = !!preview && preview.canCheckout && !!selectedAddressId;
+
+  // Saldo cukup = boleh pilih NeedPay. Server tetap memeriksa ulang saat
+  // checkout — ini cuma supaya user nggak menabrak error yang bisa dicegah.
+  const needPayEnough = !!preview && walletBalance >= Number(preview.grandTotal);
 
   return (
     <div className="min-h-screen flex flex-col bg-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
@@ -532,7 +556,42 @@ const CheckoutPage: React.FC = () => {
                       <p className="text-[11px] text-[#737686]">Bayar cash pas barangnya nyampe</p>
                     </div>
                   </button>
+
+                  {/* NeedPay dinonaktifkan kalau saldonya kurang — lebih baik
+                      ketahuan di sini daripada checkout gagal setelah diklik. */}
+                  <button
+                    type="button"
+                    onClick={() => setPaymentMethod('NEEDPAY')}
+                    disabled={!needPayEnough}
+                    className={`w-full flex items-start gap-3 text-left p-3 rounded-xl border transition-colors disabled:cursor-not-allowed disabled:opacity-60 ${
+                      paymentMethod === 'NEEDPAY'
+                        ? 'border-[#004ac6] bg-[#dbe1ff]/40'
+                        : 'border-[#e0e3e5] enabled:hover:border-[#004ac6]'
+                    }`}
+                  >
+                    <div className="w-4 h-4 mt-0.5 rounded-full border-2 shrink-0 flex items-center justify-center"
+                      style={{ borderColor: paymentMethod === 'NEEDPAY' ? '#004ac6' : '#c3c6d7' }}>
+                      {paymentMethod === 'NEEDPAY' && <div className="w-2 h-2 rounded-full bg-[#004ac6]" />}
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-[13px] font-semibold text-[#191c1e]">Saldo NeedPay</p>
+                      <p className="text-[11px] text-[#737686]">
+                        Saldo kamu {formatRupiah(walletBalance)}
+                        {!needPayEnough && ' — kurang buat pesanan ini'}
+                      </p>
+                    </div>
+                  </button>
                 </div>
+
+                {!needPayEnough && (
+                  <button
+                    type="button"
+                    onClick={() => navigate('/needpay')}
+                    className="mt-2 text-[12px] font-semibold text-[#004ac6] hover:underline"
+                  >
+                    Isi saldo NeedPay
+                  </button>
+                )}
               </div>
 
               <button

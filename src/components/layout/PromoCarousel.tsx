@@ -25,6 +25,14 @@ type AppPromo = {
 
 const APP_PROMOS: AppPromo[] = [
   {
+    eyebrow: 'NeedPay',
+    title: 'Isi saldo sekali, checkout tinggal satu ketukan',
+    body: 'Saldo NeedPay kepakai langsung pas bayar — nggak perlu buka aplikasi bank tiap belanja.',
+    cta: 'Isi saldo NeedPay',
+    to: '/needpay',
+    icon: 'card',
+  },
+  {
     eyebrow: 'Cara belanja di NeedBuy',
     title: 'Tulis kebutuhanmu, kami yang nyariin',
     body: 'Ketik "laptop buat edit video, budget 15 juta". NeedBuy nyaring produk yang beneran cocok, bukan yang cuma lewat di beranda.',
@@ -123,14 +131,20 @@ const AppSlide: React.FC<{ promo: AppPromo }> = ({ promo }) => (
   </article>
 );
 
+/** Lebar default mengikuti beranda; halaman lain boleh menimpanya. */
+const DEFAULT_SHELL = 'mx-auto w-full max-w-6xl px-5 sm:px-10 pt-6';
+
 /**
  * @param saleProducts produk diskon untuk slide promo harga. Boleh kosong —
  *   carousel-nya tetap berisi promo aplikasi, jadi tidak ada diskon palsu.
+ * @param className kelas wadah terluar. Halaman kategori memakai grid yang jauh
+ *   lebih lebar dari beranda, jadi lebarnya tidak boleh dipaku di sini.
  */
-const PromoCarousel: React.FC<{ saleProducts: Product[]; loading?: boolean }> = ({
-  saleProducts,
-  loading = false,
-}) => {
+const PromoCarousel: React.FC<{
+  saleProducts: Product[];
+  loading?: boolean;
+  className?: string;
+}> = ({ saleProducts, loading = false, className = DEFAULT_SHELL }) => {
   const trackRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -175,7 +189,7 @@ const PromoCarousel: React.FC<{ saleProducts: Product[]; loading?: boolean }> = 
 
   if (loading) {
     return (
-      <section className="mx-auto w-full max-w-6xl px-5 sm:px-10 pt-6">
+      <section className={className}>
         <div className="h-[300px] animate-pulse rounded-3xl bg-[#f2f4f6]" />
       </section>
     );
@@ -183,7 +197,7 @@ const PromoCarousel: React.FC<{ saleProducts: Product[]; loading?: boolean }> = 
 
   return (
     <section
-      className="mx-auto w-full max-w-6xl px-5 sm:px-10 pt-6"
+      className={className}
       aria-label="Promo dan info NeedBuy"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}

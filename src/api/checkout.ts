@@ -42,7 +42,8 @@ export interface CheckoutPreview {
   canCheckout: boolean;
 }
 
-export type PaymentMethod = 'MIDTRANS' | 'COD';
+/** NEEDPAY memotong saldo dompet saat checkout — ordernya langsung lunas. */
+export type PaymentMethod = 'MIDTRANS' | 'COD' | 'NEEDPAY';
 
 export interface CreatedOrderPayment {
   orderId: string;

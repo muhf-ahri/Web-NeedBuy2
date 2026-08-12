@@ -2,10 +2,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import Icon from '../components/ui/Icon';
+import DiscountBadge, { PriceWithDiscount } from '../components/ui/DiscountBadge';
 import SearchSuggestions from '../components/ui/SearchSuggestions';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
-import { formatRupiah } from '../utils/currency';
 import { getProducts, type GetProductsParams } from '../api/products';
 import { getSeller, searchSellers, type Seller } from '../api/sellers';
 import type { Product } from '../types';
@@ -195,7 +195,7 @@ const SearchPage: React.FC = () => {
     <div className="min-h-screen flex flex-col bg-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
       <Navbar />
 
-      <main className="flex-1 max-w-6xl mx-auto w-full px-5 sm:px-10 py-8">
+      <main className="flex-1 max-w-[1600px] mx-auto w-full px-5 sm:px-10 py-8">
         <h1 className="text-[28px] font-bold text-[#191c1e] mb-4">Hasil Pencarian</h1>
 
         <form onSubmit={handleSubmit} className="relative mb-6">
@@ -337,7 +337,7 @@ const SearchPage: React.FC = () => {
         </div>
 
         {loading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4">
             {[...Array(6)].map((_, i) => (
               <div key={i} className="bg-white rounded-2xl border border-[#e0e3e5] overflow-hidden animate-pulse">
                 <div className="aspect-4/3 bg-[#f2f4f6]" />
@@ -365,7 +365,7 @@ const SearchPage: React.FC = () => {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4">
             {products.map((p) => (
               <div
                 key={p.id}
@@ -378,26 +378,27 @@ const SearchPage: React.FC = () => {
                     alt={p.name}
                     className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
                   />
+                  <DiscountBadge discountPercent={p.discountPercent} price={p.price} />
                   <button
                     onClick={(e) => toggleWishlist(e, p.id)}
-                    className="absolute top-3 right-3 w-7 h-7 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-sm hover:bg-white transition-colors"
+                    className="absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-sm hover:bg-white transition-colors"
                     aria-label="Simpan ke wishlist"
                   >
-                    <Icon name="heart" size={14} className={`transition-colors ${wishlistIds.has(p.id) ? 'text-[#004ac6]' : 'text-[#737686]'}`} />
+                    <Icon name="heart" size={13} className={`transition-colors ${wishlistIds.has(p.id) ? 'text-[#004ac6]' : 'text-[#737686]'}`} />
                   </button>
                 </div>
-                <div className="p-4 flex flex-col flex-1">
-                  <span className="text-[11px] font-semibold text-[#004ac6] uppercase tracking-wide mb-1">
+                <div className="p-3.5 flex flex-col flex-1">
+                  <span className="block truncate text-[11px] font-semibold text-[#004ac6] uppercase tracking-wide">
                     {p.seller.storeName}
                   </span>
-                  <h3 className="text-[14px] font-semibold text-[#191c1e] leading-snug line-clamp-2 flex-1">
+                  <h3 className="mt-1 text-[13px] font-semibold text-[#191c1e] leading-snug line-clamp-2 flex-1">
                     {p.name}
                   </h3>
-                  <div className="mt-3 flex items-center justify-between">
-                    <span className="text-[15px] font-bold text-[#004ac6]">{formatRupiah(p.price)}</span>
+                  <div className="mt-2 flex items-end justify-between gap-1">
+                    <PriceWithDiscount price={p.price} discountPercent={p.discountPercent} />
                     <button
                       onClick={(e) => handleAddToCart(e, p.id)}
-                      className="w-8 h-8 rounded-full bg-[#191c1e] hover:bg-[#004ac6] text-white flex items-center justify-center transition-colors duration-200"
+                      className="w-8 h-8 shrink-0 rounded-full bg-[#191c1e] hover:bg-[#004ac6] text-white flex items-center justify-center transition-colors duration-200"
                       aria-label="Tambah ke keranjang"
                     >
                       <Icon name="cart" size={14} className="" />

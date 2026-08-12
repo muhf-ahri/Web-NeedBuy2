@@ -28,6 +28,21 @@
     --nb-signal-wash: #fff0e9;
     --nb-success: #12805c;      /* pesanan selesai */
     --nb-warn: #b45309;         /* menunggu pembayaran */
+
+    /* ── NeedPay (dompet) ───────────────────────────────────────────────────
+       Subsistem terpisah, dan itu disengaja: NeedPay adalah alat pembayaran,
+       bukan permukaan belanja. Bahasanya diambil dari benda aslinya — uang
+       kertas: kertas krem, tinta cetak hijau, garis guilloche, bayangan cetak
+       offset. Tujuannya supaya saldo terbaca sebagai UANG dan tidak pernah
+       tertukar dengan tombol aksi kobalt.
+
+       Warna-warna ini TIDAK dipakai di luar permukaan NeedPay. */
+    --np-ink: #12100e;          /* tinta cetak: garis, border, bayangan */
+    --np-paper: #f4efe4;        /* kertas uang */
+    --np-paper-deep: #e6ddc9;   /* kertas di bagian terlipat */
+    --np-rupiah: #0e7a5f;       /* hijau cetak — nominal & nilai positif */
+    --np-mint: #7fe8b2;         /* sorotan di atas tinta gelap */
+    --np-stamp: #e8452c;        /* cap: peringatan & status gagal */
   }
   body {
     font-family: 'Plus Jakarta Sans', sans-serif;
@@ -63,6 +78,48 @@
   .hover-lift:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  }
+
+  /* ── Permukaan NeedPay ──────────────────────────────────────────────────
+     Dipakai ulang di kartu saldo, tombol nominal, dan banner. Ditulis sekali
+     di sini karena rangkaian kelasnya panjang dan harus persis sama di semua
+     tempat — kalau tidak, "kertas"-nya kelihatan dicetak di pabrik berbeda. */
+  .np-note {
+    border: 3px solid var(--np-ink);
+    box-shadow: 8px 8px 0 var(--np-ink);
+    background-color: var(--np-paper);
+  }
+  .np-chip {
+    border: 2px solid var(--np-ink);
+    box-shadow: 3px 3px 0 var(--np-ink);
+    background-color: var(--np-paper);
+  }
+
+  /* Tekan = kertas menempel ke bayangannya. Satu-satunya gerak di NeedPay. */
+  .np-press {
+    transition: transform 0.12s ease-out, box-shadow 0.12s ease-out;
+  }
+  .np-press:not(:disabled):active {
+    transform: translate(3px, 3px);
+    box-shadow: 0 0 0 var(--np-ink);
+  }
+  .np-chip.np-press:not(:disabled):active {
+    transform: translate(3px, 3px);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .np-press { transition: none; }
+    .np-press:not(:disabled):active { transform: none; }
+  }
+
+  /* Angka nominal: lebar digit seragam supaya saldo tidak "bergoyang" saat
+     berubah, seperti angka tercetak di uang kertas. */
+  .np-figure {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.03em;
+  }
+  .np-serial {
+    font-family: ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', 'Roboto Mono', monospace;
+    letter-spacing: 0.14em;
   }
 }
 

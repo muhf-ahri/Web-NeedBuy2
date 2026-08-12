@@ -13,6 +13,8 @@ import Footer from '../components/layout/Footer';
 import PromoCarousel from '../components/layout/PromoCarousel';
 import Icon, { type IconName } from '../components/ui/Icon';
 import SearchSuggestions from '../components/ui/SearchSuggestions';
+import { DiscountChip, strikePrice } from '../components/ui/DiscountBadge';
+import { NeedPayStrip } from '../components/ui/NeedPayNote';
 import { getProducts } from '../api/products';
 import { formatRupiah } from '../utils/currency';
 import type { Product } from '../types';
@@ -94,7 +96,7 @@ const CategoryCard: React.FC<{ category: PopularCategory; rank: number }> = ({ c
 /** Satu baris daftar harga. Titik-titik penghubung dibuat dari border, bukan karakter. */
 const PriceRow: React.FC<{ product: Product }> = ({ product }) => {
   const onSale = product.discountPercent > 0;
-  const strike = onSale ? Math.round(Number(product.price) / (1 - product.discountPercent / 100)) : 0;
+  const strike = onSale ? strikePrice(product.price, product.discountPercent) : 0;
 
   return (
     <li>
@@ -103,8 +105,13 @@ const PriceRow: React.FC<{ product: Product }> = ({ product }) => {
         className="group flex items-baseline gap-3 py-3 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#004ac6]"
       >
         <span className="min-w-0 shrink">
-          <span className="block truncate text-[14px] font-semibold text-[#191c1e] group-hover:text-[#004ac6]">
-            {product.name}
+          <span className="flex items-center gap-1.5">
+            <span className="truncate text-[14px] font-semibold text-[#191c1e] group-hover:text-[#004ac6]">
+              {product.name}
+            </span>
+            {/* Diskon ikut di baris nama, bukan cuma harga coret di ujung kanan:
+                besaran potongannya yang bikin orang berhenti membaca. */}
+            <DiscountChip discountPercent={product.discountPercent} />
           </span>
           <span className="text-[12px] text-[#737686]">
             {product.category?.name}
@@ -219,6 +226,12 @@ const HomePage: React.FC = () => {
             <SearchSuggestions term={searchQuery} onPick={() => setSuggestOpen(false)} />
           )}
         </form>
+      </div>
+
+      {/* NeedPay duduk tepat di bawah kolom pencarian: dua hal yang sama-sama
+          soal "sebelum belanja" — mau cari apa, dan dibayar pakai apa. */}
+      <div className="mx-auto w-full max-w-6xl px-5 pt-6 sm:px-10">
+        <NeedPayStrip />
       </div>
 
       {error && (

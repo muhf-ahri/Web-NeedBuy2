@@ -17,6 +17,7 @@ import WishlistPage from './pages/WishlistPage';
 import ProfilePage from './pages/ProfilePage';
 import NeedsPage from './pages/NeedsPage';
 import CouponsPage from './pages/CouponsPage';
+import NeedPayPage from './pages/NeedPayPage';
 import MessagesPage from './pages/MessagesPage';
 import LegalPage from './pages/LegalPage';
 
@@ -69,6 +70,9 @@ function App() {
 
               {/* Kupon */}
               <Route path="/coupons" element={<CouponsPage />} />
+
+              {/* NeedPay — saldo */}
+              <Route path="/needpay" element={<NeedPayPage />} />
 
               {/* Pesan dengan penjual */}
               <Route path="/messages" element={<MessagesPage />} />
