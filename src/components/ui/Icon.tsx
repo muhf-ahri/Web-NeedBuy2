@@ -1,8 +1,4 @@
 // src/components/ui/Icon.tsx
-//
-// Ikon flat (solid fill, tanpa stroke) untuk seluruh navigasi dan halaman baru.
-// Ditulis sebagai path inline, bukan dependency ikon baru: satu file ~70 baris
-// mengganti seluruh gaya ikon garis lucide di permukaan yang paling terlihat.
 import React from 'react';
 
 export type IconName =
@@ -40,9 +36,17 @@ export type IconName =
   | 'arrowLeft'
   | 'trending'
   | 'alert'
-  | 'arrowRight';
+  | 'arrowRight'
+  | 'dashboard'
+  | 'product'
+  | 'analytics'
+  | 'settings'
+  | 'shop'
+  | 'upload'
+  | 'edit'
+  | 'eye'
+  | 'bell';
 
-// viewBox 24x24, semua path solid.
 const PATHS: Record<IconName, string> = {
   search:
     'M10.5 3a7.5 7.5 0 1 0 4.55 13.46l3.74 3.74a1.25 1.25 0 0 0 1.77-1.77l-3.74-3.74A7.5 7.5 0 0 0 10.5 3Zm0 2.5a5 5 0 1 1 0 10 5 5 0 0 1 0-10Z',
@@ -94,6 +98,34 @@ const PATHS: Record<IconName, string> = {
     'M10.7 3.4a1.5 1.5 0 0 1 2.6 0l8.2 14.6a1.5 1.5 0 0 1-1.3 2.25H3.8a1.5 1.5 0 0 1-1.3-2.25L10.7 3.4ZM12 8.5a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0v-4a1 1 0 0 0-1-1Zm0 8a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4Z',
   arrowRight:
     'M13.3 4.3a1.1 1.1 0 0 1 1.55 0l6.5 6.5a1.1 1.1 0 0 1 0 1.55l-6.5 6.5a1.1 1.1 0 1 1-1.55-1.55l4.62-4.62H3.6a1.1 1.1 0 0 1 0-2.2h14.32L13.3 5.85a1.1 1.1 0 0 1 0-1.55Z',
+
+  // ===== IKON BARU UNTUK SELLER =====
+  // Dashboard — solid fill
+  dashboard: 'M4 4h6v6H4V4zm10 0h6v6h-6V4zM4 14h6v6H4v-6zm10 0h6v6h-6v-6z',
+
+  // Product — solid fill (icon paket/box)
+  product: 'M12 2L2 7v10l10 5 10-5V7l-10-5zm0 2.18l7.6 3.8L12 11.82 4.4 7.98 12 4.18zM4 9.5v7.6l7 3.5v-7.6L4 9.5zm16 0l-7 3.5v7.6l7-3.5V9.5z',
+
+  // Analytics — solid fill (chart bar)
+  analytics: 'M21 19H3V5h2v12h16v2zm-4-8h2v6h-2v-6zm-4-4h2v10h-2V7zm-4 2h2v6H9V9zM5 13h2v2H5v-2z',
+
+  // Settings — solid fill (gear/roda gigi) — full color
+  settings: 'M12 2a1 1 0 0 1 .94.66l.28.84c.24.08.46.2.66.34l.82-.36a1 1 0 0 1 1.28.48l.44.78a1 1 0 0 1-.12 1.18l-.54.66c.04.26.06.52.06.78s-.02.52-.06.78l.54.66a1 1 0 0 1 .12 1.18l-.44.78a1 1 0 0 1-1.28.48l-.82-.36c-.2.14-.42.26-.66.34l-.28.84A1 1 0 0 1 12 20a1 1 0 0 1-.94-.66l-.28-.84a2.5 2.5 0 0 1-.66-.34l-.82.36a1 1 0 0 1-1.28-.48l-.44-.78a1 1 0 0 1 .12-1.18l.54-.66a3.5 3.5 0 0 1 0-1.56l-.54-.66A1 1 0 0 1 8.08 8.9l.44-.78a1 1 0 0 1 1.28-.48l.82.36c.2-.14.42-.26.66-.34l.28-.84A1 1 0 0 1 12 2zm0 5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7z',
+
+  // Shop — solid fill (toko)
+  shop: 'M4 3h16a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm0 6h16v10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9zm3 2v4h4v-4H7z',
+
+  // Upload — solid fill
+  upload: 'M12 3a1 1 0 0 1 1 1v8.59l2.3-2.29a1 1 0 1 1 1.4 1.42l-4 4a1 1 0 0 1-1.4 0l-4-4a1 1 0 1 1 1.4-1.42l2.3 2.29V4a1 1 0 0 1 1-1zM5 19h14a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2z',
+
+  // Edit — solid fill (pencil)
+  edit: 'M18.5 3.5l2 2L7 19l-3 1 1-3L18.5 3.5zM20 2l-1.5 1.5 2 2L22 4l-2-2z',
+
+  // Eye — solid fill (lihat)
+  eye: 'M12 5C7 5 3 8 1 12c2 4 6 7 11 7s9-3 11-7c-2-4-6-7-11-7zm0 10a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0-2a1 1 0 1 0 0-2 1 1 0 0 0 0 2z',
+
+  // Bell — solid fill (lonceng notifikasi)
+  bell: 'M12 22a2 2 0 0 0 2-2h-4a2 2 0 0 0 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z',
 };
 
 interface IconProps extends React.SVGProps<SVGSVGElement> {

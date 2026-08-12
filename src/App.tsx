@@ -20,68 +20,84 @@ import CouponsPage from './pages/CouponsPage';
 import MessagesPage from './pages/MessagesPage';
 import LegalPage from './pages/LegalPage';
 
+// Seller pages
+import SellerDashboard from './pages/seller/DashboardPage';
+import SellerProducts from './pages/seller/ProductsPage';
+import SellerOrders from './pages/seller/OrdersPage';
+import SellerChats from './pages/seller/ChatsPage';
+import SellerAnalytics from './pages/seller/AnalyticsPage';
+import SellerSettings from './pages/seller/SettingsPage';
+
 function App() {
   return (
     <AuthProvider>
       <CartProvider>
         <WishlistProvider>
           <BrowserRouter>
-          <Routes>
-            {/* Home */}
-            <Route path="/" element={<HomePage />} />
+            <Routes>
+              {/* Home */}
+              <Route path="/" element={<HomePage />} />
 
-            {/* Auth */}
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+              {/* Auth */}
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
 
-            {/* Categories — list semua produk */}
-            <Route path="/categories" element={<CategoriesPage />} />
-            {/* Category detail — filtered by slug */}
-            <Route path="/categories/:slug" element={<CategoryDetailPage />} />
+              {/* Categories — list semua produk */}
+              <Route path="/categories" element={<CategoriesPage />} />
+              {/* Category detail — filtered by slug */}
+              <Route path="/categories/:slug" element={<CategoryDetailPage />} />
 
-            {/* Product detail */}
-            <Route path="/products/:slug" element={<ProductDetailPage />} />
+              {/* Product detail */}
+              <Route path="/products/:slug" element={<ProductDetailPage />} />
 
-            {/* Shopping Plans */}
-            <Route path="/plans" element={<ShoppingPlansPage />} />
+              {/* Shopping Plans */}
+              <Route path="/plans" element={<ShoppingPlansPage />} />
 
-            {/* Search */}
-            <Route path="/search" element={<SearchPage />} />
+              {/* Search */}
+              <Route path="/search" element={<SearchPage />} />
 
-            {/* Needs / Need-Based Search */}
-            <Route path="/needs" element={<NeedsPage />} />
+              {/* Needs / Need-Based Search */}
+              <Route path="/needs" element={<NeedsPage />} />
 
-            {/* Cart & Checkout */}
-            <Route path="/cart" element={<CartPage />} />
-            <Route path="/checkout" element={<CheckoutPage />} />
+              {/* Cart & Checkout */}
+              <Route path="/cart" element={<CartPage />} />
+              <Route path="/checkout" element={<CheckoutPage />} />
 
-            {/* Orders */}
-            <Route path="/orders" element={<OrdersPage />} />
+              {/* Orders */}
+              <Route path="/orders" element={<OrdersPage />} />
 
-            {/* Kupon */}
-            <Route path="/coupons" element={<CouponsPage />} />
+              {/* Kupon */}
+              <Route path="/coupons" element={<CouponsPage />} />
 
-            {/* Pesan dengan penjual */}
-            <Route path="/messages" element={<MessagesPage />} />
+              {/* Pesan dengan penjual */}
+              <Route path="/messages" element={<MessagesPage />} />
 
-            {/* Halaman footer (syarat, privasi, pengiriman, kontak) */}
-            <Route path="/terms" element={<LegalPage />} />
-            <Route path="/privacy" element={<LegalPage />} />
-            <Route path="/shipping" element={<LegalPage />} />
-            <Route path="/contact" element={<LegalPage />} />
+              {/* Halaman footer (syarat, privasi, pengiriman, kontak) */}
+              <Route path="/terms" element={<LegalPage />} />
+              <Route path="/privacy" element={<LegalPage />} />
+              <Route path="/shipping" element={<LegalPage />} />
+              <Route path="/contact" element={<LegalPage />} />
 
-            {/* Wishlist */}
-            <Route path="/wishlist" element={<WishlistPage />} />
+              {/* Wishlist */}
+              <Route path="/wishlist" element={<WishlistPage />} />
 
-            {/* Profile */}
-            <Route path="/profile" element={<ProfilePage />} />
+              {/* Profile */}
+              <Route path="/profile" element={<ProfilePage />} />
 
-            {/* Compare — placeholder */}
-            <Route path="/compare" element={<div className="p-8 text-center text-gray-500 font-sans">Compare — coming soon</div>} />
+              {/* Seller routes */}
+              <Route path="/seller/dashboard" element={<SellerDashboard />} />
+              <Route path="/seller/products" element={<SellerProducts />} />
+              <Route path="/seller/orders" element={<SellerOrders />} />
+              <Route path="/seller/chats" element={<SellerChats />} />
+              <Route path="/seller/analytics" element={<SellerAnalytics />} />
+              <Route path="/seller/settings" element={<SellerSettings />} />
 
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </BrowserRouter>
+              {/* Compare — placeholder */}
+              <Route path="/compare" element={<div className="p-8 text-center text-gray-500 font-sans">Compare — coming soon</div>} />
+
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </BrowserRouter>
         </WishlistProvider>
       </CartProvider>
     </AuthProvider>
