@@ -18,10 +18,14 @@ export interface TokenPair {
   expiresIn: string;
 }
 
+/**
+ * Register selalu membuat akun BUYER — tidak ada pilihan role di sini lagi.
+ * Untuk jadi penjual, user mendaftarkan tokonya dari halaman profil
+ * (`createSellerStore` di api/sellers.ts), yang memang meminta data toko.
+ */
 export interface RegisterPayload {
   username: string;
   email: string;
-  role: 'BUYER' | 'SELLER';
   password: string;
   confirmPassword: string;
 }
@@ -34,7 +38,6 @@ export interface LoginPayload {
 export interface SocialLoginPayload {
   provider: 'GOOGLE' | 'APPLE';
   idToken: string;
-  role?: 'BUYER' | 'SELLER';
 }
 
 export const register = (data: RegisterPayload) =>
@@ -110,16 +113,3 @@ export const clearAuth = () => {
   localStorage.removeItem(REFRESH_TOKEN_KEY);
   localStorage.removeItem(USER_KEY);
 };
-
-export interface RegisterSellerPayload {
-  storeName: string;
-}
-
-export const registerSeller = (data: RegisterSellerPayload) =>
-  apiClient.post<{ success: boolean; data: { id: string; storeName: string } }>('/sellers', data);
-
-export const updateSeller = (data: { storeName?: string }) =>
-  apiClient.patch<{
-    success: boolean;
-    data: { id: string; storeName: string; rating: string; status: string };
-  }>('/sellers/me', data);

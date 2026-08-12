@@ -22,12 +22,12 @@ import type { Category } from '../../types';
 const PAGE_SIZE = 10;
 
 const STATUS_CLASS: Record<ProductStatus, string> = {
-  Active: 'bg-[#d7f5dc] text-[#156b32]',
-  'Out of Stock': 'bg-[#ffe0e0] text-[#a33131]',
-  Draft: 'bg-[#f2f4f6] text-[#737686]',
+  Tayang: 'bg-[#d7f5dc] text-[#156b32]',
+  'Stok Habis': 'bg-[#ffe0e0] text-[#a33131]',
+  Draf: 'bg-[#f2f4f6] text-[#737686]',
 };
 
-type SortableField = 'name' | 'categoryId' | 'price' | 'stock' | 'status' | 'createdAt';
+type SortableField = 'name' | 'price' | 'stock' | 'createdAt';
 
 interface SortConfig {
   field: SortableField;
@@ -118,7 +118,7 @@ const ProductsPage: React.FC = () => {
       setMeta(list.meta);
       setStats(statsRes.data.data);
     } catch (err: any) {
-      setError(err?.message ?? 'Gagal memuat produk');
+      setError(err?.message ?? 'Gagal muat produk, coba lagi ya');
     } finally {
       setLoading(false);
     }
@@ -163,22 +163,22 @@ const ProductsPage: React.FC = () => {
     <SellerLayout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-[28px] font-bold text-[#191c1e]">My Products</h1>
-          <p className="text-[15px] text-[#737686]">Manage your inventory and product listings</p>
+          <h1 className="text-[28px] font-bold text-[#191c1e]">Produk Saya</h1>
+          <p className="text-[15px] text-[#737686]">Atur stok dan produk yang kamu jual di sini</p>
         </div>
 
         {/* Stats */}
         <div className="grid grid-cols-3 gap-4 max-w-md">
           <div className="bg-white rounded-2xl border border-[#e0e3e5] p-4 text-center">
-            <p className="text-[11px] font-semibold text-[#737686] uppercase">Active Listings</p>
+            <p className="text-[11px] font-semibold text-[#737686] uppercase">Produk Tayang</p>
             <p className="text-[24px] font-bold text-[#191c1e]">{stats?.active ?? '—'}</p>
           </div>
           <div className="bg-white rounded-2xl border border-[#e0e3e5] p-4 text-center">
-            <p className="text-[11px] font-semibold text-[#737686] uppercase">Out of Stock</p>
+            <p className="text-[11px] font-semibold text-[#737686] uppercase">Stok Habis</p>
             <p className="text-[24px] font-bold text-[#ba1a1a]">{stats?.outOfStock ?? '—'}</p>
           </div>
           <div className="bg-white rounded-2xl border border-[#e0e3e5] p-4 text-center">
-            <p className="text-[11px] font-semibold text-[#737686] uppercase">Drafts</p>
+            <p className="text-[11px] font-semibold text-[#737686] uppercase">Draf</p>
             <p className="text-[24px] font-bold text-[#737686]">{stats?.drafts ?? '—'}</p>
           </div>
         </div>
@@ -191,7 +191,7 @@ const ProductsPage: React.FC = () => {
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search products..."
+              placeholder="Cari produk kamu..."
               className="w-full pl-9 pr-3 py-2 rounded-full border border-[#c3c6d7] text-sm outline-none focus:border-[#004ac6] focus:ring-2 focus:ring-[#004ac6]/20 transition"
             />
           </div>
@@ -207,34 +207,26 @@ const ProductsPage: React.FC = () => {
             <table className="w-full text-sm">
               <thead>
                 <tr className="bg-[#f2f4f6] text-[11px] font-semibold text-[#737686] uppercase tracking-wider">
-                  <th className="px-4 py-3 text-center">Image</th>
+                  <th className="px-4 py-3 text-center">Gambar</th>
 
                   <th
                     className="px-4 py-3 text-center group cursor-pointer select-none hover:text-[#004ac6] transition-colors"
                     onClick={() => handleSort('name')}
                   >
                     <div className="flex items-center justify-center gap-1.5">
-                      <span>Product Name</span>
+                      <span>Nama Produk</span>
                       {renderSortIndicator('name')}
                     </div>
                   </th>
 
-                  <th
-                    className="px-4 py-3 text-center group cursor-pointer select-none hover:text-[#004ac6] transition-colors"
-                    onClick={() => handleSort('categoryId')}
-                  >
-                    <div className="flex items-center justify-center gap-1.5">
-                      <span>Category</span>
-                      {renderSortIndicator('categoryId')}
-                    </div>
-                  </th>
+                  <th className="px-4 py-3 text-center">Kategori</th>
 
                   <th
                     className="px-4 py-3 text-center group cursor-pointer select-none hover:text-[#004ac6] transition-colors"
                     onClick={() => handleSort('price')}
                   >
                     <div className="flex items-center justify-center gap-1.5">
-                      <span>Price</span>
+                      <span>Harga</span>
                       {renderSortIndicator('price')}
                     </div>
                   </th>
@@ -244,22 +236,14 @@ const ProductsPage: React.FC = () => {
                     onClick={() => handleSort('stock')}
                   >
                     <div className="flex items-center justify-center gap-1.5">
-                      <span>Stock Level</span>
+                      <span>Sisa Stok</span>
                       {renderSortIndicator('stock')}
                     </div>
                   </th>
 
-                  <th
-                    className="px-4 py-3 text-center group cursor-pointer select-none hover:text-[#004ac6] transition-colors"
-                    onClick={() => handleSort('status')}
-                  >
-                    <div className="flex items-center justify-center gap-1.5">
-                      <span>Status</span>
-                      {renderSortIndicator('status')}
-                    </div>
-                  </th>
+                  <th className="px-4 py-3 text-center">Status</th>
 
-                  <th className="px-4 py-3 text-center">Actions</th>
+                  <th className="px-4 py-3 text-center">Aksi</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#e0e3e5]">

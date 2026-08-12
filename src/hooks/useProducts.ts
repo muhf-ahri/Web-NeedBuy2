@@ -19,7 +19,7 @@ export const useProducts = (params?: GetProductsParams) => {
       setPagination(meta);
     } catch (err: any) {
       console.error('[useProducts] Error:', err);
-      setError(err.message ?? 'Gagal memuat produk');
+      setError(err.message ?? 'Gagal muat produk, coba lagi ya');
     } finally {
       setLoading(false);
     }

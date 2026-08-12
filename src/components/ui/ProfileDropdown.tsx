@@ -35,8 +35,8 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
 
   const menuItems = [
     { to: '/seller/dashboard', label: 'Dashboard', icon: 'dashboard' },
-    { to: '/seller/profile', label: 'Profile', icon: 'user' },
-    { to: '/seller/settings', label: 'Settings', icon: 'settings' },
+    { to: '/seller/profile', label: 'Profil', icon: 'user' },
+    { to: '/seller/settings', label: 'Setelan', icon: 'settings' },
   ];
 
   return (
@@ -45,7 +45,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-2 p-1.5 rounded-full hover:bg-[#f2f4f6] transition-colors focus:outline-none"
-        aria-label="Profile menu"
+        aria-label="Menu profil"
       >
         <div className="w-8 h-8 rounded-full overflow-hidden bg-[#dbe1ff] border border-[#c3c6d7] flex items-center justify-center">
           {avatarUrl ? (
@@ -65,7 +65,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
         <div className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-[#e0e3e5] overflow-hidden z-50 animate-slideDown">
           <div className="px-4 py-3 border-b border-[#e0e3e5]">
             <p className="text-[13px] font-bold text-[#191c1e]">{sellerName}</p>
-            <p className="text-[11px] text-[#737686]">Seller Account</p>
+            <p className="text-[11px] text-[#737686]">Akun Penjual</p>
           </div>
 
           <ul className="py-1">
@@ -89,7 +89,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
               className="flex items-center gap-3 px-4 py-2.5 w-full text-[13px] text-[#ba1a1a] hover:bg-[#ffdad6] transition-colors"
             >
               <Icon name="logout" size={16} />
-              Logout
+              Keluar
             </button>
           </div>
         </div>

@@ -92,7 +92,7 @@ const SocialLogin: React.FC = () => {
         }
       }
     } catch (err: any) {
-      setError(err.message || `Gagal login dengan ${provider}.`);
+      setError(err.message || `Gagal masuk pakai ${provider}. Coba lagi ya.`);
     } finally {
       setLoading(false);
     }
@@ -158,7 +158,7 @@ const SocialLogin: React.FC = () => {
               >
                 {loading && <Icon name="clock" size={16} className="animate-spin" />}
                 {loading
-                  ? 'Memproses...'
+                  ? 'Bentar ya...'
                   : `Masuk dengan ${provider === 'GOOGLE' ? 'Google' : 'Apple'}`}
               </button>
             </form>

@@ -89,7 +89,7 @@ const SearchPage: React.FC = () => {
         setStores([]);
         setStoresError(null);
       } catch (err: any) {
-        setError(err.message ?? 'Gagal memuat produk toko');
+        setError(err.message ?? 'Gagal muat produk toko, coba lagi ya');
       } finally {
         setLoading(false);
       }
@@ -128,7 +128,7 @@ const SearchPage: React.FC = () => {
         setProducts(productRes.value.data);
       } else {
         setProducts([]);
-        setError(productRes.reason?.message ?? 'Gagal memuat hasil pencarian');
+        setError(productRes.reason?.message ?? 'Gagal muat hasil pencarian, coba lagi ya');
       }
 
       // Gagalnya pencarian toko tidak menjatuhkan hasil produk, TAPI juga tidak
@@ -140,10 +140,10 @@ const SearchPage: React.FC = () => {
         setStoresError(null);
       } else {
         setStores([]);
-        setStoresError(storeRes.reason?.message ?? 'Gagal memuat daftar toko');
+        setStoresError(storeRes.reason?.message ?? 'Gagal muat daftar toko, coba lagi ya');
       }
     } catch (err: any) {
-      setError(err.message ?? 'Gagal memuat hasil pencarian');
+      setError(err.message ?? 'Gagal muat hasil pencarian, coba lagi ya');
     } finally {
       setLoading(false);
     }
@@ -168,7 +168,7 @@ const SearchPage: React.FC = () => {
     try {
       await toggleWishlistContext(productId);
     } catch (err: any) {
-      setError(err.message ?? 'Gagal memperbarui wishlist');
+      setError(err.message ?? 'Gagal update wishlist, coba lagi ya');
     }
   };
 
@@ -182,7 +182,7 @@ const SearchPage: React.FC = () => {
       await addToCart(productId, 1);
       await refreshCartCount();
     } catch (err: any) {
-      setError(err.message ?? 'Gagal menambahkan ke keranjang');
+      setError(err.message ?? 'Gagal masukin ke keranjang, coba lagi ya');
     }
   };
 
@@ -210,7 +210,7 @@ const SearchPage: React.FC = () => {
             onFocus={() => setSuggestOpen(true)}
             onBlur={() => setSuggestOpen(false)}
             onKeyDown={(e) => { if (e.key === 'Escape') setSuggestOpen(false); }}
-            placeholder="Cari produk atau toko..."
+            placeholder="Mau cari apa hari ini?"
             className="w-full pl-12 pr-12 py-3 bg-[#f2f4f6] rounded-full text-sm outline-none focus:ring-2 focus:ring-[#004ac6]/20 focus:bg-white border border-transparent focus:border-[#004ac6] transition"
           />
           {input && (
@@ -298,7 +298,7 @@ const SearchPage: React.FC = () => {
                       )}
                     </div>
                     <p className="mt-0.5 line-clamp-2 text-[12px] text-[#737686]">
-                      {store.description || 'Toko ini belum menulis deskripsi.'}
+                      {store.description || 'Toko ini belum nulis deskripsi.'}
                     </p>
                     <p className="mt-1 text-[11px] text-[#737686]">
                       <Icon name="star" size={11} className="inline text-[#f59e0b]" />{' '}
@@ -316,13 +316,13 @@ const SearchPage: React.FC = () => {
           <p className="text-[13px] text-[#737686]">
             {openedStore
               ? loading
-                ? 'Memuat produk toko...'
+                ? 'Bentar, muat produk tokonya...'
                 : `${products.length} produk di toko ini`
               : query.trim()
                 ? loading
-                  ? 'Mencari...'
+                  ? 'Nyari...'
                   : `${products.length} produk untuk "${query}"`
-                : 'Ketik kata kunci untuk mencari produk atau nama toko'}
+                : 'Ketik dulu mau cari produk atau toko apa'}
           </p>
           <div className="relative shrink-0">
             <select
@@ -352,7 +352,7 @@ const SearchPage: React.FC = () => {
         ) : openedStore && products.length === 0 ? (
           <div className="text-center py-20">
             <Icon name="product" size={48} className="text-[#c3c6d7] mx-auto mb-4" />
-            <p className="text-[#737686]">Toko ini belum menayangkan produk apa pun.</p>
+            <p className="text-[#737686]">Toko ini belum nayangin produk apa pun.</p>
           </div>
         ) : query.trim() && products.length === 0 ? (
           <div className="text-center py-20">
@@ -361,7 +361,7 @@ const SearchPage: React.FC = () => {
             <p className="text-[12px] text-[#c3c6d7] mt-1">
               {stores.length > 0
                 ? 'Tapi ada toko yang cocok — lihat di bagian Toko di atas.'
-                : 'Coba kata kunci lain.'}
+                : 'Coba pakai kata kunci lain ya.'}
             </p>
           </div>
         ) : (
@@ -381,7 +381,7 @@ const SearchPage: React.FC = () => {
                   <button
                     onClick={(e) => toggleWishlist(e, p.id)}
                     className="absolute top-3 right-3 w-7 h-7 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-sm hover:bg-white transition-colors"
-                    aria-label="Toggle wishlist"
+                    aria-label="Simpan ke wishlist"
                   >
                     <Icon name="heart" size={14} className={`transition-colors ${wishlistIds.has(p.id) ? 'text-[#004ac6]' : 'text-[#737686]'}`} />
                   </button>

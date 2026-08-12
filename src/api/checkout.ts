@@ -9,8 +9,12 @@ export interface PreviewLine {
   productSlug: string;
   imageUrl: string | null;
   quantity: number;
+  /** Varian yang dipilih, ikut disnapshot ke order saat checkout. */
+  variant: string | null;
   price: string;
+  /** Sudah memuat potongan grosir kalau jumlahnya memenuhi. */
   subtotal: string;
+  bulkDiscountPercent: number;
 }
 
 export interface PreviewOrder {

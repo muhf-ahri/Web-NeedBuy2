@@ -38,6 +38,10 @@ export interface Product {
   soldCount: number;
   /** 0 = tidak sedang promo. Harga coret = price / (1 - discountPercent/100). */
   discountPercent: number;
+  /** Diskon grosir: minimal beli agar potongannya berlaku. null = tidak ada penawaran. */
+  bulkMinQty: number | null;
+  /** Potongan grosir dalam persen. Selalu sepasang dengan bulkMinQty. */
+  bulkDiscountPercent: number | null;
   /** Hanya ada di response list. Produk tanpa atribut `kondisi` dikirim sebagai "Baru". */
   condition?: string;
   isActive: boolean;
@@ -77,8 +81,25 @@ export interface ProductAttribute {
   attrValue: string;
 }
 
-export interface ProductDetail extends Product {
+/** Profil toko di halaman produk — lebih lengkap dari `Product['seller']`. */
+export interface ProductDetailSeller {
+  id: string;
+  storeName: string;
+  rating: string;
+  status: string;
+  logoUrl: string | null;
+  description: string | null;
+  address: string | null;
+  vacationMode: boolean;
+  createdAt: string;
+  following: boolean;
+  _count?: { products: number; followers: number };
+}
+
+export interface ProductDetail extends Omit<Product, 'seller'> {
   description: string | null;
   attributes: ProductAttribute[];
   reviewCount: number;
+  seller: ProductDetailSeller;
+  _count?: { reviews: number };
 }

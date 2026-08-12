@@ -12,10 +12,10 @@ interface NavbarProps {
 
 // Nav links desktop.
 const NAV_LINKS = [
-  { to: '/categories', label: 'Categories' },
-  { to: '/plans', label: 'Shopping Plans' },
-  { to: '/needs', label: 'Needs' },
-  { to: '/orders', label: 'Orders' },
+  { to: '/categories', label: 'Kategori' },
+  { to: '/plans', label: 'Rencana Belanja' },
+  { to: '/needs', label: 'Kebutuhan' },
+  { to: '/orders', label: 'Pesanan' },
 ];
 
 // Baris tombol bundar khusus mobile — pengganti hamburger. Tujuan tiap tombol
@@ -25,8 +25,8 @@ const QUICK_ACTIONS: Array<{ to: string; label: string; icon: IconName }> = [
   { to: '/coupons', label: 'Kupon', icon: 'coupon' },
   { to: '/messages', label: 'Pesan', icon: 'chat' },
   { to: '/categories', label: 'Kategori', icon: 'grid' },
-  { to: '/plans', label: 'Plan', icon: 'plan' },
-  { to: '/needs', label: 'Needs', icon: 'spark' },
+  { to: '/plans', label: 'Rencana', icon: 'plan' },
+  { to: '/needs', label: 'Kebutuhan', icon: 'spark' },
   { to: '/wishlist', label: 'Wishlist', icon: 'heart' },
 ];
 
@@ -147,7 +147,7 @@ const Navbar: React.FC<NavbarProps> = ({ avatarUrl }) => {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onKeyDown={handleSearchKeyDown}
-                  placeholder="Cari produk atau toko..."
+                  placeholder="Mau cari apa hari ini?"
                   className="flex-1 bg-transparent outline-none text-sm text-[#101319] placeholder-[#737686] px-2 py-1.5 min-w-0"
                 />
                 {searchQuery && (
@@ -198,10 +198,10 @@ const Navbar: React.FC<NavbarProps> = ({ avatarUrl }) => {
             <Link
               to="/seller/dashboard"
               className="inline-flex items-center gap-1.5 px-2 md:px-3 py-1.5 rounded-full bg-[#004ac6] text-white text-[13px] font-semibold hover:bg-[#003a9e] transition-colors duration-200 shrink-0"
-              aria-label="Dashboard Seller"
+              aria-label="Dashboard Toko"
             >
               <Icon name="dashboard" size={16} className="text-white" />
-              <span className="hidden md:inline">Dashboard Seller</span>
+              <span className="hidden md:inline">Dashboard Toko</span>
             </Link>
           )}
 

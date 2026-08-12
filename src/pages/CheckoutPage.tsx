@@ -64,7 +64,7 @@ const CheckoutPage: React.FC = () => {
         throw addrRes.reason;
       }
     } catch (err: any) {
-      setError(err.message ?? 'Gagal memuat data checkout');
+      setError(err.message ?? 'Gagal muat data checkout, coba lagi ya');
     } finally {
       setLoading(false);
     }
@@ -107,9 +107,9 @@ const CheckoutPage: React.FC = () => {
           mapped[f.path] = f.message;
         });
         setFieldErrors(mapped);
-        setError('Periksa kembali isian alamat.');
+        setError('Cek lagi isian alamatnya ya.');
       } else {
-        setError(err.message ?? 'Gagal menyimpan alamat');
+        setError(err.message ?? 'Gagal simpan alamat, coba lagi ya');
       }
     } finally {
       setSavingAddress(false);
@@ -128,7 +128,7 @@ const CheckoutPage: React.FC = () => {
       setCreatedOrders(res.data.data.orders);
       await refreshCartCount();
     } catch (err: any) {
-      setError(err.message ?? 'Checkout gagal');
+      setError(err.message ?? 'Checkout-nya gagal, coba lagi ya');
     }
   };
 
@@ -180,7 +180,7 @@ const CheckoutPage: React.FC = () => {
               resolve();
             },
             onError: (result) => {
-              setError('Pembayaran gagal: ' + JSON.stringify(result));
+              setError('Pembayarannya gagal: ' + JSON.stringify(result));
               resolve();
             },
             onClose: () => resolve(),
@@ -204,7 +204,7 @@ const CheckoutPage: React.FC = () => {
         <main className="flex-1 max-w-6xl mx-auto w-full px-5 sm:px-10 py-16 flex items-center justify-center">
           <div className="text-center">
             <Icon name="lock" size={48} className="text-[#c3c6d7] mx-auto mb-4" />
-            <p className="text-[#737686] mb-4">Login untuk melanjutkan checkout.</p>
+            <p className="text-[#737686] mb-4">Login dulu ya buat lanjut checkout.</p>
             <button
               onClick={() => navigate('/login')}
               className="px-6 py-2.5 rounded-full bg-[#004ac6] hover:bg-[#003ea8] text-white text-[14px] font-semibold transition-colors"
@@ -246,7 +246,7 @@ const CheckoutPage: React.FC = () => {
         <main className="flex-1 max-w-2xl mx-auto w-full px-5 sm:px-10 py-12">
           <div className="text-center mb-8">
             <Icon name="check" size={56} className="text-[#15803d] mx-auto mb-3" />
-            <h1 className="text-[26px] font-bold text-[#191c1e]">Checkout Berhasil</h1>
+            <h1 className="text-[26px] font-bold text-[#191c1e]">Checkout Berhasil!</h1>
             <p className="text-[14px] text-[#737686] mt-1">
               {allCod
                 ? `${createdOrders.length} pesanan dibuat. Pembayaran dilakukan saat barang tiba (COD).`
@@ -270,8 +270,8 @@ const CheckoutPage: React.FC = () => {
                       {order.paymentMethod === 'COD'
                         ? 'Bayar saat barang tiba (COD)'
                         : order.paymentError
-                          ? 'Token pembayaran belum dibuat'
-                          : 'Menunggu pembayaran online'}
+                          ? 'Token pembayarannya belum dibuat'
+                          : 'Nunggu pembayaran online'}
                     </p>
                   </div>
                   <div className="text-right">
@@ -289,7 +289,7 @@ const CheckoutPage: React.FC = () => {
               onClick={() => navigate('/orders')}
               className="flex-1 px-6 py-3 rounded-full border border-[#c3c6d7] text-[14px] font-semibold text-[#191c1e] hover:border-[#004ac6] hover:text-[#004ac6] transition-colors"
             >
-              {allCod ? 'Lihat Pesanan' : 'Bayar Nanti'}
+              {allCod ? 'Lihat Pesanan' : 'Bayar Nanti Aja'}
             </button>
             {hasOnline && (
               <button
@@ -298,7 +298,7 @@ const CheckoutPage: React.FC = () => {
                 className="flex-1 flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#004ac6] hover:bg-[#003ea8] text-white text-[14px] font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {paying && <Icon name="clock" size={16} className="animate-spin" />}
-                {paying ? 'Memproses...' : 'Bayar Sekarang'}
+                {paying ? 'Bentar ya...' : 'Bayar Sekarang'}
               </button>
             )}
           </div>
@@ -325,7 +325,7 @@ const CheckoutPage: React.FC = () => {
           className="flex items-center gap-1 text-[#737686] hover:text-[#191c1e] mb-6 transition-colors"
         >
           <Icon name="chevronLeft" size={16} className="" />
-          <span className="text-[13px]">Kembali ke Keranjang</span>
+          <span className="text-[13px]">Balik ke Keranjang</span>
         </button>
 
         <h1 className="text-[28px] font-bold text-[#191c1e] mb-6">Checkout</h1>
@@ -338,7 +338,7 @@ const CheckoutPage: React.FC = () => {
 
         {!preview || preview.orders.length === 0 ? (
           <div className="text-center py-20">
-            <p className="text-[#737686] mb-4">Keranjang Anda kosong.</p>
+            <p className="text-[#737686] mb-4">Keranjang kamu masih kosong nih.</p>
             <button
               onClick={() => navigate('/categories')}
               className="px-6 py-2.5 rounded-full bg-[#004ac6] hover:bg-[#003ea8] text-white text-[14px] font-semibold transition-colors"
@@ -365,7 +365,7 @@ const CheckoutPage: React.FC = () => {
 
                 {addresses.length === 0 ? (
                   <p className="text-[13px] text-[#737686]">
-                    Belum ada alamat. Tambahkan alamat pengiriman Anda.
+                    Belum ada alamat. Tambahin alamat pengirimanmu dulu ya.
                   </p>
                 ) : (
                   <div className="space-y-2">
@@ -433,7 +433,15 @@ const CheckoutPage: React.FC = () => {
                             </p>
                             <p className="text-[12px] text-[#737686]">
                               {line.quantity} x {formatRupiah(line.price)}
+                              {line.bulkDiscountPercent > 0 && (
+                                <span className="ml-1.5 font-semibold text-[#156b32]">
+                                  grosir -{line.bulkDiscountPercent}%
+                                </span>
+                              )}
                             </p>
+                            {line.variant && (
+                              <p className="text-[11px] text-[#737686]">Model: {line.variant}</p>
+                            )}
                           </div>
                         </div>
                         <span className="flex items-center gap-1 shrink-0">
@@ -457,7 +465,7 @@ const CheckoutPage: React.FC = () => {
               {/* Stock problems */}
               {preview.stockProblems.length > 0 && (
                 <div className="bg-[#ffdad6] border border-[#ba1a1a]/20 rounded-2xl px-4 py-3">
-                  <p className="text-[13px] text-[#93000a] font-semibold mb-1">Stok tidak mencukupi</p>
+                  <p className="text-[13px] text-[#93000a] font-semibold mb-1">Stoknya nggak cukup</p>
                   {preview.stockProblems.map((sp) => (
                     <p key={sp.cartItemId} className="text-[12px] text-[#93000a]">
                       {sp.productName ?? 'Produk'} — diminta {sp.requested}, tersedia {sp.available}
@@ -521,7 +529,7 @@ const CheckoutPage: React.FC = () => {
                     </div>
                     <div>
                       <p className="text-[13px] font-semibold text-[#191c1e]">COD (Bayar di Tempat)</p>
-                      <p className="text-[11px] text-[#737686]">Bayar tunai saat barang tiba</p>
+                      <p className="text-[11px] text-[#737686]">Bayar cash pas barangnya nyampe</p>
                     </div>
                   </button>
                 </div>
@@ -537,7 +545,7 @@ const CheckoutPage: React.FC = () => {
               </button>
               {!canCheckout && (
                 <p className="mt-2 text-[11px] text-[#737686] text-center">
-                  {!selectedAddressId ? 'Pilih alamat pengiriman terlebih dahulu.' : 'Perbaiki stok yang tidak tersedia.'}
+                  {!selectedAddressId ? 'Pilih alamat pengiriman dulu ya.' : 'Beresin dulu item yang stoknya kurang.'}
                 </p>
               )}
             </div>

@@ -52,7 +52,7 @@ const NeedsPage: React.FC = () => {
       const { data } = await getNeeds({ limit: 50 });
       setNeeds(data);
     } catch (err: any) {
-      setError(err.message ?? 'Gagal memuat kebutuhan');
+      setError(err.message ?? 'Gagal muat kebutuhan, coba lagi ya');
     } finally {
       setLoading(false);
     }
@@ -76,7 +76,7 @@ const NeedsPage: React.FC = () => {
         setParsed(null);
       }
     } catch (err: any) {
-      setError(err.message ?? 'Gagal membuat kebutuhan');
+      setError(err.message ?? 'Gagal simpan kebutuhan, coba lagi ya');
     } finally {
       setCreating(false);
     }
@@ -92,7 +92,7 @@ const NeedsPage: React.FC = () => {
       setParsed(null);
       await openRecommendations(needId);
     } catch (err: any) {
-      setError(err.message ?? 'Gagal mengonfirmasi kebutuhan');
+      setError(err.message ?? 'Gagal konfirmasi kebutuhan, coba lagi ya');
     } finally {
       setBusy(null);
     }
@@ -108,7 +108,7 @@ const NeedsPage: React.FC = () => {
       await fetchNeeds();
       await openRecommendations(needId);
     } catch (err: any) {
-      setError(err.message ?? 'Gagal memproses kebutuhan');
+      setError(err.message ?? 'Gagal proses kebutuhan, coba lagi ya');
     } finally {
       setBusy(null);
     }
@@ -122,7 +122,7 @@ const NeedsPage: React.FC = () => {
       const { data } = await getRecommendations(needId, 1, 50);
       setRecs(data);
     } catch (err: any) {
-      setError(err.message ?? 'Gagal memuat rekomendasi');
+      setError(err.message ?? 'Gagal muat rekomendasi, coba lagi ya');
     } finally {
       setRecLoading(false);
     }
@@ -140,7 +140,7 @@ const NeedsPage: React.FC = () => {
       await addToCart(productId, 1);
       await refreshCartCount();
     } catch (err: any) {
-      setError(err.message ?? 'Gagal menambahkan ke keranjang');
+      setError(err.message ?? 'Gagal masukin ke keranjang, coba lagi ya');
     } finally {
       setBusy(null);
     }
@@ -153,7 +153,7 @@ const NeedsPage: React.FC = () => {
         <main className="flex-1 max-w-6xl mx-auto w-full px-5 sm:px-10 py-16 flex items-center justify-center">
           <div className="text-center">
             <Icon name="lock" size={48} className="text-[#c3c6d7] mx-auto mb-4" />
-            <p className="text-[#737686] mb-4">Login untuk membuat kebutuhan belanja Anda.</p>
+            <p className="text-[#737686] mb-4">Login dulu ya buat nulis kebutuhan belanjamu.</p>
             <button
               onClick={() => navigate('/login')}
               className="px-6 py-2.5 rounded-full bg-[#004ac6] text-white text-[14px] font-semibold"
@@ -179,7 +179,7 @@ const NeedsPage: React.FC = () => {
             className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#004ac6] hover:bg-[#003ea8] text-white text-[13px] font-semibold transition-colors"
           >
             {showCreate ? <Icon name="close" size={16} className="" /> : <Icon name="plus" size={16} className="" />}
-            {showCreate ? 'Tutup' : 'Buat Kebutuhan'}
+            {showCreate ? 'Tutup' : 'Tulis Kebutuhan'}
           </button>
         </div>
 
@@ -194,7 +194,7 @@ const NeedsPage: React.FC = () => {
           <div className="bg-[#f2f6ff] border border-[#dbe1ff] rounded-2xl p-6 mb-6">
             <div className="flex items-center gap-2 mb-3">
               <Icon name="spark" size={20} className="text-[#004ac6]" />
-              <h3 className="text-[16px] font-bold text-[#191c1e]">Deskripsikan Kebutuhan Anda</h3>
+              <h3 className="text-[16px] font-bold text-[#191c1e]">Ceritain Kebutuhanmu</h3>
             </div>
             <p className="text-[13px] text-[#737686] mb-4">
               Contoh: "Saya butuh laptop untuk editing video budget 15 juta, ram minimal 16GB."
@@ -215,7 +215,7 @@ const NeedsPage: React.FC = () => {
                   }
                 }}
                 rows={3}
-                placeholder="Tulis kebutuhan Anda... (tekan Enter untuk analisis)"
+                placeholder="Ceritain kebutuhanmu... (tekan Enter buat dianalisis)"
                 className="w-full px-4 py-3 bg-white rounded-xl border border-[#dbe1ff] outline-none focus:border-[#004ac6] focus:ring-2 focus:ring-[#004ac6]/20 text-sm resize-none transition"
               />
               <div className="mt-3 flex gap-3">
@@ -290,8 +290,8 @@ const NeedsPage: React.FC = () => {
         ) : needs.length === 0 && !showCreate ? (
           <div className="text-center py-20">
             <Icon name="spark" size={48} className="text-[#c3c6d7] mx-auto mb-4" />
-            <p className="text-[#737686]">Belum ada kebutuhan.</p>
-            <p className="text-[12px] text-[#c3c6d7] mt-1">Buat kebutuhan untuk mendapatkan rekomendasi produk yang tepat.</p>
+            <p className="text-[#737686]">Belum ada kebutuhan yang ditulis.</p>
+            <p className="text-[12px] text-[#c3c6d7] mt-1">Tulis kebutuhanmu, nanti kami cariin produk yang paling pas.</p>
           </div>
         ) : (
           <div className="space-y-3">
@@ -301,7 +301,7 @@ const NeedsPage: React.FC = () => {
                   <div className="min-w-0 flex-1">
                     <p className="text-[14px] font-semibold text-[#191c1e] line-clamp-1">{need.rawInput}</p>
                     <p className="text-[12px] text-[#737686] mt-0.5">
-                      {need.goal ?? 'Belum diinterpretasi'}
+                      {need.goal ?? 'Belum dianalisis'}
                       {need.budget ? ` · Budget ${formatRupiah(need.budget)}` : ''}
                       {need.location ? ` · ${need.location}` : ''}
                     </p>
@@ -330,7 +330,7 @@ const NeedsPage: React.FC = () => {
                       </div>
                     ) : recs.length === 0 ? (
                       <p className="text-[12px] text-[#737686] text-center py-4">
-                        Belum ada rekomendasi. Proses kebutuhan ini terlebih dahulu.
+                        Belum ada rekomendasi. Proses dulu kebutuhan ini ya.
                       </p>
                     ) : (
                       <div className="space-y-2">

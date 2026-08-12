@@ -56,7 +56,7 @@ export async function payWithSnap(
 ): Promise<void> {
   await loadSnap();
   if (!window.snap) {
-    throw new Error('Tidak dapat memuat pembayaran. Silakan coba lagi.');
+    throw new Error('Gagal muat halaman pembayaran. Coba lagi ya.');
   }
   window.snap.pay(snapToken, handlers);
 }

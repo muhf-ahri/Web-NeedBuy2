@@ -21,7 +21,7 @@ export const useWishlist = (productId: string | undefined) => {
     try {
       await toggle(productId);
     } catch (err: any) {
-      setError(err.message ?? 'Gagal memperbarui wishlist');
+      setError(err.message ?? 'Gagal update wishlist, coba lagi ya');
     } finally {
       setBusy(false);
     }

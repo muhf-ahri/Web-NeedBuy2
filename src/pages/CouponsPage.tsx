@@ -19,10 +19,10 @@ const valueLabel = (coupon: Coupon) =>
     : formatRupiah(coupon.value);
 
 const expiryLabel = (iso: string | null) => {
-  if (!iso) return 'Tanpa batas waktu';
+  if (!iso) return 'Nggak ada batas waktu';
   const date = new Date(iso);
   const days = Math.ceil((date.getTime() - Date.now()) / 86_400_000);
-  if (days <= 0) return 'Sudah berakhir';
+  if (days <= 0) return 'Udah kedaluwarsa';
   if (days <= 3) return `Berakhir ${days} hari lagi`;
   return `Berlaku sampai ${date.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}`;
 };
@@ -79,7 +79,7 @@ const CouponCard: React.FC<{
           {coupon.claimed ? (
             <span className="inline-flex items-center gap-1 text-[12px] font-semibold text-[#12805c]">
               <Icon name="check" size={14} />
-              {used ? 'Terpakai' : 'Tersimpan'}
+              {used ? 'Udah dipakai' : 'Udah disimpan'}
             </span>
           ) : (
             <button
@@ -116,7 +116,7 @@ const CouponsPage: React.FC = () => {
       const res = await getCoupons(tab);
       setCoupons(res.data.data);
     } catch (err: any) {
-      setError(err.message ?? 'Gagal memuat kupon');
+      setError(err.message ?? 'Gagal muat kupon, coba lagi ya');
     } finally {
       setLoading(false);
     }
@@ -132,10 +132,10 @@ const CouponsPage: React.FC = () => {
     setNotice(null);
     try {
       await claimCoupon(id);
-      setNotice('Kupon tersimpan. Buka tab Kupon Saya untuk melihatnya.');
+      setNotice('Kupon udah kesimpen. Cek di tab Kupon Saya ya.');
       await fetchCoupons();
     } catch (err: any) {
-      setError(err.message ?? 'Gagal mengklaim kupon');
+      setError(err.message ?? 'Gagal klaim kupon, coba lagi ya');
     } finally {
       setBusy(false);
     }
@@ -153,7 +153,7 @@ const CouponsPage: React.FC = () => {
       setCode('');
       await fetchCoupons();
     } catch (err: any) {
-      setError(err.message ?? 'Kode kupon tidak bisa dipakai');
+      setError(err.message ?? 'Kode kuponnya nggak bisa dipakai');
     } finally {
       setBusy(false);
     }
@@ -166,7 +166,7 @@ const CouponsPage: React.FC = () => {
         <main className="flex-1 max-w-6xl mx-auto w-full px-5 sm:px-10 py-16 flex items-center justify-center">
           <div className="text-center">
             <Icon name="coupon" size={44} className="text-[#c3c6d7] mx-auto mb-4" />
-            <p className="text-[#737686] mb-4">Login untuk mengumpulkan kupon.</p>
+            <p className="text-[#737686] mb-4">Login dulu ya buat ngumpulin kupon.</p>
             <button
               onClick={() => navigate('/login')}
               className="px-6 py-2.5 rounded-full bg-[#004ac6] hover:bg-[#003ea8] text-white text-[14px] font-semibold transition-colors"
@@ -195,7 +195,7 @@ const CouponsPage: React.FC = () => {
           <input
             value={code}
             onChange={(e) => setCode(e.target.value)}
-            placeholder="Punya kode? Ketik di sini"
+            placeholder="Punya kode kupon? Tempel di sini"
             className="flex-1 px-4 py-2.5 rounded-full border border-[#c3c6d7] outline-none focus:border-[#004ac6] focus:ring-2 focus:ring-[#004ac6]/20 text-[13px] uppercase transition"
             aria-label="Kode kupon"
           />
@@ -246,8 +246,8 @@ const CouponsPage: React.FC = () => {
             <Icon name="coupon" size={44} className="text-[#c3c6d7] mx-auto mb-4" />
             <p className="text-[#737686] text-[14px]">
               {tab === 'mine'
-                ? 'Belum ada kupon tersimpan. Klaim dari tab Tersedia.'
-                : 'Tidak ada kupon baru untuk saat ini.'}
+                ? 'Belum ada kupon kesimpen. Klaim dulu dari tab Tersedia.'
+                : 'Belum ada kupon baru buat sekarang.'}
             </p>
           </div>
         ) : (

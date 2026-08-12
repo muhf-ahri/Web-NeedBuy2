@@ -86,7 +86,7 @@ const AnalyticsPage: React.FC = () => {
     <SellerLayout>
       <div className="space-y-6">
         <div className="flex flex-wrap items-end justify-between gap-3">
-          <h1 className="text-[28px] font-bold text-[#191c1e]">Shop Analytics</h1>
+          <h1 className="text-[28px] font-bold text-[#191c1e]">Analitik Toko</h1>
           <div className="flex gap-1 bg-white border border-[#e0e3e5] rounded-full p-1">
             {PERIODS.map((option) => (
               <button
@@ -107,7 +107,7 @@ const AnalyticsPage: React.FC = () => {
         {/* Revenue Growth */}
         <div className="bg-white rounded-2xl border border-[#e0e3e5] p-5">
           <div className="flex items-baseline justify-between mb-4">
-            <h3 className="text-[15px] font-bold text-[#191c1e]">Revenue Growth</h3>
+            <h3 className="text-[15px] font-bold text-[#191c1e]">Pertumbuhan Omzet</h3>
             {revenue.data && (
               <span className="text-[12px] text-[#737686]">
                 Total {formatRupiah(revenue.data.totals.revenue)} · {revenue.data.totals.orders} order
@@ -129,7 +129,7 @@ const AnalyticsPage: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Conversion Rate */}
           <div className="bg-white rounded-2xl border border-[#e0e3e5] p-5">
-            <h3 className="text-[15px] font-bold text-[#191c1e] mb-2">Conversion Rate</h3>
+            <h3 className="text-[15px] font-bold text-[#191c1e] mb-2">Rasio Konversi</h3>
             {conversion.loading ? (
               <div className="h-12 w-32 bg-[#f2f4f6] rounded animate-pulse" />
             ) : conversion.error ? (
@@ -159,7 +159,7 @@ const AnalyticsPage: React.FC = () => {
 
           {/* Top Selling Products */}
           <div className="bg-white rounded-2xl border border-[#e0e3e5] p-5">
-            <h3 className="text-[15px] font-bold text-[#191c1e] mb-4">Top Selling Products</h3>
+            <h3 className="text-[15px] font-bold text-[#191c1e] mb-4">Produk Paling Laris</h3>
             {topProducts.loading ? (
               <div className="h-24 bg-[#f2f4f6] rounded animate-pulse" />
             ) : topProducts.error ? (

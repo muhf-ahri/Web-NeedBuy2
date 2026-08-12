@@ -8,6 +8,7 @@ import { getUserProfile, updateProfile, changePassword, type User as UserType } 
 import { getAddresses, createAddress, deleteAddress, type Address } from '../api/orders';
 import { validateAddressForm, EMPTY_ADDRESS_FORM, type AddressFormData } from '../utils/address';
 import { useAuth } from '../contexts/AuthContext';
+import SellerRegisterForm from '../components/forms/SellerRegisterForm';
 
 interface ProfileData extends UserType {
   seller?: {
@@ -58,7 +59,7 @@ const ProfilePage: React.FC = () => {
       setPhone(data.phone ?? '');
       setAddresses(addrRes.data.data ?? []);
     } catch (err: any) {
-      setError(err.message ?? 'Gagal memuat profil');
+      setError(err.message ?? 'Gagal muat profil, coba lagi ya');
     } finally {
       setLoading(false);
     }
@@ -75,10 +76,10 @@ const ProfilePage: React.FC = () => {
     try {
       const res = await updateProfile({ name: name.trim() || undefined, phone: phone.trim() || null });
       setProfile((prev) => (prev ? { ...prev, ...res.data.data } : prev));
-      setSavedMessage('Profil berhasil diperbarui.');
+      setSavedMessage('Profil kamu udah keupdate.');
       setTimeout(() => setSavedMessage(null), 2500);
     } catch (err: any) {
-      setError(err.message ?? 'Gagal memperbarui profil');
+      setError(err.message ?? 'Gagal update profil, coba lagi ya');
     } finally {
       setSavingProfile(false);
     }
@@ -92,10 +93,10 @@ const ProfilePage: React.FC = () => {
     try {
       await changePassword({ currentPassword: pw.currentPassword, newPassword: pw.newPassword });
       setPw({ currentPassword: '', newPassword: '' });
-      setSavedMessage('Password berhasil diganti.');
+      setSavedMessage('Password udah diganti.');
       setTimeout(() => setSavedMessage(null), 2500);
     } catch (err: any) {
-      setError(err.message ?? 'Gagal mengganti password');
+      setError(err.message ?? 'Gagal ganti password, coba lagi ya');
     } finally {
       setSavingPw(false);
     }
@@ -107,7 +108,7 @@ const ProfilePage: React.FC = () => {
       await deleteAddress(id);
       setAddresses((prev) => prev.filter((a) => a.id !== id));
     } catch (err: any) {
-      setError(err.message ?? 'Gagal menghapus alamat');
+      setError(err.message ?? 'Gagal hapus alamat, coba lagi ya');
     }
   };
 
@@ -140,7 +141,7 @@ const ProfilePage: React.FC = () => {
       setFieldErrors({});
       const addrRes = await getAddresses();
       setAddresses(addrRes.data.data ?? []);
-      setSavedMessage('Alamat berhasil ditambahkan.');
+      setSavedMessage('Alamatnya udah kesimpen.');
       setTimeout(() => setSavedMessage(null), 2500);
     } catch (err: any) {
       if (err?.fields?.length) {
@@ -149,9 +150,9 @@ const ProfilePage: React.FC = () => {
           mapped[f.path] = f.message;
         });
         setFieldErrors(mapped);
-        setError('Periksa kembali isian alamat.');
+        setError('Cek lagi isian alamatnya ya.');
       } else {
-        setError(err.message ?? 'Gagal menyimpan alamat');
+        setError(err.message ?? 'Gagal simpan alamat, coba lagi ya');
       }
     } finally {
       setSavingAddress(false);
@@ -185,7 +186,7 @@ const ProfilePage: React.FC = () => {
         <Navbar />
         <main className="flex-1 max-w-6xl mx-auto w-full px-5 sm:px-10 py-16 flex items-center justify-center">
           <div className="text-center">
-            <p className="text-[#737686] mb-4">Anda belum login.</p>
+            <p className="text-[#737686] mb-4">Kamu belum login nih.</p>
             <button
               onClick={() => navigate('/login')}
               className="px-6 py-2.5 rounded-full bg-[#004ac6] text-white text-[14px] font-semibold"
@@ -303,6 +304,47 @@ const ProfilePage: React.FC = () => {
               </button>
             </div>
 
+            {/* Toko — pendaftaran penjual pindah ke sini dari form register:
+                nama perusahaan, alamat, dan logo tidak muat diminta saat
+                register, dan tidak semua pembeli mau langsung buka toko. */}
+            <div className="bg-white border border-[#e0e3e5] rounded-2xl p-5">
+              <h3 className="flex items-center gap-2 text-[15px] font-bold text-[#191c1e] mb-1">
+                <Icon name="shop" size={16} className="text-[#004ac6]" />
+                {profile.seller ? 'Toko Saya' : 'Buka Toko'}
+              </h3>
+
+              {profile.seller ? (
+                <>
+                  <p className="text-[13px] text-[#737686] mb-4">
+                    {profile.seller.storeName} — {profile.seller.status === 'ACTIVE' ? 'toko kamu aktif' : 'toko kamu sedang disuspend'}.
+                    Mau ubah data toko? Buka Setelan Toko.
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    <button
+                      onClick={() => navigate('/seller/dashboard')}
+                      className="px-6 py-2.5 rounded-full bg-[#004ac6] hover:bg-[#003ea8] text-white text-[13px] font-semibold transition-colors"
+                    >
+                      Dashboard Toko
+                    </button>
+                    <button
+                      onClick={() => navigate('/seller/settings')}
+                      className="px-6 py-2.5 rounded-full border border-[#c3c6d7] text-[13px] font-semibold text-[#191c1e] hover:bg-[#f8f9fb] transition-colors"
+                    >
+                      Setelan Toko
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <p className="text-[13px] text-[#737686] mb-4">
+                    Lengkapi data perusahaan untuk mulai berjualan. Akun kamu tetap bisa
+                    dipakai membeli seperti biasa.
+                  </p>
+                  <SellerRegisterForm onRegistered={loadData} />
+                </>
+              )}
+            </div>
+
             {/* Addresses */}
             <div className="bg-white border border-[#e0e3e5] rounded-2xl p-5">
               <div className="flex items-center justify-between mb-4">
@@ -318,7 +360,7 @@ const ProfilePage: React.FC = () => {
                 </button>
               </div>
               {addresses.length === 0 ? (
-                <p className="text-[13px] text-[#737686]">Belum ada alamat.</p>
+                <p className="text-[13px] text-[#737686]">Belum ada alamat tersimpan.</p>
               ) : (
                 <div className="space-y-2">
                   {addresses.map((addr) => (

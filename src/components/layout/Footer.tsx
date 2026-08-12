@@ -31,7 +31,7 @@ const Footer: React.FC = () => {
               NeedBuy
             </span>
             <p className="text-xs text-[#737686] mt-1 max-w-[24ch]">
-              Beli yang kamu butuhkan, bukan yang kamu lihat.
+              Beli yang kamu butuh, bukan yang cuma kamu lihat.
             </p>
           </div>
 
@@ -76,7 +76,7 @@ const Footer: React.FC = () => {
         </div>
 
         <p className="mt-8 pt-6 border-t border-[#e0e3e5] text-xs text-[#737686]">
-          © {new Date().getFullYear()} NeedBuy. Semua harga sudah termasuk PPN.
+          © {new Date().getFullYear()} NeedBuy. Semua harga udah termasuk PPN.
         </p>
       </div>
     </footer>

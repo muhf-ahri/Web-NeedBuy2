@@ -7,6 +7,8 @@ export interface Seller {
   storeName: string;
   description: string | null;
   logoUrl: string | null;
+  /** Alamat toko — publik, bagian dari profil toko. */
+  address: string | null;
   /** Libur yang diatur penjual sendiri — berbeda dari `status` yang dikelola admin. */
   vacationMode: boolean;
   rating: string;
@@ -20,12 +22,29 @@ export interface Seller {
 /** Tampilan pemilik toko: ikut membawa email bisnis yang tidak dibuka ke publik. */
 export interface OwnSeller extends Seller {
   businessEmail: string | null;
+  phone: string | null;
   updatedAt: string;
+}
+
+/**
+ * Pendaftaran toko. `storeName` (nama perusahaan), `address`, dan `phone`
+ * wajib — di sinilah data toko dikumpulkan sejak pilihan role dihapus dari
+ * form register. `logoUrl` diisi URL hasil `uploadImage()`.
+ */
+export interface CreateSellerPayload {
+  storeName: string;
+  address: string;
+  phone: string;
+  description?: string;
+  logoUrl?: string;
+  businessEmail?: string;
 }
 
 export interface UpdateSellerPayload {
   storeName?: string;
   description?: string | null;
+  address?: string | null;
+  phone?: string | null;
   logoUrl?: string | null;
   businessEmail?: string | null;
   vacationMode?: boolean;
@@ -60,9 +79,9 @@ export const searchSellers = async (
 export const getSeller = (id: string) =>
   apiClient.get<ApiResponse<Seller>>(`/sellers/${id}`);
 
-/** POST /sellers - Register own store (buyer -> seller) */
-export const createSellerStore = (storeName: string) =>
-  apiClient.post<ApiResponse<Seller>>('/sellers', { storeName });
+/** POST /sellers - Daftarkan toko sendiri (buyer -> seller), dari halaman profil */
+export const createSellerStore = (payload: CreateSellerPayload) =>
+  apiClient.post<ApiResponse<OwnSeller>>('/sellers', payload);
 
 /** GET /sellers/me - Setelan toko sendiri (sumber data halaman Seller Settings) */
 export const getOwnSeller = () => apiClient.get<ApiResponse<OwnSeller>>('/sellers/me');
@@ -70,3 +89,22 @@ export const getOwnSeller = () => apiClient.get<ApiResponse<OwnSeller>>('/seller
 /** PATCH /sellers/me - Ubah setelan toko sendiri */
 export const updateSellerStore = (payload: UpdateSellerPayload) =>
   apiClient.patch<ApiResponse<OwnSeller>>('/sellers/me', payload);
+
+/** Status ikut toko, bentuk yang sama dibalikkan follow maupun unfollow. */
+export interface FollowState {
+  sellerId: string;
+  following: boolean;
+  followerCount: number;
+}
+
+/**
+ * POST/DELETE /sellers/:id/follow — ikuti atau berhenti ikuti toko.
+ *
+ * Keduanya idempoten di server (unique user+seller), jadi tombolnya tidak perlu
+ * menjaga dirinya dari klik ganda demi kebenaran data — hanya demi rasa.
+ */
+export const followSeller = (sellerId: string) =>
+  apiClient.post<ApiResponse<FollowState>>(`/sellers/${sellerId}/follow`);
+
+export const unfollowSeller = (sellerId: string) =>
+  apiClient.delete<ApiResponse<FollowState>>(`/sellers/${sellerId}/follow`);

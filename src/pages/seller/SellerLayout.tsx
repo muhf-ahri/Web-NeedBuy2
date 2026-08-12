@@ -13,11 +13,11 @@ interface SellerLayoutProps {
 
 const navItems: SidebarItem[] = [
   { to: '/seller/dashboard', label: 'Dashboard', icon: 'dashboard' },
-  { to: '/seller/products', label: 'My Products', icon: 'product' },
-  { to: '/seller/orders', label: 'Orders', icon: 'orders' },
-  { to: '/seller/chats', label: 'Customer Chats', icon: 'chat' },
-  { to: '/seller/analytics', label: 'Shop Analytics', icon: 'analytics' },
-  { to: '/seller/settings', label: 'Settings', icon: 'settings' },
+  { to: '/seller/products', label: 'Produk Saya', icon: 'product' },
+  { to: '/seller/orders', label: 'Order Masuk', icon: 'orders' },
+  { to: '/seller/chats', label: 'Chat Pembeli', icon: 'chat' },
+  { to: '/seller/analytics', label: 'Analitik Toko', icon: 'analytics' },
+  { to: '/seller/settings', label: 'Setelan', icon: 'settings' },
 ];
 
 const SellerLayout: React.FC<SellerLayoutProps> = ({ children }) => {

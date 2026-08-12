@@ -102,23 +102,7 @@
   animation-delay: 200ms;
 }
 
-/* ── Sale rail: track digandakan 2x di markup, jadi geser -50% = loop mulus ── */
-@keyframes nb-marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
-.nb-marquee {
-  animation: nb-marquee var(--nb-marquee-duration, 40s) linear infinite;
-  will-change: transform;
-}
-.nb-marquee-paused,
-.nb-marquee:hover,
-.nb-marquee:focus-within {
-  animation-play-state: paused;
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .nb-marquee { animation: none; }
   .animate-fadeIn,
   .animate-slideDown,
   .animate-slideUp { animation: none; opacity: 1; transform: none; }

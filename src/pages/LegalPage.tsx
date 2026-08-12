@@ -44,7 +44,7 @@ export const LEGAL_DOCS: Record<string, Doc> = {
       {
         heading: '4. Kupon',
         body: [
-          'Kupon berlaku sesuai masa aktif, kuota, dan minimum belanja yang tertera pada kupon. Kupon tidak dapat diuangkan.',
+          'Kupon berlaku sesuai masa aktif, kuota, dan minimum belanja yang tertera pada kupon. Kupon nggak bisa ditukar jadi uang.',
           'Kupon yang sudah diklaim melekat pada akun dan tidak bisa dipindahkan ke akun lain.',
         ],
       },

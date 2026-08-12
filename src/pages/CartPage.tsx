@@ -35,7 +35,7 @@ const CartPage: React.FC = () => {
       const res = await getCart();
       setCart(res.data.data);
     } catch (err: any) {
-      setError(err.message ?? 'Gagal memuat keranjang');
+      setError(err.message ?? 'Gagal muat keranjang, coba lagi ya');
     } finally {
       setLoading(false);
     }
@@ -65,7 +65,7 @@ const CartPage: React.FC = () => {
       await fetchCart();
       await refreshCartCount();
     } catch (err: any) {
-      setError(err.message ?? 'Terjadi kesalahan');
+      setError(err.message ?? 'Waduh, ada yang error. Coba lagi ya.');
     } finally {
       setBusy(false);
     }
@@ -91,7 +91,7 @@ const CartPage: React.FC = () => {
         <main className="flex-1 max-w-6xl mx-auto w-full px-5 sm:px-10 py-16 flex items-center justify-center">
           <div className="text-center">
             <Icon name="cart" size={48} className="text-[#c3c6d7] mx-auto mb-4" />
-            <p className="text-[#737686] mb-4">Login untuk melihat keranjang Anda.</p>
+            <p className="text-[#737686] mb-4">Login dulu ya buat lihat keranjang kamu.</p>
             <button
               onClick={() => navigate('/login')}
               className="px-6 py-2.5 rounded-full bg-[#004ac6] hover:bg-[#003ea8] text-white text-[14px] font-semibold transition-colors"
@@ -150,7 +150,7 @@ const CartPage: React.FC = () => {
         {!cart || cart.items.length === 0 ? (
           <div className="text-center py-20">
             <Icon name="cart" size={48} className="text-[#c3c6d7] mx-auto mb-4" />
-            <p className="text-[#737686] mb-4">Keranjang Anda kosong.</p>
+            <p className="text-[#737686] mb-4">Keranjang kamu masih kosong nih.</p>
             <button
               onClick={() => navigate('/categories')}
               className="px-6 py-2.5 rounded-full bg-[#004ac6] hover:bg-[#003ea8] text-white text-[14px] font-semibold transition-colors"
@@ -224,11 +224,22 @@ const CartPage: React.FC = () => {
                             {item.product.name}
                           </p>
                           <p className="text-[12px] text-[#737686]">{item.product.seller.storeName}</p>
+                          {item.variant && (
+                            <p className="text-[11px] text-[#737686]">Model: {item.variant}</p>
+                          )}
                           <p className="text-[12px] text-[#004ac6] font-semibold mt-0.5">
                             {formatRupiah(item.priceAtAdd)}
                           </p>
+                          {/* Potongan grosir dihitung server dan sudah masuk ke
+                              subtotal — ditampilkan supaya jelas kenapa totalnya
+                              lebih kecil dari harga x jumlah. */}
+                          {item.bulkDiscountPercent > 0 && (
+                            <p className="text-[11px] font-semibold text-[#156b32]">
+                              Grosir -{item.bulkDiscountPercent}% kepake
+                            </p>
+                          )}
                           {unavailable && (
-                            <p className="text-[11px] text-[#ba1a1a]">Stok tidak tersedia, perbarui atau hapus.</p>
+                            <p className="text-[11px] text-[#ba1a1a]">Stoknya nggak cukup - kurangi jumlahnya atau hapus.</p>
                           )}
                         </div>
                       </div>
@@ -296,7 +307,7 @@ const CartPage: React.FC = () => {
                     type="number"
                     value={budgetInput}
                     onChange={(e) => setBudgetInput(e.target.value)}
-                    placeholder={budget !== null ? formatRupiah(budget) : 'Set budget keranjang'}
+                    placeholder={budget !== null ? formatRupiah(budget) : 'Atur budget keranjang'}
                     className="flex-1 bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-[12px] text-white placeholder-[#9ea3b0] outline-none focus:border-[#004ac6]"
                   />
                   <button
@@ -325,7 +336,7 @@ const CartPage: React.FC = () => {
               >
                 <Icon name="lock" size={16} className="" />
                 {selectedIds.size === 0
-                  ? 'Pilih item dulu'
+                  ? 'Pilih item-nya dulu ya'
                   : `Checkout ${selectedIds.size} item`}
               </button>
               <button

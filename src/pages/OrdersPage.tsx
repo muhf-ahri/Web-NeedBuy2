@@ -6,6 +6,13 @@ import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import { formatRupiah } from '../utils/currency';
 import { getOrders, getOrder, cancelOrder, createReview, type Order, type OrderStatus } from '../api/orders';
+import {
+  ACCEPTED_IMAGE_TYPES,
+  ACCEPTED_VIDEO_TYPES,
+  MAX_IMAGE_BYTES,
+  MAX_VIDEO_BYTES,
+  uploadImage,
+} from '../api/uploads';
 import { retryPayment, syncPayment } from '../api/payments';
 import { payWithSnap } from '../utils/snap';
 import { getAccessToken } from '../api/auth';
@@ -16,7 +23,7 @@ type TabKey = OrderStatus | 'ALL' | 'HISTORY';
 const STATUS_TABS: Array<{ key: TabKey; label: string }> = [
   { key: 'ALL', label: 'Semua' },
   { key: 'HISTORY', label: 'Riwayat' },
-  { key: 'WAITING_PAYMENT', label: 'Menunggu Pembayaran' },
+  { key: 'WAITING_PAYMENT', label: 'Nunggu Dibayar' },
   { key: 'PROCESSING', label: 'Diproses' },
   { key: 'SHIPPED', label: 'Dikirim' },
   { key: 'DELIVERED', label: 'Selesai' },
@@ -34,7 +41,7 @@ const STATUS_STYLE: Record<OrderStatus, string> = {
 };
 
 const STATUS_LABEL: Record<OrderStatus, string> = {
-  WAITING_PAYMENT: 'Menunggu Pembayaran',
+  WAITING_PAYMENT: 'Nunggu Dibayar',
   PROCESSING: 'Diproses',
   SHIPPED: 'Dikirim',
   DELIVERED: 'Selesai',
@@ -87,6 +94,10 @@ const OrdersPage: React.FC = () => {
   const [reviewFor, setReviewFor] = useState<Order | null>(null);
   const [rating, setRating] = useState(5);
   const [comment, setComment] = useState('');
+  // Lampiran ulasan diunggah begitu dipilih; yang disimpan di sini URL-nya,
+  // karena itu yang diminta server (`POST /uploads/image` -> url).
+  const [reviewMedia, setReviewMedia] = useState<Array<{ url: string; kind: 'IMAGE' | 'VIDEO' }>>([]);
+  const [uploadingMedia, setUploadingMedia] = useState(false);
 
   const isAuthed = !!getAccessToken();
 
@@ -101,7 +112,7 @@ const OrdersPage: React.FC = () => {
       );
       setOrders(res.data.data);
     } catch (err: any) {
-      setError(err.message ?? 'Gagal memuat pesanan');
+      setError(err.message ?? 'Gagal muat pesanan, coba lagi ya');
     } finally {
       setLoading(false);
     }
@@ -128,7 +139,7 @@ const OrdersPage: React.FC = () => {
       }
       setSelected(res.data.data);
     } catch (err: any) {
-      setError(err.message ?? 'Gagal memuat detail pesanan');
+      setError(err.message ?? 'Gagal muat detail pesanan, coba lagi ya');
     }
   };
 
@@ -141,7 +152,7 @@ const OrdersPage: React.FC = () => {
       setSelected(null);
       await fetchOrders();
     } catch (err: any) {
-      setError(err.message ?? 'Gagal membatalkan pesanan');
+      setError(err.message ?? 'Gagal batalin pesanan, coba lagi ya');
     } finally {
       setBusy(false);
     }
@@ -184,7 +195,7 @@ const OrdersPage: React.FC = () => {
       const res = await retryPayment(selected.id, crypto.randomUUID());
       const token = res.data.data.payment?.snapToken;
       if (!token) {
-        setError('Tidak ada token pembayaran. Coba lagi nanti.');
+        setError('Token pembayarannya belum ada. Coba lagi nanti ya.');
         return;
       }
       let paid = false;
@@ -199,7 +210,7 @@ const OrdersPage: React.FC = () => {
             resolve();
           },
           onError: (result) => {
-            setError('Pembayaran gagal: ' + JSON.stringify(result));
+            setError('Pembayarannya gagal: ' + JSON.stringify(result));
             resolve();
           },
           onClose: () => resolve(),
@@ -211,7 +222,7 @@ const OrdersPage: React.FC = () => {
       await openDetail(selected.id);
       await fetchOrders();
     } catch (err: any) {
-      setError(err.message ?? 'Gagal memuat pembayaran');
+      setError(err.message ?? 'Gagal muat data pembayaran, coba lagi ya');
     } finally {
       setBusy(false);
     }
@@ -222,16 +233,61 @@ const OrdersPage: React.FC = () => {
     setBusy(true);
     setError(null);
     try {
-      await createReview(reviewFor.id, itemId, { rating, comment: comment.trim() || undefined });
+      await createReview(reviewFor.id, itemId, {
+        rating,
+        comment: comment.trim() || undefined,
+        ...(reviewMedia.length > 0 ? { media: reviewMedia } : {}),
+      });
       setReviewFor(null);
       setRating(5);
       setComment('');
+      setReviewMedia([]);
       await openDetail(reviewFor.id);
       await fetchOrders();
     } catch (err: any) {
-      setError(err.message ?? 'Gagal mengirim ulasan');
+      setError(err.message ?? 'Ulasannya gagal dikirim, coba lagi ya');
     } finally {
       setBusy(false);
+    }
+  };
+
+  /** Foto/video ulasan. Batas ukuran dibedakan: video memang jauh lebih besar. */
+  const handlePickReviewMedia = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = [...(e.target.files ?? [])];
+    e.target.value = '';
+    if (files.length === 0) return;
+
+    if (reviewMedia.length + files.length > 5) {
+      setError('Maksimal 5 foto/video per ulasan.');
+      return;
+    }
+
+    setUploadingMedia(true);
+    setError(null);
+    try {
+      for (const file of files) {
+        const isVideo = ACCEPTED_VIDEO_TYPES.includes(file.type);
+        const isImage = ACCEPTED_IMAGE_TYPES.includes(file.type);
+        if (!isImage && !isVideo) {
+          setError(`"${file.name}" harus foto (PNG/JPG/WebP/GIF) atau video (MP4/WebM).`);
+          continue;
+        }
+        const limit = isVideo ? MAX_VIDEO_BYTES : MAX_IMAGE_BYTES;
+        if (file.size > limit) {
+          setError(
+            `"${file.name}" kegedean — maksimal ${isVideo ? '20 MB buat video' : '3 MB buat foto'}.`
+          );
+          continue;
+        }
+        const res = await uploadImage(file);
+        // Jenisnya diambil dari respons server (hasil deteksi magic bytes),
+        // bukan dari `file.type` yang gampang salah/dipalsukan.
+        setReviewMedia((prev) => [...prev, { url: res.data.data.url, kind: res.data.data.kind }]);
+      }
+    } catch (err: any) {
+      setError(err?.message ?? 'Gagal unggah lampiran, coba lagi ya');
+    } finally {
+      setUploadingMedia(false);
     }
   };
 
@@ -242,7 +298,7 @@ const OrdersPage: React.FC = () => {
         <main className="flex-1 max-w-6xl mx-auto w-full px-5 sm:px-10 py-16 flex items-center justify-center">
           <div className="text-center">
             <Icon name="lock" size={44} className="text-[#c3c6d7] mx-auto mb-4" />
-            <p className="text-[#737686] mb-4">Login untuk melihat pesanan Anda.</p>
+            <p className="text-[#737686] mb-4">Login dulu ya buat lihat pesanan kamu.</p>
             <button
               onClick={() => navigate('/login')}
               className="px-6 py-2.5 rounded-full bg-[#004ac6] hover:bg-[#003ea8] text-white text-[14px] font-semibold transition-colors"
@@ -295,7 +351,7 @@ const OrdersPage: React.FC = () => {
         ) : orders.length === 0 ? (
           <div className="text-center py-20">
             <Icon name="orders" size={44} className="text-[#c3c6d7] mx-auto mb-4" />
-            <p className="text-[#737686]">Belum ada pesanan.</p>
+            <p className="text-[#737686]">Belum ada pesanan nih.</p>
             <button
               onClick={() => navigate('/categories')}
               className="mt-4 px-6 py-2.5 rounded-full bg-[#004ac6] hover:bg-[#003ea8] text-white text-[14px] font-semibold transition-colors"
@@ -387,7 +443,7 @@ const OrdersPage: React.FC = () => {
                   <div className="text-right shrink-0">
                     <p className="text-[14px] font-bold text-[#191c1e]">{formatRupiah(order.total)}</p>
                     {order.status === 'WAITING_PAYMENT' && (
-                      <p className="text-[11px] text-[#7c3e00] font-medium">Menunggu pembayaran</p>
+                      <p className="text-[11px] text-[#7c3e00] font-medium">Nunggu dibayar</p>
                     )}
                   </div>
                 </div>
@@ -435,6 +491,9 @@ const OrdersPage: React.FC = () => {
                   <div key={item.id} className="flex items-center justify-between gap-3">
                     <div>
                       <p className="text-[13px] font-semibold text-[#191c1e]">{item.productName}</p>
+                      {item.variant && (
+                        <p className="text-[11px] text-[#737686]">Model: {item.variant}</p>
+                      )}
                       <p className="text-[12px] text-[#737686]">{item.quantity} x {formatRupiah(item.price)}</p>
                     </div>
                     <div className="text-right">
@@ -511,7 +570,7 @@ const OrdersPage: React.FC = () => {
                       className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-full border border-[#004ac6] text-[#004ac6] text-[13px] font-semibold hover:bg-[#dbe1ff]/40 transition-colors disabled:opacity-50"
                     >
                       {checkingPayment ? <Icon name="clock" size={16} className="animate-spin" /> : <Icon name="clock" size={16} />}
-                      {checkingPayment ? 'Mengecek...' : 'Periksa Status'}
+                      {checkingPayment ? 'Ngecek...' : 'Cek Status'}
                     </button>
                     <button
                       onClick={handleCancel}
@@ -554,7 +613,7 @@ const OrdersPage: React.FC = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
           <div className="bg-white rounded-2xl shadow-xl max-w-md w-full">
             <div className="flex items-center justify-between p-4 border-b border-[#e0e3e5]">
-              <h3 className="text-[15px] font-bold text-[#191c1e]">Beri Ulasan</h3>
+              <h3 className="text-[15px] font-bold text-[#191c1e]">Kasih Ulasan</h3>
               <button onClick={() => setReviewFor(null)} className="text-[#737686] hover:text-[#191c1e] transition-colors">
                 <Icon name="close" size={18} />
               </button>
@@ -570,13 +629,65 @@ const OrdersPage: React.FC = () => {
               <textarea
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
-                placeholder="Tulis ulasan Anda (opsional)"
+                placeholder="Tulis ulasanmu (opsional)"
                 rows={4}
                 className="w-full px-3 py-2 rounded-lg border border-[#c3c6d7] outline-none focus:border-[#004ac6] focus:ring-2 focus:ring-[#004ac6]/20 text-sm resize-none transition"
               />
+
+              {/* Foto/video — pembeli lain lebih percaya ulasan yang ada buktinya */}
+              <div className="mt-3">
+                {reviewMedia.length > 0 && (
+                  <div className="mb-2 flex flex-wrap gap-2">
+                    {reviewMedia.map((file, index) => (
+                      <div
+                        key={file.url}
+                        className="relative h-16 w-16 overflow-hidden rounded-lg border border-[#e0e3e5]"
+                      >
+                        {file.kind === 'VIDEO' ? (
+                          <span className="flex h-full w-full items-center justify-center bg-[#191c1e] text-white">
+                            <Icon name="eye" size={16} />
+                          </span>
+                        ) : (
+                          <img src={file.url} alt="" className="h-full w-full object-cover" />
+                        )}
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setReviewMedia((prev) => prev.filter((_, i) => i !== index))
+                          }
+                          aria-label="Hapus lampiran"
+                          className="absolute right-0.5 top-0.5 flex h-5 w-5 items-center justify-center rounded-full bg-black/60 text-white"
+                        >
+                          <Icon name="close" size={12} />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                <input
+                  type="file"
+                  id="review-media"
+                  multiple
+                  accept={[...ACCEPTED_IMAGE_TYPES, ...ACCEPTED_VIDEO_TYPES].join(',')}
+                  onChange={handlePickReviewMedia}
+                  className="hidden"
+                  disabled={uploadingMedia}
+                />
+                <label
+                  htmlFor="review-media"
+                  className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-[#c3c6d7] px-4 py-2 text-[12px] font-semibold text-[#434655] transition-colors hover:border-[#004ac6] hover:text-[#004ac6]"
+                >
+                  <Icon name="upload" size={14} />
+                  {uploadingMedia ? 'Ngunggah…' : 'Tambah foto/video'}
+                </label>
+                <p className="mt-1 text-[11px] text-[#737686]">
+                  Maksimal 5 lampiran. Foto sampai 3 MB, video sampai 20 MB.
+                </p>
+              </div>
               <button
                 onClick={() => reviewFor.items.find((i) => !i.review)?.id && submitReview(reviewFor.items.find((i) => !i.review)!.id)}
-                disabled={busy}
+                disabled={busy || uploadingMedia}
                 className="mt-4 w-full flex items-center justify-center gap-2 px-6 py-2.5 rounded-full bg-[#004ac6] hover:bg-[#003ea8] text-white text-[14px] font-semibold transition-colors disabled:opacity-50"
               >
                 {busy && <Icon name="clock" size={16} className="animate-spin" />}

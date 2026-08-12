@@ -19,9 +19,9 @@ const LoginForm: React.FC<LoginFormProps> = ({
 
   const validate = () => {
     const newErrors: typeof errors = {};
-    if (!email) newErrors.email = 'Email is required';
-    else if (!/\S+@\S+\.\S+/.test(email)) newErrors.email = 'Email is invalid';
-    if (!password) newErrors.password = 'Password is required';
+    if (!email) newErrors.email = 'Email-nya diisi dulu ya';
+    else if (!/\S+@\S+\.\S+/.test(email)) newErrors.email = 'Format email-nya kayaknya salah';
+    if (!password) newErrors.password = 'Password-nya jangan kosong ya';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -55,7 +55,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
       />
       {error && <div className="text-red-600 text-xs">{error}</div>}
       <Button type="submit" fullWidth variant="primary" disabled={isLoading} className="text-sm py-2.5">
-        {isLoading ? 'Signing in...' : 'Sign In'}
+        {isLoading ? 'Bentar ya...' : 'Masuk'}
       </Button>
     </form>
   );

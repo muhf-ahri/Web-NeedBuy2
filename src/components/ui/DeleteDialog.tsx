@@ -1,7 +1,6 @@
 // src/components/ui/DeleteDialog.tsx
 import React, { useState } from 'react';
 import Button from './Button';
-import Icon from './Icon';
 import { deleteInvent, type InventProduct } from '../../api/invent';
 
 interface DeleteDialogProps {
@@ -25,7 +24,7 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({
       await deleteInvent(product.id);
       onDeleted();
     } catch (err: any) {
-      setError(err?.message ?? 'Gagal menghapus produk');
+      setError(err?.message ?? 'Gagal hapus produk, coba lagi ya');
     } finally {
       setBusy(false);
     }
@@ -35,7 +34,7 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
       <div className="bg-white rounded-2xl w-full max-w-md">
         <div className="px-5 py-4 border-b border-[#e0e3e5]">
-          <h2 className="text-[16px] font-bold text-[#191c1e]">Hapus produk?</h2>
+          <h2 className="text-[16px] font-bold text-[#191c1e]">Yakin hapus produk ini?</h2>
         </div>
 
         <div className="p-5 space-y-3">
@@ -56,7 +55,7 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({
               disabled={busy}
               className="flex-1 px-4 py-2 rounded-full bg-[#ba1a1a] text-white text-sm font-medium hover:bg-[#9a1515] disabled:opacity-50 transition"
             >
-              {busy ? 'Menghapus…' : 'Ya, hapus'}
+              {busy ? 'Menghapus…' : 'Ya, hapus aja'}
             </button>
             <Button type="button" variant="outline" onClick={onClose} disabled={busy}>
               Batal

@@ -65,7 +65,7 @@ const ProductCard: React.FC<{ product: Product; onNavigate: (slug: string) => vo
           onClick={handleToggleWishlist}
           disabled={wishlistBusy}
           className="absolute top-3 right-3 w-7 h-7 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-sm hover:bg-white transition-colors"
-          aria-label="Toggle wishlist"
+          aria-label="Simpan ke wishlist"
         >
           <Icon name="heart" size={14} className={`transition-colors ${wishlisted ? 'text-[#004ac6]' : 'text-[#737686]'}`} />
         </button>
@@ -194,7 +194,7 @@ const CategoryDetailPage: React.FC = () => {
           {/* ── Filter Sidebar ── */}
           <aside className="hidden lg:block w-56 shrink-0 sticky top-24">
             <div className="flex items-center justify-between mb-2">
-              <h2 className="text-[15px] font-bold text-[#191c1e]">Filters</h2>
+              <h2 className="text-[15px] font-bold text-[#191c1e]">Filter</h2>
               {(priceMin || priceMax || activeConditions.length > 0) && (
                 <button onClick={clearAll} className="text-[12px] text-[#004ac6] hover:underline">
                   Clear All
@@ -203,7 +203,7 @@ const CategoryDetailPage: React.FC = () => {
             </div>
 
             {/* Category radio — navigates to the selected category */}
-            <FilterSection title="Category">
+            <FilterSection title="Kategori">
               <div className="space-y-2">
                 {rootCategories.length === 0
                   ? Array.from({ length: 5 }).map((_, i) => (
@@ -299,7 +299,7 @@ const CategoryDetailPage: React.FC = () => {
                 {catLoading ? (
                   <div className="h-6 w-40 bg-[#e0e3e5] rounded-full animate-pulse mt-1" />
                 ) : notFound ? (
-                  <h1 className="text-[22px] font-bold text-[#ba1a1a]">Kategori tidak ditemukan</h1>
+                  <h1 className="text-[22px] font-bold text-[#ba1a1a]">Kategorinya nggak ketemu</h1>
                 ) : (
                   <>
                     <h1 className="text-[22px] font-bold text-[#191c1e]">
@@ -351,7 +351,7 @@ const CategoryDetailPage: React.FC = () => {
                 {productsError ? (
                   <p>Gagal memuat produk: {productsError}</p>
                 ) : (
-                  <p>Tidak ada produk yang cocok dengan filter ini.</p>
+                  <p>Nggak ada produk yang cocok sama filter ini.</p>
                 )}
               </div>
             ) : (

@@ -9,6 +9,8 @@ import { ACCEPTED_IMAGE_TYPES, MAX_IMAGE_BYTES, uploadImage } from '../../api/up
 interface FormState {
   storeName: string;
   description: string;
+  address: string;
+  phone: string;
   logoUrl: string;
   businessEmail: string;
   vacationMode: boolean;
@@ -17,6 +19,8 @@ interface FormState {
 const toForm = (seller: OwnSeller): FormState => ({
   storeName: seller.storeName,
   description: seller.description ?? '',
+  address: seller.address ?? '',
+  phone: seller.phone ?? '',
   logoUrl: seller.logoUrl ?? '',
   businessEmail: seller.businessEmail ?? '',
   vacationMode: seller.vacationMode,
@@ -44,7 +48,7 @@ const SettingsPage: React.FC = () => {
         setProductCount(res.data.data._count?.products ?? 0);
       })
       .catch((err: any) => {
-        if (!cancelled) setError(err?.message ?? 'Gagal memuat setelan toko');
+        if (!cancelled) setError(err?.message ?? 'Gagal muat setelan toko, coba lagi ya');
       })
       .finally(() => {
         if (!cancelled) setLoading(false);
@@ -71,11 +75,11 @@ const SettingsPage: React.FC = () => {
     if (!file) return;
 
     if (!ACCEPTED_IMAGE_TYPES.includes(file.type)) {
-      setError('Format harus PNG, JPG, WebP, atau GIF. SVG tidak didukung.');
+      setError('Formatnya harus PNG, JPG, WebP, atau GIF ya. SVG belum didukung.');
       return;
     }
     if (file.size > MAX_IMAGE_BYTES) {
-      setError(`Ukuran berkas ${(file.size / 1024 / 1024).toFixed(1)} MB, maksimal 3 MB.`);
+      setError(`Ukuran berkasnya ${(file.size / 1024 / 1024).toFixed(1)} MB, maksimalnya 3 MB.`);
       return;
     }
 
@@ -86,7 +90,7 @@ const SettingsPage: React.FC = () => {
       const res = await uploadImage(file);
       set('logoUrl', res.data.data.url);
     } catch (err: any) {
-      setError(err?.message ?? 'Gagal mengunggah logo');
+      setError(err?.message ?? 'Gagal unggah logo, coba lagi ya');
     } finally {
       setUploading(false);
     }
@@ -97,7 +101,7 @@ const SettingsPage: React.FC = () => {
     if (!form || saving) return;
 
     if (form.storeName.trim().length < 3) {
-      setError('Nama toko minimal 3 karakter.');
+      setError('Nama tokonya minimal 3 karakter ya.');
       return;
     }
 
@@ -110,6 +114,8 @@ const SettingsPage: React.FC = () => {
       const res = await updateSellerStore({
         storeName: form.storeName.trim(),
         description: form.description.trim(),
+        address: form.address.trim(),
+        phone: form.phone.trim(),
         logoUrl: form.logoUrl.trim(),
         businessEmail: form.businessEmail.trim(),
         vacationMode: form.vacationMode,
@@ -117,7 +123,7 @@ const SettingsPage: React.FC = () => {
       setForm(toForm(res.data.data));
       setSaved(true);
     } catch (err: any) {
-      setError(err?.message ?? 'Gagal menyimpan setelan');
+      setError(err?.message ?? 'Gagal simpan setelan, coba lagi ya');
     } finally {
       setSaving(false);
     }
@@ -126,7 +132,7 @@ const SettingsPage: React.FC = () => {
   return (
     <SellerLayout>
       <div className="space-y-6">
-        <h1 className="text-[28px] font-bold text-[#191c1e]">Seller Settings</h1>
+        <h1 className="text-[28px] font-bold text-[#191c1e]">Setelan Toko</h1>
 
         <div className="bg-white rounded-2xl border border-[#e0e3e5] p-6 max-w-2xl">
           {loading ? (
@@ -136,7 +142,7 @@ const SettingsPage: React.FC = () => {
               <div className="h-10 bg-[#f2f4f6] rounded animate-pulse" />
             </div>
           ) : !form ? (
-            <p className="text-[13px] text-[#ba1a1a]">{error ?? 'Setelan toko tidak tersedia.'}</p>
+            <p className="text-[13px] text-[#ba1a1a]">{error ?? 'Setelan toko belum bisa dibuka.'}</p>
           ) : (
             <form className="space-y-5" onSubmit={handleSubmit}>
               {error && (
@@ -146,7 +152,7 @@ const SettingsPage: React.FC = () => {
               )}
               {saved && (
                 <div className="p-2.5 bg-[#d7f5dc] border border-[#b3e6c0] text-[#156b32] text-xs rounded-lg">
-                  Setelan toko tersimpan.
+                  Setelan toko udah tersimpan.
                 </div>
               )}
 
@@ -179,7 +185,36 @@ const SettingsPage: React.FC = () => {
                 />
               </div>
 
-              {/* Logo — URL, karena proyek ini tidak punya jalur upload berkas */}
+              {/* Alamat & telepon toko — diisi saat pendaftaran di halaman profil,
+                  bisa diperbarui di sini */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-[13px] font-medium text-[#737686] mb-1">
+                    Alamat Perusahaan
+                  </label>
+                  <textarea
+                    rows={2}
+                    value={form.address}
+                    onChange={(e) => set('address', e.target.value)}
+                    maxLength={500}
+                    className={`${FIELD_CLASS} resize-none`}
+                  />
+                </div>
+                <div>
+                  <label className="block text-[13px] font-medium text-[#737686] mb-1">
+                    No. Telepon Toko
+                  </label>
+                  <input
+                    type="tel"
+                    value={form.phone}
+                    onChange={(e) => set('phone', e.target.value)}
+                    maxLength={20}
+                    className={FIELD_CLASS}
+                  />
+                </div>
+              </div>
+
+              {/* Logo — URL hasil unggah lewat POST /uploads/image */}
               <div>
                 <label className="block text-[13px] font-medium text-[#737686] mb-1">
                   Logo Toko
@@ -187,7 +222,7 @@ const SettingsPage: React.FC = () => {
                 <div className="flex items-center gap-4">
                   <div className="w-20 h-20 shrink-0 bg-[#f2f4f6] rounded-xl overflow-hidden flex items-center justify-center text-[#737686] border border-dashed border-[#c3c6d7]">
                     {uploading ? (
-                      <span className="text-[10px] text-[#737686]">Mengunggah…</span>
+                      <span className="text-[10px] text-[#737686]">Ngunggah…</span>
                     ) : form.logoUrl ? (
                       <img src={form.logoUrl} alt="Logo toko" className="w-full h-full object-cover" />
                     ) : (
@@ -211,7 +246,7 @@ const SettingsPage: React.FC = () => {
                         onClick={() => fileInputRef.current?.click()}
                         className="text-sm"
                       >
-                        {uploading ? 'Mengunggah…' : 'Choose File'}
+                        {uploading ? 'Ngunggah…' : 'Pilih Berkas'}
                       </Button>
                       {form.logoUrl && !uploading && (
                         <button
@@ -224,8 +259,8 @@ const SettingsPage: React.FC = () => {
                       )}
                     </div>
                     <p className="text-[11px] text-[#737686] mt-1.5">
-                      PNG, JPG, WebP, atau GIF — maksimal 3 MB. Logo tersimpan setelah kamu
-                      menekan Update Settings.
+                      PNG, JPG, WebP, atau GIF — maksimal 3 MB. Logonya kesimpen setelah kamu
+                      pencet Simpan Setelan.
                     </p>
                   </div>
                 </div>
@@ -244,7 +279,7 @@ const SettingsPage: React.FC = () => {
                   className={FIELD_CLASS}
                 />
                 <p className="text-[11px] text-[#737686] mt-1">
-                  Hanya alamat kontak toko. Email untuk login akun tidak ikut berubah.
+                  Ini cuma kontak toko. Email buat login akunmu nggak ikut berubah.
                 </p>
               </div>
 
@@ -258,7 +293,7 @@ const SettingsPage: React.FC = () => {
                     className="w-4 h-4 mt-0.5 accent-[#004ac6]"
                   />
                   <span>
-                    <span className="text-[13px] font-medium text-[#191c1e]">Vacation Mode</span>
+                    <span className="text-[13px] font-medium text-[#191c1e]">Mode Libur</span>
                     <span className="block text-[11px] text-[#737686] mt-0.5">
                       Saat aktif, {productCount} produk kamu tetap bisa dilihat tapi pembeli
                       tidak bisa menambahkannya ke keranjang atau checkout. Order yang sudah
@@ -274,7 +309,7 @@ const SettingsPage: React.FC = () => {
                 disabled={saving}
                 className="w-full sm:w-auto px-8 py-2.5 text-sm"
               >
-                {saving ? 'Menyimpan…' : 'Update Settings'}
+                {saving ? 'Nyimpen…' : 'Simpan Setelan'}
               </Button>
             </form>
           )}

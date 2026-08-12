@@ -6,6 +6,8 @@ export interface OrderItem {
   id: string;
   productId: string;
   productName: string;
+  /** Varian yang dibeli, snapshot saat order dibuat. */
+  variant: string | null;
   quantity: number;
   price: string;
   subtotal: string;
@@ -137,7 +139,16 @@ export const cancelOrder = (id: string, idempotencyKey: string) =>
   });
 
 /** POST /orders/:orderId/items/:itemId/review - Create a review */
-export const createReview = (orderId: string, itemId: string, data: { rating: number; comment?: string }) =>
+export const createReview = (
+  orderId: string,
+  itemId: string,
+  data: {
+    rating: number;
+    comment?: string;
+    /** Foto/video ulasan: URL hasil `uploadImage()`, maksimal 5. */
+    media?: Array<{ url: string; kind: 'IMAGE' | 'VIDEO' }>;
+  }
+) =>
   apiClient.post<ApiResponse<Review>>(`/orders/${orderId}/items/${itemId}/review`, data);
 
 // ─── Addresses ─────────────────────────────────────────────────────────────────

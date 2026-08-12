@@ -30,7 +30,7 @@ const WishlistPage: React.FC = () => {
     try {
       await toggle(productId);
     } catch (err: any) {
-      setError(err.message ?? 'Gagal menghapus dari wishlist');
+      setError(err.message ?? 'Gagal hapus dari wishlist, coba lagi ya');
     } finally {
       setBusyId(null);
     }
@@ -43,7 +43,7 @@ const WishlistPage: React.FC = () => {
       await addToCart(productId, 1);
       await refreshCartCount();
     } catch (err: any) {
-      setError(err.message ?? 'Gagal menambahkan ke keranjang');
+      setError(err.message ?? 'Gagal masukin ke keranjang, coba lagi ya');
     } finally {
       setBusyId(null);
     }
@@ -56,7 +56,7 @@ const WishlistPage: React.FC = () => {
         <main className="flex-1 max-w-6xl mx-auto w-full px-5 sm:px-10 py-16 flex items-center justify-center">
           <div className="text-center">
             <Icon name="lock" size={48} className="text-[#c3c6d7] mx-auto mb-4" />
-            <p className="text-[#737686] mb-4">Login untuk melihat wishlist Anda.</p>
+            <p className="text-[#737686] mb-4">Login dulu ya buat lihat wishlist kamu.</p>
             <button
               onClick={() => navigate('/login')}
               className="px-6 py-2.5 rounded-full bg-[#004ac6] hover:bg-[#003ea8] text-white text-[14px] font-semibold transition-colors"
@@ -92,7 +92,7 @@ const WishlistPage: React.FC = () => {
         ) : items.length === 0 ? (
           <div className="text-center py-20">
             <Icon name="heart" size={48} className="text-[#c3c6d7] mx-auto mb-4" />
-            <p className="text-[#737686]">Wishlist Anda kosong.</p>
+            <p className="text-[#737686]">Wishlist kamu masih kosong nih.</p>
             <button
               onClick={() => navigate('/categories')}
               className="mt-4 px-6 py-2.5 rounded-full bg-[#004ac6] hover:bg-[#003ea8] text-white text-[14px] font-semibold transition-colors"

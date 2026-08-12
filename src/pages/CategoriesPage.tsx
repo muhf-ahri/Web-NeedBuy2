@@ -13,7 +13,7 @@ import { useWishlist } from '../hooks/useWishlist';
 import type { GetProductsParams } from '../api/products';
 import type { Category, Product } from '../types';
 
-const SORT_OPTIONS = ['Relevance', 'Harga: Rendah ke Tinggi', 'Harga: Tinggi ke Rendah', 'Terbaru'];
+const SORT_OPTIONS = ['Paling Cocok', 'Harga: Rendah ke Tinggi', 'Harga: Tinggi ke Rendah', 'Terbaru'];
 const CONDITIONS = ['Baru', 'Seperti Baru', 'Refurbished'];
 
 // Batas maksimal backend adalah 100 per halaman; halaman ini memuat semuanya
@@ -81,7 +81,7 @@ const ProductCard: React.FC<{ product: Product; onNavigate: (slug: string) => vo
           onClick={handleToggleWishlist}
           disabled={wishlistBusy}
           className="absolute top-3 right-3 w-7 h-7 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-sm hover:bg-white transition-colors"
-          aria-label="Toggle wishlist"
+          aria-label="Simpan ke wishlist"
         >
           <Icon name="heart" size={14} className={`transition-colors ${wishlisted ? 'text-[#004ac6]' : 'text-[#737686]'}`} />
         </button>
@@ -231,7 +231,7 @@ const CategoriesPage: React.FC = () => {
   const sidebar = (
     <div>
       <div className="flex items-center justify-between mb-2">
-        <h2 className="text-[15px] font-bold text-[#191c1e]">Filters</h2>
+        <h2 className="text-[15px] font-bold text-[#191c1e]">Filter</h2>
         {(selectedCategories.length > 0 || priceMin || priceMax || activeConditions.length > 0) && (
           <button onClick={clearAll} className="text-[12px] text-[#004ac6] hover:underline">
             Clear All
@@ -239,7 +239,7 @@ const CategoriesPage: React.FC = () => {
         )}
       </div>
 
-      <FilterSection title="Category">
+      <FilterSection title="Kategori">
         {catLoading ? (
           <div className="space-y-2">
             {Array.from({ length: 4 }).map((_, i) => (
@@ -377,7 +377,7 @@ const CategoriesPage: React.FC = () => {
                       className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#dbe1ff] text-[#004ac6] text-[12px] font-medium"
                     >
                       {cat?.name ?? slug}
-                      <button onClick={() => toggleCategory(slug)} aria-label="Remove filter">
+                      <button onClick={() => toggleCategory(slug)} aria-label="Hapus filter">
                         <Icon name="close" size={12} className="" />
                       </button>
                     </span>
@@ -409,7 +409,7 @@ const CategoriesPage: React.FC = () => {
                 {productsError ? (
                   <p>Gagal memuat produk: {productsError}</p>
                 ) : (
-                  <p>Tidak ada produk yang cocok dengan filter ini.</p>
+                  <p>Nggak ada produk yang cocok sama filter ini.</p>
                 )}
               </div>
             ) : (
@@ -434,7 +434,7 @@ const CategoriesPage: React.FC = () => {
                   disabled={loadingMore}
                   className="px-6 py-2.5 rounded-full border border-[#c3c6d7] text-[13px] text-[#191c1e] hover:border-[#004ac6] hover:text-[#004ac6] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {loadingMore ? 'Memuat...' : 'Muat Lebih Banyak'}
+                  {loadingMore ? 'Sabar ya...' : 'Muat Lagi'}
                 </button>
               </div>
             )}
@@ -451,7 +451,7 @@ const CategoriesPage: React.FC = () => {
           />
           <div className="absolute right-0 top-0 bottom-0 w-72 bg-white shadow-xl p-5 overflow-y-auto">
             <div className="flex items-center justify-between mb-4">
-              <span className="font-bold text-[#191c1e]">Filters</span>
+              <span className="font-bold text-[#191c1e]">Filter</span>
               <button
                 onClick={() => setMobileFilterOpen(false)}
                 className="p-1.5 rounded-full hover:bg-[#f2f4f6] transition-colors"

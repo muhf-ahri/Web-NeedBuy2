@@ -167,7 +167,7 @@ const DashboardPage: React.FC = () => {
         {/* Welcome + filter periode */}
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
-            <h1 className="text-[28px] font-bold text-[#191c1e]">Seller Overview</h1>
+            <h1 className="text-[28px] font-bold text-[#191c1e]">Ringkasan Toko</h1>
             <p className="text-[15px] text-[#737686]">Welcome back, {user?.name ?? 'Seller'}</p>
           </div>
 
@@ -227,7 +227,7 @@ const DashboardPage: React.FC = () => {
         {/* Sales performance — KPI grafik garis */}
         <div className="bg-white rounded-2xl border border-[#e0e3e5] p-5">
           <div className="flex items-baseline justify-between mb-4">
-            <h3 className="text-[15px] font-bold text-[#191c1e]">Sales Performance</h3>
+            <h3 className="text-[15px] font-bold text-[#191c1e]">Performa Penjualan</h3>
             {performance.data && (
               <span className="text-[12px] text-[#737686]">
                 {performance.data.totals.items} barang ·{' '}
@@ -252,7 +252,7 @@ const DashboardPage: React.FC = () => {
           {/* Inventory Alerts */}
           <div className="bg-white rounded-2xl border border-[#e0e3e5] p-5">
             <div className="flex items-baseline justify-between mb-4">
-              <h3 className="text-[15px] font-bold text-[#191c1e]">Inventory Alerts</h3>
+              <h3 className="text-[15px] font-bold text-[#191c1e]">Stok yang Perlu Dicek</h3>
               {inventory.data && (
                 <span className="text-[11px] text-[#737686]">
                   {inventory.data.outOfStockCount} habis · {inventory.data.lowStockCount} menipis
@@ -273,21 +273,21 @@ const DashboardPage: React.FC = () => {
                   >
                     <Icon name="alert" size={16} className="text-[#ba1a1a] shrink-0" />
                     <span>
-                      {alert.level === 'OUT_OF_STOCK' ? 'Stok habis' : 'Stok menipis'}:{' '}
+                      {alert.level === 'OUT_OF_STOCK' ? 'Stok habis' : 'Stok tinggal dikit'}:{' '}
                       {alert.productName} ({alert.stock} tersisa)
                     </span>
                   </li>
                 ))}
               </ul>
             ) : (
-              <p className="text-[13px] text-[#737686]">Semua stok aman.</p>
+              <p className="text-[13px] text-[#737686]">Semua stok masih aman, santai.</p>
             )}
           </div>
 
           {/* Active Orders */}
           <div className="bg-white rounded-2xl border border-[#e0e3e5] p-5">
             <div className="flex items-baseline justify-between mb-4">
-              <h3 className="text-[15px] font-bold text-[#191c1e]">Active Orders</h3>
+              <h3 className="text-[15px] font-bold text-[#191c1e]">Order yang Jalan</h3>
               {activeOrders.data && (
                 <span className="text-[11px] text-[#737686]">{activeOrders.data.value} aktif</span>
               )}
@@ -320,7 +320,7 @@ const DashboardPage: React.FC = () => {
                 ))}
               </div>
             ) : (
-              <p className="text-[13px] text-[#737686]">Belum ada order aktif.</p>
+              <p className="text-[13px] text-[#737686]">Belum ada order yang jalan nih.</p>
             )}
 
             <Link

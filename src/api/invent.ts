@@ -18,8 +18,14 @@ export interface InventProduct {
   soldCount: number;
   createdAt: string;
   updatedAt: string;
+  discountPercent: number;
+  /** Grosir: keduanya null = tidak ada penawaran. */
+  bulkMinQty: number | null;
+  bulkDiscountPercent: number | null;
   category: { id: string; name: string; slug: string } | null;
-  images: { url: string }[];
+  /** Galeri lengkap — form edit butuh semuanya, bukan cuma thumbnail. */
+  images: { id?: string; url: string; isPrimary?: boolean; sortOrder?: number }[];
+  attributes?: { id: string; attrKey: string; attrValue: string }[];
 }
 
 export interface InventStats {
@@ -44,6 +50,19 @@ export interface CreateInventPayload {
   price: number;
   stock: number;
   isActive?: boolean;
+  discountPercent?: number;
+  /** Grosir: keduanya diisi, atau keduanya null. Server menolak yang setengah. */
+  bulkMinQty?: number | null;
+  bulkDiscountPercent?: number | null;
+  /**
+   * URL hasil `uploadImage()`, BUKAN berkas. Gambar tersimpan bareng produknya
+   * dalam satu transaction — form ini dulu mengirim multipart ke
+   * `/invent/:id/images` yang handler-nya tidak pernah ada di server, dan itu
+   * sebabnya produk penjual tampil tanpa gambar di halaman pembeli.
+   */
+  images?: { url: string; isPrimary?: boolean; sortOrder?: number }[];
+  /** Spesifikasi. Beberapa baris dengan attrKey sama = pilihan model/varian. */
+  attributes?: { attrKey: string; attrValue: string }[];
 }
 
 export type UpdateInventPayload = Partial<CreateInventPayload>;
@@ -54,6 +73,9 @@ export interface ListInventParams {
   status?: 'ACTIVE' | 'INACTIVE' | 'ALL';
   page?: number;
   limit?: number;
+  /** Diurut di server: tabelnya terpaginasi, jadi mengurut per halaman salah. */
+  sortBy?: 'name' | 'price' | 'stock' | 'createdAt';
+  order?: 'asc' | 'desc';
 }
 
 /** GET /invent — daftar produk toko sendiri (terpaginasi, cek kepemilikan di server) */
@@ -86,7 +108,7 @@ export const updateInvent = (id: string, payload: UpdateInventPayload) =>
 export const deleteInvent = (id: string) =>
   apiClient.delete<ApiResponse<{ deleted: boolean; id: string }>>(`/invent/${id}`);
 
-export type ProductStatus = 'Active' | 'Out of Stock' | 'Draft';
+export type ProductStatus = 'Tayang' | 'Stok Habis' | 'Draf';
 
 /**
  * Status yang ditampilkan di tabel diturunkan dari `isActive` + `stock`, sama
@@ -94,19 +116,6 @@ export type ProductStatus = 'Active' | 'Out of Stock' | 'Draft';
  * satu tempat supaya label baris dan angka kartu tidak bisa saling berbeda.
  */
 export function productStatus(product: InventProduct): ProductStatus {
-  if (!product.isActive) return 'Draft';
-  return product.stock === 0 ? 'Out of Stock' : 'Active';
+  if (!product.isActive) return 'Draf';
+  return product.stock === 0 ? 'Stok Habis' : 'Tayang';
 }
-
-/**
- * POST /invent/:id/images — upload satu atau lebih gambar untuk produk.
- * FormData harus berisi field 'images' (array file).
- */
-export const uploadInventImages = (id: string, formData: FormData) =>
-  apiClient.post<ApiResponse<{ images: { url: string }[] }>>(
-    `/invent/${id}/images`,
-    formData,
-    {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    }
-  );

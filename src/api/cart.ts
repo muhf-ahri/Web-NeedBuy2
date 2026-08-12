@@ -5,7 +5,11 @@ import type { ApiResponse } from '../types';
 export interface CartItem {
   id: string;
   quantity: number;
+  /** Model/varian pilihan pembeli, null untuk produk tanpa pilihan. */
+  variant: string | null;
   priceAtAdd: string;
+  /** Potongan grosir yang BERLAKU untuk jumlah ini (0 = belum memenuhi). */
+  bulkDiscountPercent: number;
   subtotal: string;
   isReplaced: boolean;
   product: {
@@ -14,6 +18,8 @@ export interface CartItem {
     slug: string;
     stock: number;
     images: Array<{ url: string; isPrimary: boolean }>;
+    bulkMinQty?: number | null;
+    bulkDiscountPercent?: number | null;
     seller: {
       id: string;
       storeName: string;
@@ -66,8 +72,14 @@ export const setCartBudget = (budget: number | null) =>
 // ─── Cart Items ────────────────────────────────────────────────────────────────
 
 /** POST /cart/items - Add item to cart */
-export const addToCart = (productId: string, quantity: number = 1) =>
-  apiClient.post<ApiResponse<Cart>>('/cart/items', { productId, quantity });
+export const addToCart = (productId: string, quantity: number = 1, variant?: string | null) =>
+  apiClient.post<ApiResponse<Cart>>('/cart/items', {
+    productId,
+    quantity,
+    // Hanya dikirim kalau produknya memang punya pilihan model — server
+    // menolak key asing, tapi menerima key yang tidak ada.
+    ...(variant ? { variant } : {}),
+  });
 
 /** PATCH /cart/items/:id - Update cart item quantity */
 export const updateCartItem = (itemId: string, quantity: number) =>

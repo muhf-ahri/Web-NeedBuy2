@@ -32,7 +32,7 @@ const HeroPanel: React.FC = () => {
           transition={{ delay: 0.3 }}
           className="text-3xl font-bold leading-tight"
         >
-          Precision Engineered Commerce.
+          Belanja Tanpa Buang Duit.
         </motion.h2>
         <motion.p 
           initial={{ opacity: 0, y: 20 }}
@@ -40,8 +40,8 @@ const HeroPanel: React.FC = () => {
           transition={{ delay: 0.4 }}
           className="mt-3 text-sm leading-relaxed text-gray-600"
         >
-          Join thousands of professionals streamlining their procurement
-          process with unparalleled clarity.
+          Ribuan orang udah belanja lebih rapi di sini: beli yang memang
+          dibutuhkan, bukan yang cuma kelihatan menarik.
         </motion.p>
       </div>
     </motion.div>

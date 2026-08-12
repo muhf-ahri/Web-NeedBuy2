@@ -21,7 +21,7 @@ const Register: React.FC = () => {
         navigate('/');
       }
     } catch (err: any) {
-      setError(err.message || 'Registrasi gagal');
+      setError(err.message || 'Gagal daftar. Coba lagi ya.');
     } finally {
       setLoading(false);
     }
@@ -34,9 +34,9 @@ const Register: React.FC = () => {
 
         <div className="w-full md:w-3/5 p-6 sm:p-8">
           <div className="text-center mb-5">
-            <h1 className="text-xl font-bold text-gray-900">Create Account</h1>
+            <h1 className="text-xl font-bold text-gray-900">Bikin Akun</h1>
             <p className="text-gray-500 text-xs mt-1">
-              Enter your details to get started with NeedBuy.
+              Isi datamu dulu, habis itu langsung bisa belanja.
             </p>
           </div>
 
@@ -48,14 +48,14 @@ const Register: React.FC = () => {
 
           <RegisterForm onSubmit={handleRegister} isLoading={loading} error={error || ''} />
 
-          <Divider text="OR CONTINUE WITH" />
+          <Divider text="ATAU LANJUT PAKAI" />
 
           <SocialLogin />
 
           <p className="mt-4 text-center text-xs text-gray-600">
-            Already have an account?{' '}
+            Udah punya akun?{' '}
             <Link to="/login" className="text-blue-600 hover:underline font-medium">
-              Sign In
+              Masuk
             </Link>
           </p>
         </div>

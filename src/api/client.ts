@@ -107,11 +107,11 @@ apiClient.interceptors.response.use(
     // bagi user — jadi diterjemahkan ke keadaan yang sebenarnya.
     const unreachable = !error.response && error.code !== 'ECONNABORTED';
     const message = unreachable
-      ? 'Tidak bisa terhubung ke server. Pastikan server berjalan, lalu coba lagi.'
+      ? 'Nggak bisa nyambung ke server. Pastiin server-nya nyala, terus coba lagi ya.'
       : data?.error?.message ||
         data?.message ||
         error.message ||
-        'Terjadi kesalahan. Silakan coba lagi.';
+        'Waduh, ada yang error. Coba lagi ya.';
     const err = new Error(message);
     if (data?.error?.fields?.length) {
       (err as Error & { fields?: { path: string; message: string }[] }).fields = data.error.fields;

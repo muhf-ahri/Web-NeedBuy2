@@ -25,7 +25,7 @@ const getProductIcon = (productName: string): IconName => {
 const statusMap: Record<ShoppingPlan['status'], { label: string; color: string; bg: string }> = {
   DRAFT: { label: 'Draf', color: 'text-[#b45309]', bg: 'bg-[#fef3c7]' },
   READY: { label: 'Siap', color: 'text-[#15803d]', bg: 'bg-[#dcfce7]' },
-  NEEDS_ADJUSTMENT: { label: 'Perlu Penyesuaian', color: 'text-[#ba1a1a]', bg: 'bg-[#ffdad6]' },
+  NEEDS_ADJUSTMENT: { label: 'Perlu Disesuaiin', color: 'text-[#ba1a1a]', bg: 'bg-[#ffdad6]' },
 };
 
 // ─── Kartu Kemajuan Anggaran ───────────────────────────────────────────────────
@@ -161,7 +161,7 @@ const CreatePlanModal: React.FC<{
         }
       }
     } catch (err: any) {
-      setError(err.message ?? 'Gagal menganalisis kebutuhan');
+      setError(err.message ?? 'Gagal analisis kebutuhan, coba lagi ya');
     } finally {
       setAnalyzing(false);
     }
@@ -170,7 +170,7 @@ const CreatePlanModal: React.FC<{
   const create = async () => {
     const budget = Number(budgetInput);
     if (!rawInput.trim() || !Number.isFinite(budget) || budget <= 0) {
-      setError('Isi deskripsi kebutuhan dan anggaran terlebih dahulu.');
+      setError('Isi dulu deskripsi kebutuhan sama anggarannya ya.');
       return;
     }
     setCreating(true);
@@ -204,7 +204,7 @@ const CreatePlanModal: React.FC<{
       });
       onCreated(planRes.data.data.id);
     } catch (err: any) {
-      setError(err.message ?? 'Gagal membuat rencana belanja');
+      setError(err.message ?? 'Gagal bikin rencana belanja, coba lagi ya');
     } finally {
       setCreating(false);
     }
@@ -219,8 +219,8 @@ const CreatePlanModal: React.FC<{
       <div className="bg-white rounded-2xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between p-4 border-b border-[#e0e3e5]">
           <div>
-            <h3 className="text-[15px] font-bold text-[#191c1e]">Buat Rencana Belanja</h3>
-            <p className="text-[11px] text-[#737686] mt-0.5">Dianalisis otomatis dengan AI sesuai kebutuhanmu.</p>
+            <h3 className="text-[15px] font-bold text-[#191c1e]">Bikin Rencana Belanja</h3>
+            <p className="text-[11px] text-[#737686] mt-0.5">Biar AI yang nyusun sesuai kebutuhanmu.</p>
           </div>
           <button onClick={onClose} className="text-[#737686] hover:text-[#191c1e] transition-colors">
             <Icon name="close" size={20} className="" />
@@ -235,7 +235,7 @@ const CreatePlanModal: React.FC<{
           )}
 
           <div>
-            <label className={labelCls}>Deskripsi kebutuhan</label>
+            <label className={labelCls}>Ceritain kebutuhanmu</label>
             <textarea
               value={rawInput}
               onChange={(e) => setRawInput(e.target.value)}
@@ -258,7 +258,7 @@ const CreatePlanModal: React.FC<{
               />
             </div>
             <div>
-              <label className={labelCls}>Jumlah item maksimal</label>
+              <label className={labelCls}>Maksimal berapa item</label>
               <input
                 type="number"
                 min={1}
@@ -277,7 +277,7 @@ const CreatePlanModal: React.FC<{
               className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-full border border-[#004ac6] text-[#004ac6] text-[13px] font-semibold hover:bg-[#dbe1ff]/40 transition-colors disabled:opacity-50"
             >
               {analyzing ? <Icon name="clock" size={16} className="animate-spin" /> : <Icon name="spark" size={16} className="" />}
-              {analyzing ? 'Menganalisis...' : 'Analisis dengan AI'}
+              {analyzing ? 'Lagi dianalisis...' : 'Analisis pakai AI'}
             </button>
             <button
               onClick={create}
@@ -285,7 +285,7 @@ const CreatePlanModal: React.FC<{
               className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-full bg-[#004ac6] hover:bg-[#003ea8] text-white text-[13px] font-semibold transition-colors disabled:opacity-50"
             >
               {creating ? <Icon name="clock" size={16} className="animate-spin" /> : <Icon name="check" size={16} className="" />}
-              {creating ? 'Membuat...' : 'Buat Rencana'}
+              {creating ? 'Lagi dibikin...' : 'Bikin Rencana'}
             </button>
           </div>
 
@@ -346,7 +346,7 @@ const CreatePlanModal: React.FC<{
                 <div className="mt-3 bg-[#ffdad6] rounded-lg px-3 py-2 flex items-start gap-2">
                   <Icon name="alert" size={16} className="text-[#93000a] mt-0.5 shrink-0" />
                   <p className="text-[12px] text-[#93000a]">
-                    {interpretation.absurdityNotes?.join(' ') ?? 'Kebutuhan tampak tidak masuk akal. Periksa kembali deskripsimu.'}
+                    {interpretation.absurdityNotes?.join(' ') ?? 'Kebutuhannya kayaknya kurang masuk akal. Cek lagi deskripsimu ya.'}
                   </p>
                 </div>
               )}
@@ -408,7 +408,7 @@ const PlanDetail: React.FC<{ planId: string; onBack: () => void }> = ({ planId, 
       await removePlanItem(planId, itemId);
       await refetch();
     } catch (err: any) {
-      setActionError(err.message ?? 'Gagal menghapus item');
+      setActionError(err.message ?? 'Gagal hapus item, coba lagi ya');
     } finally {
       setBusy(false);
     }
@@ -422,21 +422,21 @@ const PlanDetail: React.FC<{ planId: string; onBack: () => void }> = ({ planId, 
       await refreshCartCount();
       navigate('/cart');
     } catch (err: any) {
-      setActionError(err.message ?? 'Gagal menambahkan ke keranjang');
+      setActionError(err.message ?? 'Gagal masukin ke keranjang, coba lagi ya');
     } finally {
       setBusy(false);
     }
   };
 
   const handleDelete = async () => {
-    if (!window.confirm('Hapus rencana belanja ini?')) return;
+    if (!window.confirm('Yakin mau hapus rencana belanja ini?')) return;
     setBusy(true);
     setActionError(null);
     try {
       await deletePlan(planId);
       onBack();
     } catch (err: any) {
-      setActionError(err.message ?? 'Gagal menghapus rencana');
+      setActionError(err.message ?? 'Gagal hapus rencana, coba lagi ya');
     } finally {
       setBusy(false);
     }
@@ -464,7 +464,7 @@ const PlanDetail: React.FC<{ planId: string; onBack: () => void }> = ({ planId, 
         <Navbar />
         <main className="flex-1 max-w-6xl mx-auto w-full px-5 sm:px-10 py-8">
           <div className="text-center py-20 text-[#ba1a1a]">
-            <p>{error ?? 'Rencana tidak ditemukan'}</p>
+            <p>{error ?? 'Rencananya nggak ketemu'}</p>
             <button onClick={onBack} className="mt-4 text-[#004ac6] hover:underline">
               Kembali ke daftar
             </button>
@@ -512,7 +512,7 @@ const PlanDetail: React.FC<{ planId: string; onBack: () => void }> = ({ planId, 
             <div className="bg-white border border-[#e0e3e5] rounded-2xl p-5">
               <div className="flex items-center gap-2 mb-4">
                 <Icon name="trending" size={16} className="text-[#004ac6]" />
-                <h3 className="text-[15px] font-bold text-[#191c1e]">Wawasan Anggaran</h3>
+                <h3 className="text-[15px] font-bold text-[#191c1e]">Ringkasan Anggaran</h3>
               </div>
               <div className="space-y-3">
                 <div className="flex justify-between items-center">
@@ -520,7 +520,7 @@ const PlanDetail: React.FC<{ planId: string; onBack: () => void }> = ({ planId, 
                   <span className="text-[12px] font-semibold text-[#004ac6]">{formatRupiah(budgetNum)}</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-[13px] text-[#737686]">Item Direncanakan</span>
+                  <span className="text-[13px] text-[#737686]">Item yang Direncanain</span>
                   <span className="text-[13px] font-semibold text-[#191c1e]">{plan.items.length} Total</span>
                 </div>
                 <div className="flex justify-between items-center">
@@ -635,7 +635,7 @@ const PlansListView: React.FC<{ onSelect: (planId: string) => void }> = ({ onSel
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-[28px] font-bold text-[#191c1e]">Rencana Belanja</h1>
-            <p className="text-[14px] text-[#737686] mt-1">Kelola rencana belanja dan anggaran Anda.</p>
+            <p className="text-[14px] text-[#737686] mt-1">Atur rencana belanja dan anggaranmu di sini.</p>
           </div>
           <button
             onClick={() => setShowCreate(true)}
@@ -655,7 +655,7 @@ const PlansListView: React.FC<{ onSelect: (planId: string) => void }> = ({ onSel
         {plans.length === 0 && !loading ? (
           <div className="text-center py-20">
             <Icon name="cart" size={48} className="text-[#c3c6d7] mx-auto mb-4" />
-            <p className="text-[#737686] mb-4">Belum ada rencana belanja.</p>
+            <p className="text-[#737686] mb-4">Belum ada rencana belanja nih.</p>
             <button
               onClick={() => setShowCreate(true)}
               className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#004ac6] hover:bg-[#003ea8] text-white text-[14px] font-semibold transition-colors"
@@ -717,14 +717,14 @@ const PlansListView: React.FC<{ onSelect: (planId: string) => void }> = ({ onSel
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
             <div className="bg-white rounded-2xl shadow-xl max-w-md w-full">
               <div className="flex items-center justify-between p-4 border-b border-[#e0e3e5]">
-                <h3 className="text-[15px] font-bold text-[#191c1e]">Login Diperlukan</h3>
+                <h3 className="text-[15px] font-bold text-[#191c1e]">Login Dulu Ya</h3>
                 <button onClick={() => setShowCreate(false)} className="text-[#737686] hover:text-[#191c1e]">
                   <Icon name="close" size={20} className="" />
                 </button>
               </div>
               <div className="p-5 text-center">
                 <Icon name="lock" size={40} className="text-[#c3c6d7] mx-auto mb-3" />
-                <p className="text-[13px] text-[#737686] mb-4">Login untuk membuat rencana belanja.</p>
+                <p className="text-[13px] text-[#737686] mb-4">Login dulu ya buat bikin rencana belanja.</p>
                 <button
                   onClick={() => (window.location.href = '/login')}
                   className="px-6 py-2.5 rounded-full bg-[#004ac6] text-white text-[14px] font-semibold"

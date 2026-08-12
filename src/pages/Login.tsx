@@ -25,7 +25,7 @@ const Login: React.FC = () => {
       // Seller (dan admin) langsung mendarat di dashboard toko.
       navigate(user.role === 'SELLER' || user.role === 'ADMIN' ? '/seller/dashboard' : '/');
     } catch (err: any) {
-      setError(err.message || 'Login gagal');
+      setError(err.message || 'Gagal masuk. Cek email dan password-mu ya.');
     } finally {
       setLoading(false);
     }
@@ -38,9 +38,9 @@ const Login: React.FC = () => {
 
         <div className="w-full md:w-3/5 p-6 sm:p-8">
           <div className="text-center mb-5">
-            <h1 className="text-xl font-bold text-gray-900">Sign In</h1>
+            <h1 className="text-xl font-bold text-gray-900">Masuk Dulu Yuk</h1>
             <p className="text-gray-500 text-xs mt-1">
-              Enter your credentials to access your account
+              Isi email dan password kamu buat masuk
             </p>
           </div>
 
@@ -52,14 +52,14 @@ const Login: React.FC = () => {
 
           <LoginForm onSubmit={handleLogin} isLoading={loading} error={error || ''} />
 
-          <Divider text="OR CONTINUE WITH" />
+          <Divider text="ATAU LANJUT PAKAI" />
 
           <SocialLogin />
 
           <p className="mt-4 text-center text-xs text-gray-600">
-            Don't have an account?{' '}
+            Belum punya akun?{' '}
             <Link to="/register" className="text-blue-600 hover:underline font-medium">
-              Sign Up
+              Daftar
             </Link>
           </p>
         </div>

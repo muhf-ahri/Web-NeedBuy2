@@ -24,7 +24,7 @@ const STATUS_CLASS: Record<OrderStatus, string> = {
 
 const STATUS_FILTERS: { value: OrderStatus | 'ALL'; label: string }[] = [
   { value: 'ALL', label: 'Semua' },
-  { value: 'WAITING_PAYMENT', label: 'Belum Bayar' },
+  { value: 'WAITING_PAYMENT', label: 'Belum Dibayar' },
   { value: 'PROCESSING', label: 'Diproses' },
   { value: 'SHIPPED', label: 'Dikirim' },
   { value: 'DELIVERED', label: 'Sampai' },
@@ -84,7 +84,7 @@ const OrdersPage: React.FC = () => {
       setOrders(result.items);
       setMeta(result.meta);
     } catch (err: any) {
-      setError(err?.message ?? 'Gagal memuat order');
+      setError(err?.message ?? 'Gagal muat order, coba lagi ya');
     } finally {
       setLoading(false);
     }
@@ -103,7 +103,7 @@ const OrdersPage: React.FC = () => {
       await updateOrderStatus(order.id, action.to);
       await load();
     } catch (err: any) {
-      setActionError(err?.message ?? 'Gagal mengubah status order');
+      setActionError(err?.message ?? 'Gagal ubah status order, coba lagi ya');
     } finally {
       setBusyId(null);
     }
@@ -113,7 +113,7 @@ const OrdersPage: React.FC = () => {
     <SellerLayout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-[28px] font-bold text-[#191c1e]">Shop Orders</h1>
+          <h1 className="text-[28px] font-bold text-[#191c1e]">Order Toko</h1>
           <p className="text-[15px] text-[#737686]">
             {meta ? `${meta.total} order masuk ke toko kamu` : 'Order yang masuk ke toko kamu'}
           </p>
@@ -167,13 +167,13 @@ const OrdersPage: React.FC = () => {
             <table className="w-full text-sm">
               <thead>
                 <tr className="bg-[#f2f4f6] text-[11px] font-semibold text-[#737686] uppercase tracking-wider">
-                  <th className="px-4 py-3 text-left">Order ID</th>
-                  <th className="px-4 py-3 text-left">Customer Name</th>
-                  <th className="px-4 py-3 text-left">Date</th>
-                  <th className="px-4 py-3 text-left">Amount</th>
-                  <th className="px-4 py-3 text-left">Payment</th>
+                  <th className="px-4 py-3 text-left">ID Order</th>
+                  <th className="px-4 py-3 text-left">Nama Pembeli</th>
+                  <th className="px-4 py-3 text-left">Tanggal</th>
+                  <th className="px-4 py-3 text-left">Total</th>
+                  <th className="px-4 py-3 text-left">Bayar</th>
                   <th className="px-4 py-3 text-left">Status</th>
-                  <th className="px-4 py-3 text-right">Actions</th>
+                  <th className="px-4 py-3 text-right">Aksi</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#e0e3e5]">
@@ -193,8 +193,8 @@ const OrdersPage: React.FC = () => {
                   <tr>
                     <td colSpan={7} className="px-4 py-10 text-center text-[#737686]">
                       {debouncedSearch || status !== 'ALL'
-                        ? 'Tidak ada order yang cocok dengan filter ini.'
-                        : 'Belum ada order masuk.'}
+                        ? 'Nggak ada order yang cocok sama filter ini.'
+                        : 'Belum ada order yang masuk nih.'}
                     </td>
                   </tr>
                 ) : (
@@ -267,6 +267,11 @@ const OrdersPage: React.FC = () => {
                                         <span className="text-[#191c1e]">
                                           {item.productName}{' '}
                                           <span className="text-[#737686]">x{item.quantity}</span>
+                                          {item.variant && (
+                                            <span className="block text-[11px] text-[#737686]">
+                                              Model: {item.variant}
+                                            </span>
+                                          )}
                                         </span>
                                         <span className="font-medium whitespace-nowrap">
                                           {formatRupiah(Number(item.subtotal))}

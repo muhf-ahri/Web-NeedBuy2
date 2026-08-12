@@ -5,7 +5,8 @@ import Button from './Button';
 import Icon from './Icon';
 import type { Category } from '../../types';
 import type { InventProduct } from '../../api/invent';
-import { createInvent, updateInvent, uploadInventImages } from '../../api/invent';
+import { createInvent, updateInvent } from '../../api/invent';
+import { ACCEPTED_IMAGE_TYPES, MAX_IMAGE_BYTES, uploadImage } from '../../api/uploads';
 
 interface ProductFormProps {
   editing: InventProduct | null;
@@ -21,6 +22,9 @@ interface FormState {
   stock: string;
   description: string;
   isActive: boolean;
+  discountPercent: string;
+  bulkMinQty: string;
+  bulkDiscountPercent: string;
 }
 
 interface FormErrors {
@@ -29,7 +33,11 @@ interface FormErrors {
   price?: string;
   stock?: string;
   images?: string;
+  bulk?: string;
 }
+
+/** Satu baris spesifikasi. Beberapa baris dengan `key` sama = pilihan model. */
+type SpecRow = { key: string; value: string };
 
 const EMPTY_FORM: FormState = {
   name: '',
@@ -38,17 +46,14 @@ const EMPTY_FORM: FormState = {
   stock: '0',
   description: '',
   isActive: true,
+  discountPercent: '0',
+  bulkMinQty: '',
+  bulkDiscountPercent: '',
 };
 
 const MAX_IMAGES = 5;
-const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 
-const ProductForm: React.FC<ProductFormProps> = ({
-  editing,
-  categories,
-  onClose,
-  onSaved,
-}) => {
+const ProductForm: React.FC<ProductFormProps> = ({ editing, categories, onClose, onSaved }) => {
   const [form, setForm] = useState<FormState>(
     editing
       ? {
@@ -58,6 +63,10 @@ const ProductForm: React.FC<ProductFormProps> = ({
           stock: String(editing.stock),
           description: editing.description ?? '',
           isActive: editing.isActive,
+          discountPercent: String(editing.discountPercent ?? 0),
+          bulkMinQty: editing.bulkMinQty === null ? '' : String(editing.bulkMinQty),
+          bulkDiscountPercent:
+            editing.bulkDiscountPercent === null ? '' : String(editing.bulkDiscountPercent),
         }
       : EMPTY_FORM
   );
@@ -65,12 +74,28 @@ const ProductForm: React.FC<ProductFormProps> = ({
   const [saving, setSaving] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
-  const [imageFiles, setImageFiles] = useState<File[]>([]);
-  const [imagePreviews, setImagePreviews] = useState<string[]>(
-    editing?.images?.map((img) => img.url) ?? []
+  /**
+   * Satu daftar untuk gambar lama maupun baru.
+   *
+   * Berkas diunggah begitu dipilih lewat `POST /uploads/image` dan yang
+   * disimpan di sini hanya URL-nya — payload create/update memang berisi URL,
+   * bukan multipart. Endpoint multipart yang dulu dipakai form ini tidak pernah
+   * ada di server, dan itulah kenapa produk penjual muncul tanpa gambar di
+   * halaman pembeli.
+   */
+  const [imageUrls, setImageUrls] = useState<string[]>(
+    editing?.images?.map((image) => image.url) ?? []
   );
+  const [uploading, setUploading] = useState(false);
   const [imageError, setImageError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const [specs, setSpecs] = useState<SpecRow[]>(
+    editing?.attributes?.map((attribute) => ({
+      key: attribute.attrKey,
+      value: attribute.attrValue,
+    })) ?? []
+  );
 
   const setField = <K extends keyof FormState>(key: K, value: FormState[K]) => {
     setForm((prev) => ({ ...prev, [key]: value }));
@@ -82,69 +107,63 @@ const ProductForm: React.FC<ProductFormProps> = ({
 
   const validate = (): boolean => {
     const newErrors: FormErrors = {};
-    const trimmedName = form.name.trim();
-    if (!trimmedName || trimmedName.length < 2) {
-      newErrors.name = 'Nama produk minimal 2 karakter.';
-    }
-    if (!form.categoryId) {
-      newErrors.categoryId = 'Pilih kategori.';
-    }
+    if (form.name.trim().length < 2) newErrors.name = 'Nama produk minimal 2 karakter.';
+    if (!form.categoryId) newErrors.categoryId = 'Pilih kategorinya dulu ya.';
+
     const price = Number(form.price);
-    if (!Number.isFinite(price) || price <= 0) {
-      newErrors.price = 'Harga harus lebih dari 0.';
-    }
+    if (!Number.isFinite(price) || price <= 0) newErrors.price = 'Harga harus lebih dari 0.';
+
     const stock = Number(form.stock);
-    if (!Number.isInteger(stock) || stock < 0) {
-      newErrors.stock = 'Stok harus bilangan bulat ≥ 0.';
+    if (!Number.isInteger(stock) || stock < 0) newErrors.stock = 'Stok harus bilangan bulat ≥ 0.';
+
+    if (imageUrls.length === 0) newErrors.images = 'Tambahin minimal 1 gambar produk ya.';
+
+    // Server menolak penawaran grosir yang cuma setengah terisi — dicegat di
+    // sini supaya penjual tahu sebelum menunggu satu round-trip.
+    const hasMin = form.bulkMinQty.trim() !== '';
+    const hasPct = form.bulkDiscountPercent.trim() !== '';
+    if (hasMin !== hasPct) {
+      newErrors.bulk = 'Diskon grosir butuh minimal beli DAN persen potongannya.';
+    } else if (hasMin && Number(form.bulkMinQty) < 2) {
+      newErrors.bulk = 'Minimal beli untuk grosir mulai dari 2.';
     }
-    if (!editing && imageFiles.length === 0) {
-      newErrors.images = 'Tambahkan minimal 1 gambar produk.';
-    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files || files.length === 0) return;
+  /** Berkas diunggah langsung; URL hasilnya baru ikut terkirim saat submit. */
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = [...(e.target.files ?? [])];
+    e.target.value = ''; // reset supaya berkas yang sama bisa dipilih ulang
+    if (files.length === 0) return;
 
     setImageError(null);
-    const newFiles: File[] = [];
-    const newPreviews: string[] = [];
-
-    const total = imageFiles.length + files.length;
-    if (total > MAX_IMAGES) {
+    if (imageUrls.length + files.length > MAX_IMAGES) {
       setImageError(`Maksimal ${MAX_IMAGES} gambar.`);
       return;
     }
 
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-      if (file.size > MAX_FILE_SIZE) {
-        setImageError(`File "${file.name}" terlalu besar (maks 5MB).`);
-        continue;
-      }
-      if (!file.type.startsWith('image/')) {
-        setImageError(`File "${file.name}" bukan gambar.`);
-        continue;
-      }
-      newFiles.push(file);
-      newPreviews.push(URL.createObjectURL(file));
-    }
-
-    if (newFiles.length > 0) {
-      setImageFiles((prev) => [...prev, ...newFiles]);
-      setImagePreviews((prev) => [...prev, ...newPreviews]);
-      if (errors.images) {
+    setUploading(true);
+    try {
+      for (const file of files) {
+        if (!ACCEPTED_IMAGE_TYPES.includes(file.type)) {
+          setImageError(`"${file.name}" harus PNG, JPG, WebP, atau GIF.`);
+          continue;
+        }
+        if (file.size > MAX_IMAGE_BYTES) {
+          setImageError(`"${file.name}" lebih dari 3 MB.`);
+          continue;
+        }
+        const res = await uploadImage(file);
+        setImageUrls((prev) => [...prev, res.data.data.url]);
         setErrors((prev) => ({ ...prev, images: undefined }));
       }
+    } catch (err: any) {
+      setImageError(err?.message ?? 'Gagal unggah gambar, coba lagi ya');
+    } finally {
+      setUploading(false);
     }
-    if (fileInputRef.current) fileInputRef.current.value = '';
-  };
-
-  const removeImage = (index: number) => {
-    setImageFiles((prev) => prev.filter((_, i) => i !== index));
-    setImagePreviews((prev) => prev.filter((_, i) => i !== index));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -154,6 +173,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
 
     setSaving(true);
     try {
+      const hasBulk = form.bulkMinQty.trim() !== '' && form.bulkDiscountPercent.trim() !== '';
       const payload = {
         name: form.name.trim(),
         categoryId: form.categoryId,
@@ -161,48 +181,45 @@ const ProductForm: React.FC<ProductFormProps> = ({
         stock: Number(form.stock),
         description: form.description.trim() || undefined,
         isActive: form.isActive,
+        discountPercent: Number(form.discountPercent) || 0,
+        bulkMinQty: hasBulk ? Number(form.bulkMinQty) : null,
+        bulkDiscountPercent: hasBulk ? Number(form.bulkDiscountPercent) : null,
+        // Gambar pertama jadi gambar utama — urutan di daftar inilah urutan
+        // yang dilihat pembeli.
+        images: imageUrls.map((url, index) => ({
+          url,
+          isPrimary: index === 0,
+          sortOrder: index,
+        })),
+        attributes: specs
+          .filter((row) => row.key.trim() && row.value.trim())
+          .map((row) => ({ attrKey: row.key.trim(), attrValue: row.value.trim() })),
       };
-
-      let productId: string;
 
       if (editing) {
         await updateInvent(editing.id, payload);
-        productId = editing.id;
       } else {
-        const res = await createInvent(payload);
-        productId = res.data.data.id;
-      }
-
-      if (imageFiles.length > 0) {
-        const formData = new FormData();
-        imageFiles.forEach((file) => {
-          formData.append('images', file);
-        });
-        await uploadInventImages(productId, formData);
+        await createInvent(payload);
       }
 
       onSaved();
     } catch (err: any) {
-      setSubmitError(err?.message ?? 'Gagal menyimpan produk.');
+      setSubmitError(err?.message ?? 'Gagal simpan produk. Coba lagi ya.');
     } finally {
       setSaving(false);
     }
   };
 
-  // Gaya input yang konsisten dengan komponen Input dari UI
   const inputBase =
     'w-full px-3 py-2 bg-gray-100/80 rounded-lg border border-gray-200 focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-sm';
-
-  const inputError =
-    'border-red-400 focus:ring-red-400';
+  const inputError = 'border-red-400 focus:ring-red-400';
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
       <div className="bg-white rounded-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-xl">
-        {/* Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-gray-200 sticky top-0 bg-white z-10">
           <h3 className="text-lg font-semibold text-gray-900">
-            {editing ? 'Edit Produk' : 'Tambah Produk Baru'}
+            {editing ? 'Ubah Produk' : 'Tambah Produk Baru'}
           </h3>
           <button
             onClick={onClose}
@@ -214,24 +231,21 @@ const ProductForm: React.FC<ProductFormProps> = ({
         </div>
 
         <form onSubmit={handleSubmit} className="p-5 space-y-4">
-          {/* Error umum dari server */}
           {submitError && (
             <div className="p-2 bg-red-50 border border-red-200 text-red-700 text-xs rounded-lg">
               {submitError}
             </div>
           )}
 
-          {/* Nama Produk */}
           <Input
             label="Nama Produk"
             value={form.name}
             onChange={(e) => setField('name', e.target.value)}
-            placeholder="Contoh: Mechanical Keyboard"
+            placeholder="Contoh: Keyboard Mekanik"
             error={errors.name}
             required
           />
 
-          {/* Kategori — konsisten dengan Input */}
           <div>
             <label className="block text-xs font-medium text-gray-700 mb-1">
               Kategori <span className="text-red-500">*</span>
@@ -248,12 +262,9 @@ const ProductForm: React.FC<ProductFormProps> = ({
                 </option>
               ))}
             </select>
-            {errors.categoryId && (
-              <p className="mt-1 text-xs text-red-600">{errors.categoryId}</p>
-            )}
+            {errors.categoryId && <p className="mt-1 text-xs text-red-600">{errors.categoryId}</p>}
           </div>
 
-          {/* Harga & Stok */}
           <div className="grid grid-cols-2 gap-3">
             <Input
               label="Harga (Rp)"
@@ -277,24 +288,69 @@ const ProductForm: React.FC<ProductFormProps> = ({
             />
           </div>
 
-          {/* Upload Gambar */}
+          {/* Diskon: promo biasa + penawaran grosir */}
+          <div className="rounded-xl border border-gray-200 p-3 space-y-3">
+            <p className="text-xs font-semibold text-gray-700">Diskon</p>
+            <Input
+              label="Diskon promo (%)"
+              type="number"
+              min={0}
+              max={90}
+              value={form.discountPercent}
+              onChange={(e) => setField('discountPercent', e.target.value)}
+              placeholder="0"
+            />
+            <div className="grid grid-cols-2 gap-3">
+              <Input
+                label="Grosir: minimal beli"
+                type="number"
+                min={2}
+                value={form.bulkMinQty}
+                onChange={(e) => setField('bulkMinQty', e.target.value)}
+                placeholder="3"
+              />
+              <Input
+                label="Grosir: potongan (%)"
+                type="number"
+                min={1}
+                max={90}
+                value={form.bulkDiscountPercent}
+                onChange={(e) => setField('bulkDiscountPercent', e.target.value)}
+                placeholder="10"
+              />
+            </div>
+            {errors.bulk ? (
+              <p className="text-xs text-red-600">{errors.bulk}</p>
+            ) : (
+              <p className="text-[11px] text-gray-500">
+                Kosongkan dua-duanya kalau nggak ada harga grosir. Potongannya dihitung server
+                saat pembeli nambah jumlah, jadi yang dibayar memang harga grosirnya.
+              </p>
+            )}
+          </div>
+
+          {/* Gambar — diunggah saat dipilih, yang dikirim ke server URL-nya */}
           <div>
             <label className="block text-xs font-medium text-gray-700 mb-1">
-              Gambar Produk {!editing && <span className="text-red-500">*</span>}
+              Gambar Produk <span className="text-red-500">*</span>
             </label>
 
-            {/* Preview gambar */}
-            {imagePreviews.length > 0 && (
+            {imageUrls.length > 0 && (
               <div className="flex flex-wrap gap-2 mb-2">
-                {imagePreviews.map((url, index) => (
+                {imageUrls.map((url, index) => (
                   <div
-                    key={index}
+                    key={url}
                     className="relative w-16 h-16 rounded-lg overflow-hidden border border-gray-200 group"
                   >
-                    <img src={url} alt={`Preview ${index + 1}`} className="w-full h-full object-cover" />
+                    <img src={url} alt="" className="w-full h-full object-cover" />
+                    {index === 0 && (
+                      <span className="absolute bottom-0 inset-x-0 bg-black/60 text-white text-[9px] text-center">
+                        Utama
+                      </span>
+                    )}
                     <button
                       type="button"
-                      onClick={() => removeImage(index)}
+                      onClick={() => setImageUrls((prev) => prev.filter((_, i) => i !== index))}
                       className="absolute top-0.5 right-0.5 w-5 h-5 rounded-full bg-black/60 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
                       aria-label="Hapus gambar"
                     >
@@ -305,7 +361,6 @@ const ProductForm: React.FC<ProductFormProps> = ({
               </div>
             )}
 
-            {/* Upload area — konsisten dengan border input */}
             <div
               className={`border-2 border-dashed rounded-lg p-4 text-center transition ${
                 errors.images || imageError
@@ -316,11 +371,12 @@ const ProductForm: React.FC<ProductFormProps> = ({
               <input
                 ref={fileInputRef}
                 type="file"
-                accept="image/*"
+                accept={ACCEPTED_IMAGE_TYPES.join(',')}
                 multiple
                 onChange={handleFileChange}
                 className="hidden"
                 id="product-images"
+                disabled={uploading}
               />
               <label
                 htmlFor="product-images"
@@ -328,10 +384,14 @@ const ProductForm: React.FC<ProductFormProps> = ({
               >
                 <Icon name="upload" size={28} className="text-gray-400" />
                 <span className="text-sm text-gray-600">
-                  {editing ? 'Tambah gambar baru' : 'Klik atau seret untuk upload'}
+                  {uploading
+                    ? 'Ngunggah…'
+                    : imageUrls.length > 0
+                      ? 'Tambah gambar lagi'
+                      : 'Klik atau seret gambarnya ke sini'}
                 </span>
                 <span className="text-xs text-gray-400">
-                  Maks {MAX_IMAGES} gambar ({MAX_FILE_SIZE / 1024 / 1024}MB per file)
+                  Maks {MAX_IMAGES} gambar, 3 MB per berkas
                 </span>
               </label>
             </div>
@@ -339,18 +399,69 @@ const ProductForm: React.FC<ProductFormProps> = ({
             {(errors.images || imageError) && (
               <p className="mt-1 text-xs text-red-600">{errors.images || imageError}</p>
             )}
-            {editing && imageFiles.length === 0 && imagePreviews.length === 0 && (
-              <p className="mt-1 text-xs text-amber-600">
-                Produk ini belum memiliki gambar. Upload minimal 1 gambar.
-              </p>
+          </div>
+
+          {/* Spesifikasi & model */}
+          <div>
+            <div className="flex items-center justify-between mb-1">
+              <label className="block text-xs font-medium text-gray-700">Spesifikasi & model</label>
+              <button
+                type="button"
+                onClick={() => setSpecs((prev) => [...prev, { key: '', value: '' }])}
+                className="text-[11px] font-semibold text-blue-600 hover:underline"
+              >
+                + Tambah baris
+              </button>
+            </div>
+            <p className="text-[11px] text-gray-500 mb-2">
+              Isi beberapa baris dengan nama sama (mis. dua baris <code>warna</code>) supaya
+              pembeli dapat pilihan model di halaman produk.
+            </p>
+
+            {specs.length === 0 ? (
+              <p className="text-xs text-gray-400">Belum ada spesifikasi.</p>
+            ) : (
+              <div className="space-y-2">
+                {specs.map((row, index) => (
+                  <div key={index} className="flex gap-2">
+                    <input
+                      value={row.key}
+                      onChange={(e) =>
+                        setSpecs((prev) =>
+                          prev.map((r, i) => (i === index ? { ...r, key: e.target.value } : r))
+                        )
+                      }
+                      placeholder="warna"
+                      maxLength={60}
+                      className={`${inputBase} w-1/3`}
+                    />
+                    <input
+                      value={row.value}
+                      onChange={(e) =>
+                        setSpecs((prev) =>
+                          prev.map((r, i) => (i === index ? { ...r, value: e.target.value } : r))
+                        )
+                      }
+                      placeholder="Hitam"
+                      maxLength={200}
+                      className={`${inputBase} flex-1`}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setSpecs((prev) => prev.filter((_, i) => i !== index))}
+                      className="px-2 text-gray-400 hover:text-red-600 transition-colors"
+                      aria-label="Hapus baris spesifikasi"
+                    >
+                      <Icon name="trash" size={16} />
+                    </button>
+                  </div>
+                ))}
+              </div>
             )}
           </div>
 
-          {/* Deskripsi */}
           <div>
-            <label className="block text-xs font-medium text-gray-700 mb-1">
-              Deskripsi
-            </label>
+            <label className="block text-xs font-medium text-gray-700 mb-1">Deskripsi</label>
             <textarea
               rows={3}
               value={form.description}
@@ -360,7 +471,6 @@ const ProductForm: React.FC<ProductFormProps> = ({
             />
           </div>
 
-          {/* Aktif / Draft — gaya sama dengan RegisterForm */}
           <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
             <input
               type="checkbox"
@@ -368,18 +478,17 @@ const ProductForm: React.FC<ProductFormProps> = ({
               onChange={(e) => setField('isActive', e.target.checked)}
               className="w-4 h-4 accent-blue-600"
             />
-            Tayangkan produk (jika dimatikan, produk menjadi Draft)
+            Tayangkan produk (kalau dimatikan, produk jadi Draf)
           </label>
 
-          {/* Tombol aksi — konsisten dengan RegisterForm */}
           <div className="flex gap-2 pt-2">
             <Button
               type="submit"
               variant="primary"
-              disabled={saving}
+              disabled={saving || uploading}
               className="flex-1 text-sm py-2.5"
             >
-              {saving ? 'Menyimpan…' : 'Simpan'}
+              {saving ? 'Nyimpen…' : 'Simpan'}
             </Button>
             <Button
               type="button"

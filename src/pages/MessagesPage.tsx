@@ -68,7 +68,7 @@ const MessagesPage: React.FC = () => {
           setActiveId((prev) => prev ?? list[0].id);
         }
       } catch (err: any) {
-        if (!cancelled) setError(err.message ?? 'Gagal memuat percakapan');
+        if (!cancelled) setError(err.message ?? 'Gagal muat chat, coba lagi ya');
       } finally {
         if (!cancelled) setLoading(false);
       }
@@ -90,7 +90,7 @@ const MessagesPage: React.FC = () => {
         if (!cancelled) setMessages(res.data.data);
       })
       .catch((err: any) => {
-        if (!cancelled) setError(err.message ?? 'Gagal memuat pesan');
+        if (!cancelled) setError(err.message ?? 'Gagal muat pesan, coba lagi ya');
       });
     return () => {
       cancelled = true;
@@ -136,7 +136,7 @@ const MessagesPage: React.FC = () => {
       setDraft('');
       loadConversations().catch(() => {});
     } catch (err: any) {
-      setError(err.message ?? 'Pesan gagal terkirim');
+      setError(err.message ?? 'Pesannya gagal dikirim, coba lagi ya');
     } finally {
       setSending(false);
     }
@@ -149,7 +149,7 @@ const MessagesPage: React.FC = () => {
         <main className="flex-1 max-w-6xl mx-auto w-full px-5 sm:px-10 py-16 flex items-center justify-center">
           <div className="text-center">
             <Icon name="chat" size={44} className="text-[#c3c6d7] mx-auto mb-4" />
-            <p className="text-[#737686] mb-4">Login untuk chat dengan penjual.</p>
+            <p className="text-[#737686] mb-4">Login dulu ya buat chat sama penjual.</p>
             <button
               onClick={() => navigate('/login')}
               className="px-6 py-2.5 rounded-full bg-[#004ac6] hover:bg-[#003ea8] text-white text-[14px] font-semibold transition-colors"
@@ -181,7 +181,7 @@ const MessagesPage: React.FC = () => {
         ) : conversations.length === 0 ? (
           <div className="text-center py-20">
             <Icon name="chat" size={44} className="text-[#c3c6d7] mx-auto mb-4" />
-            <p className="text-[#737686]">Belum ada percakapan.</p>
+            <p className="text-[#737686]">Belum ada chat nih.</p>
             <p className="text-[13px] text-[#737686] mt-1">
               Buka halaman produk, lalu tekan "Chat penjual" untuk memulai.
             </p>
@@ -210,7 +210,7 @@ const MessagesPage: React.FC = () => {
                         )}
                       </div>
                       <p className="text-[12px] text-[#737686] truncate mt-0.5">
-                        {conversation.lastMessage?.body ?? 'Belum ada pesan'}
+                        {conversation.lastMessage?.body ?? 'Belum ada pesan nih'}
                       </p>
                     </button>
                   </li>

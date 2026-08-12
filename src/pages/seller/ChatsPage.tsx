@@ -43,7 +43,7 @@ const ChatsPage: React.FC = () => {
         const list = await loadConversations();
         if (!cancelled && list.length > 0) setActiveId((prev) => prev ?? list[0].id);
       } catch (err: any) {
-        if (!cancelled) setError(err?.message ?? 'Gagal memuat percakapan');
+        if (!cancelled) setError(err?.message ?? 'Gagal muat chat, coba lagi ya');
       } finally {
         if (!cancelled) setLoading(false);
       }
@@ -64,7 +64,7 @@ const ChatsPage: React.FC = () => {
         loadConversations().catch(() => {});
       })
       .catch((err: any) => {
-        if (!cancelled) setError(err?.message ?? 'Gagal memuat pesan');
+        if (!cancelled) setError(err?.message ?? 'Gagal muat pesan, coba lagi ya');
       });
     return () => {
       cancelled = true;
@@ -108,7 +108,7 @@ const ChatsPage: React.FC = () => {
       setDraft('');
       loadConversations().catch(() => {});
     } catch (err: any) {
-      setError(err?.message ?? 'Gagal mengirim pesan');
+      setError(err?.message ?? 'Pesannya gagal dikirim, coba lagi ya');
     } finally {
       setSending(false);
     }
@@ -117,7 +117,7 @@ const ChatsPage: React.FC = () => {
   return (
     <SellerLayout>
       <div className="space-y-6">
-        <h1 className="text-[28px] font-bold text-[#191c1e]">Customer Chats</h1>
+        <h1 className="text-[28px] font-bold text-[#191c1e]">Chat Pembeli</h1>
         {error && (
           <div className="p-3 bg-[#ffe0e0] border border-[#ffbcbc] text-[#a33131] text-[13px] rounded-xl">
             {error}
@@ -151,7 +151,7 @@ const ChatsPage: React.FC = () => {
                       </div>
                       <div className="flex items-center justify-between gap-2">
                         <p className="text-[12px] text-[#737686] truncate">
-                          {chat.lastMessage?.body ?? 'Belum ada pesan'}
+                          {chat.lastMessage?.body ?? 'Belum ada pesan nih'}
                         </p>
                         {chat.unreadCount > 0 && (
                           <span className="shrink-0 bg-[#ba1a1a] text-white text-[10px] font-bold rounded-full min-w-[18px] h-[18px] px-1 flex items-center justify-center">
@@ -217,7 +217,7 @@ const ChatsPage: React.FC = () => {
                     value={draft}
                     onChange={(e) => setDraft(e.target.value)}
                     maxLength={2000}
-                    placeholder="Type a message..."
+                    placeholder="Tulis pesan..."
                     className="flex-1 px-4 py-2.5 rounded-full border border-[#c3c6d7] text-sm outline-none focus:border-[#004ac6] focus:ring-2 focus:ring-[#004ac6]/20 transition"
                   />
                   <button
@@ -232,7 +232,7 @@ const ChatsPage: React.FC = () => {
               </>
             ) : (
               <div className="flex-1 flex items-center justify-center text-[#737686] text-[13px]">
-                {loading ? 'Memuat…' : 'Pilih percakapan'}
+                {loading ? 'Memuat…' : 'Pilih chat dulu di sebelah kiri'}
               </div>
             )}
           </div>

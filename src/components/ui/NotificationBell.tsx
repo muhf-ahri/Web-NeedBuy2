@@ -76,7 +76,7 @@ const NotificationBell: React.FC = () => {
       const response = await getNotifications({ limit: 20 });
       setNotifications(response.data.data);
     } catch (err: any) {
-      setError(err?.message ?? 'Gagal memuat notifikasi');
+      setError(err?.message ?? 'Gagal muat notifikasi, coba lagi ya');
     } finally {
       setLoading(false);
     }
@@ -203,7 +203,7 @@ const NotificationBell: React.FC = () => {
       <button
         onClick={toggleOpen}
         className="relative p-2 rounded-full hover:bg-[#f2f4f6] transition-colors"
-        aria-label="Notifications"
+        aria-label="Notifikasi"
       >
         <Icon name="bell" size={20} className="text-[#434655]" />
         {unreadCount > 0 && (
@@ -217,7 +217,7 @@ const NotificationBell: React.FC = () => {
       {isOpen && (
         <div className="absolute right-0 mt-2 w-80 bg-white rounded-2xl shadow-xl border border-[#e0e3e5] overflow-hidden z-50 animate-slideDown">
           <div className="flex items-center justify-between px-4 py-3 border-b border-[#e0e3e5]">
-            <span className="text-[13px] font-bold text-[#191c1e]">Notifications</span>
+            <span className="text-[13px] font-bold text-[#191c1e]">Notifikasi</span>
             {unreadCount > 0 && (
               <button
                 onClick={markAllAsRead}

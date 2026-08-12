@@ -21,7 +21,7 @@ const RequireSeller: React.FC<{ children: React.ReactNode }> = ({ children }) =>
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center text-[#737686] font-sans">
-        Memuat…
+        Bentar ya…
       </div>
     );
   }
