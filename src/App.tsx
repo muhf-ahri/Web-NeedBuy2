@@ -37,6 +37,7 @@ import AdminDashboard from './pages/admin/DashboardPage';
 import UsersPage from './pages/admin/UsersPage';
 import StoresPage from './pages/admin/StoresPage';
 import AdminPlaceholder from './pages/admin/PlaceholderPage';
+import ProductsPage from './pages/admin/ProductsPage';
 
 function App() {
   return (
@@ -177,9 +178,7 @@ function App() {
                   </RequireAdmin>
                 }
               />
-              {/* Menu admin yang halamannya belum jadi. Tanpa splat ini, path
-                  tak dikenal jatuh ke `path="*"` di bawah dan admin terlempar
-                  keluar panel. */}
+
               <Route
                 path="/admin/*"
                 element={
@@ -188,6 +187,10 @@ function App() {
                   </RequireAdmin>
                 }
               />
+
+              <Route path="/admin/products" element={<ProductsPage />} />
+              <Route path="/admin/products/pending" element={<ProductsPage />} />
+              <Route path="/admin/products/approved " element={<ProductsPage />} />
 
               {/* Compare — placeholder */}
               <Route path="/compare" element={<div className="p-8 text-center text-gray-500 font-sans">Compare — coming soon</div>} />
