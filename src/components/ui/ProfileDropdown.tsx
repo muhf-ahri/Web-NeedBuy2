@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Icon from './Icon';
 import { useAuth } from '../../contexts/AuthContext';
+import { dashboardPathFor } from '../../utils/roleHome';
 
 interface ProfileDropdownProps {
   avatarUrl?: string;
@@ -15,8 +16,9 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const isAdmin = user?.role === 'ADMIN';
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -33,10 +35,13 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
     navigate('/');
   };
 
+  // Komponen ini dipakai header penjual DAN header admin, jadi tautannya ikut
+  // role — bukan selalu /seller/*. `/profile` dipakai keduanya karena
+  // /seller/profile tidak pernah ada sebagai route.
   const menuItems = [
-    { to: '/seller/dashboard', label: 'Dashboard', icon: 'dashboard' },
-    { to: '/seller/profile', label: 'Profil', icon: 'user' },
-    { to: '/seller/settings', label: 'Setelan', icon: 'settings' },
+    { to: dashboardPathFor(user?.role), label: 'Dashboard', icon: 'dashboard' },
+    { to: '/profile', label: 'Profil', icon: 'user' },
+    { to: isAdmin ? '/admin/settings' : '/seller/settings', label: 'Setelan', icon: 'settings' },
   ];
 
   return (
@@ -65,7 +70,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
         <div className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-[#e0e3e5] overflow-hidden z-50 animate-slideDown">
           <div className="px-4 py-3 border-b border-[#e0e3e5]">
             <p className="text-[13px] font-bold text-[#191c1e]">{sellerName}</p>
-            <p className="text-[11px] text-[#737686]">Akun Penjual</p>
+            <p className="text-[11px] text-[#737686]">{isAdmin ? 'Akun Admin' : 'Akun Penjual'}</p>
           </div>
 
           <ul className="py-1">

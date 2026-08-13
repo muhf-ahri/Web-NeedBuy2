@@ -6,6 +6,7 @@ import SearchSuggestions from '../ui/SearchSuggestions';
 import NotificationBell from '../ui/NotificationBell';
 import { useCart } from '../../contexts/CartContext';
 import { useAuth } from '../../contexts/AuthContext';
+import { dashboardPathFor, hasDashboard } from '../../utils/roleHome';
 
 interface NavbarProps {
   avatarUrl?: string;
@@ -32,7 +33,8 @@ const QUICK_ACTIONS: Array<{ to: string; label: string; icon: IconName }> = [
 const Navbar: React.FC<NavbarProps> = ({ avatarUrl, showSearch = true }) => {
   const { cartCount } = useCart();
   const { user } = useAuth();
-  const isSeller = user?.role === 'SELLER' || user?.role === 'ADMIN';
+  const showDashboard = hasDashboard(user?.role);
+  const isAdmin = user?.role === 'ADMIN';
   const location = useLocation();
   const navigate = useNavigate();
   const [searchOpen, setSearchOpen] = useState(false);
@@ -191,15 +193,15 @@ const Navbar: React.FC<NavbarProps> = ({ avatarUrl, showSearch = true }) => {
             </div>
           )}
 
-          {/* Dashboard Toko */}
-          {isSeller && (
+          {/* Dashboard — panel toko untuk penjual, panel admin untuk admin */}
+          {showDashboard && (
             <Link
-              to="/seller/dashboard"
+              to={dashboardPathFor(user?.role)}
               className="inline-flex items-center gap-1.5 px-2 md:px-3 py-1.5 rounded-full bg-[#004ac6] text-white text-[13px] font-semibold hover:bg-[#003a9e] transition-colors duration-200 shrink-0"
-              aria-label="Dashboard Toko"
+              aria-label={isAdmin ? 'Dashboard Admin' : 'Dashboard Toko'}
             >
               <Icon name="dashboard" size={16} className="text-white" />
-              <span className="hidden md:inline">Dashboard Toko</span>
+              <span className="hidden md:inline">{isAdmin ? 'Dashboard Admin' : 'Dashboard Toko'}</span>
             </Link>
           )}
 

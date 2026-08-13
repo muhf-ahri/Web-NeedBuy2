@@ -5,6 +5,7 @@ import Divider from '../components/ui/Divider';
 import SocialLogin from '../components/forms/SocialLogin';
 import HeroPanel from '../components/HeroPanel';
 import { useAuth } from '../contexts/AuthContext';
+import { dashboardPathFor } from '../utils/roleHome';
 
 const Login: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -22,8 +23,9 @@ const Login: React.FC = () => {
       // seller balik ke halaman ini.
       const user = await login({ email, password });
 
-      // Seller (dan admin) langsung mendarat di dashboard toko.
-      navigate(user.role === 'SELLER' || user.role === 'ADMIN' ? '/seller/dashboard' : '/');
+      // Tiap role mendarat di panelnya sendiri — admin ke /admin, bukan ke
+      // dashboard toko.
+      navigate(dashboardPathFor(user.role));
     } catch (err: any) {
       setError(err.message || 'Gagal masuk. Cek email dan password-mu ya.');
     } finally {

@@ -1,65 +1,72 @@
 // src/pages/admin/StoresPage.tsx
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import AdminLayout from './AdminLayout';
 import Icon from '../../components/ui/Icon';
 import Pagination from '../../components/ui/Pagination';
+import { getStores, setStoreStatus, type AdminStore, type SellerStatus } from '../../api/admin';
 import { formatRupiah } from '../../utils/currency';
 
-type StoreStatus = 'Active' | 'Inactive' | 'Suspended';
+const PAGE_SIZE = 10;
 
-interface Store {
-  id: string;
-  storeName: string;
-  domain: string;
-  products: number;
-  orders: number;
-  revenue: number;
-  rating: number;
-  status: StoreStatus;
-  createdAt: string;
-}
-
-const dummyStores: Store[] = [
-  { id: '1', storeName: 'TechHaven Electronics', domain: 'techhaven.com', products: 1245, orders: 8592, revenue: 245900, rating: 4.8, status: 'Active', createdAt: 'Oct 12, 2023' },
-  { id: '2', storeName: 'Green Valley Organics', domain: 'greenvalley.net', products: 342, orders: 1204, revenue: 34250, rating: 4.5, status: 'Inactive', createdAt: 'Jan 05, 2024' },
-  { id: '3', storeName: 'Apex Sports Gear', domain: 'apexsports.com', products: 89, orders: 432, revenue: 12400, rating: 2.8, status: 'Suspended', createdAt: 'Feb 20, 2024' },
-  { id: '4', storeName: 'Lumina Home', domain: 'luminahome.co', products: 512, orders: 3210, revenue: 89500, rating: 4.9, status: 'Active', createdAt: 'Mar 15, 2023' },
-  { id: '5', storeName: 'Gadget World', domain: 'gadgetworld.com', products: 230, orders: 1100, revenue: 45000, rating: 4.2, status: 'Active', createdAt: 'Jan 10, 2024' },
-  { id: '6', storeName: 'Fashionista Boutique', domain: 'fashionista.id', products: 78, orders: 560, revenue: 28900, rating: 4.0, status: 'Inactive', createdAt: 'Dec 01, 2023' },
-];
-
-const statusColor: Record<StoreStatus, string> = {
-  Active: 'bg-[#d7f5dc] text-[#156b32]',
-  Inactive: 'bg-[#f2f4f6] text-[#737686]',
-  Suspended: 'bg-[#ffe0e0] text-[#a33131]',
+const statusColor: Record<SellerStatus, string> = {
+  ACTIVE: 'bg-[#d7f5dc] text-[#156b32]',
+  SUSPENDED: 'bg-[#ffe0e0] text-[#a33131]',
 };
 
+const statusLabel: Record<SellerStatus, string> = {
+  ACTIVE: 'Aktif',
+  SUSPENDED: 'Dibekukan',
+};
+
+const formatDate = (iso: string) =>
+  new Date(iso).toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' });
+
 const StoresPage: React.FC = () => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [selectedStores, setSelectedStores] = useState<Set<string>>(new Set());
-  const pageSize = 10;
+  const [status, setStatus] = useState<SellerStatus | ''>('');
+  const [minRating, setMinRating] = useState('');
+  const [page, setPage] = useState(1);
 
-  // Filtering bisa ditambahkan nanti, untuk sekarang hanya data statis
-  const filteredData = dummyStores;
-  const totalItems = filteredData.length;
-  const totalPages = Math.ceil(totalItems / pageSize);
-  const startIndex = (currentPage - 1) * pageSize;
-  const paginatedData = filteredData.slice(startIndex, startIndex + pageSize);
+  const [items, setItems] = useState<AdminStore[]>([]);
+  const [total, setTotal] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [pendingId, setPendingId] = useState<string | null>(null);
 
-  const handlePageChange = (page: number) => setCurrentPage(page);
+  const load = useCallback(() => {
+    setIsLoading(true);
+    setError(null);
+    return getStores({
+      status: status || undefined,
+      minRating: minRating ? Number(minRating) : undefined,
+      page,
+      limit: PAGE_SIZE,
+    })
+      .then((res) => {
+        setItems(res.data.data);
+        setTotal(res.data.meta.total);
+        setTotalPages(res.data.meta.totalPages);
+      })
+      .catch((err: Error) => setError(err.message))
+      .finally(() => setIsLoading(false));
+  }, [status, minRating, page]);
 
-  const toggleSelectStore = (id: string) => {
-    const newSet = new Set(selectedStores);
-    if (newSet.has(id)) newSet.delete(id);
-    else newSet.add(id);
-    setSelectedStores(newSet);
-  };
+  useEffect(() => {
+    void load();
+  }, [load]);
 
-  const toggleSelectAll = () => {
-    if (selectedStores.size === paginatedData.length) {
-      setSelectedStores(new Set());
-    } else {
-      setSelectedStores(new Set(paginatedData.map(s => s.id)));
+  const toggleStatus = async (store: AdminStore) => {
+    const next: SellerStatus = store.status === 'ACTIVE' ? 'SUSPENDED' : 'ACTIVE';
+    setPendingId(store.id);
+    try {
+      await setStoreStatus(store.id, next);
+      // Muat ulang alih-alih menambal state lokal: pembekuan toko juga mengubah
+      // hitungan di halaman lain, dan daftar ini sudah tersaring di server.
+      await load();
+    } catch (err) {
+      setError((err as Error).message);
+    } finally {
+      setPendingId(null);
     }
   };
 
@@ -67,74 +74,97 @@ const StoresPage: React.FC = () => {
     <AdminLayout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-[28px] font-bold text-[#191c1e]">Stores</h1>
-          <p className="text-[15px] text-[#737686]">Manage and monitor marketplace stores, their ratings, and performance.</p>
+          <h1 className="text-[28px] font-bold text-[#191c1e]">Toko</h1>
+          <p className="text-[15px] text-[#737686]">Kelola dan pantau toko, rating, serta performanya.</p>
         </div>
 
-        {/* Filter bar (tanpa search) */}
+        {/* Filter */}
         <div className="flex flex-wrap items-center gap-3">
-          <select className="px-3 py-2 rounded-full border border-[#c3c6d7] text-sm outline-none focus:border-[#004ac6] focus:ring-2 focus:ring-[#004ac6]/20 transition bg-white">
-            <option>All Statuses</option>
-            <option>Active</option>
-            <option>Inactive</option>
-            <option>Suspended</option>
+          <select
+            value={status}
+            onChange={(e) => {
+              setStatus(e.target.value as SellerStatus | '');
+              setPage(1);
+            }}
+            className="rounded-full border border-[#c3c6d7] bg-white px-3 py-2 text-sm outline-none transition focus:border-[#004ac6] focus:ring-2 focus:ring-[#004ac6]/20"
+          >
+            <option value="">Semua Status</option>
+            <option value="ACTIVE">Aktif</option>
+            <option value="SUSPENDED">Dibekukan</option>
           </select>
-          <select className="px-3 py-2 rounded-full border border-[#c3c6d7] text-sm outline-none focus:border-[#004ac6] focus:ring-2 focus:ring-[#004ac6]/20 transition bg-white">
-            <option>All Ratings</option>
-            <option>★ 4.5 & above</option>
-            <option>★ 4.0 & above</option>
-            <option>★ 3.0 & above</option>
+          <select
+            value={minRating}
+            onChange={(e) => {
+              setMinRating(e.target.value);
+              setPage(1);
+            }}
+            className="rounded-full border border-[#c3c6d7] bg-white px-3 py-2 text-sm outline-none transition focus:border-[#004ac6] focus:ring-2 focus:ring-[#004ac6]/20"
+          >
+            <option value="">Semua Rating</option>
+            <option value="4.5">★ 4.5 ke atas</option>
+            <option value="4">★ 4.0 ke atas</option>
+            <option value="3">★ 3.0 ke atas</option>
           </select>
-          <button className="px-4 py-2 rounded-full border border-[#c3c6d7] text-sm text-[#434655] hover:border-[#004ac6] hover:text-[#004ac6] transition-colors">
-            More Filters
-          </button>
         </div>
+
+        {error && (
+          <div className="rounded-2xl border border-[#ffcdd2] bg-[#fff5f5] p-4 text-[13px] text-[#a33131]">
+            {error}
+          </div>
+        )}
 
         {/* Table */}
-        <div className="rounded-2xl border border-[#e0e3e5] bg-white p-5 overflow-hidden">
+        <div className="overflow-hidden rounded-2xl border border-[#e0e3e5] bg-white p-5">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-[#f2f4f6] text-[11px] font-semibold uppercase text-[#737686]">
-                  <th className="pb-2 pr-2 text-center w-10">
-                    <input
-                      type="checkbox"
-                      checked={paginatedData.length > 0 && selectedStores.size === paginatedData.length}
-                      onChange={toggleSelectAll}
-                      className="w-4 h-4 accent-[#004ac6] cursor-pointer"
-                    />
-                  </th>
-                  <th className="pb-2 pr-2 text-center">Store</th>
-                  <th className="pb-2 pr-2 text-center">Products</th>
-                  <th className="pb-2 pr-2 text-center">Orders</th>
-                  <th className="pb-2 pr-2 text-center">Revenue</th>
+                  <th className="pb-2 pr-2 text-center">Toko</th>
+                  <th className="pb-2 pr-2 text-center">Pemilik</th>
+                  <th className="pb-2 pr-2 text-center">Produk</th>
+                  <th className="pb-2 pr-2 text-center">Order</th>
+                  <th className="pb-2 pr-2 text-center">Omzet Kotor</th>
+                  <th className="pb-2 pr-2 text-center">Komisi</th>
+                  <th className="pb-2 pr-2 text-center">Diterima Penjual</th>
                   <th className="pb-2 pr-2 text-center">Rating</th>
                   <th className="pb-2 pr-2 text-center">Status</th>
-                  <th className="pb-2 pr-2 text-center">Created Date</th>
-                  <th className="pb-2 text-center">Actions</th>
+                  <th className="pb-2 pr-2 text-center">Dibuat</th>
+                  <th className="pb-2 text-center">Aksi</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#f2f4f6]">
-                {paginatedData.length === 0 ? (
+                {isLoading ? (
                   <tr>
-                    <td colSpan={9} className="py-10 text-center text-[#737686]">No stores found.</td>
+                    <td colSpan={11} className="py-10 text-center text-[#737686]">
+                      Memuat…
+                    </td>
+                  </tr>
+                ) : items.length === 0 ? (
+                  <tr>
+                    <td colSpan={11} className="py-10 text-center text-[#737686]">
+                      Toko nggak ketemu.
+                    </td>
                   </tr>
                 ) : (
-                  paginatedData.map((store) => (
-                    <tr key={store.id} className="text-[13px] hover:bg-[#f8f9fb] transition-colors">
-                      <td className="py-2.5 text-center">
-                        <input
-                          type="checkbox"
-                          checked={selectedStores.has(store.id)}
-                          onChange={() => toggleSelectStore(store.id)}
-                          className="w-4 h-4 accent-[#004ac6] cursor-pointer"
-                        />
+                  items.map((store) => (
+                    <tr key={store.id} className="text-[13px] transition-colors hover:bg-[#f8f9fb]">
+                      <td className="py-2.5 text-center font-medium text-[#191c1e]">
+                        {store.storeName}
+                        {store.vacationMode && (
+                          <span className="ml-1 rounded-full bg-[#f2f4f6] px-2 py-0.5 text-[10px] text-[#737686]">
+                            libur
+                          </span>
+                        )}
                       </td>
-                      <td className="py-2.5 text-center font-medium text-[#191c1e]">{store.storeName}</td>
-                      <td className="py-2.5 text-center">{store.products.toLocaleString()}</td>
-                      <td className="py-2.5 text-center">{store.orders.toLocaleString()}</td>
+                      <td className="py-2.5 text-center text-[#737686]">{store.owner}</td>
+                      <td className="py-2.5 text-center">{store.products.toLocaleString('id-ID')}</td>
+                      <td className="py-2.5 text-center">{store.orders.toLocaleString('id-ID')}</td>
+                      <td className="py-2.5 text-center">{formatRupiah(store.revenue)}</td>
                       <td className="py-2.5 text-center font-semibold text-[#004ac6]">
-                        {formatRupiah(store.revenue * 1000)} {/* dummy, agar terlihat nominal */}
+                        {formatRupiah(store.commission)}
+                      </td>
+                      <td className="py-2.5 text-center font-semibold">
+                        {formatRupiah(store.netRevenue)}
                       </td>
                       <td className="py-2.5 text-center">
                         <span className="flex items-center justify-center gap-1">
@@ -144,13 +174,21 @@ const StoresPage: React.FC = () => {
                       </td>
                       <td className="py-2.5 text-center">
                         <span className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${statusColor[store.status]}`}>
-                          {store.status}
+                          {statusLabel[store.status]}
                         </span>
                       </td>
-                      <td className="py-2.5 text-center text-[#737686]">{store.createdAt}</td>
+                      <td className="py-2.5 text-center text-[#737686]">{formatDate(store.createdAt)}</td>
                       <td className="py-2.5 text-center">
-                        <button className="text-[#004ac6] hover:underline">
-                          <Icon name="eye" size={16} />
+                        <button
+                          onClick={() => void toggleStatus(store)}
+                          disabled={pendingId === store.id}
+                          className={`rounded-full px-3 py-1 text-[12px] font-semibold text-white transition-colors disabled:opacity-50 ${
+                            store.status === 'ACTIVE'
+                              ? 'bg-[#ba1a1a] hover:bg-[#9a1515]'
+                              : 'bg-[#004ac6] hover:bg-[#003ea8]'
+                          }`}
+                        >
+                          {store.status === 'ACTIVE' ? 'Bekukan' : 'Aktifkan'}
                         </button>
                       </td>
                     </tr>
@@ -160,30 +198,19 @@ const StoresPage: React.FC = () => {
             </table>
           </div>
 
-          {/* Pagination */}
           {totalPages > 1 && (
-            <div className="mt-4 pt-4 border-t border-[#e0e3e5]">
+            <div className="mt-4 border-t border-[#e0e3e5] pt-4">
               <Pagination
-                currentPage={currentPage}
+                currentPage={page}
                 totalPages={totalPages}
-                totalItems={totalItems}
-                pageSize={pageSize}
-                onPageChange={handlePageChange}
-                showTotal={true}
+                totalItems={total}
+                pageSize={PAGE_SIZE}
+                onPageChange={setPage}
+                showTotal
               />
             </div>
           )}
         </div>
-
-        {/* Bulk action (misal delete) — sementara hanya tampilan */}
-        {selectedStores.size > 0 && (
-          <div className="flex justify-between items-center p-3 rounded-2xl bg-[#f2f4f6] border border-[#e0e3e5]">
-            <span className="text-[13px] text-[#434655]">{selectedStores.size} store(s) selected</span>
-            <button className="px-4 py-2 rounded-full bg-[#ba1a1a] text-white text-sm font-semibold hover:bg-[#9a1515] transition-colors">
-              Delete Selected
-            </button>
-          </div>
-        )}
       </div>
     </AdminLayout>
   );

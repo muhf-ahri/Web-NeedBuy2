@@ -30,8 +30,13 @@ const RequireSeller: React.FC<{ children: React.ReactNode }> = ({ children }) =>
     return <Navigate to="/login" state={{ from: location.pathname }} replace />;
   }
 
-  if (user.role !== 'SELLER' && user.role !== 'ADMIN') {
-    return <Navigate to="/" replace />;
+  // SELLER saja. Dulu ADMIN ikut diizinkan karena admin belum punya panel
+  // sendiri — sekarang punya, dan mengizinkannya justru merusak: semua endpoint
+  // /dashboard/* memanggil requireOwnSeller(), sementara akun admin tidak
+  // punya baris Seller. Hasilnya halaman terbuka tapi setiap card 403
+  // "Akun kamu belum terdaftar sebagai penjual".
+  if (user.role !== 'SELLER') {
+    return <Navigate to={user.role === 'ADMIN' ? '/admin/dashboard' : '/'} replace />;
   }
 
   return <>{children}</>;

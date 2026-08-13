@@ -5,9 +5,11 @@ import Icon from '../../../components/ui/Icon';
 import SearchSuggestions from '../../../components/ui/SearchSuggestions';
 import NotificationBell from '../../../components/ui/NotificationBell';
 import ProfileDropdown from '../../../components/ui/ProfileDropdown';
+import { useAuth } from '../../../contexts/AuthContext';
 
 const AdminHeader: React.FC = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const searchInputRef = useRef<HTMLInputElement>(null);
@@ -123,7 +125,7 @@ const AdminHeader: React.FC = () => {
           <NotificationBell />
 
           {/* Profile Dropdown */}
-          <ProfileDropdown sellerName="Admin" />
+          <ProfileDropdown sellerName={user?.name ?? 'Admin'} />
         </div>
       </div>
     </header>

@@ -32,9 +32,11 @@ import SellerAnalytics from './pages/seller/AnalyticsPage';
 import SellerSettings from './pages/seller/SettingsPage';
 
 // Admin pages
+import RequireAdmin from './components/RequireAdmin';
 import AdminDashboard from './pages/admin/DashboardPage';
 import UsersPage from './pages/admin/UsersPage';
 import StoresPage from './pages/admin/StoresPage';
+import AdminPlaceholder from './pages/admin/PlaceholderPage';
 
 function App() {
   return (
@@ -150,9 +152,42 @@ function App() {
               />
 
               {/* Admin routes — hanya untuk role ADMIN */}
-              <Route path="/admin/dashboard" element={<AdminDashboard />} />
-              <Route path="/admin/users" element={<UsersPage />} />
-              <Route path="/admin/stores" element={<StoresPage />} />
+              <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
+              <Route
+                path="/admin/dashboard"
+                element={
+                  <RequireAdmin>
+                    <AdminDashboard />
+                  </RequireAdmin>
+                }
+              />
+              <Route
+                path="/admin/users"
+                element={
+                  <RequireAdmin>
+                    <UsersPage />
+                  </RequireAdmin>
+                }
+              />
+              <Route
+                path="/admin/stores"
+                element={
+                  <RequireAdmin>
+                    <StoresPage />
+                  </RequireAdmin>
+                }
+              />
+              {/* Menu admin yang halamannya belum jadi. Tanpa splat ini, path
+                  tak dikenal jatuh ke `path="*"` di bawah dan admin terlempar
+                  keluar panel. */}
+              <Route
+                path="/admin/*"
+                element={
+                  <RequireAdmin>
+                    <AdminPlaceholder />
+                  </RequireAdmin>
+                }
+              />
 
               {/* Compare — placeholder */}
               <Route path="/compare" element={<div className="p-8 text-center text-gray-500 font-sans">Compare — coming soon</div>} />

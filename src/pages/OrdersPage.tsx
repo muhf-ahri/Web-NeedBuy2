@@ -5,7 +5,7 @@ import Icon from '../components/ui/Icon';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import { formatRupiah } from '../utils/currency';
-import { getOrders, getOrder, cancelOrder, createReview, type Order, type OrderStatus } from '../api/orders';
+import { getOrders, getOrder, cancelOrder, createReview, updateOrderStatus, type Order, type OrderStatus } from '../api/orders';
 import {
   ACCEPTED_IMAGE_TYPES,
   ACCEPTED_VIDEO_TYPES,
@@ -223,6 +223,28 @@ const OrdersPage: React.FC = () => {
       await fetchOrders();
     } catch (err: any) {
       setError(err.message ?? 'Gagal muat data pembayaran, coba lagi ya');
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  /**
+   * Konfirmasi barang sudah diterima: DELIVERED → COMPLETED.
+   *
+   * Ini satu-satunya jalan ke COMPLETED, dan backend menolak ulasan sebelum
+   * order COMPLETED (`ORDER_NOT_COMPLETED`). Tanpa tombol ini pembeli mentok:
+   * barang sudah sampai tapi form ulasannya tidak pernah muncul.
+   */
+  const handleConfirmReceived = async () => {
+    if (!selected) return;
+    setBusy(true);
+    setError(null);
+    try {
+      await updateOrderStatus(selected.id, 'COMPLETED');
+      await openDetail(selected.id);
+      await fetchOrders();
+    } catch (err: any) {
+      setError(err.message ?? 'Gagal konfirmasi pesanan diterima, coba lagi ya');
     } finally {
       setBusy(false);
     }
@@ -623,6 +645,21 @@ const OrdersPage: React.FC = () => {
                     <Icon name="clock" size={16} />
                     Pesanan sedang diproses oleh penjual
                   </div>
+                )}
+                {selected.status === 'DELIVERED' && (
+                  <>
+                    <button
+                      onClick={handleConfirmReceived}
+                      disabled={busy}
+                      className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-full bg-[#004ac6] hover:bg-[#003ea8] text-white text-[13px] font-semibold transition-colors disabled:opacity-50"
+                    >
+                      {busy ? <Icon name="clock" size={16} className="animate-spin" /> : <Icon name="check" size={16} />}
+                      Pesanan Diterima
+                    </button>
+                    <p className="w-full text-center text-[11px] text-[#737686]">
+                      Konfirmasi dulu barangnya sudah sampai, baru kamu bisa kasih ulasan.
+                    </p>
+                  </>
                 )}
               </div>
             </div>
