@@ -46,7 +46,8 @@ export type IconName =
   | 'edit'
   | 'eye'
   | 'chevronUp'
-  | 'bell';
+  | 'bell'
+  | 'wallet';
 
 const PATHS: Record<IconName, string> = {
   chevronUp: 'M4.5 15.5 12 8l7.5 7.5a1.2 1.2 0 0 0 1.7-1.7l-8.3-8.3a1.2 1.2 0 0 0-1.7 0l-8.3 8.3a1.2 1.2 0 0 0 1.7 1.7Z',
@@ -128,6 +129,9 @@ const PATHS: Record<IconName, string> = {
 
   // Bell — solid fill (lonceng notifikasi)
   bell: 'M12 22a2 2 0 0 0 2-2h-4a2 2 0 0 0 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z',
+
+  // wallet — solid fill (dompet)
+  wallet: 'M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm0 4v10h16V8H4zm4 2h8v2H8v-2z',
 };
 
 interface IconProps extends React.SVGProps<SVGSVGElement> {

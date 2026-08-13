@@ -1,15 +1,4 @@
 // src/components/ui/NeedPayNote.tsx
-//
-// Kartu saldo NeedPay, dibuat sebagai LEMBAR UANG — bukan kartu bank.
-//
-// Alasannya: yang ditampilkan di sini uang, dan uang di Indonesia punya rupa
-// yang sudah dikenal semua orang — kertas krem, tinta cetak, garis guilloche,
-// nomor seri, kotak nominal di pojok. Meminjam rupa itu bikin saldo langsung
-// terbaca sebagai uang, tanpa perlu satu kata penjelasan pun.
-//
-// Neo-brutalism-nya bukan tempelan: border tebal + bayangan offset keras
-// adalah cara cetak offset terlihat kalau platnya sedikit meleset. Jadi gaya
-// dan subjeknya kebetulan bicara hal yang sama.
 import React, { useEffect, useId, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { formatRupiah } from '../../utils/currency';
@@ -17,73 +6,100 @@ import { getAccessToken } from '../../api/auth';
 import { getWallet } from '../../api/wallet';
 
 /**
- * Garis guilloche — pola gelombang yang dipakai di uang kertas untuk
- * mempersulit pemalsuan. Di sini murni tekstur; dibuat dari satu <pattern>
- * SVG, bukan gambar, supaya tetap tajam di layar mana pun dan tidak menambah
- * satu byte pun permintaan jaringan.
+ * Garis guilloche — pola gelombang yang dipakai di uang kertas.
+ * Versi dengan warna putih transparan untuk tampilan yang lebih elegan.
  */
-export const Guilloche: React.FC<{ className?: string; opacity?: number }> = ({
+export const Guilloche: React.FC<{ className?: string; opacity?: number; color?: string }> = ({
   className = '',
-  opacity = 0.14,
+  opacity = 0.15,
+  color = 'rgba(255,255,255,0.4)',
 }) => {
-  // id unik per instance: lembar saldo dan pita bisa tampil di halaman yang
-  // sama, dan dua <pattern> ber-id sama bikin salah satunya mengambil milik
-  // yang lain.
   const patternId = `np-guilloche-${useId().replace(/:/g, '')}`;
 
   return (
-  <svg
-    aria-hidden="true"
-    className={`pointer-events-none absolute inset-0 h-full w-full ${className}`}
-    preserveAspectRatio="none"
-  >
-    <defs>
-      <pattern id={patternId} width="48" height="24" patternUnits="userSpaceOnUse">
-        <path
-          d="M0 12 Q 12 0 24 12 T 48 12"
-          fill="none"
-          stroke="var(--np-ink)"
-          strokeWidth="1"
-        />
-        <path
-          d="M0 20 Q 12 8 24 20 T 48 20"
-          fill="none"
-          stroke="var(--np-ink)"
-          strokeWidth="0.6"
-        />
-      </pattern>
-    </defs>
-    <rect width="100%" height="100%" fill={`url(#${patternId})`} opacity={opacity} />
-  </svg>
+    <svg
+      aria-hidden="true"
+      className={`pointer-events-none absolute inset-0 h-full w-full ${className}`}
+      preserveAspectRatio="none"
+    >
+      <defs>
+        <pattern id={patternId} width="48" height="24" patternUnits="userSpaceOnUse">
+          <path
+            d="M0 12 Q 12 0 24 12 T 48 12"
+            fill="none"
+            stroke={color}
+            strokeWidth="1"
+          />
+          <path
+            d="M0 20 Q 12 8 24 20 T 48 20"
+            fill="none"
+            stroke={color}
+            strokeWidth="0.6"
+          />
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill={`url(#${patternId})`} opacity={opacity} />
+    </svg>
   );
 };
 
-/** Benang pengaman: pita putus-putus vertikal di uang kertas asli. */
+/**
+ * Zig-zag dekoratif dengan gradasi dan animasi.
+ */
+export const ZigZag: React.FC<{ className?: string; color?: string; opacity?: number }> = ({
+  className = '',
+  color = 'rgba(255,255,255,0.3)',
+  opacity = 0.5,
+}) => {
+  const id = `np-zigzag-${useId().replace(/:/g, '')}`;
+
+  return (
+    <svg
+      aria-hidden="true"
+      className={`pointer-events-none absolute ${className}`}
+      width="140"
+      height="40"
+      viewBox="0 0 140 40"
+      fill="none"
+    >
+      <defs>
+        <linearGradient id={`${id}-grad`} x1="0" y1="0" x2="140" y2="0">
+          <stop offset="0%" stopColor={color} stopOpacity="0" />
+          <stop offset="30%" stopColor={color} stopOpacity={opacity} />
+          <stop offset="70%" stopColor={color} stopOpacity={opacity} />
+          <stop offset="100%" stopColor={color} stopOpacity="0" />
+        </linearGradient>
+      </defs>
+      <polyline
+        points="0,20 12,4 24,20 36,4 48,20 60,4 72,20 84,4 96,20 108,4 120,20 132,4 140,20"
+        stroke={`url(#${id}-grad)`}
+        strokeWidth="2"
+        fill="none"
+        className="animate-pulse-soft"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};
+
+/** Benang pengaman: pita vertikal bergaris. */
 const SecurityThread: React.FC<{ className?: string }> = ({ className = '' }) => (
   <span
     aria-hidden="true"
-    className={`absolute top-0 h-full w-[7px] ${className}`}
+    className={`absolute top-0 h-full w-[6px] ${className}`}
     style={{
       backgroundImage:
-        'repeating-linear-gradient(180deg, var(--np-ink) 0 10px, transparent 10px 18px)',
-      opacity: 0.5,
+        'repeating-linear-gradient(180deg, rgba(255,255,255,0.3) 0 10px, transparent 10px 18px)',
     }}
   />
 );
 
-/**
- * Nomor seri. Diturunkan dari id dompet, jadi angkanya benar-benar menandai
- * dompet ini — bukan angka hias yang sama untuk semua orang.
- */
 const serialFrom = (walletId: string | undefined): string =>
   walletId ? `NP ${walletId.replace(/-/g, '').slice(0, 10).toUpperCase()}` : 'NP ··········';
 
 /**
- * Lembar saldo utuh. Dipakai di halaman NeedPay.
- *
- * @param balance saldo dari API (string Decimal).
- * @param walletId sumber nomor seri.
- * @param loading tampilkan kerangka, bukan angka nol yang menyesatkan.
+ * Lembar saldo NeedPay — desain elegan dengan gradasi biru kobalt.
  */
 export const NeedPayNote: React.FC<{
   balance: string | number;
@@ -91,48 +107,81 @@ export const NeedPayNote: React.FC<{
   loading?: boolean;
 }> = ({ balance, walletId, loading = false }) => (
   <figure
-    className="np-note relative overflow-hidden rounded-[4px]"
-    style={{ color: 'var(--np-ink)' }}
+    className="relative overflow-hidden rounded-2xl transition-all hover:shadow-xl"
+    style={{
+      background: 'linear-gradient(145deg, #004ac6 0%, #002a7a 50%, #001a4a 100%)',
+      color: '#ffffff',
+    }}
   >
-    <Guilloche />
-    <SecurityThread className="left-[18%]" />
+    {/* Background pattern */}
+    <Guilloche color="rgba(255,255,255,0.3)" opacity={0.2} />
 
-    <div className="relative p-5 sm:p-7">
-      {/* Baris penerbit — microtext di uang asli. */}
+    {/* Security thread */}
+    <SecurityThread className="left-[12%]" />
+
+    {/* Dekorasi zig-zag dengan animasi */}
+    <ZigZag className="bottom-3 right-6" color="rgba(255,255,255,0.4)" opacity={0.6} />
+    <ZigZag className="top-3 left-6 rotate-180" color="rgba(255,255,255,0.4)" opacity={0.6} />
+
+    {/* Lingkaran dekoratif dengan animasi float */}
+    <div className="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-white/5 animate-float" />
+    <div className="absolute -bottom-12 -left-12 h-32 w-32 rounded-full bg-white/5 animate-pulse-soft" />
+    <div className="absolute right-1/4 top-1/4 h-20 w-20 rounded-full bg-white/5 animate-drift" />
+    <div className="absolute left-1/3 bottom-1/4 h-14 w-14 rounded-full bg-white/5 animate-float" style={{ animationDelay: '1.5s' }} />
+    <div className="absolute right-1/3 bottom-1/3 h-10 w-10 rounded-full bg-white/10 animate-pulse-soft" style={{ animationDelay: '0.8s' }} />
+
+    {/* Garis dekoratif */}
+    <div className="absolute right-0 top-0 h-40 w-40 rotate-12 border-r-2 border-t-2 border-white/10 rounded-tr-full" />
+    <div className="absolute bottom-0 left-0 h-28 w-28 -rotate-6 border-b-2 border-l-2 border-white/10 rounded-bl-full" />
+
+    <div className="relative z-10 p-6 sm:p-8">
+      {/* Header */}
       <div className="flex items-start justify-between gap-4">
-        <p className="np-serial text-[9px] font-bold uppercase sm:text-[10px]">
-          Bank NeedBuy · Alat pembayaran di dalam aplikasi
-        </p>
-
-        {/* Kotak nominal pojok kanan atas. */}
+        <div className="flex items-center gap-2">
+          <div className="rounded-full bg-white/15 p-1.5">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M8 8h8M8 12h6M8 16h4" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+          <p className="text-[11px] font-bold uppercase tracking-wider text-white/80">
+            NeedPay · Dompet Digital
+          </p>
+        </div>
         <span
-          className="np-serial shrink-0 border-[2.5px] px-2 py-1 text-[11px] font-bold"
-          style={{ borderColor: 'var(--np-ink)' }}
+          className="shrink-0 rounded-full border-2 border-white/30 px-3 py-1 text-[10px] font-bold uppercase text-white/70"
         >
           RP
         </span>
       </div>
 
-      <p className="np-serial mt-6 text-[10px] font-bold uppercase opacity-70">Saldo kamu</p>
-
-      {loading ? (
-        <div
-          className="mt-1.5 h-11 w-56 animate-pulse rounded-[2px] sm:h-14"
-          style={{ backgroundColor: 'var(--np-paper-deep)' }}
-        />
-      ) : (
-        <p
-          className="np-figure mt-1 text-[40px] font-extrabold leading-none sm:text-[54px]"
-          style={{ color: 'var(--np-rupiah)' }}
-        >
-          {formatRupiah(balance)}
+      {/* Saldo */}
+      <div className="mt-6">
+        <p className="text-[10px] font-medium uppercase tracking-wider text-white/50">
+          Total Saldo
         </p>
-      )}
+        {loading ? (
+          <div className="mt-1.5 h-12 w-56 animate-pulse rounded bg-white/10" />
+        ) : (
+          <p className="mt-1 text-[42px] font-extrabold leading-none tracking-tight sm:text-[54px]">
+            {formatRupiah(balance)}
+          </p>
+        )}
+      </div>
 
-      <div className="mt-7 flex items-end justify-between gap-4">
-        <p className="np-serial text-[10px] font-bold sm:text-[11px]">{serialFrom(walletId)}</p>
-        <p className="np-serial text-[9px] font-bold uppercase opacity-60">
-          Sah dipakai di NeedBuy
+      {/* Status dan Nomor Seri */}
+      <div className="mt-6 flex flex-wrap items-end justify-between gap-4 border-t border-white/10 pt-4">
+        <div className="flex items-center gap-3">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-green-400/20 px-2.5 py-1 text-[10px] font-semibold text-green-300">
+            <span className="h-1.5 w-1.5 rounded-full bg-green-400 animate-pulse" />
+            Aktif
+          </span>
+          <p className="np-serial text-[10px] font-mono font-medium text-white/50">
+            {serialFrom(walletId)}
+          </p>
+        </div>
+        <p className="text-[9px] font-medium uppercase tracking-wider text-white/40">
+          Sah di NeedBuy
         </p>
       </div>
     </div>
@@ -140,9 +189,7 @@ export const NeedPayNote: React.FC<{
 );
 
 /**
- * Pita NeedPay untuk beranda & halaman kategori: potongan lembar yang sama,
- * dipendekkan. Isinya tetap kabar yang benar — saldo asli kamu — jadi ini
- * informasi, bukan spanduk hiasan.
+ * Pita NeedPay — versi ringkas untuk beranda.
  */
 export const NeedPayBanner: React.FC<{
   balance?: string | number | null;
@@ -155,52 +202,60 @@ export const NeedPayBanner: React.FC<{
     <button
       type="button"
       onClick={onAction}
-      className={`np-note np-press group relative block w-full overflow-hidden rounded-[4px] text-left focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#12100e] ${className}`}
-      style={{ color: 'var(--np-ink)' }}
+      className={`group relative block w-full overflow-hidden rounded-2xl text-left transition-all hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#004ac6] ${className}`}
+      style={{
+        background: 'linear-gradient(145deg, #004ac6 0%, #002a7a 50%, #001a4a 100%)',
+        color: '#ffffff',
+      }}
     >
-      <Guilloche opacity={0.1} />
-      <SecurityThread className="left-[10%] hidden sm:block" />
+      {/* Pattern dan dekorasi */}
+      <Guilloche color="rgba(255,255,255,0.25)" opacity={0.15} />
+      <SecurityThread className="left-[8%] hidden sm:block" />
 
-      <span className="relative flex flex-wrap items-center justify-between gap-x-6 gap-y-3 px-4 py-3.5 sm:px-6">
+      {/* Zig-zag kecil */}
+      <ZigZag className="bottom-1 right-4" color="rgba(255,255,255,0.3)" opacity={0.4} />
+      <ZigZag className="top-1 left-4 rotate-180" color="rgba(255,255,255,0.3)" opacity={0.4} />
+
+      {/* Lingkaran dekoratif */}
+      <div className="absolute -right-10 -top-10 h-28 w-28 rounded-full bg-white/5 animate-float" />
+      <div className="absolute -bottom-8 -left-8 h-20 w-20 rounded-full bg-white/5 animate-pulse-soft" />
+
+      <div className="relative flex flex-wrap items-center justify-between gap-4 px-5 py-4 sm:px-7 sm:py-5">
         <span className="min-w-0">
-          <span className="np-serial block text-[9px] font-bold uppercase opacity-70">
+          <span className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-white/60">
+            <span className="rounded-full bg-white/10 p-1">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" strokeLinecap="round"/>
+              </svg>
+            </span>
             NeedPay
           </span>
           {hasWallet ? (
-            <span className="mt-0.5 flex items-baseline gap-2">
-              <span
-                className="np-figure text-[24px] font-extrabold leading-none sm:text-[28px]"
-                style={{ color: 'var(--np-rupiah)' }}
-              >
+            <span className="mt-1 flex items-baseline gap-2">
+              <span className="text-2xl font-extrabold sm:text-3xl">
                 {formatRupiah(balance)}
               </span>
-              <span className="text-[12px] font-semibold opacity-70">saldo kamu</span>
+              <span className="text-sm font-medium text-white/60">saldo kamu</span>
             </span>
           ) : (
-            <span className="mt-0.5 block text-[15px] font-extrabold leading-tight sm:text-[17px]">
+            <span className="mt-1 block text-base font-bold leading-tight sm:text-lg">
               Isi saldo sekali, checkout tinggal satu ketukan
             </span>
           )}
         </span>
 
         <span
-          className="np-serial shrink-0 border-[2.5px] px-3.5 py-2 text-[11px] font-bold uppercase"
-          style={{ borderColor: 'var(--np-ink)', backgroundColor: 'var(--np-mint)' }}
+          className="shrink-0 rounded-full bg-white px-5 py-2 text-sm font-bold text-[#004ac6] transition-transform group-hover:scale-105"
         >
           {hasWallet ? 'Isi saldo →' : 'Buka NeedPay →'}
         </span>
-      </span>
+      </div>
     </button>
   );
 };
 
 /**
- * Pita NeedPay siap pasang: mengambil saldonya sendiri, jadi halaman yang
- * memakainya cukup menaruh satu baris tanpa ikut mengurus state dompet.
- *
- * Tidak merender apa pun sampai saldonya diketahui kalau user sudah login —
- * pita yang muncul dengan angka nol lalu berubah jadi 500.000 lebih buruk
- * daripada pita yang datang sedikit terlambat.
+ * Pita NeedPay siap pasang — mengambil saldo sendiri.
  */
 export const NeedPayStrip: React.FC<{ className?: string }> = ({ className = '' }) => {
   const navigate = useNavigate();
@@ -216,8 +271,6 @@ export const NeedPayStrip: React.FC<{ className?: string }> = ({ className = '' 
       .then((wallet) => {
         if (!cancelled) setBalance(wallet.balance);
       })
-      // Saldo gagal dimuat bukan alasan menyembunyikan NeedPay — pitanya
-      // tampil dengan ajakan, bukan dengan angka yang salah.
       .catch(() => undefined)
       .finally(() => {
         if (!cancelled) setReady(true);
