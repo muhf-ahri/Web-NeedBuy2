@@ -212,7 +212,7 @@ const CategoriesPage: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-      <Navbar showSearch={false} />
+      <Navbar  />
 
       <PromoCarousel
         saleProducts={saleProducts}
