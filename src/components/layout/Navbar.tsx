@@ -3,14 +3,15 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Icon, { type IconName } from '../ui/Icon';
 import SearchSuggestions from '../ui/SearchSuggestions';
+import NotificationBell from '../ui/NotificationBell';
 import { useCart } from '../../contexts/CartContext';
 import { useAuth } from '../../contexts/AuthContext';
 
 interface NavbarProps {
   avatarUrl?: string;
+  showSearch?: boolean; // default true
 }
 
-// Nav links desktop.
 const NAV_LINKS = [
   { to: '/categories', label: 'Kategori' },
   { to: '/plans', label: 'Rencana Belanja' },
@@ -18,8 +19,6 @@ const NAV_LINKS = [
   { to: '/orders', label: 'Pesanan' },
 ];
 
-// Baris tombol bundar khusus mobile — pengganti hamburger. Tujuan tiap tombol
-// terlihat langsung, jadi tidak ada menu yang harus dibuka dulu.
 const QUICK_ACTIONS: Array<{ to: string; label: string; icon: IconName }> = [
   { to: '/orders', label: 'Pesanan', icon: 'orders' },
   { to: '/coupons', label: 'Kupon', icon: 'coupon' },
@@ -30,7 +29,7 @@ const QUICK_ACTIONS: Array<{ to: string; label: string; icon: IconName }> = [
   { to: '/wishlist', label: 'Wishlist', icon: 'heart' },
 ];
 
-const Navbar: React.FC<NavbarProps> = ({ avatarUrl }) => {
+const Navbar: React.FC<NavbarProps> = ({ avatarUrl, showSearch = true }) => {
   const { cartCount } = useCart();
   const { user } = useAuth();
   const isSeller = user?.role === 'SELLER' || user?.role === 'ADMIN';
@@ -130,70 +129,69 @@ const Navbar: React.FC<NavbarProps> = ({ avatarUrl }) => {
 
         {/* ── Right Actions ── */}
         <div className="flex items-center gap-1">
-          {/* Search */}
-          <div ref={searchContainerRef} className="relative flex items-center">
-            <div
-              className={`flex items-center overflow-hidden transition-all duration-300 ease-in-out ${
-                searchOpen
-                  ? 'w-40 sm:w-64 bg-[#f2f4f6] rounded-full border border-[#c3c6d7] focus-within:border-[#004ac6] focus-within:ring-2 focus-within:ring-[#004ac6]/20'
-                  : 'w-0 border-transparent'
-              }`}
-            >
-              <form onSubmit={handleSearchSubmit} className="flex items-center w-full px-3">
-                <Icon name="search" size={16} className="text-[#737686] shrink-0" />
-                <input
-                  ref={searchInputRef}
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  onKeyDown={handleSearchKeyDown}
-                  placeholder="Mau cari apa hari ini?"
-                  className="flex-1 bg-transparent outline-none text-sm text-[#101319] placeholder-[#737686] px-2 py-1.5 min-w-0"
-                />
-                {searchQuery && (
-                  <button
-                    type="button"
-                    onClick={() => setSearchQuery('')}
-                    className="text-[#737686] hover:text-[#101319] transition-colors"
-                    aria-label="Hapus kata kunci"
-                  >
-                    <Icon name="close" size={14} />
-                  </button>
-                )}
-              </form>
-            </div>
+          {/* Search — hanya tampil jika showSearch true */}
+          {showSearch && (
+            <div ref={searchContainerRef} className="relative flex items-center">
+              <div
+                className={`flex items-center overflow-hidden transition-all duration-300 ease-in-out ${
+                  searchOpen
+                    ? 'w-40 sm:w-64 bg-[#f2f4f6] rounded-full border border-[#c3c6d7] focus-within:border-[#004ac6] focus-within:ring-2 focus-within:ring-[#004ac6]/20'
+                    : 'w-0 border-transparent'
+                }`}
+              >
+                <form onSubmit={handleSearchSubmit} className="flex items-center w-full px-3">
+                  <Icon name="search" size={16} className="text-[#737686] shrink-0" />
+                  <input
+                    ref={searchInputRef}
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onKeyDown={handleSearchKeyDown}
+                    placeholder="Mau cari apa hari ini?"
+                    className="flex-1 bg-transparent outline-none text-sm text-[#101319] placeholder-[#737686] px-2 py-1.5 min-w-0"
+                  />
+                  {searchQuery && (
+                    <button
+                      type="button"
+                      onClick={() => setSearchQuery('')}
+                      className="text-[#737686] hover:text-[#101319] transition-colors"
+                      aria-label="Hapus kata kunci"
+                    >
+                      <Icon name="close" size={14} />
+                    </button>
+                  )}
+                </form>
+              </div>
 
-            <button
-              onClick={() => {
-                setSearchOpen((prev) => !prev);
-                if (searchOpen) setSearchQuery('');
-              }}
-              className={`p-2 rounded-full transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#004ac6] ${
-                searchOpen
-                  ? 'text-[#004ac6] bg-[#dbe1ff]'
-                  : 'text-[#434655] hover:text-[#004ac6] hover:bg-[#f2f4f6]'
-              }`}
-              aria-label={searchOpen ? 'Tutup pencarian' : 'Buka pencarian'}
-            >
-              <Icon name={searchOpen ? 'close' : 'search'} size={18} />
-            </button>
-
-            {/* Saran produk — ditambatkan ke kanan supaya tidak keluar layar di mobile */}
-            {searchOpen && (
-              <SearchSuggestions
-                term={searchQuery}
-                onPick={() => {
-                  setSearchOpen(false);
-                  setSearchQuery('');
+              <button
+                onClick={() => {
+                  setSearchOpen((prev) => !prev);
+                  if (searchOpen) setSearchQuery('');
                 }}
-                className="left-auto w-[280px] sm:w-[360px]"
-              />
-            )}
-          </div>
+                className={`p-2 rounded-full transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#004ac6] ${
+                  searchOpen
+                    ? 'text-[#004ac6] bg-[#dbe1ff]'
+                    : 'text-[#434655] hover:text-[#004ac6] hover:bg-[#f2f4f6]'
+                }`}
+                aria-label={searchOpen ? 'Tutup pencarian' : 'Buka pencarian'}
+              >
+                <Icon name={searchOpen ? 'close' : 'search'} size={18} />
+              </button>
 
-          {/* Pintasan ke dashboard toko — hanya muncul untuk pemilik toko.
-              Di mobile ikut tampil sebagai ikon saja supaya tidak menggeser
-              search dan cart. */}
+              {searchOpen && (
+                <SearchSuggestions
+                  term={searchQuery}
+                  onPick={() => {
+                    setSearchOpen(false);
+                    setSearchQuery('');
+                  }}
+                  className="left-auto w-[280px] sm:w-[360px]"
+                />
+              )}
+            </div>
+          )}
+
+          {/* Dashboard Toko */}
           {isSeller && (
             <Link
               to="/seller/dashboard"
@@ -205,7 +203,7 @@ const Navbar: React.FC<NavbarProps> = ({ avatarUrl }) => {
             </Link>
           )}
 
-          {/* Wishlist — desktop saja, di mobile sudah ada di quick actions */}
+          {/* Wishlist */}
           <Link
             to="/wishlist"
             className="hidden md:inline-flex relative p-2 rounded-full text-[#434655] hover:text-[#004ac6] hover:bg-[#f2f4f6] transition-colors duration-200"
@@ -213,6 +211,9 @@ const Navbar: React.FC<NavbarProps> = ({ avatarUrl }) => {
           >
             <Icon name="heart" size={18} />
           </Link>
+
+          {/* Notification */}
+          <NotificationBell />
 
           {/* Cart */}
           <Link

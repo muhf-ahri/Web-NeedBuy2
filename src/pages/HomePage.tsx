@@ -187,7 +187,7 @@ const HomePage: React.FC = () => {
       className="min-h-screen flex flex-col bg-white"
       style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
     >
-      <Navbar />
+      <Navbar showSearch={false}/>
 
       {/* ── 1. Promo: diskon + kenapa NeedBuy ──────────────────────────────────── */}
       <PromoCarousel saleProducts={saleProducts} loading={loading} />
