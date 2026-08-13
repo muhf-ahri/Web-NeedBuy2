@@ -5,7 +5,7 @@ import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import Icon from '../components/ui/Icon';
 import { formatRupiah } from '../utils/currency';
-import { claimCoupon, claimCouponByCode, getCoupons, type Coupon } from '../api/coupons';
+import { claimCoupon, claimCouponByCode, getCoupons, COUPON_SKIN, type Coupon } from '../api/coupons';
 import { getAccessToken } from '../api/auth';
 
 const TABS = [
@@ -13,10 +13,11 @@ const TABS = [
   { key: 'mine' as const, label: 'Kupon Saya' },
 ];
 
-const valueLabel = (coupon: Coupon) =>
-  coupon.type === 'PERCENT'
-    ? `${Number(coupon.value)}%`
-    : formatRupiah(coupon.value);
+const valueLabel = (coupon: Coupon) => {
+  if (coupon.type === 'FREE_SHIPPING') return 'GRATIS';
+  if (coupon.type === 'PERCENT') return `${Number(coupon.value)}%`;
+  return formatRupiah(coupon.value);
+};
 
 const expiryLabel = (iso: string | null) => {
   if (!iso) return 'Nggak ada batas waktu';
@@ -34,6 +35,9 @@ const CouponCard: React.FC<{
 }> = ({ coupon, busy, onClaim }) => {
   const used = !!coupon.usedAt;
   const dead = used || coupon.expired || coupon.soldOut;
+  // Kategori tak dikenal (kupon lama sebelum kolomnya ada) jatuh ke DISCOUNT
+  // ketimbang bikin kartunya gagal render.
+  const skin = COUPON_SKIN[coupon.category] ?? COUPON_SKIN.DISCOUNT;
 
   return (
     <article
@@ -41,13 +45,21 @@ const CouponCard: React.FC<{
         dead ? 'opacity-60' : ''
       }`}
     >
-      {/* Stub kiri — bagian yang "disobek", penanda ini kupon bukan kartu biasa */}
-      <div className="w-24 shrink-0 bg-[#fff0e9] text-[#ff5a1f] flex flex-col items-center justify-center gap-1 px-2 border-r border-dashed border-[#ffcbb5]">
-        <Icon name="tag" size={18} />
+      {/* Stub kiri — bagian yang "disobek", penanda ini kupon bukan kartu biasa.
+          Warnanya dari kategori kupon, jadi jenis untungnya kebaca sebelum
+          satu huruf pun dibaca: hijau = ongkir, ungu = cashback, oranye =
+          potongan harga. */}
+      <div
+        className="w-24 shrink-0 flex flex-col items-center justify-center gap-1 px-2 border-r border-dashed"
+        style={{ backgroundColor: skin.stub, color: skin.ink, borderColor: skin.edge }}
+      >
+        <Icon name={coupon.type === 'FREE_SHIPPING' ? 'truck' : 'tag'} size={18} />
         <span className="text-[17px] font-bold leading-none text-center break-all">
           {valueLabel(coupon)}
         </span>
-        <span className="text-[10px] uppercase tracking-wide">potongan</span>
+        <span className="text-[10px] uppercase tracking-wide text-center leading-tight">
+          {skin.label}
+        </span>
       </div>
 
       <div className="flex-1 p-4 min-w-0">

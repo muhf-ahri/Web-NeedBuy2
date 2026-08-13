@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import SellerLayout from './SellerLayout';
 import Icon from '../../components/ui/Icon';
+import { ChatMessageBody, AttachPhotoButton, PendingPhoto, previewOf } from '../../components/ui/ChatMessageBody';
 import { useAuth } from '../../contexts/AuthContext';
 import {
   getConversations,
@@ -23,6 +24,7 @@ const ChatsPage: React.FC = () => {
   const [draft, setDraft] = useState('');
   const [loading, setLoading] = useState(true);
   const [sending, setSending] = useState(false);
+  const [photoUrl, setPhotoUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
 
@@ -103,9 +105,13 @@ const ChatsPage: React.FC = () => {
     setSending(true);
     setError(null);
     try {
-      const res = await sendMessage(activeId, body);
+      const res = await sendMessage(activeId, {
+        ...(body ? { body } : {}),
+        ...(photoUrl ? { imageUrl: photoUrl } : {}),
+      });
       setMessages((prev) => [...prev, res.data.data]);
       setDraft('');
+      setPhotoUrl(null);
       loadConversations().catch(() => {});
     } catch (err: any) {
       setError(err?.message ?? 'Pesannya gagal dikirim, coba lagi ya');
@@ -151,7 +157,7 @@ const ChatsPage: React.FC = () => {
                       </div>
                       <div className="flex items-center justify-between gap-2">
                         <p className="text-[12px] text-[#737686] truncate">
-                          {chat.lastMessage?.body ?? 'Belum ada pesan nih'}
+                          {previewOf(chat.lastMessage)}
                         </p>
                         {chat.unreadCount > 0 && (
                           <span className="shrink-0 bg-[#ba1a1a] text-white text-[10px] font-bold rounded-full min-w-[18px] h-[18px] px-1 flex items-center justify-center">
@@ -192,9 +198,9 @@ const ChatsPage: React.FC = () => {
                                 : 'bg-white border border-[#e0e3e5] text-[#191c1e] rounded-bl-sm'
                             }`}
                           >
-                            <p className="text-[13px] whitespace-pre-wrap break-words">
-                              {msg.body}
-                            </p>
+                            <div className="text-[13px]">
+                              <ChatMessageBody message={msg} mine={mine} />
+                            </div>
                             <p
                               className={`text-[10px] mt-1 flex justify-end gap-1 ${
                                 mine ? 'text-white/70' : 'text-[#737686]'
@@ -211,7 +217,14 @@ const ChatsPage: React.FC = () => {
                   <div ref={bottomRef} />
                 </div>
 
-                <form onSubmit={handleSend} className="border-t border-[#e0e3e5] p-3 flex items-center gap-2">
+                <form onSubmit={handleSend} className="border-t border-[#e0e3e5] p-3">
+                  {photoUrl && <PendingPhoto url={photoUrl} onRemove={() => setPhotoUrl(null)} />}
+                  <div className="flex items-center gap-2">
+                  <AttachPhotoButton
+                    disabled={sending}
+                    onUploaded={setPhotoUrl}
+                    onError={setError}
+                  />
                   <input
                     type="text"
                     value={draft}
@@ -228,6 +241,7 @@ const ChatsPage: React.FC = () => {
                   >
                     <Icon name="send" size={18} />
                   </button>
+                </div>
                 </form>
               </>
             ) : (

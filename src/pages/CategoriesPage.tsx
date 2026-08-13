@@ -1,5 +1,5 @@
 // src/pages/CategoriesPage.tsx
-import React, { useState, useMemo, useEffect, useCallback } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Icon from '../components/ui/Icon';
 import DiscountBadge, { PriceWithDiscount } from '../components/ui/DiscountBadge';
@@ -125,16 +125,26 @@ const CategoriesPage: React.FC = () => {
   const [sortBy, setSortBy] = useState(SORT_OPTIONS[0]);
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
 
-  // ── Ambil produk dari API dengan pagination ──────────────────────────────
+  // ── Ambil produk dari API ────────────────────────────────────────────────
+  //
+  // SELURUH filter ikut dikirim ke server, bukan disaring di client. Paginasi
+  // di halaman ini server-side: kalau filternya dijalankan di client, yang
+  // tersaring cuma 24 item halaman berjalan sementara jumlah halamannya masih
+  // menghitung seluruh katalog — hasilnya halaman yang kelihatan kosong padahal
+  // paginasinya bilang masih ada 30 halaman lagi.
   const params: GetProductsParams = useMemo(() => {
     const p: GetProductsParams = { limit: PAGE_SIZE, page };
-    // Hanya kirim sort jika bukan 'Paling Cocok' (default server)
     if (sortBy === 'Harga: Rendah ke Tinggi') p.sort = 'price_asc';
     else if (sortBy === 'Harga: Tinggi ke Rendah') p.sort = 'price_desc';
     else if (sortBy === 'Terbaru') p.sort = 'newest';
     // 'Paling Cocok' = tidak kirim sort, biar server pakai default
+
+    if (selectedCategories.length > 0) p.categorySlugs = selectedCategories.join(',');
+    if (activeConditions.length > 0) p.conditions = activeConditions.join(',');
+    if (priceMin) p.minPrice = Number(priceMin);
+    if (priceMax) p.maxPrice = Number(priceMax);
     return p;
-  }, [page, sortBy]);
+  }, [page, sortBy, selectedCategories, activeConditions, priceMin, priceMax]);
 
   const {
     products: apiProducts,
@@ -158,45 +168,6 @@ const CategoriesPage: React.FC = () => {
   }, [apiCategories]);
 
   const rootCategories = allCategories.filter((c) => !c.parentId);
-
-  // ── Filter dan sorting produk (client-side) ──────────────────────────────
-  const filtered = useMemo(() => {
-    let list = [...apiProducts];
-
-    if (selectedCategories.length > 0) {
-      const matchedSlugs = new Set<string>();
-      selectedCategories.forEach((slug) => {
-        // Cari semua descendant (termasuk dirinya sendiri)
-        const descendants = allCategories.filter(c => {
-          let parent = c;
-          while (parent.parentId) {
-            const p = allCategories.find(cat => cat.id === parent.parentId);
-            if (!p) break;
-            if (p.slug === slug) return true;
-            parent = p;
-          }
-          return c.slug === slug;
-        });
-        descendants.forEach(c => matchedSlugs.add(c.slug));
-      });
-      list = list.filter((p) => matchedSlugs.has(p.category.slug));
-    }
-
-    if (priceMin || priceMax) {
-      const min = priceMin ? parseInt(priceMin) : 0;
-      const max = priceMax ? parseInt(priceMax) : Infinity;
-      list = list.filter((p) => {
-        const price = parseInt(p.price);
-        return price >= min && price <= max;
-      });
-    }
-
-    if (activeConditions.length > 0) {
-      list = list.filter((p) => activeConditions.includes(p.condition ?? 'Baru'));
-    }
-
-    return list;
-  }, [apiProducts, allCategories, selectedCategories, priceMin, priceMax, activeConditions]);
 
   // ── Reset page saat filter/sort berubah ────────────────────────────────────
   useEffect(() => {
@@ -230,10 +201,14 @@ const CategoriesPage: React.FC = () => {
     [apiProducts]
   );
 
-  const hasActiveFilters =
-    selectedCategories.length > 0 || priceMin || priceMax || activeConditions.length > 0;
+  // Boolean() eksplisit: `priceMin || priceMax` menghasilkan STRING, dan string
+  // kosong itu falsy — jadi tanpa ini prop `hasActiveFilters` kadang berisi
+  // "150000" alih-alih true.
+  const hasActiveFilters = Boolean(
+    selectedCategories.length > 0 || priceMin || priceMax || activeConditions.length > 0
+  );
 
-  const totalDisplay = filtered.length;
+  const totalDisplay = total;
 
   return (
     <div className="min-h-screen flex flex-col bg-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
@@ -339,7 +314,7 @@ const CategoriesPage: React.FC = () => {
                   </div>
                 ))}
               </div>
-            ) : filtered.length === 0 ? (
+            ) : apiProducts.length === 0 ? (
               <div className="text-center py-20 text-[#737686]">
                 {productsError ? (
                   <p>Gagal memuat produk: {productsError}</p>
@@ -350,7 +325,7 @@ const CategoriesPage: React.FC = () => {
             ) : (
               <>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4">
-                  {filtered.map((p) => (
+                  {apiProducts.map((p) => (
                     <ProductCard key={p.id} product={p} onNavigate={handleNavigate} />
                   ))}
                 </div>

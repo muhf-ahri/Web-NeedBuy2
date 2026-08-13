@@ -6,6 +6,17 @@ export interface GetProductsParams {
   limit?: number;
   // categorySlug goes in URL path, not here
   q?: string;
+  /**
+   * Filter kategori jamak, slug dipisah koma. Turunannya dimekarkan di server
+   * (produk cuma menempel di kategori daun).
+   *
+   * Dikirim ke server, bukan disaring di client, karena paginasinya server-side
+   * — filter client cuma menyaring halaman berjalan sementara jumlah halamannya
+   * masih menghitung seluruh katalog.
+   */
+  categorySlugs?: string;
+  /** Filter kondisi barang, dipisah koma. Alasannya sama dengan categorySlugs. */
+  conditions?: string;
   /** Batasi ke produk satu toko — dipakai saat membuka toko dari hasil pencarian. */
   sellerId?: string;
   minPrice?: number;

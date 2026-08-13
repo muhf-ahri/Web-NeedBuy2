@@ -86,7 +86,7 @@ const CartPage: React.FC = () => {
 
   if (!isAuthed) {
     return (
-      <div className="min-h-screen flex flex-col bg-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+      <div className="min-h-screen flex flex-col bg-[#f2f4f6]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
         <Navbar />
         <main className="flex-1 max-w-6xl mx-auto w-full px-5 sm:px-10 py-16 flex items-center justify-center">
           <div className="text-center">
@@ -107,7 +107,7 @@ const CartPage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col bg-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+      <div className="min-h-screen flex flex-col bg-[#f2f4f6]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
         <Navbar />
         <main className="flex-1 max-w-6xl mx-auto w-full px-5 sm:px-10 py-8">
           <div className="animate-pulse space-y-4">
@@ -135,11 +135,14 @@ const CartPage: React.FC = () => {
   const pct = budget && budget > 0 ? Math.min(100, Math.round((subtotal / budget) * 100)) : 0;
 
   return (
-    <div className="min-h-screen flex flex-col bg-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+    <div className="min-h-screen flex flex-col bg-[#f2f4f6]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
       <Navbar />
 
       <main className="flex-1 max-w-6xl mx-auto w-full px-5 sm:px-10 py-8">
-        <h1 className="text-[28px] font-bold text-[#191c1e] mb-6">Keranjang</h1>
+        <h1 className="text-[28px] font-bold text-[#101319]">Keranjang</h1>
+        <p className="mb-6 mt-1 text-[14px] text-[#737686]">
+          Centang barang yang mau dibayar sekarang. Sisanya tetap tersimpan di sini.
+        </p>
 
         {error && (
           <div className="bg-[#ffdad6] border border-[#ba1a1a]/20 rounded-2xl px-4 py-3 mb-4">
@@ -148,21 +151,22 @@ const CartPage: React.FC = () => {
         )}
 
         {!cart || cart.items.length === 0 ? (
-          <div className="text-center py-20">
-            <Icon name="cart" size={48} className="text-[#c3c6d7] mx-auto mb-4" />
-            <p className="text-[#737686] mb-4">Keranjang kamu masih kosong nih.</p>
+          <div className="rounded-2xl border border-[#e0e3e5] bg-white py-20 text-center">
+            <Icon name="cart" size={44} className="mx-auto mb-3 text-[#c3c6d7]" />
+            <p className="text-[15px] font-semibold text-[#101319]">Keranjangmu masih kosong.</p>
+            <p className="mt-1 text-[13px] text-[#737686]">Barang yang kamu simpan bakal muncul di sini.</p>
             <button
               onClick={() => navigate('/categories')}
-              className="px-6 py-2.5 rounded-full bg-[#004ac6] hover:bg-[#003ea8] text-white text-[14px] font-semibold transition-colors"
+              className="mt-5 rounded-full bg-[#004ac6] px-6 py-2.5 text-[14px] font-semibold text-white transition-colors hover:bg-[#003ea8]"
             >
-              Mulai Belanja
+              Mulai belanja
             </button>
           </div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
             {/* ── Item list ── */}
             <div className="lg:col-span-2 bg-white border border-[#e0e3e5] rounded-2xl overflow-hidden">
-              <div className="flex items-center justify-between px-5 py-4 border-b border-[#e0e3e5]">
+              <div className="flex items-center justify-between gap-3 border-b border-[#e0e3e5] bg-[#f7f9ff] px-5 py-3.5">
                 <label className="flex items-center gap-2.5 cursor-pointer">
                   <input
                     type="checkbox"
@@ -175,7 +179,7 @@ const CartPage: React.FC = () => {
                     }
                     className="w-4 h-4 accent-[#004ac6] cursor-pointer"
                   />
-                  <span className="text-[15px] font-bold text-[#004ac6]">
+                  <span className="text-[14px] font-bold text-[#101319]">
                     {selectedIds.size} dari {cart.items.length} item dipilih
                   </span>
                 </label>
@@ -184,7 +188,7 @@ const CartPage: React.FC = () => {
                   disabled={busy}
                   className="text-[12px] text-[#ba1a1a] hover:underline disabled:opacity-50"
                 >
-                  Kosongkan Keranjang
+                  Kosongkan keranjang
                 </button>
               </div>
 
@@ -282,11 +286,11 @@ const CartPage: React.FC = () => {
 
             {/* ── Summary ── */}
             <div className="space-y-4">
-              <div className="bg-[#191c1e] rounded-2xl p-5 text-white">
-                <p className="text-[10px] font-semibold text-[#9ea3b0] uppercase tracking-widest mb-1">
+              <div className="rounded-2xl bg-gradient-to-br from-[#004ac6] to-[#002a7a] p-5 text-white">
+                <p className="mb-1 text-[11px] font-semibold uppercase tracking-widest text-white/70">
                   Subtotal {selectedItems.length} item terpilih
                 </p>
-                <p className="text-[26px] font-bold leading-tight">{formatRupiah(subtotal)}</p>
+                <p className="text-[28px] font-bold leading-none tabular-nums">{formatRupiah(subtotal)}</p>
 
                 {budget !== null && (
                   <div className="mt-4">
@@ -296,7 +300,7 @@ const CartPage: React.FC = () => {
                         style={{ width: `${pct}%` }}
                       />
                     </div>
-                    <p className="mt-1.5 text-[11px] text-[#9ea3b0]">
+                    <p className="mt-1.5 text-[11px] text-white/70">
                       {pct}% dari budget {formatRupiah(budget)}
                     </p>
                   </div>
@@ -308,12 +312,12 @@ const CartPage: React.FC = () => {
                     value={budgetInput}
                     onChange={(e) => setBudgetInput(e.target.value)}
                     placeholder={budget !== null ? formatRupiah(budget) : 'Atur budget keranjang'}
-                    className="flex-1 bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-[12px] text-white placeholder-[#9ea3b0] outline-none focus:border-[#004ac6]"
+                    className="flex-1 rounded-lg border border-white/25 bg-white/10 px-3 py-2 text-[12px] text-white outline-none transition placeholder:text-white/50 focus:border-white"
                   />
                   <button
                     onClick={handleBudget}
                     disabled={busy || !budgetInput.trim()}
-                    className="px-3 py-2 rounded-lg bg-white text-[#191c1e] text-[12px] font-semibold hover:bg-[#e0e3e5] transition-colors disabled:opacity-50"
+                    className="rounded-lg bg-white px-3 py-2 text-[12px] font-bold text-[#004ac6] transition-colors hover:bg-[#dbe1ff] disabled:opacity-50"
                   >
                     {budget !== null ? 'Ubah' : 'Simpan'}
                   </button>
@@ -322,7 +326,7 @@ const CartPage: React.FC = () => {
                   <button
                     onClick={() => mutate(() => setCartBudget(null))}
                     disabled={busy}
-                    className="mt-2 text-[11px] text-[#9ea3b0] hover:text-white transition-colors disabled:opacity-50"
+                    className="mt-2 text-[11px] text-white/70 transition-colors hover:text-white disabled:opacity-50"
                   >
                     Hapus budget
                   </button>
@@ -343,7 +347,7 @@ const CartPage: React.FC = () => {
                 onClick={() => navigate('/categories')}
                 className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-[#c3c6d7] text-[#191c1e] font-semibold hover:border-[#004ac6] hover:text-[#004ac6] transition-colors"
               >
-                Lanjut Belanja
+                Lanjut belanja
                 <Icon name="arrowRight" size={16} className="" />
               </button>
             </div>

@@ -13,6 +13,8 @@ import { getAccessToken } from '../api/auth';
 import { validateAddressForm, EMPTY_ADDRESS_FORM, type AddressFormData } from '../utils/address';
 import { useCart as useCartContext } from '../contexts/CartContext';
 import { getWallet } from '../api/wallet';
+import { getCoupons, couponDiscount, COUPON_SKIN, type Coupon } from '../api/coupons';
+import { StepCard, StepAction, StepEmpty, DataRow, ChoiceRow } from '../components/ui/StepCard';
 
 const CheckoutPage: React.FC = () => {
   const navigate = useNavigate();
@@ -28,6 +30,8 @@ const CheckoutPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('MIDTRANS');
   const [walletBalance, setWalletBalance] = useState(0);
+  const [coupons, setCoupons] = useState<Coupon[]>([]);
+  const [couponCode, setCouponCode] = useState<string | null>(null);
 
   // Success / payment state
   const [createdOrders, setCreatedOrders] = useState<CreatedOrderPayment[] | null>(null);
@@ -46,11 +50,19 @@ const CheckoutPage: React.FC = () => {
     setLoading(true);
     setError(null);
     try {
-      const [addrRes, previewRes, walletRes] = await Promise.allSettled([
+      const [addrRes, previewRes, walletRes, couponRes] = await Promise.allSettled([
         getAddresses(),
         previewCheckout(0, cartItemIds),
         getWallet(),
+        getCoupons('mine'),
       ]);
+
+      // Kupon yang sudah dipakai atau kedaluwarsa tidak ikut ditawarkan.
+      setCoupons(
+        couponRes.status === 'fulfilled'
+          ? couponRes.value.data.data.filter((c) => !c.usedAt && !c.expired)
+          : []
+      );
 
       // Saldo gagal dimuat bukan alasan menggagalkan checkout — NeedPay-nya
       // saja yang tidak bisa dipilih.
@@ -132,7 +144,13 @@ const CheckoutPage: React.FC = () => {
     try {
       const idempotencyKey = crypto.randomUUID();
       const res = await confirmCheckout(
-        { addressId: selectedAddressId, cartItemIds, shippingCost: 0, paymentMethod },
+        {
+          addressId: selectedAddressId,
+          cartItemIds,
+          shippingCost: 0,
+          paymentMethod,
+          ...(couponCode ? { couponCode } : {}),
+        },
         idempotencyKey
       );
       setCreatedOrders(res.data.data.orders);
@@ -209,7 +227,7 @@ const CheckoutPage: React.FC = () => {
 
   if (!isAuthed) {
     return (
-      <div className="min-h-screen flex flex-col bg-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+      <div className="min-h-screen flex flex-col bg-[#f2f4f6]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
         <Navbar />
         <main className="flex-1 max-w-6xl mx-auto w-full px-5 sm:px-10 py-16 flex items-center justify-center">
           <div className="text-center">
@@ -230,7 +248,7 @@ const CheckoutPage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col bg-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+      <div className="min-h-screen flex flex-col bg-[#f2f4f6]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
         <Navbar />
         <main className="flex-1 max-w-6xl mx-auto w-full px-5 sm:px-10 py-8">
           <div className="animate-pulse space-y-4">
@@ -253,7 +271,7 @@ const CheckoutPage: React.FC = () => {
     const allPaidReady = !hasOnline;
 
     return (
-      <div className="min-h-screen flex flex-col bg-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+      <div className="min-h-screen flex flex-col bg-[#f2f4f6]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
         <Navbar />
         <main className="flex-1 max-w-2xl mx-auto w-full px-5 sm:px-10 py-12">
           <div className="text-center mb-8">
@@ -274,7 +292,7 @@ const CheckoutPage: React.FC = () => {
             </div>
           )}
 
-          <div className="bg-white border border-[#e0e3e5] rounded-2xl overflow-hidden">
+          <div className="overflow-hidden rounded-2xl border border-[#e0e3e5] bg-white">
             {createdOrders.map((order) => (
               <div key={order.orderId} className="px-5 py-4 border-b border-[#e0e3e5] last:border-0">
                 <div className="flex items-center justify-between">
@@ -335,163 +353,258 @@ const CheckoutPage: React.FC = () => {
 
   const canCheckout = !!preview && preview.canCheckout && !!selectedAddressId;
 
+  // Ongkir di aplikasi ini masih nol, jadi subtotal = grand total. Ditulis
+  // sebagai dua nilai terpisah supaya saat ongkir benar-benar dihitung nanti,
+  // syarat minimal belanja tidak diam-diam ikut menghitung ongkir.
+  const cartSubtotal = preview ? Number(preview.grandTotal) : 0;
+  const cartShipping = 0;
+
+  const appliedCoupon = coupons.find((c) => c.code === couponCode) ?? null;
+  const couponCut = appliedCoupon
+    ? couponDiscount(appliedCoupon, cartSubtotal, cartShipping)
+    : 0;
+  const payable = Math.max(cartSubtotal + cartShipping - couponCut, 0);
+
   // Saldo cukup = boleh pilih NeedPay. Server tetap memeriksa ulang saat
   // checkout — ini cuma supaya user nggak menabrak error yang bisa dicegah.
-  const needPayEnough = !!preview && walletBalance >= Number(preview.grandTotal);
+  const needPayEnough = !!preview && walletBalance >= payable;
+
+  // Alamat terpilih memasok DUA kartu sekaligus: kontak penerima dan alamat
+  // pengiriman. Satu data, dua cara orang memikirkannya.
+  const shipTo = addresses.find((a) => a.id === selectedAddressId) ?? null;
 
   return (
-    <div className="min-h-screen flex flex-col bg-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+    <div className="flex min-h-screen flex-col bg-[#f2f4f6]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
       <Navbar />
 
-      <main className="flex-1 max-w-6xl mx-auto w-full px-5 sm:px-10 py-8">
+      <main className="mx-auto w-full max-w-6xl flex-1 px-5 py-8 sm:px-10">
         <button
           onClick={() => navigate('/cart')}
-          className="flex items-center gap-1 text-[#737686] hover:text-[#191c1e] mb-6 transition-colors"
+          className="mb-5 flex items-center gap-1 text-[#737686] transition-colors hover:text-[#101319]"
         >
-          <Icon name="chevronLeft" size={16} className="" />
-          <span className="text-[13px]">Balik ke Keranjang</span>
+          <Icon name="chevronLeft" size={16} />
+          <span className="text-[13px]">Balik ke keranjang</span>
         </button>
 
-        <h1 className="text-[28px] font-bold text-[#191c1e] mb-6">Checkout</h1>
+        <h1 className="text-[28px] font-bold text-[#101319]">Checkout</h1>
+        <p className="mt-1 text-[14px] text-[#737686]">
+          Cek penerima, alamat, dan cara bayarnya. Pesanan baru dibuat setelah kamu menekan tombol di bawah.
+        </p>
 
         {error && (
-          <div className="bg-[#ffdad6] border border-[#ba1a1a]/20 rounded-2xl px-4 py-3 mb-4">
+          <div className="mt-5 rounded-2xl border border-[#ba1a1a]/20 bg-[#ffdad6] px-4 py-3">
             <p className="text-[13px] text-[#93000a]">{error}</p>
           </div>
         )}
 
         {!preview || preview.orders.length === 0 ? (
-          <div className="text-center py-20">
-            <p className="text-[#737686] mb-4">Keranjang kamu masih kosong nih.</p>
+          <div className="mt-6 rounded-2xl border border-[#e0e3e5] bg-white py-20 text-center">
+            <Icon name="cart" size={44} className="mx-auto mb-3 text-[#c3c6d7]" />
+            <p className="text-[15px] font-semibold text-[#101319]">Keranjangmu masih kosong.</p>
+            <p className="mt-1 text-[13px] text-[#737686]">Pilih barangnya dulu, checkout-nya nanti.</p>
             <button
               onClick={() => navigate('/categories')}
-              className="px-6 py-2.5 rounded-full bg-[#004ac6] hover:bg-[#003ea8] text-white text-[14px] font-semibold transition-colors"
+              className="mt-5 rounded-full bg-[#004ac6] px-6 py-2.5 text-[14px] font-semibold text-white transition-colors hover:bg-[#003ea8]"
             >
-              Mulai Belanja
+              Mulai belanja
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
-            {/* ── Left column ── */}
-            <div className="lg:col-span-2 space-y-5">
-              {/* Address */}
-              <div className="bg-white border border-[#e0e3e5] rounded-2xl p-5">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-[15px] font-bold text-[#004ac6]">Alamat Pengiriman</h3>
-                  <button
-                    onClick={() => setShowAddressForm(true)}
-                    className="flex items-center gap-1.5 text-[12px] text-[#004ac6] hover:underline"
-                  >
-                    <Icon name="plus" size={14} className="" />
-                    Alamat Baru
-                  </button>
-                </div>
+          <div className="mt-6 grid grid-cols-1 items-start gap-5 lg:grid-cols-3">
+            {/* ── Kiri: langkah 1-3 ── */}
+            <div className="space-y-5 lg:col-span-2">
 
-                {addresses.length === 0 ? (
-                  <p className="text-[13px] text-[#737686]">
-                    Belum ada alamat. Tambahin alamat pengirimanmu dulu ya.
-                  </p>
+              {/* ── 1. Kontak penerima ── */}
+              <StepCard
+                step={1}
+                title="Kontak penerima"
+                hint={shipTo ? 'Orang yang dihubungi kurir' : undefined}
+                done={!!shipTo}
+                action={
+                  shipTo ? <StepAction onClick={() => setShowAddressForm(true)}>Ubah</StepAction> : undefined
+                }
+              >
+                {shipTo ? (
+                  <dl className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    <DataRow label="Nama lengkap" value={shipTo.recipientName} />
+                    <DataRow label="Nomor telepon" value={shipTo.phone} />
+                  </dl>
                 ) : (
-                  <div className="space-y-2">
-                    {addresses.map((addr) => {
-                      const isSelected = selectedAddressId === addr.id;
-                      return (
-                        <button
-                          key={addr.id}
-                          onClick={() => setSelectedAddressId(addr.id)}
-                          className={`w-full flex items-start gap-3 text-left p-3 rounded-xl border transition-colors ${
-                            isSelected
-                              ? 'border-[#004ac6] bg-[#dbe1ff]/40'
-                              : 'border-[#e0e3e5] hover:border-[#004ac6]'
-                          }`}
-                        >
-                          <Icon name="pin" size={16} className="text-[#004ac6] mt-0.5 shrink-0" />
-                          <div className="min-w-0 flex-1">
-                            <p className="text-[13px] font-semibold text-[#191c1e]">
-                              {addr.recipientName} • {addr.phone}
-                              {addr.label && <span className="text-[#737686] font-normal"> ({addr.label})</span>}
-                              {addr.isDefault && <span className="text-[#004ac6]"> • Default</span>}
-                            </p>
-                            <p className="text-[12px] text-[#737686] mt-0.5">
-                              {addr.fullAddress}, {addr.city}, {addr.province} {addr.postalCode}
-                            </p>
-                          </div>
-                          <div
-                            className="mt-0.5 w-4 h-4 rounded-full border-2 shrink-0 flex items-center justify-center"
-                            style={{ borderColor: isSelected ? '#004ac6' : '#c3c6d7' }}
-                          >
-                            {isSelected && <div className="w-2 h-2 rounded-full bg-[#004ac6]" />}
-                          </div>
-                        </button>
-                      );
-                    })}
-                  </div>
+                  <StepEmpty
+                    text="Belum ada data penerima"
+                    cta="Isi nama & nomor telepon"
+                    onClick={() => setShowAddressForm(true)}
+                  />
                 )}
-              </div>
+              </StepCard>
 
-              {/* Order summary */}
-              {preview.orders.map((order) => (
-                <div key={order.sellerId} className="bg-white border border-[#e0e3e5] rounded-2xl p-5">
-                  <p className="text-[13px] font-bold text-[#191c1e] mb-3">{order.storeName ?? 'Toko'}</p>
-                  <div className="space-y-3">
-                    {order.items.map((line) => (
-                      // Dibuka di tab baru: mengecek produk tidak boleh
-                      // membuang alamat dan metode bayar yang sudah dipilih.
-                      <Link
-                        key={line.cartItemId}
-                        to={`/products/${line.productSlug}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="group flex items-center justify-between gap-3 -mx-2 px-2 py-1.5 rounded-xl hover:bg-[#f2f4f6] transition-colors"
-                      >
-                        <div className="flex items-center gap-3 min-w-0">
-                          <img
-                            src={line.imageUrl ?? 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=200&q=80'}
-                            alt=""
-                            loading="lazy"
-                            className="w-11 h-11 rounded-lg object-cover bg-[#f2f4f6] shrink-0"
-                          />
-                          <div className="min-w-0">
-                            <p className="text-[13px] text-[#191c1e] truncate group-hover:text-[#004ac6] transition-colors">
-                              {line.productName}
-                            </p>
-                            <p className="text-[12px] text-[#737686]">
-                              {line.quantity} x {formatRupiah(line.price)}
-                              {line.bulkDiscountPercent > 0 && (
-                                <span className="ml-1.5 font-semibold text-[#156b32]">
-                                  grosir -{line.bulkDiscountPercent}%
-                                </span>
-                              )}
-                            </p>
-                            {line.variant && (
-                              <p className="text-[11px] text-[#737686]">Model: {line.variant}</p>
-                            )}
-                          </div>
+              {/* ── 2. Alamat pengiriman ── */}
+              <StepCard
+                step={2}
+                title="Alamat pengiriman"
+                hint={addresses.length > 1 ? `${addresses.length} alamat tersimpan` : undefined}
+                done={!!shipTo}
+                action={<StepAction onClick={() => setShowAddressForm(true)}>Alamat baru</StepAction>}
+              >
+                {addresses.length === 0 ? (
+                  <StepEmpty
+                    text="Belum ada alamat tersimpan"
+                    cta="Tambah alamat pengiriman"
+                    onClick={() => setShowAddressForm(true)}
+                  />
+                ) : (
+                  <>
+                    {shipTo && (
+                      <dl className="mb-4 grid grid-cols-1 gap-4 rounded-xl bg-[#f7f9ff] p-4 sm:grid-cols-2">
+                        <div className="sm:col-span-2">
+                          <DataRow label="Alamat lengkap" value={shipTo.fullAddress} />
                         </div>
-                        <span className="flex items-center gap-1 shrink-0">
-                          <span className="text-[13px] font-semibold text-[#191c1e]">{formatRupiah(line.subtotal)}</span>
-                          <Icon name="chevronRight" size={14} className="text-[#c3c6d7] group-hover:text-[#004ac6] transition-colors" />
-                        </span>
-                      </Link>
-                    ))}
-                  </div>
-                  <div className="mt-3 pt-3 border-t border-[#e0e3e5] flex items-center justify-between">
-                    <span className="text-[12px] text-[#737686]">Ongkir</span>
-                    <span className="text-[12px] text-[#737686]">Gratis</span>
-                  </div>
-                  <div className="mt-1 flex items-center justify-between">
-                    <span className="text-[13px] font-semibold text-[#191c1e]">Total Toko</span>
-                    <span className="text-[14px] font-bold text-[#004ac6]">{formatRupiah(order.total)}</span>
-                  </div>
-                </div>
-              ))}
+                        <DataRow label="Kota" value={shipTo.city} />
+                        <DataRow label="Provinsi" value={shipTo.province} />
+                        <DataRow label="Kode pos" value={shipTo.postalCode} />
+                        <DataRow label="Nomor HP" value={shipTo.phone} />
+                      </dl>
+                    )}
 
-              {/* Stock problems */}
+                    {addresses.length > 1 && (
+                      <>
+                        <p className="mb-2 text-[12px] font-semibold text-[#737686]">Kirim ke alamat lain</p>
+                        <div className="space-y-2">
+                          {addresses.map((addr) => (
+                            <ChoiceRow
+                              key={addr.id}
+                              selected={selectedAddressId === addr.id}
+                              onClick={() => setSelectedAddressId(addr.id)}
+                            >
+                              <span className="block truncate text-[13px] font-semibold text-[#101319]">
+                                {addr.recipientName}
+                                {addr.label && <span className="font-normal text-[#737686]"> · {addr.label}</span>}
+                                {addr.isDefault && <span className="text-[#004ac6]"> · Utama</span>}
+                              </span>
+                              <span className="mt-0.5 block text-[12px] text-[#737686]">
+                                {addr.fullAddress}, {addr.city}, {addr.province} {addr.postalCode}
+                              </span>
+                            </ChoiceRow>
+                          ))}
+                        </div>
+                      </>
+                    )}
+                  </>
+                )}
+              </StepCard>
+
+              {/* ── 3. Metode pembayaran ── */}
+              <StepCard step={3} title="Metode pembayaran" done>
+                <div className="space-y-2">
+                  <ChoiceRow
+                    selected={paymentMethod === 'MIDTRANS'}
+                    onClick={() => setPaymentMethod('MIDTRANS')}
+                  >
+                    <span className="block text-[13px] font-semibold text-[#101319]">Bayar online</span>
+                    <span className="block text-[11px] text-[#737686]">
+                      Kartu, e-wallet, transfer bank, QRIS — lewat Midtrans
+                    </span>
+                  </ChoiceRow>
+
+                  <ChoiceRow selected={paymentMethod === 'COD'} onClick={() => setPaymentMethod('COD')}>
+                    <span className="block text-[13px] font-semibold text-[#101319]">Bayar di tempat (COD)</span>
+                    <span className="block text-[11px] text-[#737686]">Bayar tunai saat barang tiba</span>
+                  </ChoiceRow>
+
+                  {/* Dinonaktifkan kalau saldo kurang — lebih baik ketahuan di
+                      sini daripada checkout gagal setelah tombolnya ditekan. */}
+                  <ChoiceRow
+                    selected={paymentMethod === 'NEEDPAY'}
+                    disabled={!needPayEnough}
+                    onClick={() => setPaymentMethod('NEEDPAY')}
+                  >
+                    <span className="block text-[13px] font-semibold text-[#101319]">Saldo NeedPay</span>
+                    <span className="block text-[11px] text-[#737686]">
+                      Saldo kamu {formatRupiah(walletBalance)}
+                      {!needPayEnough && ' — kurang buat pesanan ini'}
+                    </span>
+                  </ChoiceRow>
+                </div>
+
+                {!needPayEnough && (
+                  <button
+                    type="button"
+                    onClick={() => navigate('/needpay')}
+                    className="mt-2.5 text-[12px] font-semibold text-[#004ac6] hover:underline"
+                  >
+                    Isi saldo NeedPay →
+                  </button>
+                )}
+              </StepCard>
+
+              {/* ── Barang yang dibeli ── */}
+              <section className="overflow-hidden rounded-2xl border border-[#e0e3e5] bg-white">
+                <header className="border-b border-[#e0e3e5] px-4 py-3 sm:px-5">
+                  <h2 className="text-[14px] font-bold text-[#101319]">
+                    Barang yang dibeli
+                    <span className="ml-1.5 font-medium text-[#737686]">
+                      · {preview.orderCount} pesanan
+                    </span>
+                  </h2>
+                </header>
+
+                <div className="divide-y divide-[#e0e3e5]">
+                  {preview.orders.map((order) => (
+                    <div key={order.sellerId} className="p-4 sm:p-5">
+                      <p className="mb-3 text-[12px] font-bold uppercase tracking-wide text-[#004ac6]">
+                        {order.storeName ?? 'Toko'}
+                      </p>
+                      <div className="space-y-2">
+                        {order.items.map((line) => (
+                          // Tab baru: mengecek produk tidak boleh membuang
+                          // alamat dan cara bayar yang sudah dipilih.
+                          <Link
+                            key={line.cartItemId}
+                            to={`/products/${line.productSlug}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="group -mx-2 flex items-center justify-between gap-3 rounded-xl px-2 py-1.5 transition-colors hover:bg-[#f7f9ff]"
+                          >
+                            <span className="flex min-w-0 items-center gap-3">
+                              <img
+                                src={line.imageUrl ?? 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=200&q=80'}
+                                alt=""
+                                loading="lazy"
+                                className="h-11 w-11 shrink-0 rounded-lg bg-[#f2f4f6] object-cover"
+                              />
+                              <span className="min-w-0">
+                                <span className="block truncate text-[13px] text-[#101319] transition-colors group-hover:text-[#004ac6]">
+                                  {line.productName}
+                                </span>
+                                <span className="block text-[12px] text-[#737686]">
+                                  {line.quantity} × {formatRupiah(line.price)}
+                                  {line.bulkDiscountPercent > 0 && (
+                                    <span className="ml-1.5 font-semibold text-[#12805c]">
+                                      grosir −{line.bulkDiscountPercent}%
+                                    </span>
+                                  )}
+                                </span>
+                                {line.variant && (
+                                  <span className="block text-[11px] text-[#737686]">Model: {line.variant}</span>
+                                )}
+                              </span>
+                            </span>
+                            <span className="shrink-0 text-[13px] font-semibold text-[#101319]">
+                              {formatRupiah(line.subtotal)}
+                            </span>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+
               {preview.stockProblems.length > 0 && (
-                <div className="bg-[#ffdad6] border border-[#ba1a1a]/20 rounded-2xl px-4 py-3">
-                  <p className="text-[13px] text-[#93000a] font-semibold mb-1">Stoknya nggak cukup</p>
+                <div className="rounded-2xl border border-[#ffe0b0] bg-[#fff4e0] px-4 py-3">
+                  <p className="text-[13px] font-semibold text-[#7c3e00]">Ada item yang stoknya kurang</p>
                   {preview.stockProblems.map((sp) => (
-                    <p key={sp.cartItemId} className="text-[12px] text-[#93000a]">
+                    <p key={sp.cartItemId} className="mt-0.5 text-[12px] text-[#7c3e00]">
                       {sp.productName ?? 'Produk'} — diminta {sp.requested}, tersedia {sp.available}
                     </p>
                   ))}
@@ -499,115 +612,123 @@ const CheckoutPage: React.FC = () => {
               )}
             </div>
 
-            {/* ── Right column ── */}
-            <div className="bg-white border border-[#e0e3e5] rounded-2xl p-5">
-              <h3 className="text-[15px] font-bold text-[#004ac6] mb-4">Ringkasan</h3>
-              <div className="space-y-2 text-[13px]">
-                <div className="flex justify-between">
-                  <span className="text-[#737686]">Total ({preview.orderCount} pesanan)</span>
-                  <span className="font-semibold text-[#191c1e]">{formatRupiah(preview.grandTotal)}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-[#737686]">Ongkos kirim</span>
-                  <span className="font-semibold text-[#191c1e]">Gratis</span>
-                </div>
-              </div>
-              <div className="mt-4 pt-4 border-t border-[#e0e3e5] flex items-center justify-between">
-                <span className="text-[14px] font-semibold text-[#191c1e]">Total Bayar</span>
-                <span className="text-[22px] font-bold text-[#004ac6]">{formatRupiah(preview.grandTotal)}</span>
-              </div>
+            {/* ── Kanan: ringkasan + tombol checkout ──
+                Satu-satunya kartu berwarna penuh di halaman ini. Ini kartu
+                uang, jadi ia memakai bahasa yang sama dengan kartu saldo
+                NeedPay — dan karena cuma satu, matanya langsung ke sana. */}
+            <aside className="lg:sticky lg:top-24">
+              <div className="overflow-hidden rounded-2xl border border-[#e0e3e5] bg-white">
+                <div className="bg-gradient-to-br from-[#004ac6] to-[#002a7a] p-5 text-white">
+                  <p className="text-[11px] font-semibold uppercase tracking-widest text-white/70">
+                    Total bayar
+                  </p>
+                  <p className="mt-1 text-[30px] font-bold leading-none tabular-nums">
+                    {formatRupiah(payable)}
+                  </p>
 
-              <div className="mt-4 pt-4 border-t border-[#e0e3e5]">
-                <p className="text-[13px] font-semibold text-[#191c1e] mb-2">Metode Pembayaran</p>
-                <div className="space-y-2">
-                  <button
-                    type="button"
-                    onClick={() => setPaymentMethod('MIDTRANS')}
-                    className={`w-full flex items-start gap-3 text-left p-3 rounded-xl border transition-colors ${
-                      paymentMethod === 'MIDTRANS'
-                        ? 'border-[#004ac6] bg-[#dbe1ff]/40'
-                        : 'border-[#e0e3e5] hover:border-[#004ac6]'
-                    }`}
-                  >
-                    <div className="w-4 h-4 mt-0.5 rounded-full border-2 shrink-0 flex items-center justify-center"
-                      style={{ borderColor: paymentMethod === 'MIDTRANS' ? '#004ac6' : '#c3c6d7' }}>
-                      {paymentMethod === 'MIDTRANS' && <div className="w-2 h-2 rounded-full bg-[#004ac6]" />}
+                  <dl className="mt-4 space-y-1.5 border-t border-white/20 pt-3 text-[13px]">
+                    <div className="flex justify-between">
+                      <dt className="text-white/75">Subtotal barang</dt>
+                      <dd className="font-semibold tabular-nums">{formatRupiah(cartSubtotal)}</dd>
                     </div>
-                    <div>
-                      <p className="text-[13px] font-semibold text-[#191c1e]">Bayar Online</p>
-                      <p className="text-[11px] text-[#737686]">Midtrans (kartu, e-wallet, bank transfer, QRIS)</p>
+                    <div className="flex justify-between">
+                      <dt className="text-white/75">Ongkos kirim</dt>
+                      <dd className="font-semibold">Gratis</dd>
                     </div>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setPaymentMethod('COD')}
-                    className={`w-full flex items-start gap-3 text-left p-3 rounded-xl border transition-colors ${
-                      paymentMethod === 'COD'
-                        ? 'border-[#004ac6] bg-[#dbe1ff]/40'
-                        : 'border-[#e0e3e5] hover:border-[#004ac6]'
-                    }`}
-                  >
-                    <div className="w-4 h-4 mt-0.5 rounded-full border-2 shrink-0 flex items-center justify-center"
-                      style={{ borderColor: paymentMethod === 'COD' ? '#004ac6' : '#c3c6d7' }}>
-                      {paymentMethod === 'COD' && <div className="w-2 h-2 rounded-full bg-[#004ac6]" />}
-                    </div>
-                    <div>
-                      <p className="text-[13px] font-semibold text-[#191c1e]">COD (Bayar di Tempat)</p>
-                      <p className="text-[11px] text-[#737686]">Bayar cash pas barangnya nyampe</p>
-                    </div>
-                  </button>
-
-                  {/* NeedPay dinonaktifkan kalau saldonya kurang — lebih baik
-                      ketahuan di sini daripada checkout gagal setelah diklik. */}
-                  <button
-                    type="button"
-                    onClick={() => setPaymentMethod('NEEDPAY')}
-                    disabled={!needPayEnough}
-                    className={`w-full flex items-start gap-3 text-left p-3 rounded-xl border transition-colors disabled:cursor-not-allowed disabled:opacity-60 ${
-                      paymentMethod === 'NEEDPAY'
-                        ? 'border-[#004ac6] bg-[#dbe1ff]/40'
-                        : 'border-[#e0e3e5] enabled:hover:border-[#004ac6]'
-                    }`}
-                  >
-                    <div className="w-4 h-4 mt-0.5 rounded-full border-2 shrink-0 flex items-center justify-center"
-                      style={{ borderColor: paymentMethod === 'NEEDPAY' ? '#004ac6' : '#c3c6d7' }}>
-                      {paymentMethod === 'NEEDPAY' && <div className="w-2 h-2 rounded-full bg-[#004ac6]" />}
-                    </div>
-                    <div className="min-w-0">
-                      <p className="text-[13px] font-semibold text-[#191c1e]">Saldo NeedPay</p>
-                      <p className="text-[11px] text-[#737686]">
-                        Saldo kamu {formatRupiah(walletBalance)}
-                        {!needPayEnough && ' — kurang buat pesanan ini'}
-                      </p>
-                    </div>
-                  </button>
+                    {couponCut > 0 && (
+                      <div className="flex justify-between">
+                        <dt className="text-white/75">Potongan kupon</dt>
+                        <dd className="font-semibold tabular-nums text-[#7fe8b2]">
+                          − {formatRupiah(couponCut)}
+                        </dd>
+                      </div>
+                    )}
+                  </dl>
                 </div>
 
-                {!needPayEnough && (
-                  <button
-                    type="button"
-                    onClick={() => navigate('/needpay')}
-                    className="mt-2 text-[12px] font-semibold text-[#004ac6] hover:underline"
-                  >
-                    Isi saldo NeedPay
-                  </button>
-                )}
-              </div>
+                {/* ── Kupon ── */}
+                <div className="border-b border-[#e0e3e5] p-4 sm:p-5">
+                  <div className="mb-2 flex items-center justify-between gap-2">
+                    <p className="text-[13px] font-bold text-[#101319]">Kupon</p>
+                    {couponCode && (
+                      <button
+                        type="button"
+                        onClick={() => setCouponCode(null)}
+                        className="text-[12px] font-semibold text-[#ba1a1a] hover:underline"
+                      >
+                        Lepas
+                      </button>
+                    )}
+                  </div>
 
-              <button
-                onClick={handleCheckout}
-                disabled={!canCheckout}
-                className="mt-5 w-full flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#004ac6] hover:bg-[#003ea8] text-white font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                <Icon name="lock" size={16} className="" />
-                Buat Pesanan
-              </button>
-              {!canCheckout && (
-                <p className="mt-2 text-[11px] text-[#737686] text-center">
-                  {!selectedAddressId ? 'Pilih alamat pengiriman dulu ya.' : 'Beresin dulu item yang stoknya kurang.'}
-                </p>
-              )}
-            </div>
+                  {coupons.length === 0 ? (
+                    <StepEmpty
+                      text="Belum punya kupon"
+                      cta="Klaim di halaman Kupon"
+                      onClick={() => navigate('/coupons')}
+                    />
+                  ) : (
+                    <div className="max-h-56 space-y-2 overflow-y-auto">
+                      {coupons.map((coupon) => {
+                        const skin = COUPON_SKIN[coupon.category] ?? COUPON_SKIN.DISCOUNT;
+                        const cut = couponDiscount(coupon, cartSubtotal, cartShipping);
+                        const shortfall = Number(coupon.minSpend) - cartSubtotal;
+                        const usable = cut > 0;
+                        const picked = couponCode === coupon.code;
+
+                        return (
+                          <ChoiceRow
+                            key={coupon.id}
+                            selected={picked}
+                            disabled={!usable}
+                            onClick={() => setCouponCode(picked ? null : coupon.code)}
+                          >
+                            <span className="flex items-center gap-2">
+                              <span
+                                className="shrink-0 rounded-md px-1.5 py-0.5 text-[10px] font-bold"
+                                style={{ backgroundColor: skin.stub, color: skin.ink }}
+                              >
+                                {skin.label}
+                              </span>
+                              <span className="truncate text-[12px] font-semibold text-[#101319]">
+                                {coupon.title}
+                              </span>
+                            </span>
+                            <span className="mt-0.5 block text-[11px] text-[#737686]">
+                              {usable
+                                ? `Potong ${formatRupiah(cut)}`
+                                : shortfall > 0
+                                  ? `Kurang ${formatRupiah(shortfall)} lagi`
+                                  : 'Nggak memotong apa-apa di pesanan ini'}
+                            </span>
+                          </ChoiceRow>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+
+                {/* ── 4. Tombol checkout ── */}
+                <div className="p-4 sm:p-5">
+                  <button
+                    onClick={handleCheckout}
+                    disabled={!canCheckout}
+                    className="flex w-full items-center justify-center gap-2 rounded-full bg-[#004ac6] px-6 py-3.5 text-[15px] font-bold text-white transition-colors hover:bg-[#003ea8] disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#004ac6]"
+                  >
+                    <Icon name="lock" size={16} />
+                    Checkout · {formatRupiah(payable)}
+                  </button>
+
+                  <p className="mt-2.5 text-center text-[11px] text-[#737686]">
+                    {!canCheckout
+                      ? !selectedAddressId
+                        ? 'Pilih alamat pengiriman dulu ya.'
+                        : 'Beresin dulu item yang stoknya kurang.'
+                      : 'Stok baru dikunci setelah pesanan dibuat.'}
+                  </p>
+                </div>
+              </div>
+            </aside>
           </div>
         )}
       </main>
@@ -616,8 +737,13 @@ const CheckoutPage: React.FC = () => {
       {showAddressForm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
           <div className="bg-white rounded-2xl shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between p-4 border-b border-[#e0e3e5]">
-              <h3 className="text-[15px] font-bold text-[#191c1e]">Alamat Baru</h3>
+            <div className="flex items-start justify-between gap-3 border-b border-[#e0e3e5] bg-[#f7f9ff] p-4">
+              <div>
+                <h3 className="text-[15px] font-bold text-[#101319]">Alamat & kontak penerima</h3>
+                {/* Disebut sebagai satu form karena memang satu data — form ini
+                    yang mengisi kartu 1 DAN kartu 2 sekaligus. */}
+                <p className="mt-0.5 text-[12px] text-[#737686]">Mengisi langkah 1 dan 2 sekaligus.</p>
+              </div>
               <button
                 onClick={() => setShowAddressForm(false)}
                 className="text-[#737686] hover:text-[#191c1e] transition-colors"
@@ -628,14 +754,14 @@ const CheckoutPage: React.FC = () => {
             <form onSubmit={saveAddress} className="p-5 space-y-3">
               <div className="grid grid-cols-2 gap-3">
                 <Field
-                  label="Nama Penerima"
+                  label="Nama lengkap"
                   value={addressForm.recipientName}
                   onChange={(v) => updateField('recipientName', v)}
                   error={fieldErrors.recipientName}
                   required
                 />
                 <Field
-                  label="No. HP"
+                  label="Nomor telepon"
                   value={addressForm.phone}
                   onChange={(v) => updateField('phone', v)}
                   error={fieldErrors.phone}
@@ -643,7 +769,7 @@ const CheckoutPage: React.FC = () => {
                 />
               </div>
               <Field
-                label="Alamat Lengkap"
+                label="Alamat lengkap"
                 value={addressForm.fullAddress}
                 onChange={(v) => updateField('fullAddress', v)}
                 error={fieldErrors.fullAddress}
@@ -667,7 +793,7 @@ const CheckoutPage: React.FC = () => {
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <Field
-                  label="Kode Pos"
+                  label="Kode pos"
                   value={addressForm.postalCode}
                   onChange={(v) => updateField('postalCode', v)}
                   error={fieldErrors.postalCode}
@@ -686,7 +812,7 @@ const CheckoutPage: React.FC = () => {
                 className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#004ac6] hover:bg-[#003ea8] text-white text-[14px] font-semibold transition-colors disabled:opacity-50"
               >
                 {savingAddress && <Icon name="clock" size={16} className="animate-spin" />}
-                Simpan Alamat
+                Simpan alamat
               </button>
             </form>
           </div>
@@ -706,7 +832,9 @@ const Field: React.FC<{
   error?: string;
 }> = ({ label, value, onChange, required, error }) => (
   <div>
-    <label className="block text-xs font-medium text-[#737686] mb-1">{label}</label>
+    <label className="mb-1 block text-[11px] font-semibold uppercase tracking-wide text-[#737686]">
+      {label}
+    </label>
     <input
       type="text"
       value={value}

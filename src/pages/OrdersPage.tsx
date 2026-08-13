@@ -442,8 +442,30 @@ const OrdersPage: React.FC = () => {
                   </div>
                   <div className="text-right shrink-0">
                     <p className="text-[14px] font-bold text-[#191c1e]">{formatRupiah(order.total)}</p>
-                    {order.status === 'WAITING_PAYMENT' && (
+                    {order.status === 'WAITING_PAYMENT' ? (
                       <p className="text-[11px] text-[#7c3e00] font-medium">Nunggu dibayar</p>
+                    ) : (
+                      // Muncul hanya setelah dibayar — sebelum itu memang belum
+                      // ada paket yang bisa dilacak.
+                      <span
+                        role="link"
+                        tabIndex={0}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigate(`/orders/${order.id}/track`);
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            navigate(`/orders/${order.id}/track`);
+                          }
+                        }}
+                        className="mt-1 inline-flex cursor-pointer items-center gap-1 text-[11px] font-semibold text-[#004ac6] hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#004ac6]"
+                      >
+                        <Icon name="truck" size={12} />
+                        Lacak paket
+                      </span>
                     )}
                   </div>
                 </div>

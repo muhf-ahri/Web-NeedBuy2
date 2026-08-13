@@ -4,6 +4,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import Icon from '../components/ui/Icon';
+import { ChatMessageBody, AttachPhotoButton, PendingPhoto, previewOf } from '../components/ui/ChatMessageBody';
 import { useAuth } from '../contexts/AuthContext';
 import {
   getConversations,
@@ -32,6 +33,7 @@ const MessagesPage: React.FC = () => {
   const [draft, setDraft] = useState('');
   const [loading, setLoading] = useState(true);
   const [sending, setSending] = useState(false);
+  const [photoUrl, setPhotoUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
 
@@ -127,13 +129,19 @@ const MessagesPage: React.FC = () => {
   const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
     const body = draft.trim();
-    if (!body || !activeId) return;
+    // Foto tanpa teks tetap pesan yang sah — server yang menolak kalau
+    // dua-duanya kosong.
+    if ((!body && !photoUrl) || !activeId) return;
     setSending(true);
     setError(null);
     try {
-      const res = await sendMessage(activeId, body);
+      const res = await sendMessage(activeId, {
+        ...(body ? { body } : {}),
+        ...(photoUrl ? { imageUrl: photoUrl } : {}),
+      });
       setMessages((prev) => [...prev, res.data.data]);
       setDraft('');
+      setPhotoUrl(null);
       loadConversations().catch(() => {});
     } catch (err: any) {
       setError(err.message ?? 'Pesannya gagal dikirim, coba lagi ya');
@@ -210,7 +218,7 @@ const MessagesPage: React.FC = () => {
                         )}
                       </div>
                       <p className="text-[12px] text-[#737686] truncate mt-0.5">
-                        {conversation.lastMessage?.body ?? 'Belum ada pesan nih'}
+                        {previewOf(conversation.lastMessage)}
                       </p>
                     </button>
                   </li>
@@ -258,9 +266,9 @@ const MessagesPage: React.FC = () => {
                               : 'bg-white border border-[#e0e3e5] text-[#101319] rounded-bl-sm'
                           }`}
                         >
-                          <p className="text-[13px] leading-relaxed whitespace-pre-wrap break-words">
-                            {message.body}
-                          </p>
+                          <div className="text-[13px] leading-relaxed">
+                            <ChatMessageBody message={message} mine={mine} />
+                          </div>
                           <p
                             className={`text-[10px] mt-1 flex items-center justify-end gap-1 ${
                               mine ? 'text-white/70' : 'text-[#737686]'
@@ -277,7 +285,14 @@ const MessagesPage: React.FC = () => {
                 <div ref={bottomRef} />
               </div>
 
-              <form onSubmit={handleSend} className="flex items-center gap-2 p-3 border-t border-[#e0e3e5]">
+              <form onSubmit={handleSend} className="border-t border-[#e0e3e5] p-3">
+                {photoUrl && <PendingPhoto url={photoUrl} onRemove={() => setPhotoUrl(null)} />}
+                <div className="flex items-center gap-2">
+                <AttachPhotoButton
+                  disabled={sending}
+                  onUploaded={setPhotoUrl}
+                  onError={setError}
+                />
                 <input
                   value={draft}
                   onChange={(e) => setDraft(e.target.value)}
@@ -289,12 +304,13 @@ const MessagesPage: React.FC = () => {
                 />
                 <button
                   type="submit"
-                  disabled={sending || !draft.trim() || !activeId}
+                  disabled={sending || (!draft.trim() && !photoUrl) || !activeId}
                   className="w-11 h-11 shrink-0 rounded-full bg-[#004ac6] hover:bg-[#003ea8] text-white flex items-center justify-center transition-colors disabled:opacity-50"
                   aria-label="Kirim pesan"
                 >
                   <Icon name="send" size={18} />
                 </button>
+              </div>
               </form>
             </section>
           </div>

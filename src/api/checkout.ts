@@ -78,6 +78,8 @@ export const confirmCheckout = (
     cartItemIds?: string[];
     shippingCost?: number;
     notes?: string;
+    /** Kode kupon yang sudah diklaim. Server yang menghitung potongannya. */
+    couponCode?: string;
     paymentMethod?: PaymentMethod;
   },
   idempotencyKey: string

@@ -18,6 +18,7 @@ import ProfilePage from './pages/ProfilePage';
 import NeedsPage from './pages/NeedsPage';
 import CouponsPage from './pages/CouponsPage';
 import NeedPayPage from './pages/NeedPayPage';
+import TrackingPage from './pages/TrackingPage';
 import MessagesPage from './pages/MessagesPage';
 import LegalPage from './pages/LegalPage';
 
@@ -73,6 +74,9 @@ function App() {
 
               {/* NeedPay — saldo */}
               <Route path="/needpay" element={<NeedPayPage />} />
+
+              {/* Lacak paket */}
+              <Route path="/orders/:id/track" element={<TrackingPage />} />
 
               {/* Pesan dengan penjual */}
               <Route path="/messages" element={<MessagesPage />} />

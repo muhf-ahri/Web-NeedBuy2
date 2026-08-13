@@ -67,7 +67,6 @@ const SLIDE_MS = 6000;
 // ── Slide Produk Diskon ──
 const SaleSlide: React.FC<{ product: Product }> = ({ product }) => {
   const image = product.images?.[0]?.url;
-  const grad = 'from-[#ff5a1f] via-[#ff6b2f] to-[#d94a0f]';
 
   return (
     <div className="h-full w-full snap-center shrink-0">

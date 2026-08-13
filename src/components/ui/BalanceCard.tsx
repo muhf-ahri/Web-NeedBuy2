@@ -4,7 +4,8 @@ import Icon from './Icon';
 import { formatRupiah } from '../../utils/currency';
 
 interface BalanceCardProps {
-  balance: number;
+  /** Decimal dari API dikirim sebagai string; number tetap diterima. */
+  balance: number | string;
   walletId?: string;
   loading?: boolean;
 }

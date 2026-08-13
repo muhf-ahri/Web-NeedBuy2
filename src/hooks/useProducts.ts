@@ -29,11 +29,14 @@ export const useProducts = (params?: GetProductsParams) => {
     fetchProducts();
   }, [fetchProducts]);
 
-  return { 
-    products, 
-    pagination, 
-    loading, 
-    error, 
+  return {
+    products,
+    pagination,
+    total: pagination?.total ?? 0,
+    totalPages: pagination?.totalPages ?? 0,
+    page: pagination?.page ?? 1,
+    loading,
+    error,
     refetch: fetchProducts,
     hasMore: pagination ? pagination.page < pagination.totalPages : false,
     loadMore: async () => {
