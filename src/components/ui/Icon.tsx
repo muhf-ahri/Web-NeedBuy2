@@ -47,7 +47,21 @@ export type IconName =
   | 'eye'
   | 'chevronUp'
   | 'bell'
-  | 'wallet';
+  | 'wallet'
+  | 'users'
+  | 'store'
+  | 'categories'
+  | 'subcategories'
+  | 'pending'
+  | 'reported'
+  | 'processing'
+  | 'payments'
+  | 'withdrawals'
+  | 'vouchers'
+  | 'flash'
+  | 'reviews'
+  | 'reports'
+  | 'roles';;
 
 const PATHS: Record<IconName, string> = {
   chevronUp: 'M4.5 15.5 12 8l7.5 7.5a1.2 1.2 0 0 0 1.7-1.7l-8.3-8.3a1.2 1.2 0 0 0-1.7 0l-8.3 8.3a1.2 1.2 0 0 0 1.7 1.7Z',
@@ -132,6 +146,21 @@ const PATHS: Record<IconName, string> = {
 
   // wallet — solid fill (dompet)
   wallet: 'M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm0 4v10h16V8H4zm4 2h8v2H8v-2z',
+
+  users: 'M12 12a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9zm0 1.8c-3.9 0-7 2.2-7 4.9 0 1.3 1 2.3 2.3 2.3h9.4c1.3 0 2.3-1 2.3-2.3 0-2.7-3.1-4.9-7-4.9z',
+  store: 'M4 3h16a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm0 6h16v10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9zm3 2v4h4v-4H7z',
+  categories: 'M5 5h6v6H5V5zm0 8h6v6H5v-6zm8-8h6v6h-6V5zm0 8h6v6h-6v-6z',
+  subcategories: 'M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm0 4v12h14V7H5zm4 2h6v2H9V9zm0 4h6v2H9v-2z',
+  pending: 'M12 2.5a9.5 9.5 0 1 0 0 19 9.5 9.5 0 0 0 0-19zm1 4.6v4.86l3.3 1.93a1 1 0 1 1-1 1.72l-3.8-2.22a1 1 0 0 1-.5-.87V7.1a1 1 0 1 1 2 0z',
+  reported: 'M10.7 3.4a1.5 1.5 0 0 1 2.6 0l8.2 14.6a1.5 1.5 0 0 1-1.3 2.25H3.8a1.5 1.5 0 0 1-1.3-2.25L10.7 3.4zM12 8.5a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0v-4a1 1 0 0 0-1-1zm0 8a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4z',
+  processing: 'M12 2.5a9.5 9.5 0 1 0 0 19 9.5 9.5 0 0 0 0-19zm1 4.6v4.86l3.3 1.93a1 1 0 1 1-1 1.72l-3.8-2.22a1 1 0 0 1-.5-.87V7.1a1 1 0 1 1 2 0z',
+  payments: 'M2.5 7A2.5 2.5 0 0 1 5 4.5h14A2.5 2.5 0 0 1 21.5 7v1.5h-19V7zm0 3.8h19V17a2.5 2.5 0 0 1-2.5 2.5H5A2.5 2.5 0 0 1 2.5 17v-6.2zM5.5 14a1 1 0 0 0 0 2h4a1 1 0 1 0 0-2h-4z',
+  withdrawals: 'M4 4h16a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1zm1 3v10h14V7H5zm7 2v2h-2v2h2v2h2v-2h2v-2h-2V9h-2z',
+  vouchers: 'M3 6.5A1.5 1.5 0 0 1 4.5 5h15A1.5 1.5 0 0 1 21 6.5v3a.9.9 0 0 1-.72.88 1.7 1.7 0 0 0 0 3.24.9.9 0 0 1 .72.88v3a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5v-3a.9.9 0 0 1 .72-.88 1.7 1.7 0 0 0 0-3.24A.9.9 0 0 1 3 9.5v-3z',
+  flash: 'M12 2l-2 7h4l-2 9 7-8h-5l2-8-4 0z',
+  reviews: 'M12 2.8l2.9 5.9 6.5.95-4.7 4.6 1.1 6.45L12 17.65l-5.8 3.05 1.1-6.45-4.7-4.6 6.5-.95L12 2.8z',
+  reports: 'M20 19H3V5h2v12h15v2zm-3-8h2v6h-2v-6zm-4-4h2v10h-2V7zm-4 2h2v6H9V9zM5 13h2v2H5v-2z',
+  roles: 'M12 2.5a9.5 9.5 0 1 0 0 19 9.5 9.5 0 0 0 0-19zm0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 0 1 0-7zm0 10c-2.5 0-4.5 1.2-4.5 2.8 0 .8 2 1.7 4.5 1.7s4.5-.9 4.5-1.7c0-1.6-2-2.8-4.5-2.8z',
 };
 
 interface IconProps extends React.SVGProps<SVGSVGElement> {

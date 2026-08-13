@@ -31,6 +31,11 @@ import SellerChats from './pages/seller/ChatsPage';
 import SellerAnalytics from './pages/seller/AnalyticsPage';
 import SellerSettings from './pages/seller/SettingsPage';
 
+// Admin pages
+import AdminDashboard from './pages/admin/DashboardPage';
+import UsersPage from './pages/admin/UsersPage';
+import StoresPage from './pages/admin/StoresPage';
+
 function App() {
   return (
     <AuthProvider>
@@ -93,7 +98,7 @@ function App() {
               {/* Profile */}
               <Route path="/profile" element={<ProfilePage />} />
 
-              {/* Seller routes — hanya untuk role SELLER/ADMIN */}
+              {/* Seller routes — hanya untuk role SELLER */}
               <Route path="/seller" element={<Navigate to="/seller/dashboard" replace />} />
               <Route
                 path="/seller/dashboard"
@@ -143,6 +148,11 @@ function App() {
                   </RequireSeller>
                 }
               />
+
+              {/* Admin routes — hanya untuk role ADMIN */}
+              <Route path="/admin/dashboard" element={<AdminDashboard />} />
+              <Route path="/admin/users" element={<UsersPage />} />
+              <Route path="/admin/stores" element={<StoresPage />} />
 
               {/* Compare — placeholder */}
               <Route path="/compare" element={<div className="p-8 text-center text-gray-500 font-sans">Compare — coming soon</div>} />
