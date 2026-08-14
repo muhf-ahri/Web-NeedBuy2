@@ -19,44 +19,22 @@ const HomeSearch: React.FC<HomeSearchProps> = ({
   setSuggestOpen,
 }) => {
   return (
+    // Sinkron dengan lebar carousel promo di atasnya
     <section className="mx-auto w-full max-w-6xl px-4 pt-7 sm:px-8">
       <div
         className="
           relative
+          mx-auto
+          w-full
           overflow-visible
           rounded-[24px]
           border border-white
           bg-white/75
-          p-3
+          p-5
           shadow-[0_15px_45px_rgba(53,91,139,0.10)]
           backdrop-blur-xl
-          sm:max-w-3xl
         "
       >
-        <div className="mb-2 flex items-center gap-2 px-2">
-          <span
-            className="
-              flex h-8 w-8
-              items-center justify-center
-              rounded-xl
-              bg-[#edf4ff]
-              text-[#004ac6]
-            "
-          >
-            <Icon name="search" size={15} />
-          </span>
-
-          <div>
-            <p className="text-[11px] font-bold text-[#191c1e]">
-              Lagi cari apa?
-            </p>
-
-            <p className="text-[9px] text-[#737686]">
-              Tulis kebutuhanmu, kami bantu cari.
-            </p>
-          </div>
-        </div>
-
         <form
           onSubmit={onSubmit}
           className="

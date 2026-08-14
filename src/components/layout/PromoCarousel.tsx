@@ -59,43 +59,28 @@ const APP_PROMOS: AppPromo[] = [
 
 const SLIDE_MS = 6000;
 
-/* =========================================================
-   Decorative Shapes
-========================================================= */
-
 const DecorativeShapes: React.FC = () => (
   <>
-    {/* Yellow circle */}
     <div
       aria-hidden="true"
       className="absolute -right-10 -top-12 h-32 w-32 rounded-full bg-[#FFD500]"
     />
-
-    {/* Red circle */}
     <div
       aria-hidden="true"
       className="absolute -bottom-10 -left-8 h-24 w-24 rounded-full bg-[#FF4B4B]"
     />
-
-    {/* Blue circle */}
     <div
       aria-hidden="true"
       className="absolute right-[28%] bottom-[12%] h-10 w-10 rounded-full bg-[#6FA4EA]/50"
     />
-
-    {/* Small yellow dot */}
     <div
       aria-hidden="true"
       className="absolute left-[8%] top-[18%] h-3 w-3 rounded-full bg-[#FFD500]"
     />
-
-    {/* Small red square */}
     <div
       aria-hidden="true"
       className="absolute right-[12%] bottom-[22%] h-4 w-4 rotate-45 rounded-[3px] bg-[#FF4B4B]"
     />
-
-    {/* Curved line */}
     <svg
       aria-hidden="true"
       className="pointer-events-none absolute right-0 top-0 h-full w-1/2 opacity-40"
@@ -117,10 +102,6 @@ const DecorativeShapes: React.FC = () => (
   </>
 );
 
-/* =========================================================
-   Sale Slide
-========================================================= */
-
 const SaleSlide: React.FC<{ product: Product }> = ({ product }) => {
   const image = product.images?.[0]?.url;
 
@@ -140,8 +121,6 @@ const SaleSlide: React.FC<{ product: Product }> = ({ product }) => {
         "
       >
         <DecorativeShapes />
-
-        {/* Content */}
         <div className="relative z-10 flex flex-1 flex-col justify-center p-5 sm:p-7 lg:p-8">
           <span
             className="
@@ -199,8 +178,6 @@ const SaleSlide: React.FC<{ product: Product }> = ({ product }) => {
             <Icon name="arrowRight" size={15} className="text-white" />
           </span>
         </div>
-
-        {/* Product image */}
         <div
           className="
             relative z-10
@@ -233,10 +210,6 @@ const SaleSlide: React.FC<{ product: Product }> = ({ product }) => {
     </div>
   );
 };
-
-/* =========================================================
-   App Promo Slide
-========================================================= */
 
 const AppSlide: React.FC<{ promo: AppPromo }> = ({ promo }) => (
   <div className="h-full w-full snap-center shrink-0">

@@ -194,9 +194,6 @@ const HomePage: React.FC = () => {
           setSuggestOpen={setSuggestOpen}
         />
 
-        {/* ─────────────────────────────────────────
-            NEEDPAY
-        ───────────────────────────────────────── */}
 
         <section className="mx-auto w-full max-w-6xl px-4 pt-5 sm:px-8">
           <NeedPayStrip />

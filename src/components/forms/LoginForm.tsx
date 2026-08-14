@@ -1,4 +1,3 @@
-// src/components/forms/LoginForm.tsx
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -53,7 +52,6 @@ const LoginForm: React.FC<LoginFormProps> = ({
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
 
-      {/* Email */}
       <Input
         label="Email"
         type="email"
@@ -75,7 +73,6 @@ const LoginForm: React.FC<LoginFormProps> = ({
         "
       />
 
-      {/* Password */}
       <div>
 
         <Input
