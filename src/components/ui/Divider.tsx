@@ -1,14 +1,24 @@
+// src/components/ui/Divider.tsx
 import React from 'react';
 
-const Divider: React.FC<{ text?: string }> = ({ text = 'ATAU LANJUT PAKAI' }) => {
+interface DividerProps {
+  text?: string;
+}
+
+const Divider: React.FC<DividerProps> = ({
+  text = 'atau',
+}) => {
   return (
-    <div className="relative my-4">
-      <div className="absolute inset-0 flex items-center">
-        <div className="w-full border-t border-gray-300" />
-      </div>
-      <div className="relative flex justify-center text-xs">
-        <span className="px-2 bg-white text-gray-400">{text}</span>
-      </div>
+    <div className="my-5 flex items-center gap-3">
+
+      <div className="h-px flex-1 bg-[#E8ECF4]" />
+
+      <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-[#A0A6B1]">
+        {text}
+      </span>
+
+      <div className="h-px flex-1 bg-[#E8ECF4]" />
+
     </div>
   );
 };

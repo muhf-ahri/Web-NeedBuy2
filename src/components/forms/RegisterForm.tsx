@@ -1,6 +1,9 @@
+// src/components/forms/RegisterForm.tsx
 import React, { useState } from 'react';
+
 import Input from '../ui/Input';
 import Button from '../ui/Button';
+
 import { type RegisterPayload } from '../../api/auth';
 
 interface RegisterFormProps {
@@ -23,93 +26,210 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
 
   const [errors, setErrors] = useState<Partial<RegisterPayload>>({});
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
-    setErrors((prev) => ({ ...prev, [name]: '' }));
+
+    setForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
+    setErrors((prev) => ({
+      ...prev,
+      [name]: '',
+    }));
   };
 
   const validate = (): boolean => {
     const newErrors: Partial<RegisterPayload> = {};
-    if (!form.username) newErrors.username = 'Username-nya diisi dulu ya';
-    if (!form.email) newErrors.email = 'Email-nya diisi dulu ya';
-    else if (!/\S+@\S+\.\S+/.test(form.email)) newErrors.email = 'Format email-nya kayaknya salah';
-    if (!form.password) newErrors.password = 'Password-nya jangan kosong ya';
-    else if (form.password.length < 8) newErrors.password = 'Minimal 8 karakter ya';
-    if (form.password !== form.confirmPassword)
-      newErrors.confirmPassword = 'Password-nya beda, cek lagi';
+
+    if (!form.username.trim()) {
+      newErrors.username = 'Username wajib diisi';
+    }
+
+    if (!form.email.trim()) {
+      newErrors.email = 'Email wajib diisi';
+    } else if (!/\S+@\S+\.\S+/.test(form.email)) {
+      newErrors.email = 'Format email tidak valid';
+    }
+
+    if (!form.password) {
+      newErrors.password = 'Password wajib diisi';
+    } else if (form.password.length < 8) {
+      newErrors.password = 'Password minimal 8 karakter';
+    }
+
+    if (!form.confirmPassword) {
+      newErrors.confirmPassword = 'Ulangi password kamu';
+    } else if (form.password !== form.confirmPassword) {
+      newErrors.confirmPassword = 'Password tidak sama';
+    }
+
     setErrors(newErrors);
+
     return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
     if (validate()) {
       onSubmit(form);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-3">
-      {/* Username - full width */}
+    <form
+      onSubmit={handleSubmit}
+      className="space-y-3.5"
+    >
+
+      {/* =====================================================
+          USERNAME
+      ====================================================== */}
+
       <Input
         label="Username"
         name="username"
-        placeholder="@ username kamu"
+        placeholder="username kamu"
         value={form.username}
         onChange={handleChange}
         error={errors.username}
-        className="text-sm py-2"
+        className="
+          rounded-xl
+          border-[#E8ECF4]
+          bg-white
+          py-2.5
+          text-sm
+          transition
+          focus:border-[#538CDB]
+          focus:ring-2
+          focus:ring-[#538CDB]/15
+        "
       />
 
-      {/* Email. Pilihan role dihapus: semua akun mulai sebagai pembeli, dan
-          toko didaftarkan dari halaman profil karena butuh nama perusahaan,
-          alamat, dan logo — data yang tidak muat diminta di sini. */}
+      {/* =====================================================
+          EMAIL
+      ====================================================== */}
+
       <Input
         label="Email"
         name="email"
         type="email"
-        placeholder="jane@company.com"
+        placeholder="nama@email.com"
         value={form.email}
         onChange={handleChange}
         error={errors.email}
-        className="text-sm py-2"
+        className="
+          rounded-xl
+          border-[#E8ECF4]
+          bg-white
+          py-2.5
+          text-sm
+          transition
+          focus:border-[#538CDB]
+          focus:ring-2
+          focus:ring-[#538CDB]/15
+        "
       />
 
-      {/* Password dan Confirm Password dalam satu baris (2 kolom) */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        <div className="flex flex-col">
+      {/* =====================================================
+          PASSWORD
+      ====================================================== */}
+
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+
+        <div>
           <Input
             label="Password"
             name="password"
             type="password"
-            placeholder="**********"
+            placeholder="••••••••"
             value={form.password}
             onChange={handleChange}
             error={errors.password}
-            className="text-sm py-2"
+            className="
+              rounded-xl
+              border-[#E8ECF4]
+              bg-white
+              py-2.5
+              text-sm
+              transition
+              focus:border-[#538CDB]
+              focus:ring-2
+              focus:ring-[#538CDB]/15
+            "
           />
-          <p className="text-xs text-gray-500 mt-1">Minimal 8 karakter ya.</p>
+
+          <p className="mt-1.5 text-[10px] text-[#737A87]">
+            Minimal 8 karakter
+          </p>
         </div>
-        <div>
-          <Input
-            label="Ulangi Password"
-            name="confirmPassword"
-            type="password"
-            placeholder="**********"
-            value={form.confirmPassword}
-            onChange={handleChange}
-            error={errors.confirmPassword}
-            className="text-sm py-2"
-          />
-        </div>
+
+        {/* =================================================
+            CONFIRM PASSWORD
+        ================================================== */}
+
+        <Input
+          label="Ulangi Password"
+          name="confirmPassword"
+          type="password"
+          placeholder="••••••••"
+          value={form.confirmPassword}
+          onChange={handleChange}
+          error={errors.confirmPassword}
+          className="
+            rounded-xl
+            border-[#E8ECF4]
+            bg-white
+            py-2.5
+            text-sm
+            transition
+            focus:border-[#538CDB]
+            focus:ring-2
+            focus:ring-[#538CDB]/15
+          "
+        />
+
       </div>
 
-      {error && <div className="text-red-600 text-xs">{error}</div>}
-      
-      <Button type="submit" fullWidth variant="primary" disabled={isLoading} className="text-sm py-2.5">
-        {isLoading ? 'Lagi dibikin...' : 'Bikin Akun'}
+      {/* API Error */}
+      {error && (
+        <div className="rounded-xl bg-[#FFF0F0] px-3 py-2 text-xs text-[#C73535]">
+          {error}
+        </div>
+      )}
+
+      {/* =====================================================
+          SUBMIT
+      ====================================================== */}
+
+      <Button
+        type="submit"
+        fullWidth
+        variant="primary"
+        disabled={isLoading}
+        className="
+          rounded-full
+          bg-[#538CDB]
+          py-2.5
+          text-sm
+          font-semibold
+          text-white
+          shadow-[0_6px_16px_rgba(83,140,219,0.20)]
+          transition
+          hover:bg-[#467BC7]
+          hover:shadow-[0_8px_20px_rgba(83,140,219,0.25)]
+          focus:ring-4
+          focus:ring-[#538CDB]/15
+          active:scale-[0.98]
+        "
+      >
+        {isLoading ? 'Membuat akun...' : 'Buat akun'}
       </Button>
+
     </form>
   );
 };

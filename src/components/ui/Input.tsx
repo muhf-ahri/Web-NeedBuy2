@@ -1,3 +1,4 @@
+// src/components/ui/Input.tsx
 import React, { type InputHTMLAttributes } from 'react';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -16,29 +17,34 @@ const Input: React.FC<InputProps> = ({
   return (
     <div className="w-full">
       {label && (
-        <label className="block text-xs font-medium text-gray-700 mb-1">
+        <label className="mb-1.5 block text-sm font-medium text-[#20242D]">
           {label}
         </label>
       )}
       <div className="relative">
         {icon && (
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+          <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-[#737A87]">
             {icon}
           </div>
         )}
         <input
           className={`
-            w-full px-3 py-2 bg-gray-100/80 rounded-lg border border-gray-200
-            focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition
-            text-sm
+            w-full rounded-xl border border-[#E8ECF4] bg-white
+            px-3 py-2.5 text-sm text-[#20242D] outline-none
+            transition-all duration-200
+            placeholder:text-[#9AA1AD]
+            focus:border-[#538CDB] focus:ring-4 focus:ring-[#538CDB]/20
+            disabled:cursor-not-allowed disabled:bg-[#F8FAFF]
             ${icon ? 'pl-9' : ''}
-            ${error ? 'border-red-400 focus:ring-red-400' : ''}
+            ${error ? 'border-[#FF4646] focus:border-[#FF4646] focus:ring-[#FF4646]/20' : ''}
             ${className}
           `}
           {...props}
         />
       </div>
-      {error && <p className="mt-1 text-xs text-red-600">{error}</p>}
+      {error && (
+        <p className="mt-1.5 text-sm text-[#FF4646]">{error}</p>
+      )}
     </div>
   );
 };

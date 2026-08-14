@@ -15,7 +15,6 @@ type AppPromo = {
   cta: string;
   to: string;
   icon: IconName;
-  gradient: string;
   accent: string;
 };
 
@@ -23,48 +22,105 @@ const APP_PROMOS: AppPromo[] = [
   {
     eyebrow: 'NeedPay',
     title: 'Isi saldo sekali, checkout tinggal satu ketukan',
-    body: 'Saldo NeedPay kepakai langsung pas bayar nggak perlu buka aplikasi bank tiap belanja.',
+    body: 'Saldo NeedPay bisa langsung dipakai saat checkout tanpa perlu berpindah aplikasi.',
     cta: 'Isi saldo NeedPay',
     to: '/needpay',
     icon: 'wallet',
-    gradient: 'from-[#004ac6] via-[#1a5fc7] to-[#002a7a]',
-    accent: '#004ac6',
+    accent: '#2563C7',
   },
   {
     eyebrow: 'Cara belanja di NeedBuy',
     title: 'Tulis kebutuhanmu, kami yang nyariin',
-    body: 'Ketik "laptop buat edit video, budget 15 juta". NeedBuy nyaring produk yang beneran cocok, bukan yang cuma lewat di beranda.',
+    body: 'Tulis apa yang kamu butuhkan dan temukan produk yang paling sesuai dengan kebutuhanmu.',
     cta: 'Coba tulis kebutuhan',
     to: '/needs',
     icon: 'spark',
-    gradient: 'from-[#7c3aed] via-[#8b5cf6] to-[#5b21b6]',
-    accent: '#7c3aed',
+    accent: '#2563C7',
   },
   {
     eyebrow: 'Rencana belanja',
     title: 'Belanja banyak, budget tetap kepegang',
-    body: 'Susun daftar belanja, NeedBuy hitung totalnya dan kasih tau kalau kelewat budget — sebelum kamu checkout.',
+    body: 'Susun daftar belanja dan pantau total pengeluaran sebelum kamu checkout.',
     cta: 'Bikin rencana belanja',
     to: '/plans',
     icon: 'plan',
-    gradient: 'from-[#059669] via-[#10b981] to-[#047857]',
-    accent: '#059669',
+    accent: '#2563C7',
   },
   {
     eyebrow: 'Kupon',
     title: 'Klaim kupon dulu, baru checkout',
-    body: 'Kupon potongan nempel di akunmu dan otomatis kepakai pas bayar. Nggak ada kode yang kelupaan.',
+    body: 'Temukan berbagai kupon dan manfaatkan potongan harga untuk belanja lebih hemat.',
     cta: 'Lihat kupon',
     to: '/coupons',
     icon: 'coupon',
-    gradient: 'from-[#d97706] via-[#f59e0b] to-[#b45309]',
-    accent: '#d97706',
+    accent: '#2563C7',
   },
 ];
 
 const SLIDE_MS = 6000;
 
-// ── Slide Produk Diskon ──
+/* =========================================================
+   Decorative Shapes
+========================================================= */
+
+const DecorativeShapes: React.FC = () => (
+  <>
+    {/* Yellow circle */}
+    <div
+      aria-hidden="true"
+      className="absolute -right-10 -top-12 h-32 w-32 rounded-full bg-[#FFD500]"
+    />
+
+    {/* Red circle */}
+    <div
+      aria-hidden="true"
+      className="absolute -bottom-10 -left-8 h-24 w-24 rounded-full bg-[#FF4B4B]"
+    />
+
+    {/* Blue circle */}
+    <div
+      aria-hidden="true"
+      className="absolute right-[28%] bottom-[12%] h-10 w-10 rounded-full bg-[#6FA4EA]/50"
+    />
+
+    {/* Small yellow dot */}
+    <div
+      aria-hidden="true"
+      className="absolute left-[8%] top-[18%] h-3 w-3 rounded-full bg-[#FFD500]"
+    />
+
+    {/* Small red square */}
+    <div
+      aria-hidden="true"
+      className="absolute right-[12%] bottom-[22%] h-4 w-4 rotate-45 rounded-[3px] bg-[#FF4B4B]"
+    />
+
+    {/* Curved line */}
+    <svg
+      aria-hidden="true"
+      className="pointer-events-none absolute right-0 top-0 h-full w-1/2 opacity-40"
+      viewBox="0 0 400 300"
+      fill="none"
+    >
+      <path
+        d="M420 20C320 50 360 110 280 130C210 148 270 210 170 245"
+        stroke="#2563C7"
+        strokeWidth="1.2"
+      />
+      <path
+        d="M430 45C340 72 375 125 295 150C230 170 285 225 185 270"
+        stroke="#2563C7"
+        strokeWidth="0.8"
+        opacity="0.45"
+      />
+    </svg>
+  </>
+);
+
+/* =========================================================
+   Sale Slide
+========================================================= */
+
 const SaleSlide: React.FC<{ product: Product }> = ({ product }) => {
   const image = product.images?.[0]?.url;
 
@@ -72,44 +128,104 @@ const SaleSlide: React.FC<{ product: Product }> = ({ product }) => {
     <div className="h-full w-full snap-center shrink-0">
       <Link
         to={`/products/${product.slug}`}
-        className="group relative flex h-full min-h-[280px] flex-col-reverse sm:flex-row overflow-hidden rounded-2xl bg-gradient-to-br text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#004ac6]"
-        style={{ background: `linear-gradient(135deg, #ff5a1f 0%, #d94a0f 100%)` }}
+        className="
+          group relative flex h-full min-h-[230px] sm:min-h-[250px]
+          overflow-hidden rounded-[22px]
+          border border-[#DCE7F8]
+          bg-[#EAF2FF]
+          text-[#172033]
+          shadow-[0_8px_30px_rgba(37,99,199,0.08)]
+          transition-all duration-300
+          hover:shadow-[0_14px_40px_rgba(37,99,199,0.14)]
+        "
       >
-        {/* Dekorasi grafis */}
-        <div className="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-white/5 animate-float" />
-        <div className="absolute -bottom-12 -left-12 h-32 w-32 rounded-full bg-white/5 animate-pulse-soft" />
-        <div className="absolute right-1/4 top-1/4 h-16 w-16 rounded-full bg-white/5 animate-drift" />
-        <div className="absolute left-1/2 bottom-1/3 h-8 w-8 rounded-full bg-white/10 animate-float" style={{ animationDelay: '1s' }} />
+        <DecorativeShapes />
 
-        <div className="relative z-10 flex flex-1 flex-col justify-center p-6 sm:p-8">
-          <p className="inline-flex w-fit items-center gap-1.5 rounded-full bg-white/20 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider">
-            <Icon name="tag" size={12} className="text-white" />
+        {/* Content */}
+        <div className="relative z-10 flex flex-1 flex-col justify-center p-5 sm:p-7 lg:p-8">
+          <span
+            className="
+              inline-flex w-fit items-center gap-1.5
+              rounded-full bg-[#FF4B4B]
+              px-2.5 py-1
+              text-[10px] font-bold uppercase tracking-wider text-white
+            "
+          >
+            <Icon name="tag" size={11} className="text-white" />
             Diskon {product.discountPercent}%
-          </p>
-          <h3 className="mt-3 text-[22px] sm:text-[28px] font-bold leading-[1.1] line-clamp-2">
+          </span>
+
+          <h3
+            className="
+              mt-3 max-w-[520px]
+              line-clamp-2
+              text-[21px] font-bold leading-[1.12]
+              text-[#172033]
+              sm:text-[27px]
+            "
+          >
             {product.name}
           </h3>
-          <p className="mt-1 text-[13px] text-white/80">{product.category?.name}</p>
 
-          <div className="mt-3 flex items-baseline gap-3">
-            <span className="text-2xl font-bold">{formatRupiah(product.price)}</span>
-            <span className="text-sm text-white/70 line-through">
-              {formatRupiah(strikePrice(product.price, product.discountPercent))}
+          <p className="mt-1 text-[12px] font-medium text-[#65738B]">
+            {product.category?.name}
+          </p>
+
+          <div className="mt-3 flex items-baseline gap-2.5">
+            <span className="text-xl font-extrabold text-[#2563C7] sm:text-2xl">
+              {formatRupiah(product.price)}
+            </span>
+
+            <span className="text-xs text-[#8793A6] line-through">
+              {formatRupiah(
+                strikePrice(product.price, product.discountPercent)
+              )}
             </span>
           </div>
 
-          <span className="mt-4 inline-flex w-fit items-center gap-2 rounded-full bg-white px-5 py-2 text-[13px] font-semibold text-[#ff5a1f] transition-transform group-hover:translate-x-0.5">
+          <span
+            className="
+              mt-4 inline-flex w-fit items-center gap-2
+              rounded-full
+              bg-[#2563C7]
+              px-4 py-2
+              text-[12px] font-bold text-white
+              transition-all duration-200
+              group-hover:gap-3
+              group-hover:bg-[#1D4FA5]
+            "
+          >
             Ambil sekarang
-            <Icon name="arrowRight" size={16} className="text-[#ff5a1f]" />
+            <Icon name="arrowRight" size={15} className="text-white" />
           </span>
         </div>
 
-        <div className="relative z-10 h-40 sm:h-auto sm:w-2/5 shrink-0 bg-white/15">
+        {/* Product image */}
+        <div
+          className="
+            relative z-10
+            hidden w-[36%]
+            shrink-0
+            items-center justify-center
+            overflow-hidden
+            bg-white/70
+            sm:flex
+          "
+        >
           {image ? (
-            <img src={image} alt="" loading="lazy" className="h-full w-full object-cover" />
+            <img
+              src={image}
+              alt=""
+              loading="lazy"
+              className="
+                h-full w-full object-cover
+                transition-transform duration-500
+                group-hover:scale-[1.04]
+              "
+            />
           ) : (
-            <span className="flex h-full w-full items-center justify-center text-white/50">
-              <Icon name="orders" size={40} className="text-white/50" />
+            <span className="flex h-full w-full items-center justify-center">
+              <Icon name="orders" size={40} className="text-[#2563C7]/40" />
             </span>
           )}
         </div>
@@ -118,95 +234,230 @@ const SaleSlide: React.FC<{ product: Product }> = ({ product }) => {
   );
 };
 
-// ── Slide Promo Aplikasi ──
+/* =========================================================
+   App Promo Slide
+========================================================= */
+
 const AppSlide: React.FC<{ promo: AppPromo }> = ({ promo }) => (
   <div className="h-full w-full snap-center shrink-0">
-    <div className={`relative flex h-full min-h-[280px] flex-col justify-between rounded-2xl bg-gradient-to-br ${promo.gradient} p-6 sm:p-8 text-white overflow-hidden`}>
-      {/* Dekorasi grafis dengan animasi */}
-      <div className="absolute -right-20 -top-20 h-56 w-56 rounded-full bg-white/5 animate-float" />
-      <div className="absolute -bottom-16 -left-16 h-40 w-40 rounded-full bg-white/5 animate-pulse-soft" />
-      <div className="absolute right-1/3 top-1/4 h-20 w-20 rounded-full bg-white/5 animate-drift" />
-      <div className="absolute left-1/4 bottom-1/4 h-12 w-12 rounded-full bg-white/10 animate-float" style={{ animationDelay: '1.5s' }} />
-      <div className="absolute right-1/4 bottom-1/3 h-10 w-10 rounded-full bg-white/10 animate-pulse-soft" style={{ animationDelay: '0.8s' }} />
+    <div
+      className="
+        relative flex h-full min-h-[230px] sm:min-h-[250px]
+        overflow-hidden rounded-[22px]
+        border border-[#DCE7F8]
+        bg-[#EAF2FF]
+        p-5 sm:p-7 lg:p-8
+        text-[#172033]
+        shadow-[0_8px_30px_rgba(37,99,199,0.08)]
+      "
+    >
+      <DecorativeShapes />
 
-      {/* Garis dekoratif */}
-      <div className="absolute right-0 top-0 h-32 w-32 rotate-12 border-r-2 border-t-2 border-white/10 rounded-tr-full" />
-      <div className="absolute bottom-0 left-0 h-24 w-24 -rotate-6 border-b-2 border-l-2 border-white/10 rounded-bl-full" />
+      {/* Main blue shape */}
+      <div
+        aria-hidden="true"
+        className="
+          absolute
+          -right-24
+          bottom-[-90px]
+          h-64
+          w-64
+          rounded-full
+          bg-[#2563C7]/10
+        "
+      />
 
-      <div className="relative z-10">
-        <p className="inline-flex w-fit items-center gap-1.5 rounded-full bg-white/15 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider">
-          <Icon name={promo.icon} size={12} className="text-white" />
-          {promo.eyebrow}
-        </p>
-        <h3 className="mt-3 max-w-xl text-[22px] sm:text-[28px] font-bold leading-[1.1]">
-          {promo.title}
-        </h3>
-        <p className="mt-2 max-w-md text-[13px] leading-relaxed text-white/85">{promo.body}</p>
+      {/* Content */}
+      <div className="relative z-10 flex h-full max-w-2xl flex-col justify-between">
+        <div>
+          <p
+            className="
+              inline-flex w-fit items-center gap-1.5
+              rounded-full
+              bg-white
+              px-2.5 py-1
+              text-[10px] font-bold uppercase
+              tracking-wider
+              text-[#2563C7]
+              shadow-sm
+            "
+          >
+            <Icon name={promo.icon} size={11} className="text-[#2563C7]" />
+            {promo.eyebrow}
+          </p>
+
+          <h3
+            className="
+              mt-3 max-w-xl
+              text-[22px] font-extrabold
+              leading-[1.1]
+              text-[#172033]
+              sm:text-[28px]
+            "
+          >
+            {promo.title}
+          </h3>
+
+          <p
+            className="
+              mt-2 max-w-lg
+              text-[12px]
+              leading-relaxed
+              text-[#65738B]
+              sm:text-[13px]
+            "
+          >
+            {promo.body}
+          </p>
+        </div>
+
+        <Link
+          to={promo.to}
+          className="
+            mt-4 inline-flex w-fit items-center gap-2
+            rounded-full
+            bg-[#2563C7]
+            px-4 py-2
+            text-[12px] font-bold
+            text-white
+            transition-all duration-200
+            hover:bg-[#1D4FA5]
+            hover:gap-3
+          "
+          style={{ color: '#ffffff' }}
+        >
+          {promo.cta}
+          <Icon name="arrowRight" size={15} className="text-white" />
+        </Link>
       </div>
 
-      <Link
-        to={promo.to}
-        className="relative z-10 mt-4 inline-flex w-fit items-center gap-2 rounded-full bg-white px-5 py-2 text-[13px] font-semibold text-[#004ac6] hover:bg-[#dbe1ff] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-        style={{ color: promo.accent }}
+      {/* Decorative card */}
+      <div
+        aria-hidden="true"
+        className="
+          absolute right-[12%] top-[20%]
+          hidden h-24 w-24
+          rotate-12
+          rounded-[20px]
+          border-2 border-white
+          bg-[#2563C7]
+          shadow-lg
+          lg:block
+        "
       >
-        {promo.cta}
-        <Icon name="arrowRight" size={16} className="text-[#004ac6]" />
-      </Link>
+        <div className="absolute left-4 top-4 h-3 w-3 rounded-full bg-[#FFD500]" />
+        <div className="absolute bottom-4 right-4 h-3 w-3 rounded-full bg-[#FF4B4B]" />
+      </div>
     </div>
   </div>
 );
 
-const DEFAULT_SHELL = 'mx-auto w-full max-w-6xl px-5 sm:px-10 pt-6';
+/* =========================================================
+   Main Carousel
+========================================================= */
+
+const DEFAULT_SHELL = 'mx-auto w-full max-w-6xl px-5 sm:px-10 pt-5';
 
 const PromoCarousel: React.FC<{
   saleProducts: Product[];
   loading?: boolean;
   className?: string;
-}> = ({ saleProducts, loading = false, className = DEFAULT_SHELL }) => {
+}> = ({
+  saleProducts,
+  loading = false,
+  className = DEFAULT_SHELL,
+}) => {
   const trackRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
 
-  // Jika tidak ada produk diskon, tampilkan hanya slide aplikasi
   const hasSales = saleProducts.length > 0;
-  const slides: Array<{ key: string; node: React.ReactNode }> = [
-    ...(hasSales ? saleProducts.slice(0, 3).map((product) => ({
-      key: `sale-${product.id}`,
-      node: <SaleSlide product={product} />,
-    })) : []),
-    ...APP_PROMOS.map((promo) => ({ key: promo.to, node: <AppSlide promo={promo} /> })),
+
+  const slides: Array<{
+    key: string;
+    node: React.ReactNode;
+  }> = [
+    ...(hasSales
+      ? saleProducts.slice(0, 3).map((product) => ({
+          key: `sale-${product.id}`,
+          node: <SaleSlide product={product} />,
+        }))
+      : []),
+
+    ...APP_PROMOS.map((promo) => ({
+      key: promo.to,
+      node: <AppSlide promo={promo} />,
+    })),
   ];
 
-  const goTo = useCallback((index: number) => {
-    const track = trackRef.current;
-    if (!track) return;
-    const clamped = (index + slides.length) % slides.length;
-    track.scrollTo({ left: track.clientWidth * clamped, behavior: 'smooth' });
-  }, [slides.length]);
+  const goTo = useCallback(
+    (index: number) => {
+      const track = trackRef.current;
+
+      if (!track) return;
+
+      const clamped =
+        (index + slides.length) % slides.length;
+
+      track.scrollTo({
+        left: track.clientWidth * clamped,
+        behavior: 'smooth',
+      });
+    },
+    [slides.length]
+  );
 
   const handleScroll = () => {
     const track = trackRef.current;
+
     if (!track || track.clientWidth === 0) return;
-    setActive(Math.round(track.scrollLeft / track.clientWidth));
+
+    setActive(
+      Math.round(track.scrollLeft / track.clientWidth)
+    );
   };
 
-  // Autoplay
+  /* Autoplay */
   useEffect(() => {
     if (paused || slides.length < 2) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    if (
+      window.matchMedia(
+        '(prefers-reduced-motion: reduce)'
+      ).matches
+    ) {
+      return;
+    }
+
     const timer = window.setInterval(() => {
       const track = trackRef.current;
+
       if (!track || track.clientWidth === 0) return;
-      const next = (Math.round(track.scrollLeft / track.clientWidth) + 1) % slides.length;
-      track.scrollTo({ left: track.clientWidth * next, behavior: 'smooth' });
+
+      const next =
+        (Math.round(track.scrollLeft / track.clientWidth) + 1) %
+        slides.length;
+
+      track.scrollTo({
+        left: track.clientWidth * next,
+        behavior: 'smooth',
+      });
     }, SLIDE_MS);
+
     return () => window.clearInterval(timer);
   }, [paused, slides.length]);
 
   if (loading) {
     return (
       <section className={className}>
-        <div className="h-[280px] animate-pulse rounded-2xl bg-[#f2f4f6]" />
+        <div
+          className="
+            h-[230px] sm:h-[250px]
+            animate-pulse
+            rounded-[22px]
+            bg-[#EAF2FF]
+          "
+        />
       </section>
     );
   }
@@ -223,45 +474,91 @@ const PromoCarousel: React.FC<{
       onBlur={() => setPaused(false)}
     >
       <div className="relative">
+        {/* Track */}
         <div
           ref={trackRef}
           onScroll={handleScroll}
           tabIndex={0}
-          className="flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#004ac6]"
+          className="
+            flex
+            snap-x snap-mandatory
+            gap-4
+            overflow-x-auto
+            scroll-smooth
+            rounded-[22px]
+            [scrollbar-width:none]
+            [&::-webkit-scrollbar]:hidden
+            focus-visible:outline-2
+            focus-visible:outline-offset-2
+            focus-visible:outline-[#2563C7]
+          "
         >
           {slides.map(({ key, node }) => (
-            <div key={key} className="min-w-full">
+            <div
+              key={key}
+              className="min-w-full"
+            >
               {node}
             </div>
           ))}
         </div>
 
-        {/* Tombol navigasi */}
+        {/* Previous */}
         {slides.length > 1 && (
           <>
             <button
               type="button"
               onClick={() => goTo(active - 1)}
               aria-label="Promo sebelumnya"
-              className="absolute -left-4 top-1/2 hidden -translate-y-1/2 sm:flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-[#191c1e] shadow-lg hover:bg-white transition-all z-10 backdrop-blur-sm"
+              className="
+                absolute -left-4 top-1/2
+                hidden h-9 w-9
+                -translate-y-1/2
+                items-center justify-center
+                rounded-full
+                border border-[#DCE7F8]
+                bg-white
+                text-[#2563C7]
+                shadow-md
+                transition-all
+                hover:bg-[#EEF5FF]
+                hover:shadow-lg
+                sm:flex
+              "
             >
-              <Icon name="chevronLeft" size={18} />
+              <Icon name="chevronLeft" size={17} />
             </button>
+
+            {/* Next */}
             <button
               type="button"
               onClick={() => goTo(active + 1)}
               aria-label="Promo berikutnya"
-              className="absolute -right-4 top-1/2 hidden -translate-y-1/2 sm:flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-[#191c1e] shadow-lg hover:bg-white transition-all z-10 backdrop-blur-sm"
+              className="
+                absolute -right-4 top-1/2
+                hidden h-9 w-9
+                -translate-y-1/2
+                items-center justify-center
+                rounded-full
+                border border-[#DCE7F8]
+                bg-white
+                text-[#2563C7]
+                shadow-md
+                transition-all
+                hover:bg-[#EEF5FF]
+                hover:shadow-lg
+                sm:flex
+              "
             >
-              <Icon name="chevronRight" size={18} />
+              <Icon name="chevronRight" size={17} />
             </button>
           </>
         )}
       </div>
 
-      {/* Indikator */}
+      {/* Indicator */}
       {slides.length > 1 && (
-        <div className="mt-4 flex justify-center gap-2">
+        <div className="mt-3 flex justify-center gap-1.5">
           {slides.map(({ key }, index) => (
             <button
               key={key}
@@ -269,9 +566,15 @@ const PromoCarousel: React.FC<{
               onClick={() => goTo(index)}
               aria-label={`Ke promo ${index + 1}`}
               aria-current={index === active}
-              className={`h-2 rounded-full transition-all ${
-                index === active ? 'w-6 bg-[#004ac6]' : 'w-2 bg-[#c3c6d7] hover:bg-[#737686]'
-              }`}
+              className={`
+                h-1.5 rounded-full
+                transition-all duration-300
+                ${
+                  index === active
+                    ? 'w-6 bg-[#2563C7]'
+                    : 'w-1.5 bg-[#C9D7EC] hover:bg-[#8FAED8]'
+                }
+              `}
             />
           ))}
         </div>
