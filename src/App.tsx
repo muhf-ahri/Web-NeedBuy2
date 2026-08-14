@@ -12,7 +12,7 @@ import ShoppingPlansPage from './pages/ShoppingPlansPage';
 import SearchPage from './pages/SearchPage';
 import CartPage from './pages/CartPage';
 import CheckoutPage from './pages/CheckoutPage';
-import OrdersPage from './pages/OrdersPage';
+import OrderPage from './pages/OrderPage';
 import WishlistPage from './pages/WishlistPage';
 import ProfilePage from './pages/ProfilePage';
 import NeedsPage from './pages/NeedsPage';
@@ -39,6 +39,7 @@ import StoresPage from './pages/admin/StoresPage';
 import AdminPlaceholder from './pages/admin/PlaceholderPage';
 import ProductsPage from './pages/admin/ProductsPage';
 import CategoryPage from './pages/admin/CategoryPage';
+import OrdersPage from './pages/admin/OrdersPage';
 
 function App() {
   return (
@@ -85,7 +86,7 @@ function App() {
               <Route path="/needpay" element={<NeedPayPage />} />
 
               {/* Lacak paket */}
-              <Route path="/orders/:id/track" element={<TrackingPage />} />
+              <Route path="/order/:id/track" element={<TrackingPage />} />
 
               {/* Pesan dengan penjual */}
               <Route path="/messages" element={<MessagesPage />} />
@@ -193,6 +194,7 @@ function App() {
               <Route path="/admin/products/pending" element={<RequireAdmin><ProductsPage /></RequireAdmin>} />
               <Route path="/admin/products/approved " element={<RequireAdmin><ProductsPage /></RequireAdmin>} />
               <Route path="/admin/categories" element={<RequireAdmin><CategoryPage /></RequireAdmin>} />
+              <Route path="/admin/orders" element={<RequireAdmin><OrdersPage /></RequireAdmin>} />
 
               {/* Compare — placeholder */}
               <Route path="/compare" element={<div className="p-8 text-center text-gray-500 font-sans">Compare — coming soon</div>} />

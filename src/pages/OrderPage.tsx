@@ -82,7 +82,7 @@ const paymentMethodLabel = (method: string | null | undefined): string => {
   return ONLINE_CHANNELS.includes(method) ? `Bayar via ${method}` : method;
 };
 
-const OrdersPage: React.FC = () => {
+const OrderPage: React.FC = () => {
   const navigate = useNavigate();
   const [orders, setOrders] = useState<Order[]>([]);
   const [activeTab, setActiveTab] = useState<TabKey>('ALL');
@@ -762,4 +762,4 @@ const OrdersPage: React.FC = () => {
   );
 };
 
-export default OrdersPage;
+export default OrderPage;
