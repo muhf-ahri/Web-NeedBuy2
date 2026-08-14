@@ -23,7 +23,7 @@ const APP_PROMOS: AppPromo[] = [
   {
     eyebrow: 'NeedPay',
     title: 'Isi saldo sekali, checkout tinggal satu ketukan',
-    body: 'Saldo NeedPay kepakai langsung pas bayar — nggak perlu buka aplikasi bank tiap belanja.',
+    body: 'Saldo NeedPay kepakai langsung pas bayar nggak perlu buka aplikasi bank tiap belanja.',
     cta: 'Isi saldo NeedPay',
     to: '/needpay',
     icon: 'wallet',

@@ -5,14 +5,38 @@ import type { ApiResponse, Category } from '../types';
 export interface CreateCategoryRequest {
   name: string;
   slug?: string;
-  parentId?: string;
+  description?: string | null;
+  isActive?: boolean;
+  parentId?: string | null;
 }
 
 export interface UpdateCategoryRequest {
   name?: string;
   slug?: string;
-  parentId?: string;
+  description?: string | null;
+  isActive?: boolean;
+  parentId?: string | null;
 }
+
+/**
+ * Baris kategori versi panel admin: rata (bukan pohon), termasuk yang
+ * nonaktif, plus jumlah produk & sub-kategori yang menempel.
+ */
+export interface AdminCategory {
+  id: string;
+  name: string;
+  slug: string;
+  description: string | null;
+  isActive: boolean;
+  parentId: string | null;
+  createdAt: string;
+  _count: { products: number; children: number };
+}
+
+export const getAdminCategories = async (): Promise<AdminCategory[]> => {
+  const res = await apiClient.get<ApiResponse<AdminCategory[]>>('/categories/admin/all');
+  return res.data.data;
+};
 
 export const getCategories = async (): Promise<Category[]> => {
   const res = await apiClient.get<ApiResponse<Category[]>>('/categories');

@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Icon from './ui/Icon';
+import ReportButton from './ui/ReportButton';
 import { getProductReviews, type ProductReview, type ReviewMeta } from '../api/reviews';
 
 const PAGE_SIZE = 5;
@@ -103,7 +104,7 @@ const ProductReviews: React.FC<{ productId: string }> = ({ productId }) => {
                   <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#dbe1ff] text-[#004ac6]">
                     <Icon name="user" size={16} className="" />
                   </span>
-                  <div className="min-w-0">
+                  <div className="min-w-0 flex-1">
                     <p className="text-[13px] font-semibold text-[#191c1e]">
                       {review.user?.name ?? 'Pembeli'}
                     </p>
@@ -116,6 +117,12 @@ const ProductReviews: React.FC<{ productId: string }> = ({ productId }) => {
                       })}
                     </p>
                   </div>
+                  <ReportButton
+                    compact
+                    targetType="REVIEW"
+                    targetId={review.id}
+                    targetLabel={`Ulasan ${review.user?.name ?? 'pembeli'}`}
+                  />
                 </div>
 
                 {review.orderItem?.variant && (

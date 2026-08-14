@@ -8,6 +8,7 @@ import { getUserProfile, updateProfile, changePassword, type User as UserType } 
 import { getAddresses, createAddress, deleteAddress, type Address } from '../api/orders';
 import { validateAddressForm, EMPTY_ADDRESS_FORM, type AddressFormData } from '../utils/address';
 import { useAuth } from '../contexts/AuthContext';
+import VerifyEmailBanner from '../components/ui/VerifyEmailBanner';
 import SellerRegisterForm from '../components/forms/SellerRegisterForm';
 
 interface ProfileData extends UserType {
@@ -209,6 +210,8 @@ const ProfilePage: React.FC = () => {
 
       <main className="flex-1 max-w-6xl mx-auto w-full px-5 sm:px-10 py-8">
         <h1 className="text-[28px] font-bold text-[#191c1e] mb-6">Profil Saya</h1>
+
+        <VerifyEmailBanner />
 
         {error && (
           <div className="bg-[#ffdad6] border border-[#ba1a1a]/20 rounded-2xl px-4 py-3 mb-4">

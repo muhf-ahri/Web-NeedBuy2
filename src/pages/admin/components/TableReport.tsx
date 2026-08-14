@@ -1,42 +1,61 @@
-// src/pages/admin/components/ReportTable.tsx
+// src/pages/admin/components/TableReport.tsx
 import React from 'react';
-import Icon from '../../../components/ui/Icon';
-import type { Report, ReportPriority, ReportStatus } from '../data/reportsData';
+import type {
+  AdminReport,
+  ReportPriority,
+  ReportStatus,
+  ReportTargetType,
+} from '../../../api/admin';
 
 interface ReportTableProps {
-  reports: Report[];
+  reports: AdminReport[];
   isLoading?: boolean;
   emptyMessage?: string;
+  onAdvance: (report: AdminReport) => void;
+  pendingId?: string | null;
 }
 
 const priorityColor: Record<ReportPriority, string> = {
-  High: 'bg-[#ffe0e0] text-[#a33131]',
-  Medium: 'bg-[#fff4e0] text-[#b45309]',
-  Low: 'bg-[#f2f4f6] text-[#737686]',
+  HIGH: 'bg-[#ffe0e0] text-[#a33131]',
+  MEDIUM: 'bg-[#fff4e0] text-[#b45309]',
+  LOW: 'bg-[#f2f4f6] text-[#737686]',
 };
 
 const statusColor: Record<ReportStatus, string> = {
-  Open: 'bg-[#ffe0e0] text-[#a33131]',
-  Investigating: 'bg-[#cfe8ff] text-[#0057b8]',
-  Resolved: 'bg-[#d7f5dc] text-[#156b32]',
+  OPEN: 'bg-[#ffe0e0] text-[#a33131]',
+  INVESTIGATING: 'bg-[#cfe8ff] text-[#0057b8]',
+  RESOLVED: 'bg-[#d7f5dc] text-[#156b32]',
 };
 
-const priorityLabel: Record<ReportPriority, string> = {
-  High: 'Tinggi',
-  Medium: 'Sedang',
-  Low: 'Rendah',
+export const priorityLabel: Record<ReportPriority, string> = {
+  HIGH: 'Tinggi',
+  MEDIUM: 'Sedang',
+  LOW: 'Rendah',
 };
 
-const statusLabel: Record<ReportStatus, string> = {
-  Open: 'Terbuka',
-  Investigating: 'Diselidiki',
-  Resolved: 'Selesai',
+export const statusLabel: Record<ReportStatus, string> = {
+  OPEN: 'Terbuka',
+  INVESTIGATING: 'Diselidiki',
+  RESOLVED: 'Selesai',
 };
 
-const categoryLabel: Record<Report['category'], string> = {
-  Product: 'Produk',
-  Seller: 'Penjual',
-  Review: 'Ulasan',
+export const targetLabel: Record<ReportTargetType, string> = {
+  PRODUCT: 'Produk',
+  SELLER: 'Penjual',
+  REVIEW: 'Ulasan',
+};
+
+/** Tombol aksi cuma memajukan satu langkah — nggak ada jalan mundur. */
+const nextStatus: Record<ReportStatus, ReportStatus | null> = {
+  OPEN: 'INVESTIGATING',
+  INVESTIGATING: 'RESOLVED',
+  RESOLVED: null,
+};
+
+const nextActionLabel: Record<ReportStatus, string> = {
+  OPEN: 'Selidiki',
+  INVESTIGATING: 'Selesaikan',
+  RESOLVED: '',
 };
 
 const formatDate = (iso: string) =>
@@ -50,11 +69,13 @@ const TableReport: React.FC<ReportTableProps> = ({
   reports,
   isLoading = false,
   emptyMessage = 'Tidak ada laporan.',
+  onAdvance,
+  pendingId = null,
 }) => {
   if (isLoading) {
     return (
       <tr>
-        <td colSpan={7} className="py-10 text-center text-[#737686]">
+        <td colSpan={8} className="py-10 text-center text-[#737686]">
           <span className="inline-block h-5 w-5 animate-spin rounded-full border-2 border-[#004ac6] border-t-transparent" />
           <span className="ml-2">Memuat…</span>
         </td>
@@ -65,7 +86,7 @@ const TableReport: React.FC<ReportTableProps> = ({
   if (reports.length === 0) {
     return (
       <tr>
-        <td colSpan={7} className="py-10 text-center text-[#737686]">
+        <td colSpan={8} className="py-10 text-center text-[#737686]">
           {emptyMessage}
         </td>
       </tr>
@@ -76,16 +97,21 @@ const TableReport: React.FC<ReportTableProps> = ({
     <>
       {reports.map((report) => (
         <tr key={report.id} className="text-[13px] transition-colors hover:bg-[#f8f9fb]">
+          {/* Backend nggak menyimpan nomor laporan — potongan UUID sudah cukup
+              untuk dirujuk manusia tanpa mengarang kolom baru. */}
           <td className="py-2.5 pr-2 font-medium text-[#004ac6]">
-            {report.reportId}
+            #{report.id.slice(0, 8).toUpperCase()}
           </td>
           <td className="py-2.5 pr-2">
             <span className="rounded-full bg-[#f2f4f6] px-2 py-0.5 text-[11px] font-semibold text-[#434655]">
-              {categoryLabel[report.category]}
+              {targetLabel[report.targetType]}
             </span>
           </td>
-          <td className="py-2.5 pr-2 text-[#737686]">{report.reporter}</td>
-          <td className="py-2.5 pr-2 text-[#191c1e]">{report.entity}</td>
+          <td className="py-2.5 pr-2 text-[#737686]">{report.reporter.email}</td>
+          <td className="py-2.5 pr-2">
+            <div className="text-[#191c1e]">{report.targetLabel}</div>
+            <div className="text-[11px] text-[#737686]">{report.reason}</div>
+          </td>
           <td className="py-2.5 pr-2">
             <span
               className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${priorityColor[report.priority]}`}
@@ -102,12 +128,17 @@ const TableReport: React.FC<ReportTableProps> = ({
           </td>
           <td className="py-2.5 pr-2 text-[#737686]">{formatDate(report.createdAt)}</td>
           <td className="py-2.5">
-            <button
-              className="rounded-lg p-1.5 text-[#737686] transition-colors hover:bg-[#f2f4f6] hover:text-[#004ac6]"
-              aria-label="Detail laporan"
-            >
-              <Icon name="eye" size={16} />
-            </button>
+            {nextStatus[report.status] ? (
+              <button
+                onClick={() => onAdvance(report)}
+                disabled={pendingId === report.id}
+                className="rounded-full bg-[#004ac6] px-3 py-1 text-[12px] font-semibold text-white transition-colors hover:bg-[#003ea8] disabled:opacity-50"
+              >
+                {nextActionLabel[report.status]}
+              </button>
+            ) : (
+              <span className="text-[11px] text-[#737686]">—</span>
+            )}
           </td>
         </tr>
       ))}
@@ -115,4 +146,5 @@ const TableReport: React.FC<ReportTableProps> = ({
   );
 };
 
+export { nextStatus };
 export default TableReport;

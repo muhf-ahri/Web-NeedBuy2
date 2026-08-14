@@ -1,121 +1,130 @@
 // src/pages/admin/PaymentsPage.tsx
-import React, { useState, useMemo } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import AdminLayout from './AdminLayout';
 import FilterBar from '../../components/ui/filter/FilterBar';
 import Pagination from '../../components/ui/Pagination';
 import PaymentTable from './components/TablePayments';
-import { DUMMY_PAYMENTS, type PaymentStatus, type PaymentMethod } from './data/paymentsData';
+import {
+  getPayments,
+  type AdminPayment,
+  type PaymentMethod,
+  type PaymentStatus,
+} from '../../api/admin';
 
 const PAGE_SIZE = 10;
 
 const PaymentsPage: React.FC = () => {
   const [page, setPage] = useState(1);
-  const [statusFilter, setStatusFilter] = useState<string>('all');
-  const [methodFilter, setMethodFilter] = useState<string>('all');
+  const [status, setStatus] = useState<PaymentStatus | ''>('');
+  const [method, setMethod] = useState<PaymentMethod | ''>('');
 
-  const filteredData = useMemo(() => {
-    let data = [...DUMMY_PAYMENTS];
+  const [items, setItems] = useState<AdminPayment[]>([]);
+  const [total, setTotal] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-    if (statusFilter !== 'all') {
-      data = data.filter((payment) => payment.status === statusFilter);
-    }
+  const load = useCallback(() => {
+    setIsLoading(true);
+    setError(null);
+    return getPayments({
+      status: status || undefined,
+      method: method || undefined,
+      page,
+      limit: PAGE_SIZE,
+    })
+      .then((res) => {
+        setItems(res.data.data);
+        setTotal(res.data.meta.total);
+        setTotalPages(res.data.meta.totalPages);
+      })
+      .catch((err: Error) => setError(err.message))
+      .finally(() => setIsLoading(false));
+  }, [status, method, page]);
 
-    if (methodFilter !== 'all') {
-      data = data.filter((payment) => payment.method === methodFilter);
-    }
-
-    return data;
-  }, [statusFilter, methodFilter]);
-
-  const totalItems = filteredData.length;
-  const totalPages = Math.ceil(totalItems / PAGE_SIZE);
-  const startIndex = (page - 1) * PAGE_SIZE;
-  const paginatedData = filteredData.slice(startIndex, startIndex + PAGE_SIZE);
+  useEffect(() => {
+    void load();
+  }, [load]);
 
   const statusOptions = [
-    { label: 'Semua Status', value: 'all' },
-    { label: 'Berhasil', value: 'Paid' },
-    { label: 'Menunggu', value: 'Pending' },
-    { label: 'Gagal', value: 'Failed' },
-    { label: 'Dikembalikan', value: 'Refunded' },
+    { label: 'Semua Status', value: '' },
+    { label: 'Berhasil', value: 'PAID' },
+    { label: 'Menunggu', value: 'PENDING' },
+    { label: 'Gagal', value: 'FAILED' },
+    { label: 'Kedaluwarsa', value: 'EXPIRED' },
+    { label: 'Dikembalikan', value: 'REFUNDED' },
   ];
 
+  // Cuma dua metode yang benar-benar ada di sistem ini.
   const methodOptions = [
-    { label: 'Semua Metode', value: 'all' },
-    { label: 'Visa', value: 'Visa' },
-    { label: 'Mastercard', value: 'Mastercard' },
-    { label: 'Bank Transfer', value: 'Bank Transfer' },
-    { label: 'PayPal', value: 'PayPal' },
-    { label: 'QRIS', value: 'QRIS' },
-    { label: 'E-Wallet', value: 'E-Wallet' },
+    { label: 'Semua Metode', value: '' },
+    { label: 'Midtrans', value: 'MIDTRANS' },
+    { label: 'Bayar di Tempat', value: 'COD' },
   ];
-
-  const getEmptyMessage = () => {
-    if (statusFilter !== 'all' && methodFilter !== 'all') {
-      return 'Tidak ada transaksi dengan filter ini.';
-    }
-    return 'Belum ada transaksi pembayaran.';
-  };
 
   return (
     <AdminLayout>
       <div className="space-y-6">
-        {/* Header */}
         <div>
           <h1 className="text-[28px] font-bold text-[#191c1e]">Pembayaran</h1>
           <p className="text-[15px] text-[#737686]">
-            Kelola dan lacak semua transaksi pembayaran pelanggan.
+            Pantau semua transaksi pembayaran pelanggan.
           </p>
         </div>
 
-        {/* Filter */}
         <FilterBar
           filters={[
             {
               key: 'status',
               options: statusOptions,
-              value: statusFilter,
+              value: status,
               onChange: (val) => {
-                setStatusFilter(val);
+                setStatus(val as PaymentStatus | '');
                 setPage(1);
               },
             },
             {
               key: 'method',
               options: methodOptions,
-              value: methodFilter,
+              value: method,
               onChange: (val) => {
-                setMethodFilter(val);
+                setMethod(val as PaymentMethod | '');
                 setPage(1);
               },
             },
           ]}
-          onMoreFilters={() => {}}
-          moreFiltersLabel="More Filters"
           visibleFilters={2}
         />
 
-        {/* Table */}
+        {error && (
+          <div className="rounded-2xl border border-[#ffcdd2] bg-[#fff5f5] p-4 text-[13px] text-[#a33131]">
+            {error}
+          </div>
+        )}
+
         <div className="overflow-hidden rounded-2xl border border-[#e0e3e5] bg-white p-5">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-[#f2f4f6] text-[11px] font-semibold uppercase text-[#737686]">
                   <th className="pb-2 pr-2 text-left">ID Transaksi</th>
-                  <th className="pb-2 pr-2 text-left">ID Order</th>
+                  <th className="pb-2 pr-2 text-left">No. Order</th>
                   <th className="pb-2 pr-2 text-left">Pembeli</th>
                   <th className="pb-2 pr-2 text-left">Jumlah</th>
                   <th className="pb-2 pr-2 text-left">Metode</th>
                   <th className="pb-2 pr-2 text-left">Status</th>
-                  <th className="pb-2 pr-2 text-left">Tanggal</th>
-                  <th className="pb-2 text-center">Aksi</th>
+                  <th className="pb-2 text-left">Tanggal</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#f2f4f6]">
                 <PaymentTable
-                  payments={paginatedData}
-                  isLoading={false}
-                  emptyMessage={getEmptyMessage()}
+                  payments={items}
+                  isLoading={isLoading}
+                  emptyMessage={
+                    status || method
+                      ? 'Nggak ada transaksi yang cocok sama filter ini.'
+                      : 'Belum ada transaksi pembayaran.'
+                  }
                 />
               </tbody>
             </table>
@@ -126,7 +135,7 @@ const PaymentsPage: React.FC = () => {
               <Pagination
                 currentPage={page}
                 totalPages={totalPages}
-                totalItems={totalItems}
+                totalItems={total}
                 pageSize={PAGE_SIZE}
                 onPageChange={setPage}
                 showTotal

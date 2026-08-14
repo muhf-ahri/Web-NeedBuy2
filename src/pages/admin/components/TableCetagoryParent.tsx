@@ -2,7 +2,7 @@
 import React from 'react';
 import Icon from '../../../components/ui/Icon';
 import Pagination from '../../../components/ui/Pagination';
-import { type Category } from '../data/categoryData';
+import type { AdminCategory as Category } from '../../../api/categories';
 
 interface TableCategoryParentProps {
   data: Category[];

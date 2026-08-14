@@ -1,5 +1,5 @@
 // src/pages/admin/StoresPage.tsx
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import AdminLayout from './AdminLayout';
 import Icon from '../../components/ui/Icon';
 import FilterBar from '../../components/ui/filter/FilterBar';
@@ -41,6 +41,7 @@ const StoresPage: React.FC = () => {
     return getStores({
       status: status || undefined,
       minRating: minRating ? Number(minRating) : undefined,
+      q: searchTerm.trim() || undefined,
       page,
       limit: PAGE_SIZE,
     })
@@ -51,28 +52,13 @@ const StoresPage: React.FC = () => {
       })
       .catch((err: Error) => setError(err.message))
       .finally(() => setIsLoading(false));
-  }, [status, minRating, page]);
+  }, [status, minRating, searchTerm, page]);
 
+  // Pencarian di-debounce: tiap ketikan tidak perlu jadi satu request.
   useEffect(() => {
-    void load();
-  }, [load]);
-
-  // Filter client-side untuk pencarian
-  const filteredItems = useMemo(() => {
-    if (!searchTerm.trim()) return items;
-    const term = searchTerm.toLowerCase().trim();
-    return items.filter(
-      (store) =>
-        store.storeName.toLowerCase().includes(term) ||
-        store.owner.toLowerCase().includes(term)
-    );
-  }, [items, searchTerm]);
-
-  // Hitung ulang total & totalPages setelah filter client-side
-  const filteredTotal = filteredItems.length;
-  const filteredTotalPages = Math.ceil(filteredTotal / PAGE_SIZE);
-  const startIndex = (page - 1) * PAGE_SIZE;
-  const paginatedItems = filteredItems.slice(startIndex, startIndex + PAGE_SIZE);
+    const timer = setTimeout(() => void load(), searchTerm ? 300 : 0);
+    return () => clearTimeout(timer);
+  }, [load, searchTerm]);
 
   // Reset page saat filter berubah
   useEffect(() => {
@@ -116,6 +102,20 @@ const StoresPage: React.FC = () => {
 
         {/* Search + Filter Bar */}
         <div className="flex flex-wrap items-center gap-3">
+          <div className="relative">
+            <input
+              type="search"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Cari nama toko atau pemilik…"
+              className="w-64 rounded-xl border border-[#c3c6d7] px-4 py-2.5 pl-9 text-sm outline-none transition focus:border-[#004ac6] focus:ring-2 focus:ring-[#004ac6]/20"
+            />
+            <Icon
+              name="search"
+              size={14}
+              className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[#737686]"
+            />
+          </div>
 
           {/* FilterBar */}
           <FilterBar
@@ -172,14 +172,14 @@ const StoresPage: React.FC = () => {
                       <span className="ml-2">Memuat…</span>
                     </td>
                   </tr>
-                ) : paginatedItems.length === 0 ? (
+                ) : items.length === 0 ? (
                   <tr>
                     <td colSpan={11} className="py-10 text-center text-[#737686]">
                       {searchTerm ? `Tidak ada toko yang cocok dengan "${searchTerm}"` : 'Belum ada toko.'}
                     </td>
                   </tr>
                 ) : (
-                  paginatedItems.map((store) => (
+                  items.map((store) => (
                     <tr key={store.id} className="text-[13px] transition-colors hover:bg-[#f8f9fb]">
                       <td className="py-2.5 pr-2 text-left font-medium text-[#191c1e]">
                         {store.storeName}
@@ -232,12 +232,12 @@ const StoresPage: React.FC = () => {
           </div>
 
           {/* Pagination */}
-          {filteredTotalPages > 1 && (
+          {totalPages > 1 && (
             <div className="mt-4 border-t border-[#e0e3e5] pt-4">
               <Pagination
                 currentPage={page}
-                totalPages={filteredTotalPages}
-                totalItems={filteredTotal}
+                totalPages={totalPages}
+                totalItems={total}
                 pageSize={PAGE_SIZE}
                 onPageChange={setPage}
                 showTotal

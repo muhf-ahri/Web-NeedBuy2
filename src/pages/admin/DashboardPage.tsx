@@ -159,7 +159,7 @@ const DashboardPage: React.FC = () => {
                   </p>
                 </div>
                 <div className={`shrink-0 rounded-full bg-[#dbe1ff] p-2 ${stat.alert ? 'text-[#ba1a1a]' : 'text-[#004ac6]'}`}>
-                  <Icon name={stat.icon} size={18} sm:size={20} />
+                  <Icon name={stat.icon} size={20} />
                 </div>
               </div>
             </div>

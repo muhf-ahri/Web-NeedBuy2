@@ -1,12 +1,49 @@
 // src/pages/admin/SettingsPage.tsx
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import AdminLayout from './AdminLayout';
 import Icon from '../../components/ui/Icon';
 import MarketplaceInfo from './components/settings/MarketPlaceInfo';
 import Branding from './components/settings/Branding';
 import RegionalSettings from './components/settings/RegionalSettings';
+import { getConfigs, setConfigs, type ConfigKey } from '../../api/admin';
+
+/**
+ * Semua kartu di halaman ini menulis ke tabel AdminConfig lewat
+ * `POST /admin/configs`. Data dimuat sekali di sini, bukan per kartu, supaya
+ * tiga kartu tidak memanggil endpoint yang sama tiga kali.
+ */
+export type SaveConfigs = (entries: Partial<Record<ConfigKey, string>>) => Promise<void>;
+
+export interface SettingsCardProps {
+  values: Record<string, string>;
+  onSave: SaveConfigs;
+}
 
 const SettingsPage: React.FC = () => {
+  const [values, setValues] = useState<Record<string, string> | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  const load = useCallback(async () => {
+    try {
+      const res = await getConfigs();
+      setValues(res.data.data.configs);
+      setError(null);
+    } catch (err: any) {
+      setError(err?.message ?? 'Gagal muat pengaturan, coba muat ulang halaman ya');
+    }
+  }, []);
+
+  useEffect(() => {
+    void load();
+  }, [load]);
+
+  const handleSave = useCallback<SaveConfigs>(async (entries) => {
+    await setConfigs(entries);
+    // State lokal disamakan dengan yang barusan dikirim — tidak perlu GET ulang
+    // karena backend menyimpan nilainya apa adanya.
+    setValues((prev) => ({ ...(prev ?? {}), ...(entries as Record<string, string>) }));
+  }, []);
+
   return (
     <AdminLayout>
       <div className="space-y-6">
@@ -18,32 +55,48 @@ const SettingsPage: React.FC = () => {
           </p>
         </div>
 
-        {/* Marketplace Information */}
-        <div className="rounded-2xl border border-[#e0e3e5] bg-white p-5">
-          <h2 className="mb-4 flex items-center gap-2 text-[15px] font-bold text-[#191c1e]">
-            <Icon name="settings" size={18} className="text-[#004ac6]" />
-            Informasi Marketplace
-          </h2>
-          <MarketplaceInfo />
-        </div>
+        {error && (
+          <div className="rounded-xl border border-[#ffbcbc] bg-[#ffe0e0] p-3 text-[13px] text-[#a33131]">
+            {error}
+          </div>
+        )}
 
-        {/* Branding */}
-        <div className="rounded-2xl border border-[#e0e3e5] bg-white p-5">
-          <h2 className="mb-4 flex items-center gap-2 text-[15px] font-bold text-[#191c1e]">
-            <Icon name="upload" size={18} className="text-[#004ac6]" />
-            Branding
-          </h2>
-          <Branding />
-        </div>
+        {!values ? (
+          <div className="space-y-6">
+            {[0, 1, 2].map((i) => (
+              <div key={i} className="h-40 animate-pulse rounded-2xl bg-[#f2f4f6]" />
+            ))}
+          </div>
+        ) : (
+          <>
+            {/* Marketplace Information */}
+            <div className="rounded-2xl border border-[#e0e3e5] bg-white p-5">
+              <h2 className="mb-4 flex items-center gap-2 text-[15px] font-bold text-[#191c1e]">
+                <Icon name="settings" size={18} className="text-[#004ac6]" />
+                Informasi Marketplace
+              </h2>
+              <MarketplaceInfo values={values} onSave={handleSave} />
+            </div>
 
-        {/* Regional Settings */}
-        <div className="rounded-2xl border border-[#e0e3e5] bg-white p-5">
-          <h2 className="mb-4 flex items-center gap-2 text-[15px] font-bold text-[#191c1e]">
-            <Icon name="globe" size={18} className="text-[#004ac6]" />
-            Regional Settings
-          </h2>
-          <RegionalSettings />
-        </div>
+            {/* Branding */}
+            <div className="rounded-2xl border border-[#e0e3e5] bg-white p-5">
+              <h2 className="mb-4 flex items-center gap-2 text-[15px] font-bold text-[#191c1e]">
+                <Icon name="upload" size={18} className="text-[#004ac6]" />
+                Branding
+              </h2>
+              <Branding values={values} onSave={handleSave} />
+            </div>
+
+            {/* Regional Settings */}
+            <div className="rounded-2xl border border-[#e0e3e5] bg-white p-5">
+              <h2 className="mb-4 flex items-center gap-2 text-[15px] font-bold text-[#191c1e]">
+                <Icon name="globe" size={18} className="text-[#004ac6]" />
+                Regional Settings
+              </h2>
+              <RegionalSettings values={values} onSave={handleSave} />
+            </div>
+          </>
+        )}
       </div>
     </AdminLayout>
   );

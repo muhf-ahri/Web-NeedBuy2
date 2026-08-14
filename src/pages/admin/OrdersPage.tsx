@@ -1,102 +1,84 @@
 // src/pages/admin/OrdersPage.tsx
-import React, { useState, useMemo } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import AdminLayout from './AdminLayout';
 import FilterBar from '../../components/ui/filter/FilterBar';
 import Pagination from '../../components/ui/Pagination';
-import OrderTable from './components/OrderTable';
-import { DUMMY_ORDERS, type OrderStatus } from './data/ordersData';
+import OrderTable, { statusLabel } from './components/OrderTable';
+import { getOrders, type AdminOrder, type OrderStatus, type PaymentStatus } from '../../api/admin';
 
-type TabType = OrderStatus;
+/** Tab "Semua" = tanpa filter status, jadi nilainya string kosong. */
+type Tab = '' | Extract<OrderStatus, 'PROCESSING' | 'SHIPPED' | 'COMPLETED' | 'CANCELLED'>;
+
+const TABS: Tab[] = ['', 'PROCESSING', 'SHIPPED', 'COMPLETED', 'CANCELLED'];
 
 const PAGE_SIZE = 10;
 
 const OrdersPage: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<TabType>('all');
+  const [status, setStatus] = useState<Tab>('');
+  const [paymentStatus, setPaymentStatus] = useState<PaymentStatus | ''>('');
   const [page, setPage] = useState(1);
-  const [paymentFilter, setPaymentFilter] = useState('all');
 
-  const filteredData = useMemo(() => {
-    let data = [...DUMMY_ORDERS];
+  const [items, setItems] = useState<AdminOrder[]>([]);
+  const [total, setTotal] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-    if (activeTab !== 'all') {
-      data = data.filter((order) => order.status === activeTab);
-    }
+  const load = useCallback(() => {
+    setIsLoading(true);
+    setError(null);
+    return getOrders({
+      status: status || undefined,
+      paymentStatus: paymentStatus || undefined,
+      page,
+      limit: PAGE_SIZE,
+    })
+      .then((res) => {
+        setItems(res.data.data);
+        setTotal(res.data.meta.total);
+        setTotalPages(res.data.meta.totalPages);
+      })
+      .catch((err: Error) => setError(err.message))
+      .finally(() => setIsLoading(false));
+  }, [status, paymentStatus, page]);
 
-    if (paymentFilter !== 'all') {
-      data = data.filter((order) => order.paymentStatus === paymentFilter);
-    }
-
-    return data;
-  }, [activeTab, paymentFilter]);
-
-  const totalItems = filteredData.length;
-  const totalPages = Math.ceil(totalItems / PAGE_SIZE);
-  const startIndex = (page - 1) * PAGE_SIZE;
-  const paginatedData = filteredData.slice(startIndex, startIndex + PAGE_SIZE);
-
-  const handleTabChange = (tab: TabType) => {
-    setActiveTab(tab);
-    setPage(1);
-  };
+  useEffect(() => {
+    void load();
+  }, [load]);
 
   const paymentOptions = [
-    { label: 'Semua Pembayaran', value: 'all' },
-    { label: 'Lunas', value: 'Paid' },
-    { label: 'Menunggu', value: 'Pending' },
-    { label: 'Gagal', value: 'Failed' },
+    { label: 'Semua Pembayaran', value: '' },
+    { label: 'Lunas', value: 'PAID' },
+    { label: 'Menunggu', value: 'PENDING' },
+    { label: 'Gagal', value: 'FAILED' },
+    { label: 'Kedaluwarsa', value: 'EXPIRED' },
+    { label: 'Dikembalikan', value: 'REFUNDED' },
   ];
-
-  const getEmptyMessage = () => {
-    switch (activeTab) {
-      case 'all':
-        return 'Belum ada order.';
-      case 'processing':
-        return 'Tidak ada order yang diproses.';
-      case 'completed':
-        return 'Tidak ada order yang selesai.';
-      case 'cancelled':
-        return 'Tidak ada order yang dibatalkan.';
-      default:
-        return 'Tidak ada order.';
-    }
-  };
-
-  const getTabLabel = (tab: TabType) => {
-    switch (tab) {
-      case 'all':
-        return 'Semua';
-      case 'processing':
-        return 'Diproses';
-      case 'completed':
-        return 'Selesai';
-      case 'cancelled':
-        return 'Dibatalkan';
-    }
-  };
 
   return (
     <AdminLayout>
       <div className="space-y-6">
         <div>
           <h1 className="text-[28px] font-bold text-[#191c1e]">Pesanan</h1>
-          <p className="text-[15px] text-[#737686]">
-            Kelola dan lacak semua pesanan marketplace.
-          </p>
+          <p className="text-[15px] text-[#737686]">Kelola dan lacak semua pesanan marketplace.</p>
         </div>
 
         {/* Tabs */}
         <div className="flex gap-2 border-b border-[#e0e3e5]">
-          {(['all', 'processing', 'completed', 'cancelled'] as TabType[]).map((tab) => (
+          {TABS.map((tab) => (
             <button
-              key={tab}
-              onClick={() => handleTabChange(tab)}
+              key={tab || 'all'}
+              onClick={() => {
+                setStatus(tab);
+                setPage(1);
+              }}
               className={`px-4 py-2 text-sm font-semibold transition-colors border-b-2 ${
-                activeTab === tab
+                status === tab
                   ? 'border-[#004ac6] text-[#004ac6]'
                   : 'border-transparent text-[#737686] hover:text-[#191c1e]'
               }`}
             >
-              {getTabLabel(tab)}
+              {tab ? statusLabel[tab] : 'Semua'}
             </button>
           ))}
         </div>
@@ -107,17 +89,21 @@ const OrdersPage: React.FC = () => {
             {
               key: 'payment',
               options: paymentOptions,
-              value: paymentFilter,
+              value: paymentStatus,
               onChange: (val) => {
-                setPaymentFilter(val);
+                setPaymentStatus(val as PaymentStatus | '');
                 setPage(1);
               },
             },
           ]}
-          onMoreFilters={() => {}}
-          moreFiltersLabel="More Filters"
           visibleFilters={1}
         />
+
+        {error && (
+          <div className="rounded-2xl border border-[#ffcdd2] bg-[#fff5f5] p-4 text-[13px] text-[#a33131]">
+            {error}
+          </div>
+        )}
 
         {/* Table */}
         <div className="overflow-hidden rounded-2xl border border-[#e0e3e5] bg-white p-5">
@@ -136,9 +122,9 @@ const OrdersPage: React.FC = () => {
               </thead>
               <tbody className="divide-y divide-[#f2f4f6]">
                 <OrderTable
-                  orders={paginatedData}
-                  isLoading={false}
-                  emptyMessage={getEmptyMessage()}
+                  orders={items}
+                  isLoading={isLoading}
+                  emptyMessage={status ? 'Nggak ada order di status ini.' : 'Belum ada order.'}
                 />
               </tbody>
             </table>
@@ -149,7 +135,7 @@ const OrdersPage: React.FC = () => {
               <Pagination
                 currentPage={page}
                 totalPages={totalPages}
-                totalItems={totalItems}
+                totalItems={total}
                 pageSize={PAGE_SIZE}
                 onPageChange={setPage}
                 showTotal

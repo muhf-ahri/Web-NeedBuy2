@@ -1,52 +1,38 @@
-// src/pages/admin/components/ReviewTable.tsx
+// src/pages/admin/components/TableReview.tsx
 import React from 'react';
 import Icon from '../../../components/ui/Icon';
-import type { Review, ReviewStatus } from '../data/reviewsData';
+import type { AdminReview } from '../../../api/admin';
 
 interface ReviewTableProps {
-  reviews: Review[];
+  reviews: AdminReview[];
   isLoading?: boolean;
   emptyMessage?: string;
+  onToggleHidden?: (review: AdminReview) => void;
+  pendingId?: string | null;
 }
 
-const statusColor: Record<ReviewStatus, string> = {
-  Published: 'bg-[#d7f5dc] text-[#156b32]',
-  Hidden: 'bg-[#f2f4f6] text-[#737686]',
-  Reported: 'bg-[#ffe0e0] text-[#a33131]',
-};
-
-const statusLabel: Record<ReviewStatus, string> = {
-  Published: 'Dipublikasikan',
-  Hidden: 'Disembunyikan',
-  Reported: 'Dilaporkan',
-};
-
-const ratingStars = (rating: number) => {
-  return (
-    <span className="inline-flex items-center gap-0.5">
-      {[1, 2, 3, 4, 5].map((star) => (
-        <Icon
-          key={star}
-          name="star"
-          size={14}
-          className={star <= rating ? 'text-[#f59e0b]' : 'text-[#e0e3e5]'}
-        />
-      ))}
-    </span>
-  );
-};
+const ratingStars = (rating: number) => (
+  <span className="inline-flex items-center gap-0.5">
+    {[1, 2, 3, 4, 5].map((star) => (
+      <Icon
+        key={star}
+        name="star"
+        size={14}
+        className={star <= rating ? 'text-[#f59e0b]' : 'text-[#e0e3e5]'}
+      />
+    ))}
+  </span>
+);
 
 const formatDate = (iso: string) =>
-  new Date(iso).toLocaleDateString('id-ID', {
-    day: '2-digit',
-    month: 'short',
-    year: 'numeric',
-  });
+  new Date(iso).toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' });
 
 const TableReview: React.FC<ReviewTableProps> = ({
   reviews,
   isLoading = false,
   emptyMessage = 'Tidak ada ulasan.',
+  onToggleHidden,
+  pendingId,
 }) => {
   if (isLoading) {
     return (
@@ -74,52 +60,40 @@ const TableReview: React.FC<ReviewTableProps> = ({
       {reviews.map((review) => (
         <tr key={review.id} className="text-[13px] transition-colors hover:bg-[#f8f9fb]">
           <td className="py-2.5 pr-2">
-            <div className="font-medium text-[#191c1e]">{review.productName}</div>
-            <div className="text-[11px] text-[#737686]">{review.productCategory}</div>
-          </td>
-          <td className="py-2.5 pr-2">
-            <div className="flex items-center gap-1">
-              {ratingStars(review.rating)}
-            </div>
-            <div className="mt-0.5 flex items-center gap-1 text-[11px] text-[#737686]">
-              <span>{review.reviewerName}</span>
-              {review.isVerified && (
-                <span className="rounded-full bg-[#dbe1ff] px-1.5 py-0.5 text-[9px] font-semibold text-[#004ac6]">
-                  Verifikasi
-                </span>
-              )}
+            <div className="font-medium text-[#191c1e]">{review.product.name}</div>
+            <div className="text-[11px] text-[#737686]">
+              {review.product.category.name} · {review.product.seller.storeName}
             </div>
           </td>
           <td className="py-2.5 pr-2">
-            <div className="max-w-[200px] truncate text-[#434655]">
-              {review.comment}
-            </div>
+            <div className="flex items-center gap-1">{ratingStars(review.rating)}</div>
+            <div className="mt-0.5 text-[11px] text-[#737686]">{review.user.name}</div>
+          </td>
+          <td className="py-2.5 pr-2">
+            <div className="max-w-[240px] truncate text-[#434655]">{review.comment ?? '—'}</div>
           </td>
           <td className="py-2.5 pr-2">
             <span
-              className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${statusColor[review.status]}`}
+              className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${
+                review.isHidden ? 'bg-[#f2f4f6] text-[#737686]' : 'bg-[#d7f5dc] text-[#156b32]'
+              }`}
             >
-              {statusLabel[review.status]}
+              {review.isHidden ? 'Disembunyikan' : 'Tampil'}
             </span>
           </td>
           <td className="py-2.5 pr-2 text-[#737686]">{formatDate(review.createdAt)}</td>
           <td className="py-2.5">
-            <div className="flex items-center gap-1">
-              <button
-                className="rounded-lg p-1.5 text-[#737686] transition-colors hover:bg-[#f2f4f6] hover:text-[#004ac6]"
-                aria-label="Lihat detail ulasan"
-              >
-                <Icon name="eye" size={16} />
-              </button>
-              {review.status === 'Reported' && (
-                <button
-                  className="rounded-lg p-1.5 text-[#737686] transition-colors hover:bg-[#ffe0e0] hover:text-[#ba1a1a]"
-                  aria-label="Hapus ulasan"
-                >
-                  <Icon name="trash" size={16} />
-                </button>
-              )}
-            </div>
+            <button
+              onClick={() => onToggleHidden?.(review)}
+              disabled={pendingId === review.id}
+              className={`rounded-full px-3 py-1 text-[12px] font-semibold text-white transition-colors disabled:opacity-50 ${
+                review.isHidden
+                  ? 'bg-[#004ac6] hover:bg-[#003ea8]'
+                  : 'bg-[#ba1a1a] hover:bg-[#9a1515]'
+              }`}
+            >
+              {review.isHidden ? 'Tampilkan' : 'Sembunyikan'}
+            </button>
           </td>
         </tr>
       ))}

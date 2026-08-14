@@ -8,7 +8,7 @@ export interface Wallet {
   balance: string;
 }
 
-export type WalletTxType = 'TOPUP' | 'PAYMENT' | 'REFUND';
+export type WalletTxType = 'TOPUP' | 'PAYMENT' | 'REFUND' | 'WITHDRAWAL';
 export type WalletTxStatus = 'PENDING' | 'SUCCESS' | 'FAILED' | 'EXPIRED';
 
 export interface WalletTransaction {
@@ -19,6 +19,11 @@ export interface WalletTransaction {
   amount: string;
   balanceAfter: string | null;
   orderId: string | null;
+  /** Hanya terisi untuk WITHDRAWAL. */
+  bankName?: string | null;
+  bankAccount?: string | null;
+  bankAccountName?: string | null;
+  handledAt?: string | null;
   note: string | null;
   snapToken: string | null;
   snapRedirectUrl: string | null;
@@ -80,5 +85,30 @@ export const syncTopup = async (topupId: string): Promise<TopupSyncResult> => {
   const res = await apiClient.post<ApiResponse<TopupSyncResult>>(
     `/wallet/topup/${topupId}/sync`
   );
+  return res.data.data;
+};
+
+/** Batas nominal penarikan, disamakan dengan validasi server (lib/needpay.ts). */
+export const MIN_WITHDRAWAL = 50_000;
+export const MAX_WITHDRAWAL = 100_000_000;
+
+export interface WithdrawalPayload {
+  amount: number;
+  bankName: string;
+  bankAccount: string;
+  bankAccountName: string;
+}
+
+/**
+ * POST /wallet/withdrawals — ajukan pencairan saldo ke rekening bank.
+ *
+ * Saldo langsung dipotong saat pengajuan dibuat (bukan saat admin menyetujui),
+ * supaya satu saldo tidak bisa dijanjikan ke beberapa pengajuan sekaligus.
+ * Kalau admin menolak, saldonya dikembalikan.
+ */
+export const requestWithdrawal = async (
+  payload: WithdrawalPayload
+): Promise<WalletTransaction> => {
+  const res = await apiClient.post<ApiResponse<WalletTransaction>>('/wallet/withdrawals', payload);
   return res.data.data;
 };

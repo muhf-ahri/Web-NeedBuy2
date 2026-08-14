@@ -10,6 +10,7 @@ import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import ProductReviews from '../components/ProductReviews';
 import SellerCard from '../components/SellerCard';
+import ReportButton from '../components/ui/ReportButton';
 import { formatRupiah } from '../utils/currency';
 import { getProductBySlug, recordProductView } from '../api/products';
 import { addToCart } from '../api/cart';
@@ -262,9 +263,17 @@ const ProductDetailPage: React.FC = () => {
               <p className="text-[12px] uppercase tracking-wider text-[#737686]">
                 {product.category?.name}
               </p>
-              <h1 className="mt-1 text-[26px] sm:text-[30px] font-bold leading-tight text-[#191c1e]">
-                {product.name}
-              </h1>
+              <div className="mt-1 flex items-start justify-between gap-3">
+                <h1 className="text-[26px] sm:text-[30px] font-bold leading-tight text-[#191c1e]">
+                  {product.name}
+                </h1>
+                <ReportButton
+                  targetType="PRODUCT"
+                  targetId={product.id}
+                  targetLabel={product.name}
+                  className="mt-2 shrink-0"
+                />
+              </div>
 
               <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2 text-[13px]">
                 <span className="inline-flex items-center gap-1.5">
@@ -362,6 +371,13 @@ const ProductDetailPage: React.FC = () => {
 
             {/* Profil penjual */}
             <SellerCard seller={product.seller} />
+            <div className="-mt-2 flex justify-end">
+              <ReportButton
+                targetType="SELLER"
+                targetId={product.seller.id}
+                targetLabel={product.seller.storeName}
+              />
+            </div>
 
             {/* Deskripsi */}
             {product.description && (

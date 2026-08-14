@@ -14,8 +14,11 @@ import {
   getWalletTransactions,
   startTopup,
   syncTopup,
+  requestWithdrawal,
   MAX_TOPUP,
   MIN_TOPUP,
+  MAX_WITHDRAWAL,
+  MIN_WITHDRAWAL,
   type Wallet,
   type WalletTransaction,
 } from '../api/wallet';
@@ -26,6 +29,7 @@ const TX_LABEL: Record<WalletTransaction['type'], string> = {
   TOPUP: 'Isi Saldo',
   PAYMENT: 'Pembayaran',
   REFUND: 'Pengembalian',
+  WITHDRAWAL: 'Penarikan',
 };
 
 const STATUS_LABEL: Record<WalletTransaction['status'], string> = {
@@ -43,7 +47,7 @@ const STATUS_STYLE: Record<WalletTransaction['status'], { bg: string; text: stri
 };
 
 const TransactionRow: React.FC<{ tx: WalletTransaction }> = ({ tx }) => {
-  const isCredit = tx.type !== 'PAYMENT';
+  const isCredit = tx.type === 'TOPUP' || tx.type === 'REFUND';
   const settled = tx.status === 'SUCCESS';
   const statusStyle = STATUS_STYLE[tx.status];
 
@@ -60,6 +64,11 @@ const TransactionRow: React.FC<{ tx: WalletTransaction }> = ({ tx }) => {
             </span>
           )}
         </div>
+        {tx.type === 'WITHDRAWAL' && tx.bankName && (
+          <span className="mt-0.5 block text-[11px] text-[#737686]">
+            {tx.bankName} · {tx.bankAccount} a.n. {tx.bankAccountName}
+          </span>
+        )}
         <span className="mt-0.5 block text-[11px] text-[#737686]">
           {new Date(tx.createdAt).toLocaleString('id-ID', {
             day: 'numeric',
@@ -104,6 +113,10 @@ const NeedPayPage: React.FC = () => {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
+
+  const [wdOpen, setWdOpen] = useState(false);
+  const [wdBusy, setWdBusy] = useState(false);
+  const [wd, setWd] = useState({ amount: '', bankName: '', bankAccount: '', bankAccountName: '' });
 
   const refresh = useCallback(async () => {
     if (!isAuthed) {
@@ -176,6 +189,47 @@ const NeedPayPage: React.FC = () => {
       setError(err.message ?? 'Gagal mulai isi saldo');
     } finally {
       setBusy(false);
+    }
+  };
+
+  /**
+   * Saldo dipotong server begitu pengajuan dibuat, jadi tidak ada jendela di mana
+   * satu saldo bisa diajukan dua kali. Kalau admin menolak, saldonya balik lagi.
+   */
+  const handleWithdraw = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (wdBusy) return;
+
+    const nominal = Number(wd.amount);
+    if (!Number.isInteger(nominal) || nominal < MIN_WITHDRAWAL || nominal > MAX_WITHDRAWAL) {
+      setError(
+        `Nominal penarikan antara ${formatRupiah(MIN_WITHDRAWAL)} dan ${formatRupiah(MAX_WITHDRAWAL)}.`
+      );
+      return;
+    }
+    if (!/^[0-9-]{6,30}$/.test(wd.bankAccount.trim())) {
+      setError('Nomor rekeningnya cuma boleh angka, 6–30 digit.');
+      return;
+    }
+
+    setWdBusy(true);
+    setError(null);
+    setNotice(null);
+    try {
+      await requestWithdrawal({
+        amount: nominal,
+        bankName: wd.bankName.trim(),
+        bankAccount: wd.bankAccount.trim(),
+        bankAccountName: wd.bankAccountName.trim(),
+      });
+      setWd({ amount: '', bankName: '', bankAccount: '', bankAccountName: '' });
+      setWdOpen(false);
+      setNotice('Pengajuan penarikan udah masuk antrean admin. Saldo kamu udah dipotong sekarang.');
+      await refresh();
+    } catch (err: any) {
+      setError(err?.message ?? 'Gagal ngajuin penarikan, coba lagi ya');
+    } finally {
+      setWdBusy(false);
     }
   };
 
@@ -286,6 +340,151 @@ const NeedPayPage: React.FC = () => {
             <Icon name="lock" size={12} />
             Pembayaran aman melalui Midtrans
           </p>
+        </section>
+
+        {/* Withdrawal Section */}
+        <section className="mt-6 bg-white rounded-2xl border border-[#e0e3e5] p-6">
+          <div className="flex items-start justify-between gap-4">
+            <div className="min-w-0">
+              <h2 className="text-[16px] font-bold text-[#191c1e] flex items-center gap-2">
+                <Icon name="wallet" size={18} className="text-[#004ac6]" />
+                Tarik Saldo
+              </h2>
+              <p className="mt-1 text-[13px] text-[#737686]">
+                Cairkan saldo NeedPay ke rekening bank kamu. Admin yang bakal ninjau
+                pengajuannya, biasanya 1–2 hari kerja.
+              </p>
+            </div>
+            {!wdOpen && (
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setError(null);
+                  setWdOpen(true);
+                }}
+                className="shrink-0 text-sm"
+              >
+                Ajukan
+              </Button>
+            )}
+          </div>
+
+          {wdOpen && (
+            <form className="mt-5 space-y-4" onSubmit={handleWithdraw}>
+              <div>
+                <label
+                  htmlFor="wd-amount"
+                  className="block text-[13px] font-medium text-[#737686] mb-1"
+                >
+                  Nominal Penarikan
+                </label>
+                <div className="relative">
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#737686] font-semibold text-sm">
+                    Rp
+                  </span>
+                  <input
+                    id="wd-amount"
+                    type="number"
+                    inputMode="numeric"
+                    min={MIN_WITHDRAWAL}
+                    max={MAX_WITHDRAWAL}
+                    required
+                    value={wd.amount}
+                    onChange={(e) => setWd({ ...wd, amount: e.target.value })}
+                    placeholder={`Min ${formatRupiah(MIN_WITHDRAWAL)}`}
+                    className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-[#c3c6d7] text-sm outline-none focus:border-[#004ac6] focus:ring-2 focus:ring-[#004ac6]/20 transition"
+                  />
+                </div>
+                <p className="mt-1 text-[11px] text-[#737686]">
+                  Saldo tersedia {formatRupiah(wallet?.balance ?? 0)}.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label
+                    htmlFor="wd-bank"
+                    className="block text-[13px] font-medium text-[#737686] mb-1"
+                  >
+                    Nama Bank
+                  </label>
+                  <input
+                    id="wd-bank"
+                    type="text"
+                    required
+                    minLength={2}
+                    maxLength={60}
+                    value={wd.bankName}
+                    onChange={(e) => setWd({ ...wd, bankName: e.target.value })}
+                    placeholder="BCA"
+                    className="w-full px-3 py-2.5 rounded-xl border border-[#c3c6d7] text-sm outline-none focus:border-[#004ac6] focus:ring-2 focus:ring-[#004ac6]/20 transition"
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="wd-account"
+                    className="block text-[13px] font-medium text-[#737686] mb-1"
+                  >
+                    Nomor Rekening
+                  </label>
+                  <input
+                    id="wd-account"
+                    type="text"
+                    inputMode="numeric"
+                    required
+                    value={wd.bankAccount}
+                    onChange={(e) => setWd({ ...wd, bankAccount: e.target.value })}
+                    placeholder="1234567890"
+                    className="w-full px-3 py-2.5 rounded-xl border border-[#c3c6d7] text-sm outline-none focus:border-[#004ac6] focus:ring-2 focus:ring-[#004ac6]/20 transition"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label
+                  htmlFor="wd-holder"
+                  className="block text-[13px] font-medium text-[#737686] mb-1"
+                >
+                  Nama Pemilik Rekening
+                </label>
+                <input
+                  id="wd-holder"
+                  type="text"
+                  required
+                  minLength={2}
+                  maxLength={80}
+                  value={wd.bankAccountName}
+                  onChange={(e) => setWd({ ...wd, bankAccountName: e.target.value })}
+                  placeholder="Sesuai buku tabungan"
+                  className="w-full px-3 py-2.5 rounded-xl border border-[#c3c6d7] text-sm outline-none focus:border-[#004ac6] focus:ring-2 focus:ring-[#004ac6]/20 transition"
+                />
+                <p className="mt-1 text-[11px] text-[#737686]">
+                  Pastikan datanya bener. Saldo langsung dipotong pas kamu ngajuin, dan balik
+                  lagi kalau pengajuannya ditolak.
+                </p>
+              </div>
+
+              <div className="flex flex-wrap gap-3">
+                <Button
+                  type="submit"
+                  variant="primary"
+                  disabled={wdBusy}
+                  className="px-6 py-2.5 text-sm"
+                >
+                  {wdBusy ? 'Ngirim…' : 'Ajukan Penarikan'}
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  disabled={wdBusy}
+                  onClick={() => setWdOpen(false)}
+                  className="px-6 py-2.5 text-sm"
+                >
+                  Batal
+                </Button>
+              </div>
+            </form>
+          )}
         </section>
 
         {/* Transaction History */}

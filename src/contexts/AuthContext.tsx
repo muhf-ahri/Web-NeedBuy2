@@ -20,7 +20,8 @@ interface AuthContextType {
   login: (data: LoginPayload) => Promise<User>;
   register: (data: RegisterPayload) => Promise<void>;
   logout: () => Promise<void>;
-  refreshUser: () => Promise<void>;
+  /** Mengembalikan user terbaru supaya pemanggil bisa langsung cabang per role. */
+  refreshUser: () => Promise<User | null>;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -48,12 +49,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   // Refresh user from API
-  const refreshUser = useCallback(async () => {
-    if (!getAccessToken()) return;
+  const refreshUser = useCallback(async (): Promise<User | null> => {
+    if (!getAccessToken()) return null;
     try {
       const response = await getCurrentUser();
       if (response.data.success) {
         setUser(response.data.data);
+        localStorage.setItem('user', JSON.stringify(response.data.data));
+        return response.data.data;
       }
     } catch {
       // JANGAN cabut sesi di sini. Gagalnya /auth/me paling sering karena
@@ -62,6 +65,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       // balik ke halaman login. Sesi yang benar-benar kedaluwarsa sudah
       // ditangani interceptor di api/client.ts lewat event `auth:expired`.
     }
+    return null;
   }, []);
 
   // Mengembalikan user supaya pemanggil bisa langsung bercabang berdasarkan

@@ -1,7 +1,7 @@
 import React, { type ButtonHTMLAttributes } from 'react';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'outline' | 'google' | 'apple';
+  variant?: 'primary' | 'outline' | 'google';
   fullWidth?: boolean;
   children: React.ReactNode;
 }
@@ -20,7 +20,6 @@ const Button: React.FC<ButtonProps> = ({
     primary: 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500',
     outline: 'border border-gray-300 text-gray-700 hover:bg-gray-50 focus:ring-gray-500',
     google: 'bg-white text-gray-700 border border-gray-200 hover:bg-gray-50 focus:ring-gray-500',
-    apple: 'bg-black text-white hover:bg-gray-800 focus:ring-gray-500',
   };
 
   return (

@@ -1,9 +1,15 @@
+import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { getPublicSettings } from './api/admin';
 import { AuthProvider } from './contexts/AuthContext';
 import { CartProvider } from './contexts/CartContext';
 import { WishlistProvider } from './contexts/WishlistContext';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import AuthCallbackPage from './pages/AuthCallbackPage';
+import VerifyEmailPage from './pages/VerifyEmailPage';
+import ForgotPasswordPage from './pages/ForgotPasswordPage';
+import ResetPasswordPage from './pages/ResetPasswordPage';
 import HomePage from './pages/HomePage';
 import CategoriesPage from './pages/CategoriesPage';
 import CategoryDetailPage from './pages/CategoryDetailPage';
@@ -49,7 +55,31 @@ import AnalyticsPage from './pages/admin/AnalyticsPage';
 import NotificationsPage from './pages/admin/NotificationPage';
 import SettingsPage from './pages/admin/SettingsPage';
 
+/**
+ * Branding dari halaman Pengaturan admin dipasang ke judul tab dan favicon.
+ * Tanpa ini setelan branding cuma jadi angka di database yang tidak pernah
+ * kelihatan. Gagal ambil = diamkan, halaman tetap jalan dengan judul bawaan.
+ */
+function useBranding() {
+  useEffect(() => {
+    getPublicSettings()
+      .then((res) => {
+        const { MARKETPLACE_NAME: name, BRAND_FAVICON_URL: favicon } = res.data.data;
+        if (name) document.title = name;
+        if (favicon) {
+          const link =
+            document.querySelector<HTMLLinkElement>("link[rel~='icon']") ??
+            document.head.appendChild(Object.assign(document.createElement('link'), { rel: 'icon' }));
+          link.href = favicon;
+        }
+      })
+      .catch(() => {});
+  }, []);
+}
+
 function App() {
+  useBranding();
+
   return (
     <AuthProvider>
       <CartProvider>
@@ -62,6 +92,11 @@ function App() {
               {/* Auth */}
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              {/* Pendaratan redirect Google OAuth — lihat AuthCallbackPage */}
+              <Route path="/auth/callback" element={<AuthCallbackPage />} />
+              <Route path="/verify-email/:token" element={<VerifyEmailPage />} />
+              <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+              <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
 
               {/* Categories — list semua produk */}
               <Route path="/categories" element={<CategoriesPage />} />
@@ -84,8 +119,9 @@ function App() {
               <Route path="/cart" element={<CartPage />} />
               <Route path="/checkout" element={<CheckoutPage />} />
 
-              {/* Orders */}
-              <Route path="/orders" element={<OrdersPage />} />
+              {/* Orders — halaman pembeli. `OrdersPage` (jamak) itu panel admin,
+                  bukan ini: tertukar sejak OrdersPage.tsx di-rename ke OrderPage.tsx. */}
+              <Route path="/orders" element={<OrderPage />} />
 
               {/* Kupon */}
               <Route path="/coupons" element={<CouponsPage />} />
@@ -198,9 +234,10 @@ function App() {
                 }
               />
 
+              {/* Pending/approved dulunya route sendiri (salah satunya bahkan
+                  punya spasi di akhir path, jadi tak pernah cocok). Sekarang
+                  cuma tab di dalam halaman ini. */}
               <Route path="/admin/products" element={<RequireAdmin><ProductsPage /></RequireAdmin>} />
-              <Route path="/admin/products/pending" element={<RequireAdmin><ProductsPage /></RequireAdmin>} />
-              <Route path="/admin/products/approved " element={<RequireAdmin><ProductsPage /></RequireAdmin>} />
               <Route path="/admin/categories" element={<RequireAdmin><CategoryPage /></RequireAdmin>} />
               <Route path="/admin/orders" element={<RequireAdmin><OrdersPage /></RequireAdmin>} />
               <Route path="/admin/payments" element={<RequireAdmin><PaymentsPage /></RequireAdmin>} />

@@ -1,66 +1,93 @@
 // src/pages/admin/ReportsPage.tsx
-import React, { useState, useMemo } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import AdminLayout from './AdminLayout';
-import Icon from '../../components/ui/Icon';
-import Button from '../../components/ui/Button';
 import FilterBar from '../../components/ui/filter/FilterBar';
 import Pagination from '../../components/ui/Pagination';
-import ReportTable from './components/TableReport';
-import { DUMMY_REPORTS, type ReportPriority, type ReportStatus } from './data/reportsData';
+import ReportTable, { nextStatus } from './components/TableReport';
+import {
+  getReports,
+  updateReport,
+  type AdminReport,
+  type ReportPriority,
+  type ReportStatus,
+} from '../../api/admin';
 
 const PAGE_SIZE = 10;
 
 const ReportsPage: React.FC = () => {
   const [page, setPage] = useState(1);
-  const [statusFilter, setStatusFilter] = useState('all');
-  const [priorityFilter, setPriorityFilter] = useState('all');
+  const [statusFilter, setStatusFilter] = useState('');
+  const [priorityFilter, setPriorityFilter] = useState('');
 
-  const filteredData = useMemo(() => {
-    let data = [...DUMMY_REPORTS];
+  const [items, setItems] = useState<AdminReport[]>([]);
+  const [total, setTotal] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [pendingId, setPendingId] = useState<string | null>(null);
 
-    if (statusFilter !== 'all') {
-      data = data.filter((report) => report.status === statusFilter);
+  const load = useCallback(() => {
+    setIsLoading(true);
+    setError(null);
+    return getReports({
+      status: (statusFilter || undefined) as ReportStatus | undefined,
+      priority: (priorityFilter || undefined) as ReportPriority | undefined,
+      page,
+      limit: PAGE_SIZE,
+    })
+      .then((res) => {
+        setItems(res.data.data);
+        setTotal(res.data.meta.total);
+        setTotalPages(res.data.meta.totalPages);
+      })
+      .catch((err: Error) => setError(err.message))
+      .finally(() => setIsLoading(false));
+  }, [statusFilter, priorityFilter, page]);
+
+  useEffect(() => {
+    void load();
+  }, [load]);
+
+  const advance = async (report: AdminReport) => {
+    const status = nextStatus[report.status];
+    if (!status) return;
+
+    setPendingId(report.id);
+    try {
+      await updateReport(report.id, { status });
+      await load();
+    } catch (err) {
+      setError((err as Error).message);
+    } finally {
+      setPendingId(null);
     }
-
-    if (priorityFilter !== 'all') {
-      data = data.filter((report) => report.priority === priorityFilter);
-    }
-
-    return data;
-  }, [statusFilter, priorityFilter]);
-
-  const totalItems = filteredData.length;
-  const totalPages = Math.ceil(totalItems / PAGE_SIZE);
-  const startIndex = (page - 1) * PAGE_SIZE;
-  const paginatedData = filteredData.slice(startIndex, startIndex + PAGE_SIZE);
+  };
 
   const statusOptions = [
-    { label: 'Semua Status', value: 'all' },
-    { label: 'Terbuka', value: 'Open' },
-    { label: 'Diselidiki', value: 'Investigating' },
-    { label: 'Selesai', value: 'Resolved' },
+    { label: 'Semua Status', value: '' },
+    { label: 'Terbuka', value: 'OPEN' },
+    { label: 'Diselidiki', value: 'INVESTIGATING' },
+    { label: 'Selesai', value: 'RESOLVED' },
   ];
 
   const priorityOptions = [
-    { label: 'Semua Prioritas', value: 'all' },
-    { label: 'Tinggi', value: 'High' },
-    { label: 'Sedang', value: 'Medium' },
-    { label: 'Rendah', value: 'Low' },
+    { label: 'Semua Prioritas', value: '' },
+    { label: 'Tinggi', value: 'HIGH' },
+    { label: 'Sedang', value: 'MEDIUM' },
+    { label: 'Rendah', value: 'LOW' },
   ];
 
   return (
     <AdminLayout>
       <div className="space-y-6">
-        {/* Header */}
         <div>
           <h1 className="text-[28px] font-bold text-[#191c1e]">Laporan</h1>
           <p className="text-[15px] text-[#737686]">
-            Kelola dan selidiki laporan dari pengguna marketplace.
+            Tindak lanjuti laporan pengguna atas produk, toko, dan ulasan.
           </p>
         </div>
 
-        {/* Filter + Add Button */}
-        <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           <FilterBar
             filters={[
               {
@@ -82,14 +109,16 @@ const ReportsPage: React.FC = () => {
                 },
               },
             ]}
-            onMoreFilters={() => {}}
-            moreFiltersLabel="More Filters"
             visibleFilters={2}
           />
-
         </div>
 
-        {/* Table */}
+        {error && (
+          <div className="rounded-2xl border border-[#ffcdd2] bg-[#fff5f5] p-4 text-[13px] text-[#a33131]">
+            {error}
+          </div>
+        )}
+
         <div className="overflow-hidden rounded-2xl border border-[#e0e3e5] bg-white p-5">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
@@ -98,7 +127,7 @@ const ReportsPage: React.FC = () => {
                   <th className="pb-2 pr-2 text-left">ID Laporan</th>
                   <th className="pb-2 pr-2 text-left">Kategori</th>
                   <th className="pb-2 pr-2 text-left">Pelapor</th>
-                  <th className="pb-2 pr-2 text-left">Entitas</th>
+                  <th className="pb-2 pr-2 text-left">Sasaran</th>
                   <th className="pb-2 pr-2 text-left">Prioritas</th>
                   <th className="pb-2 pr-2 text-left">Status</th>
                   <th className="pb-2 pr-2 text-left">Tanggal</th>
@@ -107,21 +136,26 @@ const ReportsPage: React.FC = () => {
               </thead>
               <tbody className="divide-y divide-[#f2f4f6]">
                 <ReportTable
-                  reports={paginatedData}
-                  isLoading={false}
-                  emptyMessage="Belum ada laporan."
+                  reports={items}
+                  isLoading={isLoading}
+                  emptyMessage={
+                    statusFilter || priorityFilter
+                      ? 'Nggak ada laporan yang cocok sama filter ini.'
+                      : 'Belum ada laporan masuk.'
+                  }
+                  onAdvance={(report) => void advance(report)}
+                  pendingId={pendingId}
                 />
               </tbody>
             </table>
           </div>
 
-          {/* Pagination */}
           {totalPages > 1 && (
             <div className="mt-4 border-t border-[#e0e3e5] pt-4">
               <Pagination
                 currentPage={page}
                 totalPages={totalPages}
-                totalItems={totalItems}
+                totalItems={total}
                 pageSize={PAGE_SIZE}
                 onPageChange={setPage}
                 showTotal

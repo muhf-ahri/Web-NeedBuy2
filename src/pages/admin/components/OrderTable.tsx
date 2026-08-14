@@ -1,37 +1,46 @@
 // src/pages/admin/components/OrderTable.tsx
 import React from 'react';
-import Icon from '../../../components/ui/Icon';
 import { formatRupiah } from '../../../utils/currency';
-import type { Order } from '../data/ordersData';
+import type { AdminOrder, OrderStatus, PaymentStatus } from '../../../api/admin';
 
 interface OrderTableProps {
-  orders: Order[];
+  orders: AdminOrder[];
   isLoading?: boolean;
   emptyMessage?: string;
 }
 
-const statusLabel: Record<Order['status'], string> = {
-  processing: 'Diproses',
-  completed: 'Selesai',
-  cancelled: 'Dibatalkan',
+export const statusLabel: Record<OrderStatus, string> = {
+  WAITING_PAYMENT: 'Nunggu Bayar',
+  PROCESSING: 'Diproses',
+  SHIPPED: 'Dikirim',
+  DELIVERED: 'Sampai',
+  COMPLETED: 'Selesai',
+  CANCELLED: 'Dibatalkan',
 };
 
-const statusColor: Record<Order['status'], string> = {
-  processing: 'bg-[#cfe8ff] text-[#0057b8]',
-  completed: 'bg-[#d7f5dc] text-[#156b32]',
-  cancelled: 'bg-[#ffe0e0] text-[#a33131]',
+const statusColor: Record<OrderStatus, string> = {
+  WAITING_PAYMENT: 'bg-[#fff4e0] text-[#b45309]',
+  PROCESSING: 'bg-[#cfe8ff] text-[#0057b8]',
+  SHIPPED: 'bg-[#e3e0ff] text-[#4338ca]',
+  DELIVERED: 'bg-[#e0f2f1] text-[#0f766e]',
+  COMPLETED: 'bg-[#d7f5dc] text-[#156b32]',
+  CANCELLED: 'bg-[#ffe0e0] text-[#a33131]',
 };
 
-const paymentColor: Record<Order['paymentStatus'], string> = {
-  Paid: 'bg-[#d7f5dc] text-[#156b32]',
-  Pending: 'bg-[#fff4e0] text-[#b45309]',
-  Failed: 'bg-[#ffe0e0] text-[#a33131]',
+const paymentColor: Record<PaymentStatus, string> = {
+  PAID: 'bg-[#d7f5dc] text-[#156b32]',
+  PENDING: 'bg-[#fff4e0] text-[#b45309]',
+  FAILED: 'bg-[#ffe0e0] text-[#a33131]',
+  EXPIRED: 'bg-[#f2f4f6] text-[#737686]',
+  REFUNDED: 'bg-[#e3e0ff] text-[#4338ca]',
 };
 
-const paymentLabel: Record<Order['paymentStatus'], string> = {
-  Paid: 'Lunas',
-  Pending: 'Menunggu',
-  Failed: 'Gagal',
+export const paymentLabel: Record<PaymentStatus, string> = {
+  PAID: 'Lunas',
+  PENDING: 'Menunggu',
+  FAILED: 'Gagal',
+  EXPIRED: 'Kedaluwarsa',
+  REFUNDED: 'Dikembalikan',
 };
 
 const OrderTable: React.FC<OrderTableProps> = ({
@@ -64,24 +73,26 @@ const OrderTable: React.FC<OrderTableProps> = ({
     <>
       {orders.map((order) => (
         <tr key={order.id} className="text-[13px] transition-colors hover:bg-[#f8f9fb]">
-          <td className="py-2.5 pr-2 font-medium text-[#004ac6]">
-            {order.orderNumber}
-          </td>
+          <td className="py-2.5 pr-2 font-medium text-[#004ac6]">{order.orderNumber}</td>
           <td className="py-2.5 pr-2">
-            <div className="font-medium text-[#191c1e]">{order.buyer}</div>
-            <div className="text-[11px] text-[#737686]">{order.buyerEmail}</div>
+            <div className="font-medium text-[#191c1e]">{order.user.name}</div>
+            <div className="text-[11px] text-[#737686]">{order.user.email}</div>
           </td>
-          <td className="py-2.5 pr-2 text-[#434655]">{order.store}</td>
-          <td className="py-2.5 pr-2 text-center">{order.items} item</td>
+          <td className="py-2.5 pr-2 text-[#434655]">{order.seller.storeName}</td>
+          <td className="py-2.5 pr-2 text-center">{order.items.length} item</td>
           <td className="py-2.5 pr-2 font-semibold text-[#004ac6]">
-            {formatRupiah(order.totalAmount)}
+            {formatRupiah(Number(order.total))}
           </td>
           <td className="py-2.5 pr-2 text-center">
-            <span
-              className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${paymentColor[order.paymentStatus]}`}
-            >
-              {paymentLabel[order.paymentStatus]}
-            </span>
+            {order.payment ? (
+              <span
+                className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${paymentColor[order.payment.status]}`}
+              >
+                {paymentLabel[order.payment.status]}
+              </span>
+            ) : (
+              <span className="text-[11px] text-[#737686]">—</span>
+            )}
           </td>
           <td className="py-2.5 text-center">
             <span

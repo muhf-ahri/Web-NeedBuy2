@@ -17,6 +17,9 @@ const navItems: SidebarItem[] = [
   { to: '/seller/orders', label: 'Order Masuk', icon: 'orders' },
   { to: '/seller/chats', label: 'Chat Pembeli', icon: 'chat' },
   { to: '/seller/analytics', label: 'Analitik Toko', icon: 'analytics' },
+  // Dompet penjual sama dengan dompet akun — halaman NeedPay yang sudah ada
+  // dipakai ulang, bukan bikin halaman saldo kedua yang isinya sama.
+  { to: '/needpay', label: 'Saldo & Penarikan', icon: 'wallet' },
   { to: '/seller/settings', label: 'Setelan', icon: 'settings' },
 ];
 

@@ -1,104 +1,87 @@
 // src/pages/admin/PromotionsPage.tsx
-import React, { useState, useMemo } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import AdminLayout from './AdminLayout';
-import Button from '../../components/ui/Button';
-import Icon from '../../components/ui/Icon';
 import FilterBar from '../../components/ui/filter/FilterBar';
 import Pagination from '../../components/ui/Pagination';
 import VoucherTable from './components/TableVoucher';
-import FlashSaleTable from './components/TableFlashSale';
-import { DUMMY_VOUCHERS, DUMMY_FLASH_SALE, type Voucher, type FlashSaleProduct } from './data/promotionsData';
-
-type TabType = 'vouchers' | 'flash';
+import { getCoupons, updateCoupon, type AdminCoupon } from '../../api/admin';
 
 const PAGE_SIZE = 10;
 
+/**
+ * Tab "Flash Sale" belum ada di sini: backend nggak punya model jadwal diskon
+ * per produk, jadi satu-satunya promo yang benar-benar bisa dikelola adalah
+ * kupon (`/admin/coupons`).
+ *
+ * Filter status "Kadaluwarsa" juga cuma dihitung di client — backend hanya
+ * memfilter `isActive`, dan kupon kadaluwarsa bisa saja masih aktif.
+ */
 const PromotionsPage: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<TabType>('vouchers');
   const [page, setPage] = useState(1);
-  const [statusFilter, setStatusFilter] = useState('all');
+  const [statusFilter, setStatusFilter] = useState('');
 
-  const filteredVouchers = useMemo(() => {
-    if (statusFilter === 'all') return DUMMY_VOUCHERS;
-    return DUMMY_VOUCHERS.filter((v) => v.status === statusFilter);
-  }, [statusFilter]);
+  const [items, setItems] = useState<AdminCoupon[]>([]);
+  const [total, setTotal] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [pendingId, setPendingId] = useState<string | null>(null);
 
-  const filteredFlash = useMemo(() => {
-    if (statusFilter === 'all') return DUMMY_FLASH_SALE;
-    return DUMMY_FLASH_SALE.filter((v) => v.status === statusFilter);
-  }, [statusFilter]);
+  const load = useCallback(() => {
+    setIsLoading(true);
+    setError(null);
+    return getCoupons({
+      isActive: statusFilter === '' ? undefined : statusFilter === 'active',
+      page,
+      limit: PAGE_SIZE,
+    })
+      .then((res) => {
+        setItems(res.data.data);
+        setTotal(res.data.meta.total);
+        setTotalPages(res.data.meta.totalPages);
+      })
+      .catch((err: Error) => setError(err.message))
+      .finally(() => setIsLoading(false));
+  }, [statusFilter, page]);
 
-  const currentData = activeTab === 'vouchers' ? filteredVouchers : filteredFlash;
-  const totalItems = currentData.length;
-  const totalPages = Math.ceil(totalItems / PAGE_SIZE);
-  const startIndex = (page - 1) * PAGE_SIZE;
-  const paginatedData = currentData.slice(startIndex, startIndex + PAGE_SIZE);
+  useEffect(() => {
+    void load();
+  }, [load]);
 
-  const handleTabChange = (tab: TabType) => {
-    setActiveTab(tab);
-    setPage(1);
+  const toggleActive = async (coupon: AdminCoupon) => {
+    setPendingId(coupon.id);
+    try {
+      await updateCoupon(coupon.id, { isActive: !coupon.isActive });
+      await load();
+    } catch (err) {
+      setError((err as Error).message);
+    } finally {
+      setPendingId(null);
+    }
   };
 
   const statusOptions = [
-    { label: 'Semua Status', value: 'all' },
+    { label: 'Semua Status', value: '' },
     { label: 'Aktif', value: 'active' },
     { label: 'Ditahan', value: 'paused' },
-    { label: 'Kadaluwarsa', value: 'expired' },
   ];
-
-  const flashStatusOptions = [
-    { label: 'Semua Status', value: 'all' },
-    { label: 'Berlangsung', value: 'ongoing' },
-    { label: 'Akan Datang', value: 'upcoming' },
-    { label: 'Selesai', value: 'ended' },
-  ];
-
-  const getEmptyMessage = () => {
-    if (activeTab === 'vouchers') return 'Belum ada voucher.';
-    return 'Belum ada produk flash sale.';
-  };
 
   return (
     <AdminLayout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-[28px] font-bold text-[#191c1e]">Promotions</h1>
+          <h1 className="text-[28px] font-bold text-[#191c1e]">Promosi</h1>
           <p className="text-[15px] text-[#737686]">
-            Kelola kampanye diskon dan penawaran spesial.
+            Kelola kupon diskon yang bisa dipakai pembeli saat checkout.
           </p>
         </div>
 
-        {/* Tabs */}
-        <div className="flex gap-2 border-b border-[#e0e3e5]">
-          <button
-            onClick={() => handleTabChange('vouchers')}
-            className={`px-4 py-2 text-sm font-semibold transition-colors border-b-2 ${
-              activeTab === 'vouchers'
-                ? 'border-[#004ac6] text-[#004ac6]'
-                : 'border-transparent text-[#737686] hover:text-[#191c1e]'
-            }`}
-          >
-            Vouchers
-          </button>
-          <button
-            onClick={() => handleTabChange('flash')}
-            className={`px-4 py-2 text-sm font-semibold transition-colors border-b-2 ${
-              activeTab === 'flash'
-                ? 'border-[#004ac6] text-[#004ac6]'
-                : 'border-transparent text-[#737686] hover:text-[#191c1e]'
-            }`}
-          >
-            Flash Sale
-          </button>
-        </div>
-
-        {/* Filter + Add Button */}
         <div className="flex flex-wrap items-center justify-between gap-3">
           <FilterBar
             filters={[
               {
                 key: 'status',
-                options: activeTab === 'vouchers' ? statusOptions : flashStatusOptions,
+                options: statusOptions,
                 value: statusFilter,
                 onChange: (val) => {
                   setStatusFilter(val);
@@ -106,65 +89,42 @@ const PromotionsPage: React.FC = () => {
                 },
               },
             ]}
-            onMoreFilters={() => {}}
-            moreFiltersLabel="More Filters"
             visibleFilters={1}
           />
-
-          <Button
-            variant="primary"
-            onClick={() => {}}
-            className="flex items-center gap-2 px-5 py-2.5 text-sm"
-          >
-            <Icon name="plus" size={16} />
-            {activeTab === 'vouchers' ? 'Tambah Voucher' : 'Tambah Flash Sale'}
-          </Button>
         </div>
 
-        {/* Table */}
+        {error && (
+          <div className="rounded-2xl border border-[#ffcdd2] bg-[#fff5f5] p-4 text-[13px] text-[#a33131]">
+            {error}
+          </div>
+        )}
+
         <div className="overflow-hidden rounded-2xl border border-[#e0e3e5] bg-white p-5">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-[#f2f4f6] text-[11px] font-semibold uppercase text-[#737686]">
-                  {activeTab === 'vouchers' ? (
-                    <>
-                      <th className="pb-2 pr-2 text-left">Kode / Judul</th>
-                      <th className="pb-2 pr-2 text-left">Tipe</th>
-                      <th className="pb-2 pr-2 text-left">Nilai</th>
-                      <th className="pb-2 pr-2 text-left">Penggunaan</th>
-                      <th className="pb-2 pr-2 text-left">Berlaku</th>
-                      <th className="pb-2 pr-2 text-left">Status</th>
-                      <th className="pb-2 text-left">Aksi</th>
-                    </>
-                  ) : (
-                    <>
-                      <th className="pb-2 pr-2 text-left">Produk</th>
-                      <th className="pb-2 pr-2 text-left">Seller</th>
-                      <th className="pb-2 pr-2 text-left">Diskon</th>
-                      <th className="pb-2 pr-2 text-left">Harga Asli</th>
-                      <th className="pb-2 pr-2 text-left">Harga Sale</th>
-                      <th className="pb-2 pr-2 text-left">Jadwal</th>
-                      <th className="pb-2 pr-2 text-left">Status</th>
-                      <th className="pb-2 text-left">Aksi</th>
-                    </>
-                  )}
+                  <th className="pb-2 pr-2 text-left">Kode / Judul</th>
+                  <th className="pb-2 pr-2 text-left">Tipe</th>
+                  <th className="pb-2 pr-2 text-left">Nilai</th>
+                  <th className="pb-2 pr-2 text-left">Penggunaan</th>
+                  <th className="pb-2 pr-2 text-left">Berlaku</th>
+                  <th className="pb-2 pr-2 text-left">Status</th>
+                  <th className="pb-2 text-left">Aksi</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#f2f4f6]">
-                {activeTab === 'vouchers' ? (
-                  <VoucherTable
-                    vouchers={paginatedData as Voucher[]}
-                    isLoading={false}
-                    emptyMessage={getEmptyMessage()}
-                  />
-                ) : (
-                  <FlashSaleTable
-                    products={paginatedData as FlashSaleProduct[]}
-                    isLoading={false}
-                    emptyMessage={getEmptyMessage()}
-                  />
-                )}
+                <VoucherTable
+                  vouchers={items}
+                  isLoading={isLoading}
+                  emptyMessage={
+                    statusFilter
+                      ? 'Nggak ada kupon yang cocok sama filter ini.'
+                      : 'Belum ada kupon.'
+                  }
+                  onToggleActive={(coupon) => void toggleActive(coupon)}
+                  pendingId={pendingId}
+                />
               </tbody>
             </table>
           </div>
@@ -174,7 +134,7 @@ const PromotionsPage: React.FC = () => {
               <Pagination
                 currentPage={page}
                 totalPages={totalPages}
-                totalItems={totalItems}
+                totalItems={total}
                 pageSize={PAGE_SIZE}
                 onPageChange={setPage}
                 showTotal

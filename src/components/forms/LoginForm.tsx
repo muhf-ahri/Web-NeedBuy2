@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Input from '../ui/Input';
 import Button from '../ui/Button';
 
@@ -53,6 +54,11 @@ const LoginForm: React.FC<LoginFormProps> = ({
         error={errors.password}
         className="text-sm py-2"
       />
+      <div className="flex justify-end -mt-1">
+        <Link to="/forgot-password" className="text-xs font-medium text-[#004ac6] hover:underline">
+          Lupa password?
+        </Link>
+      </div>
       {error && <div className="text-red-600 text-xs">{error}</div>}
       <Button type="submit" fullWidth variant="primary" disabled={isLoading} className="text-sm py-2.5">
         {isLoading ? 'Bentar ya...' : 'Masuk'}

@@ -1,40 +1,67 @@
-// src/pages/admin/components/VoucherTable.tsx
+// src/pages/admin/components/TableVoucher.tsx
 import React from 'react';
-import Icon from '../../../components/ui/Icon';
-import { type Voucher } from '../data/promotionsData';
+import { formatRupiah } from '../../../utils/currency';
+import type { AdminCoupon } from '../../../api/admin';
 
 interface TableVoucherProps {
-  vouchers: Voucher[];
+  vouchers: AdminCoupon[];
   isLoading?: boolean;
   emptyMessage?: string;
+  onToggleActive: (coupon: AdminCoupon) => void;
+  pendingId?: string | null;
 }
 
-const statusColor: Record<Voucher['status'], string> = {
+/**
+ * Backend nggak menyimpan kolom "status" — yang ada cuma `isActive` dan
+ * `expiresAt`. Statusnya diturunkan di sini supaya nggak ada dua sumber
+ * kebenaran yang bisa selisih.
+ */
+type VoucherStatus = 'active' | 'paused' | 'expired';
+
+const deriveStatus = (coupon: AdminCoupon): VoucherStatus => {
+  if (coupon.expiresAt && new Date(coupon.expiresAt) < new Date()) return 'expired';
+  return coupon.isActive ? 'active' : 'paused';
+};
+
+const statusColor: Record<VoucherStatus, string> = {
   active: 'bg-[#d7f5dc] text-[#156b32]',
   paused: 'bg-[#fff4e0] text-[#b45309]',
   expired: 'bg-[#f2f4f6] text-[#737686]',
 };
 
-const statusLabel: Record<Voucher['status'], string> = {
+const statusLabel: Record<VoucherStatus, string> = {
   active: 'Aktif',
   paused: 'Ditahan',
   expired: 'Kadaluwarsa',
 };
 
-const discountTypeLabel: Record<Voucher['discountType'], string> = {
-  percentage: 'Persentase',
-  fixed: 'Nominal',
+const typeLabel: Record<AdminCoupon['type'], string> = {
+  PERCENT: 'Persentase',
+  FIXED: 'Nominal',
+  FREE_SHIPPING: 'Gratis Ongkir',
 };
 
-const formatDate = (date: string) => {
-  const d = new Date(date);
-  return d.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
+const formatDate = (date: string | null) => {
+  if (!date) return '—';
+  return new Date(date).toLocaleDateString('id-ID', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  });
+};
+
+const formatValue = (coupon: AdminCoupon) => {
+  if (coupon.type === 'PERCENT') return `${Number(coupon.value)}%`;
+  if (coupon.type === 'FREE_SHIPPING') return 'Ongkir';
+  return formatRupiah(coupon.value);
 };
 
 const TableVoucher: React.FC<TableVoucherProps> = ({
   vouchers,
   isLoading = false,
   emptyMessage = 'Tidak ada voucher.',
+  onToggleActive,
+  pendingId = null,
 }) => {
   if (isLoading) {
     return (
@@ -59,39 +86,48 @@ const TableVoucher: React.FC<TableVoucherProps> = ({
 
   return (
     <>
-      {vouchers.map((voucher) => (
-        <tr key={voucher.id} className="text-[13px] transition-colors hover:bg-[#f8f9fb]">
-          <td className="py-2.5 pr-2">
-            <div className="font-medium text-[#004ac6]">{voucher.code}</div>
-            <div className="text-[11px] text-[#737686]">{voucher.title}</div>
-          </td>
-          <td className="py-2.5 pr-2 text-[#434655]">{discountTypeLabel[voucher.discountType]}</td>
-          <td className="py-2.5 pr-2 font-semibold text-[#191c1e]">
-            {voucher.discountType === 'percentage' ? `${voucher.value}%` : `$${voucher.value.toFixed(2)}`}
-          </td>
-          <td className="py-2.5 pr-2 text-[#434655]">
-            {voucher.used.toLocaleString('id-ID')} / {voucher.quota === null ? '∞' : voucher.quota.toLocaleString('id-ID')}
-          </td>
-          <td className="py-2.5 pr-2 text-[#737686] text-[12px]">
-            {formatDate(voucher.validFrom)} - {formatDate(voucher.validTo)}
-          </td>
-          <td className="py-2.5 pr-2">
-            <span className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${statusColor[voucher.status]}`}>
-              {statusLabel[voucher.status]}
-            </span>
-          </td>
-          <td className="py-2.5">
-            <div className="flex items-center gap-1">
-              <button className="rounded-lg p-1.5 text-[#737686] transition-colors hover:bg-[#f2f4f6] hover:text-[#004ac6]">
-                <Icon name="edit" size={16} />
+      {vouchers.map((voucher) => {
+        const status = deriveStatus(voucher);
+        return (
+          <tr key={voucher.id} className="text-[13px] transition-colors hover:bg-[#f8f9fb]">
+            <td className="py-2.5 pr-2">
+              <div className="font-medium text-[#004ac6]">{voucher.code}</div>
+              <div className="text-[11px] text-[#737686]">{voucher.title}</div>
+            </td>
+            <td className="py-2.5 pr-2 text-[#434655]">{typeLabel[voucher.type]}</td>
+            <td className="py-2.5 pr-2 font-semibold text-[#191c1e]">{formatValue(voucher)}</td>
+            <td className="py-2.5 pr-2 text-[#434655]">
+              {voucher.usedCount.toLocaleString('id-ID')} /{' '}
+              {voucher.quota === null ? '∞' : voucher.quota.toLocaleString('id-ID')}
+            </td>
+            <td className="py-2.5 pr-2 text-[12px] text-[#737686]">
+              {formatDate(voucher.startsAt)} - {formatDate(voucher.expiresAt)}
+            </td>
+            <td className="py-2.5 pr-2">
+              <span
+                className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${statusColor[status]}`}
+              >
+                {statusLabel[status]}
+              </span>
+            </td>
+            <td className="py-2.5">
+              {/* Kupon nggak pernah dihapus — kupon yang sudah dipakai masih
+                  jadi rujukan order lama. Yang tersedia cuma ditahan/diaktifkan. */}
+              <button
+                onClick={() => onToggleActive(voucher)}
+                disabled={pendingId === voucher.id || status === 'expired'}
+                className={`rounded-full px-3 py-1 text-[12px] font-semibold text-white transition-colors disabled:opacity-50 ${
+                  voucher.isActive
+                    ? 'bg-[#ba1a1a] hover:bg-[#9a1515]'
+                    : 'bg-[#004ac6] hover:bg-[#003ea8]'
+                }`}
+              >
+                {voucher.isActive ? 'Tahan' : 'Aktifkan'}
               </button>
-              <button className="rounded-lg p-1.5 text-[#737686] transition-colors hover:bg-[#ffe0e0] hover:text-[#ba1a1a]">
-                <Icon name="trash" size={16} />
-              </button>
-            </div>
-          </td>
-        </tr>
-      ))}
+            </td>
+          </tr>
+        );
+      })}
     </>
   );
 };

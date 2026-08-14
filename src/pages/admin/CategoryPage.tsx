@@ -1,5 +1,5 @@
 // src/pages/admin/CategoriesPage.tsx
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import AdminLayout from './AdminLayout';
 import Icon from '../../components/ui/Icon';
 import Button from '../../components/ui/Button';
@@ -7,7 +7,13 @@ import FilterBar from '../../components/ui/filter/FilterBar';
 import CategoryForm, { type CategoryFormData } from './components/CategoryForm';
 import TableCategoryParent from './components/TableCetagoryParent';
 import TableCategoryChild from './components/TableCategoryChild';
-import { DUMMY_CATEGORIES, type Category } from './data/categoryData';
+import {
+  getAdminCategories,
+  createCategory,
+  updateCategory,
+  deleteCategory,
+  type AdminCategory as Category,
+} from '../../api/categories';
 
 type StatusFilter = '' | 'active' | 'inactive';
 type TabType = 'parent' | 'child';
@@ -27,7 +33,9 @@ const formatDate = (iso: string) =>
   });
 
 const CategoriesPage: React.FC = () => {
-  const [items, setItems] = useState<Category[]>(DUMMY_CATEGORIES);
+  const [items, setItems] = useState<Category[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<TabType>('parent');
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('');
   const [pageParent, setPageParent] = useState(1);
@@ -35,6 +43,19 @@ const CategoriesPage: React.FC = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
   const [formType, setFormType] = useState<'parent' | 'child'>('parent');
+
+  const load = useCallback(() => {
+    setIsLoading(true);
+    setError(null);
+    return getAdminCategories()
+      .then(setItems)
+      .catch((err: Error) => setError(err.message))
+      .finally(() => setIsLoading(false));
+  }, []);
+
+  useEffect(() => {
+    void load();
+  }, [load]);
 
   // Filter data berdasarkan status
   const filteredItems = useMemo(() => {
@@ -96,42 +117,36 @@ const CategoriesPage: React.FC = () => {
     setIsFormOpen(false);
   };
 
-  const handleSave = (data: CategoryFormData) => {
+  // Error dilempar balik ke CategoryForm: form yang menampilkannya dan menahan
+  // modal tetap terbuka, jadi isian user tidak hilang saat simpan gagal.
+  const handleSave = async (data: CategoryFormData) => {
+    const payload = {
+      name: data.name,
+      description: data.description.trim() || null,
+      isActive: data.isActive,
+      parentId: data.parentId || null,
+    };
     if (editingCategory) {
-      setItems((prev) =>
-        prev.map((cat) =>
-          cat.id === editingCategory.id
-            ? {
-                ...cat,
-                name: data.name,
-                description: data.description || null,
-                isActive: data.isActive,
-                parentId: data.parentId || null,
-              }
-            : cat
-        )
-      );
+      await updateCategory(editingCategory.id, payload);
     } else {
-      const newCategory: Category = {
-        id: `cat-${Date.now()}`,
-        name: data.name,
-        description: data.description || null,
-        isActive: data.isActive,
-        parentId: data.parentId || null,
-        createdAt: new Date().toISOString(),
-        _count: { products: 0, children: 0 },
-      };
-      setItems((prev) => [newCategory, ...prev]);
+      await createCategory(payload);
     }
-    setIsFormOpen(false);
     setEditingCategory(null);
     setPageParent(1);
     setPageChild(1);
+    await load();
   };
 
-  const handleDelete = (id: string) => {
-    if (!window.confirm('Yakin ingin menghapus kategori ini?')) return;
-    setItems((prev) => prev.filter((cat) => cat.id !== id));
+  const handleDelete = async (id: string) => {
+    if (!window.confirm('Yakin mau hapus kategori ini?')) return;
+    try {
+      await deleteCategory(id);
+      await load();
+    } catch (err) {
+      // Backend menolak kalau kategori masih dipakai produk atau punya anak —
+      // pesannya sudah menjelaskan sebabnya, jadi ditampilkan apa adanya.
+      setError((err as Error).message);
+    }
   };
 
   const openEdit = (category: Category) => {
@@ -216,9 +231,16 @@ const CategoriesPage: React.FC = () => {
           </Button>
         </div>
 
+        {error && (
+          <div className="rounded-2xl border border-[#ffcdd2] bg-[#fff5f5] p-4 text-[13px] text-[#a33131]">
+            {error}
+          </div>
+        )}
+
         {/* Tabel sesuai tab */}
         {activeTab === 'parent' ? (
           <TableCategoryParent
+            isLoading={isLoading}
             data={paginatedParent}
             page={pageParent}
             totalPages={totalParentPages}
@@ -232,6 +254,7 @@ const CategoriesPage: React.FC = () => {
           />
         ) : (
           <TableCategoryChild
+            isLoading={isLoading}
             data={paginatedChild}
             parentMap={parentMap}
             page={pageChild}

@@ -1,47 +1,79 @@
 // src/pages/admin/AnalyticsPage.tsx
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import AdminLayout from './AdminLayout';
-import Icon from '../../components/ui/Icon';
 import StatCard from './components/StatCard';
 import RevenueChart from './components/RevenueChart';
 import TopCategories from './components/TopCategories';
 import TopStores from './components/TopStores';
 import OrderStatus from './components/OrderStatus';
-import {
-  DUMMY_STATS,
-  DUMMY_REVENUE_DATA,
-  DUMMY_TOP_CATEGORIES,
-  DUMMY_TOP_STORES,
-  DUMMY_ORDER_STATUS,
-} from './data/analyticsData';
+import { getAnalytics, type AdminAnalytics, type OrderStatus as OrderStatusCode } from '../../api/admin';
+
+const STATUS_LABEL: Record<OrderStatusCode, string> = {
+  WAITING_PAYMENT: 'Nunggu Bayar',
+  PROCESSING: 'Diproses',
+  SHIPPED: 'Dikirim',
+  DELIVERED: 'Sampai',
+  COMPLETED: 'Selesai',
+  CANCELLED: 'Dibatalkan',
+};
+
+const STATUS_COLOR: Record<OrderStatusCode, string> = {
+  WAITING_PAYMENT: '#b45309',
+  PROCESSING: '#0057b8',
+  SHIPPED: '#4338ca',
+  DELIVERED: '#0f766e',
+  COMPLETED: '#156b32',
+  CANCELLED: '#a33131',
+};
 
 const AnalyticsPage: React.FC = () => {
-  const stats = [
+  const [data, setData] = useState<AdminAnalytics | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let alive = true;
+    getAnalytics()
+      .then((res) => {
+        if (alive) setData(res.data.data);
+      })
+      .catch((err: Error) => {
+        if (alive) setError(err.message);
+      })
+      .finally(() => {
+        if (alive) setIsLoading(false);
+      });
+    return () => {
+      alive = false;
+    };
+  }, []);
+
+  const stats = data && [
     {
-      title: 'Total Pendapatan',
-      value: DUMMY_STATS.totalRevenue,
-      change: DUMMY_STATS.revenueChange,
+      title: 'Pendapatan Platform',
+      value: data.totals.revenue,
+      change: data.changes.revenue,
       icon: 'payments' as const,
       isCurrency: true,
     },
     {
       title: 'Total Pesanan',
-      value: DUMMY_STATS.totalOrders,
-      change: DUMMY_STATS.ordersChange,
+      value: data.totals.orders,
+      change: data.changes.orders,
       icon: 'orders' as const,
       isCurrency: false,
     },
     {
       title: 'Conversion Rate',
-      value: `${DUMMY_STATS.conversionRate}%`,
-      change: DUMMY_STATS.conversionChange,
+      value: `${data.totals.conversionRate}%`,
+      change: data.changes.conversionRate,
       icon: 'trending' as const,
       isCurrency: false,
     },
     {
-      title: 'Pengguna Aktif',
-      value: DUMMY_STATS.activeUsers,
-      change: DUMMY_STATS.usersChange,
+      title: 'Pembeli Aktif',
+      value: data.totals.activeUsers,
+      change: data.changes.activeUsers,
       icon: 'users' as const,
       isCurrency: false,
     },
@@ -50,75 +82,82 @@ const AnalyticsPage: React.FC = () => {
   return (
     <AdminLayout>
       <div className="space-y-6">
-        {/* Header */}
         <div>
           <h1 className="text-[28px] font-bold text-[#191c1e]">Analytics</h1>
           <p className="text-[15px] text-[#737686]">
-            Overview of marketplace performance metrics and trends.
+            Performa marketplace {data ? `${data.windowDays} hari terakhir` : '30 hari terakhir'},
+            dibanding periode sebelumnya.
           </p>
         </div>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {stats.map((stat, idx) => (
-            <StatCard
-              key={idx}
-              title={stat.title}
-              value={stat.value}
-              change={stat.change}
-              icon={stat.icon}
-              isCurrency={stat.isCurrency}
-            />
-          ))}
-        </div>
-
-        {/* Revenue Chart & Order Status */}
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-          <div className="rounded-2xl border border-[#e0e3e5] bg-white p-5 lg:col-span-2">
-            <h2 className="text-[15px] font-bold text-[#191c1e]">
-              Revenue Overview
-            </h2>
-            <RevenueChart data={DUMMY_REVENUE_DATA} />
+        {error && (
+          <div className="rounded-2xl border border-[#ffcdd2] bg-[#fff5f5] p-4 text-[13px] text-[#a33131]">
+            {error}
           </div>
+        )}
 
-          <div className="rounded-2xl border border-[#e0e3e5] bg-white p-5">
-            <h2 className="text-[15px] font-bold text-[#191c1e]">Order Status</h2>
-            <div className="mt-3">
-              <OrderStatus data={DUMMY_ORDER_STATUS} />
-            </div>
+        {isLoading || !data ? (
+          <div className="rounded-2xl border border-[#e0e3e5] bg-white py-20 text-center text-[#737686]">
+            <span className="inline-block h-5 w-5 animate-spin rounded-full border-2 border-[#004ac6] border-t-transparent" />
+            <span className="ml-2">Memuat…</span>
           </div>
-        </div>
+        ) : (
+          <>
+            {/* Stats Grid */}
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {stats!.map((stat) => (
+                <StatCard
+                  key={stat.title}
+                  title={stat.title}
+                  value={stat.value}
+                  change={stat.change}
+                  icon={stat.icon}
+                  isCurrency={stat.isCurrency}
+                />
+              ))}
+            </div>
 
-        {/* Top Categories & Top Stores */}
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-          <div className="rounded-2xl border border-[#e0e3e5] bg-white p-5">
-            <div className="flex items-center justify-between">
-              <h2 className="text-[15px] font-bold text-[#191c1e]">
-                Top Selling Categories
-              </h2>
-              <button className="text-[12px] font-semibold text-[#004ac6] hover:underline">
-                View All
-              </button>
-            </div>
-            <div className="mt-3">
-              <TopCategories categories={DUMMY_TOP_CATEGORIES} />
-            </div>
-          </div>
+            {/* Revenue Chart & Order Status */}
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+              <div className="rounded-2xl border border-[#e0e3e5] bg-white p-5 lg:col-span-2">
+                <h2 className="text-[15px] font-bold text-[#191c1e]">
+                  Pendapatan Platform (12 bulan)
+                </h2>
+                <RevenueChart data={data.revenueSeries} />
+              </div>
 
-          <div className="rounded-2xl border border-[#e0e3e5] bg-white p-5">
-            <div className="flex items-center justify-between">
-              <h2 className="text-[15px] font-bold text-[#191c1e]">
-                Top Performing Stores
-              </h2>
-              <button className="text-[12px] font-semibold text-[#004ac6] hover:underline">
-                View All
-              </button>
+              <div className="rounded-2xl border border-[#e0e3e5] bg-white p-5">
+                <h2 className="text-[15px] font-bold text-[#191c1e]">Status Pesanan</h2>
+                <div className="mt-3">
+                  <OrderStatus
+                    data={data.ordersByStatus.map((row) => ({
+                      label: STATUS_LABEL[row.status] ?? row.status,
+                      value: row.percentage,
+                      color: STATUS_COLOR[row.status] ?? '#737686',
+                    }))}
+                  />
+                </div>
+              </div>
             </div>
-            <div className="mt-3">
-              <TopStores stores={DUMMY_TOP_STORES} />
+
+            {/* Top Categories & Top Stores */}
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+              <div className="rounded-2xl border border-[#e0e3e5] bg-white p-5">
+                <h2 className="text-[15px] font-bold text-[#191c1e]">Kategori Terlaris</h2>
+                <div className="mt-3">
+                  <TopCategories categories={data.topCategories} />
+                </div>
+              </div>
+
+              <div className="rounded-2xl border border-[#e0e3e5] bg-white p-5">
+                <h2 className="text-[15px] font-bold text-[#191c1e]">Toko Terbaik</h2>
+                <div className="mt-3">
+                  <TopStores stores={data.topStores} />
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          </>
+        )}
       </div>
     </AdminLayout>
   );

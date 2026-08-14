@@ -1,15 +1,28 @@
-// src/pages/admin/components/WithdrawalTable.tsx
+// src/pages/admin/components/TableWithdrawals.tsx
 import React from 'react';
 import Icon from '../../../components/ui/Icon';
 import { formatRupiah } from '../../../utils/currency';
-import { type Withdrawal, statusLabel, statusColor } from '../data/withdrawalsData';
+import type { AdminWithdrawal, WithdrawalStatus } from '../../../api/admin';
 
 interface TableWithdrawalsProps {
-  withdrawals: Withdrawal[];
+  withdrawals: AdminWithdrawal[];
   isLoading?: boolean;
   emptyMessage?: string;
-  onAction?: (id: string, action: 'approve' | 'reject') => void;
+  onAction: (id: string, action: 'APPROVE' | 'REJECT') => void;
+  pendingId?: string | null;
 }
+
+export const statusLabel: Record<WithdrawalStatus, string> = {
+  PENDING: 'Menunggu',
+  SUCCESS: 'Ditransfer',
+  FAILED: 'Ditolak',
+};
+
+export const statusColor: Record<WithdrawalStatus, string> = {
+  PENDING: 'bg-[#fff4e0] text-[#b45309]',
+  SUCCESS: 'bg-[#d7f5dc] text-[#156b32]',
+  FAILED: 'bg-[#ffe0e0] text-[#a33131]',
+};
 
 const formatDate = (iso: string) =>
   new Date(iso).toLocaleDateString('id-ID', {
@@ -23,6 +36,7 @@ const TableWithdrawals: React.FC<TableWithdrawalsProps> = ({
   isLoading = false,
   emptyMessage = 'Tidak ada permintaan penarikan.',
   onAction,
+  pendingId = null,
 }) => {
   if (isLoading) {
     return (
@@ -47,67 +61,69 @@ const TableWithdrawals: React.FC<TableWithdrawalsProps> = ({
 
   return (
     <>
-      {withdrawals.map((withdrawal) => (
-        <tr key={withdrawal.id} className="text-[13px] transition-colors hover:bg-[#f8f9fb]">
-          <td className="py-2.5 pr-2 font-medium text-[#004ac6]">
-            {withdrawal.withdrawalId}
-          </td>
-          <td className="py-2.5 pr-2">
-            <div className="font-medium text-[#191c1e]">{withdrawal.seller}</div>
-            <div className="text-[11px] text-[#737686]">ID: {withdrawal.sellerId}</div>
-          </td>
-          <td className="py-2.5 pr-2 font-semibold text-[#004ac6]">
-            {formatRupiah(withdrawal.amount)}
-          </td>
-          <td className="py-2.5 pr-2">
-            <div className="text-[#191c1e]">{withdrawal.bankName}</div>
-            <div className="text-[11px] text-[#737686]">
-              {withdrawal.bankAccount} · Routing: {withdrawal.routingNumber}
-            </div>
-          </td>
-          <td className="py-2.5 pr-2 text-[#737686]">
-            {formatDate(withdrawal.requestedDate)}
-          </td>
-          <td className="py-2.5 pr-2">
-            <span
-              className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${statusColor[withdrawal.status]}`}
-            >
-              {statusLabel[withdrawal.status]}
-            </span>
-          </td>
-          <td className="py-2.5">
-            <div className="flex items-center gap-1">
-              {withdrawal.status === 'pending' && onAction && (
-                <>
+      {withdrawals.map((withdrawal) => {
+        const user = withdrawal.wallet.user;
+        const busy = pendingId === withdrawal.id;
+        return (
+          <tr key={withdrawal.id} className="text-[13px] transition-colors hover:bg-[#f8f9fb]">
+            {/* Backend nggak punya nomor penarikan sendiri — 8 karakter pertama
+                UUID sudah cukup untuk dirujuk manusia tanpa mengarang kolom. */}
+            <td className="py-2.5 pr-2 font-medium text-[#004ac6]">
+              #{withdrawal.id.slice(0, 8).toUpperCase()}
+            </td>
+            <td className="py-2.5 pr-2">
+              <div className="font-medium text-[#191c1e]">
+                {user.seller?.storeName ?? user.name}
+              </div>
+              <div className="text-[11px] text-[#737686]">{user.email}</div>
+            </td>
+            <td className="py-2.5 pr-2 font-semibold text-[#004ac6]">
+              {formatRupiah(withdrawal.amount)}
+            </td>
+            <td className="py-2.5 pr-2">
+              <div className="text-[#191c1e]">{withdrawal.bankName ?? '—'}</div>
+              <div className="text-[11px] text-[#737686]">
+                {withdrawal.bankAccount ?? '—'}
+                {withdrawal.bankAccountName ? ` · a.n. ${withdrawal.bankAccountName}` : ''}
+              </div>
+            </td>
+            <td className="py-2.5 pr-2 text-[#737686]">{formatDate(withdrawal.createdAt)}</td>
+            <td className="py-2.5 pr-2">
+              <span
+                className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${statusColor[withdrawal.status]}`}
+              >
+                {statusLabel[withdrawal.status]}
+              </span>
+            </td>
+            <td className="py-2.5">
+              {withdrawal.status === 'PENDING' ? (
+                <div className="flex items-center gap-1">
                   <button
-                    onClick={() => onAction(withdrawal.id, 'approve')}
-                    className="rounded-lg p-1.5 text-[#156b32] transition-colors hover:bg-[#d7f5dc]"
+                    onClick={() => onAction(withdrawal.id, 'APPROVE')}
+                    disabled={busy}
+                    className="rounded-lg p-1.5 text-[#156b32] transition-colors hover:bg-[#d7f5dc] disabled:opacity-40"
                     aria-label="Setujui"
-                    title="Setujui"
+                    title="Setujui — dana sudah ditransfer"
                   >
                     <Icon name="check" size={16} />
                   </button>
                   <button
-                    onClick={() => onAction(withdrawal.id, 'reject')}
-                    className="rounded-lg p-1.5 text-[#ba1a1a] transition-colors hover:bg-[#ffe0e0]"
+                    onClick={() => onAction(withdrawal.id, 'REJECT')}
+                    disabled={busy}
+                    className="rounded-lg p-1.5 text-[#ba1a1a] transition-colors hover:bg-[#ffe0e0] disabled:opacity-40"
                     aria-label="Tolak"
-                    title="Tolak"
+                    title="Tolak — saldo dikembalikan ke penjual"
                   >
                     <Icon name="close" size={16} />
                   </button>
-                </>
+                </div>
+              ) : (
+                <span className="text-[11px] text-[#737686]">{withdrawal.note ?? '—'}</span>
               )}
-              {withdrawal.status !== 'pending' && (
-                <span className="text-[11px] text-[#737686]">
-                  {withdrawal.status === 'approved' && 'Disetujui'}
-                  {withdrawal.status === 'processed' && 'Diproses'}
-                  {withdrawal.status === 'rejected' && 'Ditolak'}
-                </span>
-              )}
-            </div>
-          </td>
-        </tr>
-      ))}
+            </td>
+          </tr>
+        );
+      })}
     </>
   );
 };
