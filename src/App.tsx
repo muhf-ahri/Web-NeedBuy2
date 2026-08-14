@@ -40,6 +40,14 @@ import AdminPlaceholder from './pages/admin/PlaceholderPage';
 import ProductsPage from './pages/admin/ProductsPage';
 import CategoryPage from './pages/admin/CategoryPage';
 import OrdersPage from './pages/admin/OrdersPage';
+import PaymentsPage from './pages/admin/PaymentsPage';
+import WithdrawalsPage from './pages/admin/WithdrawalsPage';
+import PromotionsPage from './pages/admin/PromotionsPage';
+import ReviewsPage from './pages/admin/ReviewsPage';
+import ReportsPage from './pages/admin/ReportsPage';
+import AnalyticsPage from './pages/admin/AnalyticsPage';
+import NotificationsPage from './pages/admin/NotificationPage';
+import SettingsPage from './pages/admin/SettingsPage';
 
 function App() {
   return (
@@ -195,6 +203,14 @@ function App() {
               <Route path="/admin/products/approved " element={<RequireAdmin><ProductsPage /></RequireAdmin>} />
               <Route path="/admin/categories" element={<RequireAdmin><CategoryPage /></RequireAdmin>} />
               <Route path="/admin/orders" element={<RequireAdmin><OrdersPage /></RequireAdmin>} />
+              <Route path="/admin/payments" element={<RequireAdmin><PaymentsPage /></RequireAdmin>} />
+              <Route path="/admin/withdrawals" element={<RequireAdmin><WithdrawalsPage /></RequireAdmin>} />
+              <Route path="/admin/promotions" element={<RequireAdmin><PromotionsPage /></RequireAdmin>} />
+              <Route path="/admin/reviews" element={<RequireAdmin><ReviewsPage /></RequireAdmin>} />
+              <Route path="/admin/reports" element={<RequireAdmin><ReportsPage /></RequireAdmin>} />
+              <Route path="/admin/analytics" element={<RequireAdmin><AnalyticsPage /></RequireAdmin>} />
+              <Route path="/admin/notifications" element={<RequireAdmin><NotificationsPage /></RequireAdmin>} />
+              <Route path="/admin/settings" element={<RequireAdmin><SettingsPage /></RequireAdmin>} />
 
               {/* Compare — placeholder */}
               <Route path="/compare" element={<div className="p-8 text-center text-gray-500 font-sans">Compare — coming soon</div>} />

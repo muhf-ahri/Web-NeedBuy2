@@ -4,7 +4,7 @@ import AdminLayout from './AdminLayout';
 import FilterBar from '../../components/ui/filter/FilterBar';
 import Pagination from '../../components/ui/Pagination';
 import OrderTable from './components/OrderTable';
-import { DUMMY_ORDERS, type OrderStatus, type Order } from './data/ordersData';
+import { DUMMY_ORDERS, type OrderStatus } from './data/ordersData';
 
 type TabType = OrderStatus;
 
@@ -14,18 +14,14 @@ const OrdersPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabType>('all');
   const [page, setPage] = useState(1);
   const [paymentFilter, setPaymentFilter] = useState('all');
-  const [methodFilter, setMethodFilter] = useState('all');
 
-  // Filter data berdasarkan tab
   const filteredData = useMemo(() => {
     let data = [...DUMMY_ORDERS];
 
-    // Filter tab
     if (activeTab !== 'all') {
       data = data.filter((order) => order.status === activeTab);
     }
 
-    // Filter payment status
     if (paymentFilter !== 'all') {
       data = data.filter((order) => order.paymentStatus === paymentFilter);
     }
@@ -48,14 +44,6 @@ const OrdersPage: React.FC = () => {
     { label: 'Lunas', value: 'Paid' },
     { label: 'Menunggu', value: 'Pending' },
     { label: 'Gagal', value: 'Failed' },
-  ];
-
-  // Method filter (opsional)
-  const methodOptions = [
-    { label: 'Semua Metode', value: 'all' },
-    { label: 'Transfer Bank', value: 'bank' },
-    { label: 'E-Wallet', value: 'ewallet' },
-    { label: 'COD', value: 'cod' },
   ];
 
   const getEmptyMessage = () => {
@@ -89,7 +77,6 @@ const OrdersPage: React.FC = () => {
   return (
     <AdminLayout>
       <div className="space-y-6">
-        {/* Header */}
         <div>
           <h1 className="text-[28px] font-bold text-[#191c1e]">Pesanan</h1>
           <p className="text-[15px] text-[#737686]">
@@ -115,33 +102,22 @@ const OrdersPage: React.FC = () => {
         </div>
 
         {/* Filter */}
-        <div className="flex flex-wrap items-center gap-3">
-          <FilterBar
-            filters={[
-              {
-                key: 'payment',
-                options: paymentOptions,
-                value: paymentFilter,
-                onChange: (val) => {
-                  setPaymentFilter(val);
-                  setPage(1);
-                },
+        <FilterBar
+          filters={[
+            {
+              key: 'payment',
+              options: paymentOptions,
+              value: paymentFilter,
+              onChange: (val) => {
+                setPaymentFilter(val);
+                setPage(1);
               },
-              {
-                key: 'method',
-                options: methodOptions,
-                value: methodFilter,
-                onChange: (val) => {
-                  setMethodFilter(val);
-                  setPage(1);
-                },
-              },
-            ]}
-            onMoreFilters={() => {}}
-            moreFiltersLabel="More Filters"
-            visibleFilters={2}
-          />
-        </div>
+            },
+          ]}
+          onMoreFilters={() => {}}
+          moreFiltersLabel="More Filters"
+          visibleFilters={1}
+        />
 
         {/* Table */}
         <div className="overflow-hidden rounded-2xl border border-[#e0e3e5] bg-white p-5">
@@ -155,8 +131,7 @@ const OrdersPage: React.FC = () => {
                   <th className="pb-2 pr-2 text-center">Item</th>
                   <th className="pb-2 pr-2 text-left">Total</th>
                   <th className="pb-2 pr-2 text-center">Pembayaran</th>
-                  <th className="pb-2 pr-2 text-center">Status</th>
-                  <th className="pb-2 text-center">Aksi</th>
+                  <th className="pb-2 text-center">Status</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#f2f4f6]">
@@ -169,7 +144,6 @@ const OrdersPage: React.FC = () => {
             </table>
           </div>
 
-          {/* Pagination */}
           {totalPages > 1 && (
             <div className="mt-4 border-t border-[#e0e3e5] pt-4">
               <Pagination
