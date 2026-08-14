@@ -9,7 +9,7 @@ export type MenuItem = {
 
 /**
  * Daftar menu sekaligus sumber judul halaman placeholder — App.tsx memakai
- * `/admin/*` yang menjatuhkan semua route belum-jadi ke satu PlaceholderPage,
+* `/admin/*` yang menjatuhkan semua route belum-jadi ke satu PlaceholderPage,
  * dan halaman itu mencari labelnya di sini. Satu daftar, bukan dua yang harus
  * dijaga tetap sinkron.
  *
