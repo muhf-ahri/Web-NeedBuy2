@@ -1,5 +1,6 @@
 // src/components/home/HomeSearch.tsx
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+
 import Icon from '../ui/Icon';
 import SearchSuggestions from '../ui/SearchSuggestions';
 
@@ -11,6 +12,17 @@ interface HomeSearchProps {
   setSuggestOpen: (open: boolean) => void;
 }
 
+/* ── Contoh placeholder yang berganti-ganti (voice NeedBuy: santai, helpful) ── */
+const PLACEHOLDER_LINES = [
+  'Contoh: laptop buat edit video, budget 15 juta...',
+  'Contoh: sepatu lari untuk kaki lebar...',
+  'Contoh: kopi robusta 1kg, harga di bawah 100rb...',
+  'Contoh: kado wisuda buat sahabat cewek...',
+  'Contoh: tas ransel tahan air untuk motoran...',
+];
+
+const INTERVAL_MS = 4000;
+
 const HomeSearch: React.FC<HomeSearchProps> = ({
   value,
   onChange,
@@ -18,91 +30,150 @@ const HomeSearch: React.FC<HomeSearchProps> = ({
   suggestOpen,
   setSuggestOpen,
 }) => {
+  const [placeholderIdx, setPlaceholderIdx] = useState(0);
+  const [showAnimatedPlaceholder, setShowAnimatedPlaceholder] = useState(true);
+
+  /* Ganti contoh placeholder otomatis (hormati prefers-reduced-motion) */
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const timer = window.setInterval(() => {
+      setPlaceholderIdx((i) => (i + 1) % PLACEHOLDER_LINES.length);
+    }, INTERVAL_MS);
+
+    return () => window.clearInterval(timer);
+  }, []);
+
+  /* Matikan placeholder animasi saat user mulai mengetik / fokus */
+  useEffect(() => {
+    setShowAnimatedPlaceholder(!value && !suggestOpen);
+  }, [value, suggestOpen]);
+
   return (
-    // Sinkron dengan lebar carousel promo di atasnya
     <section className="mx-auto w-full max-w-6xl px-4 pt-7 sm:px-8">
+      {/* Entrance animation: fade-in + slide-up */}
       <div
         className="
-          relative
-          mx-auto
-          w-full
-          overflow-visible
-          rounded-[24px]
-          border border-white
-          bg-white/75
-          p-5
-          shadow-[0_15px_45px_rgba(53,91,139,0.10)]
-          backdrop-blur-xl
+          relative w-full overflow-visible rounded-[24px] border
+          border-white/80 bg-white/95 p-5 shadow-[0_18px_50px_rgba(32,36,45,0.08)]
+          backdrop-blur-sm home-search-enter sm:p-6
         "
       >
+        {/* Eyebrow + heading (pola SectionHeading, compact) */}
+        <div className="mb-3 flex items-center justify-between gap-3">
+          <div className="min-w-0">
+            <p
+              className="
+                mb-1 text-[10px] font-semibold uppercase tracking-[0.18em]
+                text-[#538CDB]
+              "
+            >
+              Cari produk
+            </p>
+            <h2
+              className="
+                text-[16px] font-bold leading-tight tracking-tight
+                text-[#20242D] sm:text-[18px]
+              "
+            >
+              Apa yang kamu cari hari ini?
+            </h2>
+          </div>
+
+          {/* Icon dekoratif (callback ke logo "N") */}
+
+        </div>
+
+        {/* Input bar */}
         <form
           onSubmit={onSubmit}
           className="
-            relative
-            flex items-center gap-2
-            rounded-2xl
-            border border-transparent
-            bg-[#f4f7fb]
-            px-3 py-1.5
-            transition-all duration-200
-            focus-within:border-[#b9cef4]
-            focus-within:bg-white
-            focus-within:shadow-[0_4px_20px_rgba(0,74,198,0.08)]
+            group/input relative flex items-center gap-2 rounded-full
+            border border-[#E8ECF4] bg-[#F5F7FB] px-2 py-1.5
+            transition-all duration-300 focus-within:border-[#538CDB]
+            focus-within:bg-white focus-within:shadow-[0_6px_20px_rgba(83,140,219,0.12)]
           "
         >
-          <Icon
-            name="search"
-            size={16}
-            className="shrink-0 text-[#737686]"
-          />
-
-          <input
-            type="text"
-            value={value}
-            onChange={(e) => {
-              onChange(e.target.value);
-              setSuggestOpen(true);
-            }}
-            onFocus={() => setSuggestOpen(true)}
-            onBlur={() => setSuggestOpen(false)}
-            onKeyDown={(e) => {
-              if (e.key === 'Escape') {
-                setSuggestOpen(false);
-              }
-            }}
-            placeholder="Contoh: laptop buat edit video, budget 15 juta..."
+          {/* Icon search — berdenyut halus saat fokus */}
+          <span
             className="
-              min-w-0
-              flex-1
-              bg-transparent
-              py-2
-              text-[12px]
-              text-[#191c1e]
-              outline-none
-              placeholder-[#8a90a0]
+              relative flex h-8 w-8 shrink-0 items-center justify-center
+              rounded-full transition-colors duration-300
+              group-focus-within/input:bg-[#538CDB]/10
             "
-          />
+          >
+            <Icon
+              name="search"
+              size={15}
+              className="text-[#737A87] transition-colors duration-300 group-focus-within/input:text-[#538CDB]"
+            />
+          </span>
 
+          {/* Input dengan placeholder animasi */}
+          <div className="relative min-w-0 flex-1">
+            <input
+              type="text"
+              value={value}
+              onChange={(e) => {
+                onChange(e.target.value);
+                setSuggestOpen(true);
+              }}
+              onFocus={() => setSuggestOpen(true)}
+              onBlur={() => {
+                // Beri delay kecil agar klik suggestion tidak langsung menutup
+                setTimeout(() => setSuggestOpen(false), 150);
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Escape') setSuggestOpen(false);
+              }}
+              placeholder={
+                showAnimatedPlaceholder ? '' : 'Cari produk...'
+              }
+              className="
+                min-w-0 w-full bg-transparent py-2 text-[13px]
+                text-[#20242D] outline-none placeholder:text-[#A2A8B3]
+              "
+            />
+
+            {/* Placeholder animasi — slide-up + fade, sama seperti HeroSection */}
+            {showAnimatedPlaceholder && (
+              <span
+                aria-hidden="true"
+                className="
+                  pointer-events-none absolute inset-y-0 left-0 flex
+                  items-center overflow-hidden
+                "
+              >
+                <span
+                  key={placeholderIdx}
+                  className="
+                    search-placeholder-in block truncate text-[13px]
+                    text-[#A2A8B3]
+                  "
+                >
+                  {PLACEHOLDER_LINES[placeholderIdx]}
+                </span>
+              </span>
+            )}
+          </div>
+
+          {/* Submit button — rounded-full biru brand (pola tombol form Login) */}
           <button
             type="submit"
             className="
-              flex h-9 w-9
-              shrink-0
-              items-center justify-center
-              rounded-xl
-              bg-[#004ac6]
-              text-white
-              shadow-[0_5px_15px_rgba(0,74,198,0.20)]
-              transition-all
-              hover:bg-[#003a9e]
-              hover:shadow-[0_7px_20px_rgba(0,74,198,0.28)]
-              active:scale-95
+              flex h-10 w-10 shrink-0 items-center justify-center
+              rounded-full bg-[#538CDB] text-white
+              shadow-[0_7px_18px_rgba(83,140,219,0.25)] transition-all
+              duration-200 hover:bg-[#467BC7]
+              hover:shadow-[0_9px_22px_rgba(83,140,219,0.30)]
+              active:scale-[0.95]
             "
             aria-label="Cari"
           >
-            <Icon name="arrowRight" size={15} />
+            <Icon name="arrowRight" size={15} className="text-white" />
           </button>
 
+          {/* Suggestions dropdown */}
           {suggestOpen && (
             <SearchSuggestions
               term={value}
@@ -110,7 +181,49 @@ const HomeSearch: React.FC<HomeSearchProps> = ({
             />
           )}
         </form>
+
+        {/* Indicator placeholder dots — bisa diklik */}
+        {showAnimatedPlaceholder && (
+          <div className="mt-3 flex justify-center gap-1.5">
+            {PLACEHOLDER_LINES.map((line, i) => (
+              <button
+                key={line}
+                type="button"
+                onClick={() => setPlaceholderIdx(i)}
+                aria-label={`Contoh ${i + 1}`}
+                aria-current={i === placeholderIdx}
+                className={`
+                  h-1 rounded-full transition-all duration-300
+                  ${
+                    i === placeholderIdx
+                      ? 'w-5 bg-[#538CDB]'
+                      : 'w-1 bg-[#538CDB]/25 hover:bg-[#538CDB]/50'
+                  }
+                `}
+              />
+            ))}
+          </div>
+        )}
       </div>
+
+      {/* Keyframes */}
+      <style>{`
+        @keyframes home-search-enter {
+          0%   { opacity: 0; transform: translateY(12px); }
+          100% { opacity: 1; transform: translateY(0); }
+        }
+        .home-search-enter {
+          animation: home-search-enter 0.6s cubic-bezier(0.22, 0.9, 0.35, 1) both;
+        }
+
+        @keyframes search-placeholder-in {
+          0%   { opacity: 0; transform: translateY(70%); }
+          100% { opacity: 1; transform: translateY(0); }
+        }
+        .search-placeholder-in {
+          animation: search-placeholder-in 0.5s cubic-bezier(0.22, 0.9, 0.35, 1) both;
+        }
+      `}</style>
     </section>
   );
 };

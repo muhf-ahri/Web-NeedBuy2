@@ -119,14 +119,6 @@ const HomePage: React.FC = () => {
 
         <HeroSection />
 
-        <div className="pt-5 sm:pt-7">
-          <PromoCarousel
-            saleProducts={saleProducts}
-            loading={loading}
-            className="mx-auto w-full max-w-6xl px-4 sm:px-8"
-          />
-        </div>
-
         {/* ─────────────────────────────────────────
             SEARCH BAR
         ───────────────────────────────────────── */}
@@ -137,6 +129,14 @@ const HomePage: React.FC = () => {
           suggestOpen={suggestOpen}
           setSuggestOpen={setSuggestOpen}
         />
+
+        <div className="pt-5 sm:pt-7">
+          <PromoCarousel
+            saleProducts={saleProducts}
+            loading={loading}
+            className="mx-auto w-full max-w-6xl px-4 sm:px-8"
+          />
+        </div>
 
         {/* ─────────────────────────────────────────
             NEEDPAY STRIP — dengan Section Heading

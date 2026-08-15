@@ -5,7 +5,7 @@ import Icon from '../ui/Icon';
 import { formatRupiah } from '../../utils/currency';
 import { getAccessToken } from '../../api/auth';
 import { getWallet } from '../../api/wallet';
-import needpayCard from '../../assets/needpay.png';
+import needpayCard from '../../assets/needpay.jpg';
 
 const serialFrom = (walletId: string | undefined): string =>
   walletId
