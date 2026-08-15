@@ -57,7 +57,7 @@ const Login: React.FC = () => {
 
       {/* Background illustration — full screen, sits behind the card, never inside it */}
       <img
-        src="/src/assets/login.png"
+        src="/src/assets/login.jpg"
         alt=""
         aria-hidden="true"
         draggable={false}

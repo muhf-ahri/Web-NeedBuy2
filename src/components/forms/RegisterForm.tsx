@@ -26,28 +26,17 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
 
   const [errors, setErrors] = useState<Partial<RegisterPayload>>({});
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
-    setForm((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-
-    setErrors((prev) => ({
-      ...prev,
-      [name]: '',
-    }));
+    setForm((prev) => ({ ...prev, [name]: value }));
+    setErrors((prev) => ({ ...prev, [name]: '' }));
   };
 
   const validate = (): boolean => {
     const newErrors: Partial<RegisterPayload> = {};
 
-    if (!form.username.trim()) {
-      newErrors.username = 'Username wajib diisi';
-    }
+    if (!form.username.trim()) newErrors.username = 'Username wajib diisi';
 
     if (!form.email.trim()) {
       newErrors.email = 'Email wajib diisi';
@@ -68,28 +57,17 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
     }
 
     setErrors(newErrors);
-
     return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (validate()) {
-      onSubmit(form);
-    }
+    if (validate()) onSubmit(form);
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="space-y-3.5"
-    >
-
-      {/* =====================================================
-          USERNAME
-      ====================================================== */}
-
+    <form onSubmit={handleSubmit} className="space-y-3.5">
+      {/* Username */}
       <Input
         label="Username"
         name="username"
@@ -98,22 +76,12 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
         onChange={handleChange}
         error={errors.username}
         className="
-          rounded-xl
-          border-[#E8ECF4]
-          bg-white
-          py-2.5
-          text-sm
-          transition
-          focus:border-[#538CDB]
-          focus:ring-2
-          focus:ring-[#538CDB]/15
+          rounded-xl border-[#E8ECF4] bg-white py-2.5 text-sm
+          transition focus:border-[#538CDB] focus:ring-2 focus:ring-[#538CDB]/15
         "
       />
 
-      {/* =====================================================
-          EMAIL
-      ====================================================== */}
-
+      {/* Email */}
       <Input
         label="Email"
         name="email"
@@ -123,24 +91,13 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
         onChange={handleChange}
         error={errors.email}
         className="
-          rounded-xl
-          border-[#E8ECF4]
-          bg-white
-          py-2.5
-          text-sm
-          transition
-          focus:border-[#538CDB]
-          focus:ring-2
-          focus:ring-[#538CDB]/15
+          rounded-xl border-[#E8ECF4] bg-white py-2.5 text-sm
+          transition focus:border-[#538CDB] focus:ring-2 focus:ring-[#538CDB]/15
         "
       />
 
-      {/* =====================================================
-          PASSWORD
-      ====================================================== */}
-
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-
+      {/* ── Password & Ulangi Password: BERSEBELAHAN di layar sm+ ── */}
+      <div className="grid grid-cols-1 items-start gap-3 sm:grid-cols-2">
         <div>
           <Input
             label="Password"
@@ -151,26 +108,12 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
             onChange={handleChange}
             error={errors.password}
             className="
-              rounded-xl
-              border-[#E8ECF4]
-              bg-white
-              py-2.5
-              text-sm
-              transition
-              focus:border-[#538CDB]
-              focus:ring-2
-              focus:ring-[#538CDB]/15
+              rounded-xl border-[#E8ECF4] bg-white py-2.5 text-sm
+              transition focus:border-[#538CDB] focus:ring-2 focus:ring-[#538CDB]/15
             "
           />
-
-          <p className="mt-1.5 text-[10px] text-[#737A87]">
-            Minimal 8 karakter
-          </p>
+          <p className="mt-1.5 text-[10px] text-[#737A87]">Minimal 8 karakter</p>
         </div>
-
-        {/* =================================================
-            CONFIRM PASSWORD
-        ================================================== */}
 
         <Input
           label="Ulangi Password"
@@ -181,18 +124,10 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
           onChange={handleChange}
           error={errors.confirmPassword}
           className="
-            rounded-xl
-            border-[#E8ECF4]
-            bg-white
-            py-2.5
-            text-sm
-            transition
-            focus:border-[#538CDB]
-            focus:ring-2
-            focus:ring-[#538CDB]/15
+            rounded-xl border-[#E8ECF4] bg-white py-2.5 text-sm
+            transition focus:border-[#538CDB] focus:ring-2 focus:ring-[#538CDB]/15
           "
         />
-
       </div>
 
       {/* API Error */}
@@ -202,34 +137,21 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
         </div>
       )}
 
-      {/* =====================================================
-          SUBMIT
-      ====================================================== */}
-
+      {/* Submit */}
       <Button
         type="submit"
         fullWidth
         variant="primary"
         disabled={isLoading}
         className="
-          rounded-full
-          bg-[#538CDB]
-          py-2.5
-          text-sm
-          font-semibold
-          text-white
-          shadow-[0_6px_16px_rgba(83,140,219,0.20)]
-          transition
-          hover:bg-[#467BC7]
-          hover:shadow-[0_8px_20px_rgba(83,140,219,0.25)]
-          focus:ring-4
-          focus:ring-[#538CDB]/15
-          active:scale-[0.98]
+          rounded-full bg-[#538CDB] py-2.5 text-sm font-semibold text-white
+          shadow-[0_6px_16px_rgba(83,140,219,0.20)] transition
+          hover:bg-[#467BC7] hover:shadow-[0_8px_20px_rgba(83,140,219,0.25)]
+          focus:ring-4 focus:ring-[#538CDB]/15 active:scale-[0.98]
         "
       >
         {isLoading ? 'Membuat akun...' : 'Buat akun'}
       </Button>
-
     </form>
   );
 };

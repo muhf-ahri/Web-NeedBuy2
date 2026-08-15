@@ -54,6 +54,7 @@ import ReportsPage from './pages/admin/ReportsPage';
 import AnalyticsPage from './pages/admin/AnalyticsPage';
 import NotificationsPage from './pages/admin/NotificationPage';
 import SettingsPage from './pages/admin/SettingsPage';
+import NotFoundPage from './pages/NotFoundPage';
 
 /**
  * Branding dari halaman Pengaturan admin dipasang ke judul tab dan favicon.
@@ -251,6 +252,9 @@ function App() {
 
               {/* Compare — placeholder */}
               <Route path="/compare" element={<div className="p-8 text-center text-gray-500 font-sans">Compare — coming soon</div>} />
+
+              {/* 404 */}
+              <Route path="*" element={<NotFoundPage />} />
 
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
