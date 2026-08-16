@@ -49,7 +49,6 @@ const NeedPayLoginPrompt: React.FC = () => {
                   uppercase tracking-[0.18em] text-[#538CDB] backdrop-blur-sm
                 "
               >
-                <span className="h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
                 NeedPay
               </div>
 

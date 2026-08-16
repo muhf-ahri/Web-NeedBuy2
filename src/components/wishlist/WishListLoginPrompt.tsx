@@ -146,8 +146,6 @@ const WishlistLoginPrompt: React.FC = () => {
                   Wishlist
                 </div>
 
-                <div className="pointer-events-none absolute left-[24%] top-[16%] z-10 h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
-
                 <div className="absolute bottom-5 right-6 z-10 text-right text-white">
                   <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/70">
                     NeedBuy

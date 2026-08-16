@@ -175,14 +175,6 @@ const OrdersLoginPrompt: React.FC = () => {
                   Pesanan
                 </div>
 
-                {/* Dekorasi titik kuning */}
-                <div
-                  className="
-                    pointer-events-none absolute left-[24%] top-[16%] z-10
-                    h-1.5 w-1.5 rounded-full bg-[#FFD500]
-                  "
-                />
-
                 {/* Text kanan bawah */}
                 <div className="absolute bottom-5 right-6 z-10 text-right text-white">
                   <p

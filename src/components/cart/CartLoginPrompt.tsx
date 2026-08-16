@@ -54,17 +54,10 @@ const CartLoginPrompt: React.FC = () => {
               {/* Konten kiri */}
               <section className="flex items-center bg-white px-6 py-8 sm:px-8 lg:px-10">
                 <div className="mx-auto w-full max-w-md">
-                  <span
-                    className="
-                      relative inline-flex h-14 w-14 items-center justify-center
-                      overflow-hidden rounded-2xl bg-gradient-to-br
-                      from-[#5B93E0] to-[#3A66AC]
-                      shadow-[0_8px_20px_rgba(83,140,219,0.30)]
-                    "
-                  >
-                    <span className="pointer-events-none absolute -right-1.5 -top-1.5 h-4 w-4 rounded-full border border-white/25" />
-                    <Icon name="cart" size={22} className="text-white" />
-                  </span>
+
+                    <h1 className="text-[30px] font-bold leading-tight tracking-tight text-[#538CBD] hover:text-[#467BC7] sm:text-[34px]">
+                    Halaman Keranjang
+                    </h1>
 
                   <p className="mt-4 mb-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#538CDB]">
                     Area member
@@ -138,7 +131,6 @@ const CartLoginPrompt: React.FC = () => {
                   <span className="h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
                   Keranjang
                 </div>
-                <div className="pointer-events-none absolute left-[24%] top-[16%] z-10 h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
                 <div className="absolute bottom-5 right-6 z-10 text-right text-white">
                   <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/70">
                     NeedBuy
