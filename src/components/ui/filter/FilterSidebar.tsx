@@ -1,5 +1,6 @@
-// src/components/ui/filter/FilterSidebar.tsx
 import React from 'react';
+
+import Icon from '../Icon';
 import CategoryFilter from './CategoryFilter';
 import ConditionFilter from './ConditionFilter';
 import PriceRangeFilter from './PriceRangeFilter';
@@ -24,6 +25,18 @@ interface FilterSidebarProps {
   hasActiveFilters: boolean;
 }
 
+const SectionTitle: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <p
+    className="
+      mb-3 flex items-center gap-1.5 text-[10px] font-bold uppercase
+      tracking-[0.16em] text-[#737A87]
+    "
+  >
+    <span className="h-1 w-1 rounded-full bg-[#FFD500]" />
+    {children}
+  </p>
+);
+
 const FilterSidebar: React.FC<FilterSidebarProps> = ({
   categories,
   selectedCategories,
@@ -41,17 +54,36 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
 }) => {
   return (
     <div>
-      <div className="flex items-center justify-between mb-2">
-        <h2 className="text-[15px] font-bold text-[#191c1e]">Filter</h2>
+      {/* Header */}
+      <div className="mb-2 flex items-center justify-between">
+        <h2 className="flex items-center gap-2 text-[15px] font-bold text-[#20242D]">
+          <span
+            className="
+              flex h-7 w-7 items-center justify-center rounded-lg
+              bg-[#538CDB]/10
+            "
+          >
+            <Icon name="filter" size={14} className="text-[#538CDB]" />
+          </span>
+          Filter
+        </h2>
+
         {hasActiveFilters && (
-          <button onClick={onClearAll} className="text-[12px] text-[#004ac6] hover:underline">
+          <button
+            onClick={onClearAll}
+            className="
+              text-[11px] font-semibold text-[#538CDB] transition-colors
+              hover:text-[#467BC7] hover:underline
+            "
+          >
             Hapus Semua
           </button>
         )}
       </div>
 
-      <div className="py-4 border-b border-[#e0e3e5]">
-        <p className="text-[11px] font-bold text-[#737686] uppercase tracking-wider mb-3">Kategori</p>
+      {/* Kategori */}
+      <div className="border-b border-[#E8ECF4] py-4">
+        <SectionTitle>Kategori</SectionTitle>
         <CategoryFilter
           categories={categories}
           selected={selectedCategories}
@@ -60,8 +92,9 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
         />
       </div>
 
-      <div className="py-4 border-b border-[#e0e3e5]">
-        <p className="text-[11px] font-bold text-[#737686] uppercase tracking-wider mb-3">Rentang Harga</p>
+      {/* Rentang Harga */}
+      <div className="border-b border-[#E8ECF4] py-4">
+        <SectionTitle>Rentang Harga</SectionTitle>
         <PriceRangeFilter
           minValue={priceMin}
           maxValue={priceMax}
@@ -70,8 +103,9 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
         />
       </div>
 
-      <div className="py-4 border-b border-[#e0e3e5] last:border-0">
-        <p className="text-[11px] font-bold text-[#737686] uppercase tracking-wider mb-3">Kondisi</p>
+      {/* Kondisi */}
+      <div className="py-4">
+        <SectionTitle>Kondisi</SectionTitle>
         <ConditionFilter
           options={conditions}
           selected={selectedConditions}

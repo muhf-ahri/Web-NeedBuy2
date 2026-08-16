@@ -1,5 +1,5 @@
-// src/components/ui/Pagination.tsx
 import React from 'react';
+
 import Icon from './Icon';
 
 interface PaginationProps {
@@ -63,26 +63,56 @@ const Pagination: React.FC<PaginationProps> = ({
   };
 
   const startItem = totalItems ? (currentPage - 1) * (pageSize || 1) + 1 : 0;
-  const endItem = totalItems ? Math.min(currentPage * (pageSize || 1), totalItems) : 0;
+  const endItem = totalItems
+    ? Math.min(currentPage * (pageSize || 1), totalItems)
+    : 0;
 
   return (
-    <div className={`flex flex-wrap items-center justify-between gap-4 ${className}`}>
-      {/* Info total */}
+    <div
+      className={`
+        flex flex-col items-center justify-between gap-4 sm:flex-row
+        sm:gap-6 ${className}
+      `}
+    >
+      {/* Info total — pill style dengan icon */}
       {showTotal && totalItems !== undefined && (
-        <div className="text-[12px] text-[#737686]">
-          Menampilkan <span className="font-semibold text-[#191c1e]">{startItem}</span> sampai{' '}
-          <span className="font-semibold text-[#191c1e]">{endItem}</span> dari{' '}
-          <span className="font-semibold text-[#191c1e]">{totalItems}</span> produk
+        <div className="flex items-center gap-2">
+          <span
+            className="
+              flex h-7 w-7 items-center justify-center rounded-lg
+              bg-[#538CDB]/10
+            "
+          >
+            <Icon name="product" size={14} className="text-[#538CDB]" />
+          </span>
+          <p className="text-[12px] text-[#737A87]">
+            Menampilkan{' '}
+            <span className="font-bold text-[#20242D]">{startItem}</span>
+            –
+            <span className="font-bold text-[#20242D]">{endItem}</span>
+            {' '}dari{' '}
+            <span className="font-bold text-[#20242D]">{totalItems}</span>
+            {' '}produk
+          </p>
         </div>
       )}
 
       {/* Tombol navigasi */}
-      <div className="flex items-center gap-1">
+      <div className="flex items-center gap-1.5">
         {/* Prev */}
         <button
           onClick={() => goToPage(currentPage - 1)}
           disabled={currentPage <= 1}
-          className="flex items-center justify-center w-9 h-9 rounded-lg border border-[#c3c6d7] text-[#737686] hover:border-[#004ac6] hover:text-[#004ac6] transition-colors disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:border-[#c3c6d7] disabled:hover:text-[#737686]"
+          className="
+            flex h-9 w-9 items-center justify-center rounded-full
+            border border-[#E8ECF4] bg-white text-[#737A87]
+            transition-all duration-200 hover:border-[#538CDB]
+            hover:text-[#538CDB] hover:shadow-[0_4px_12px_rgba(83,140,219,0.15)]
+            active:scale-[0.95] disabled:cursor-not-allowed
+            disabled:border-[#E8ECF4] disabled:bg-[#F5F7FB]
+            disabled:text-[#D8DEE9] disabled:shadow-none
+            disabled:hover:border-[#E8ECF4] disabled:hover:text-[#D8DEE9]
+          "
           aria-label="Halaman sebelumnya"
         >
           <Icon name="chevronLeft" size={16} />
@@ -94,7 +124,10 @@ const Pagination: React.FC<PaginationProps> = ({
             return (
               <span
                 key={`ellipsis-${index}`}
-                className="flex items-center justify-center w-9 h-9 text-[13px] text-[#737686]"
+                className="
+                  flex h-9 w-9 items-center justify-center text-[14px]
+                  font-bold text-[#A2A8B3]
+                "
               >
                 …
               </span>
@@ -106,11 +139,16 @@ const Pagination: React.FC<PaginationProps> = ({
             <button
               key={page}
               onClick={() => goToPage(page)}
-              className={`flex items-center justify-center w-9 h-9 rounded-lg text-[13px] font-medium transition-colors ${
-                isActive
-                  ? 'bg-[#004ac6] text-white'
-                  : 'text-[#434655] hover:bg-[#f2f4f6] hover:text-[#004ac6]'
-              }`}
+              className={`
+                flex h-9 min-w-[36px] items-center justify-center
+                rounded-full px-2 text-[13px] font-bold transition-all
+                duration-200 active:scale-[0.95]
+                ${
+                  isActive
+                    ? 'bg-[#538CDB] text-white shadow-[0_6px_16px_rgba(83,140,219,0.30)]'
+                    : 'border border-transparent text-[#737A87] hover:border-[#E8ECF4] hover:bg-white hover:text-[#538CDB] hover:shadow-[0_3px_10px_rgba(83,140,219,0.10)]'
+                }
+              `}
               aria-current={isActive ? 'page' : undefined}
             >
               {page}
@@ -122,7 +160,16 @@ const Pagination: React.FC<PaginationProps> = ({
         <button
           onClick={() => goToPage(currentPage + 1)}
           disabled={currentPage >= totalPages}
-          className="flex items-center justify-center w-9 h-9 rounded-lg border border-[#c3c6d7] text-[#737686] hover:border-[#004ac6] hover:text-[#004ac6] transition-colors disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:border-[#c3c6d7] disabled:hover:text-[#737686]"
+          className="
+            flex h-9 w-9 items-center justify-center rounded-full
+            border border-[#E8ECF4] bg-white text-[#737A87]
+            transition-all duration-200 hover:border-[#538CDB]
+            hover:text-[#538CDB] hover:shadow-[0_4px_12px_rgba(83,140,219,0.15)]
+            active:scale-[0.95] disabled:cursor-not-allowed
+            disabled:border-[#E8ECF4] disabled:bg-[#F5F7FB]
+            disabled:text-[#D8DEE9] disabled:shadow-none
+            disabled:hover:border-[#E8ECF4] disabled:hover:text-[#D8DEE9]
+          "
           aria-label="Halaman berikutnya"
         >
           <Icon name="chevronRight" size={16} />

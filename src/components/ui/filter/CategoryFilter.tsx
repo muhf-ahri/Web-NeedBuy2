@@ -1,4 +1,6 @@
 import React from 'react';
+
+import Icon from '../../ui/Icon';
 import type { Category } from '../../../types';
 
 interface CategoryFilterProps {
@@ -16,38 +18,89 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
 }) => {
   if (loading) {
     return (
-      <div className="space-y-2">
-        {Array.from({ length: 4 }).map((_, i) => (
-          <div key={i} className="h-4 bg-[#e0e3e5] rounded-full animate-pulse w-32" />
+      <div className="space-y-1.5">
+        {Array.from({ length: 5 }).map((_, i) => (
+          <div
+            key={i}
+            className="
+              flex h-9 items-center gap-2.5 rounded-xl bg-[#F5F7FB]
+              animate-pulse
+            "
+          >
+            <div className="ml-2.5 h-4 w-4 shrink-0 rounded-md bg-[#E8ECF4]" />
+            <div className="h-2.5 w-24 rounded-full bg-[#E8ECF4]" />
+          </div>
         ))}
       </div>
     );
   }
 
+  if (categories.length === 0) {
+    return (
+      <p className="py-3 text-center text-[11px] text-[#A2A8B3]">
+        Belum ada kategori.
+      </p>
+    );
+  }
+
   return (
-    <div className="space-y-2">
+    <div className="space-y-1">
       {categories.map((cat) => {
         const active = selected.includes(cat.slug);
         return (
           <button
             key={cat.slug}
+            type="button"
             onClick={() => onChange(cat.slug)}
-            className="flex items-center gap-2 w-full text-left group"
+            className={`
+              group flex w-full items-center gap-2.5 rounded-xl px-2.5
+              py-2 text-left transition-all duration-200
+              ${
+                active
+                  ? 'bg-[#538CDB]/10'
+                  : 'hover:bg-[#F5F7FB]'
+              }
+            `}
           >
+            {/* Checkbox custom */}
             <span
-              className={`w-4 h-4 rounded-full border flex items-center justify-center transition-colors shrink-0 ${
-                active ? 'border-[#004ac6] bg-[#004ac6]' : 'border-[#c3c6d7] group-hover:border-[#004ac6]'
-              }`}
+              className={`
+                relative flex h-4 w-4 shrink-0 items-center justify-center
+                rounded-md border transition-all duration-200
+                ${
+                  active
+                    ? 'border-[#538CDB] bg-[#538CDB]'
+                    : 'border-[#D8DEE9] bg-white group-hover:border-[#538CDB]/60'
+                }
+              `}
             >
-              {active && <span className="w-1.5 h-1.5 rounded-full bg-white" />}
+              {active && <Icon name="check" size={11} className="text-white" />}
             </span>
+
+            {/* Label */}
             <span
-              className={`text-[13px] transition-colors ${
-                active ? 'text-[#004ac6] font-semibold' : 'text-[#434655] group-hover:text-[#191c1e]'
-              }`}
+              className={`
+                min-w-0 flex-1 truncate text-[13px] transition-colors
+                duration-200
+                ${
+                  active
+                    ? 'font-semibold text-[#538CDB]'
+                    : 'font-medium text-[#20242D] group-hover:text-[#538CDB]'
+                }
+              `}
             >
               {cat.name}
             </span>
+
+            {/* Indicator titik kuning untuk yang aktif (callback dekorasi) */}
+            {active && (
+              <span
+                className="
+                  h-1.5 w-1.5 shrink-0 rounded-full bg-[#FFD500]
+                  transition-opacity duration-200
+                "
+              />
+            )}
           </button>
         );
       })}

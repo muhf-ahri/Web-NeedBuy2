@@ -1,5 +1,6 @@
-// src/components/ui/filter/ConditionFilter.tsx
 import React from 'react';
+
+import Icon from '../Icon';
 
 interface ConditionFilterProps {
   options: string[];
@@ -12,6 +13,14 @@ const ConditionFilter: React.FC<ConditionFilterProps> = ({
   selected,
   onChange,
 }) => {
+  if (options.length === 0) {
+    return (
+      <p className="py-3 text-center text-[11px] text-[#A2A8B3]">
+        Tidak ada pilihan kondisi.
+      </p>
+    );
+  }
+
   return (
     <div className="flex flex-wrap gap-2">
       {options.map((cond) => {
@@ -19,13 +28,20 @@ const ConditionFilter: React.FC<ConditionFilterProps> = ({
         return (
           <button
             key={cond}
+            type="button"
             onClick={() => onChange(cond)}
-            className={`px-3 py-1 rounded-full text-[12px] font-medium border transition-colors duration-200 ${
-              active
-                ? 'bg-[#191c1e] text-white border-[#191c1e]'
-                : 'bg-white text-[#434655] border-[#c3c6d7] hover:border-[#004ac6] hover:text-[#004ac6]'
-            }`}
+            className={`
+              inline-flex items-center gap-1.5 rounded-full border px-3.5
+              py-1.5 text-[12px] font-semibold transition-all duration-200
+              active:scale-[0.98]
+              ${
+                active
+                  ? 'border-[#538CDB] bg-[#538CDB] text-white shadow-[0_4px_12px_rgba(83,140,219,0.25)]'
+                  : 'border-[#E8ECF4] bg-white text-[#20242D] hover:border-[#538CDB]/40 hover:text-[#538CDB]'
+              }
+            `}
           >
+            {active && <Icon name="check" size={12} className="text-white" />}
             {cond}
           </button>
         );
