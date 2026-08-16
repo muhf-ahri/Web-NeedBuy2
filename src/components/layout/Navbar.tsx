@@ -172,21 +172,6 @@ const Navbar: React.FC<NavbarProps> = ({ avatarUrl, showSearch = true }) => {
             className="group/logo flex shrink-0 items-center gap-2.5"
             aria-label="NeedBuy"
           >
-            <span
-              className={`
-                relative flex h-9 w-9 items-center justify-center
-                overflow-hidden rounded-xl text-sm font-bold
-                transition-all duration-300 group-hover/logo:-translate-y-0.5
-                ${
-                  blueMode
-                    ? 'bg-white text-[#538CDB] shadow-[0_4px_12px_rgba(255,255,255,0.25)]'
-                    : 'bg-gradient-to-br from-[#5B93E0] to-[#3A66AC] text-white shadow-[0_4px_12px_rgba(83,140,219,0.25)] group-hover/logo:bg-white group-hover/logo:text-[#538CDB]'
-                }
-              `}
-            >
-              <span className="pointer-events-none absolute -right-1 -top-1 h-3 w-3 rounded-full border border-white/25" />
-              N
-            </span>
 
             <span
               className={`

@@ -1,7 +1,7 @@
-﻿// src/components/ui/NotificationBell.tsx
-import React, { useState, useRef, useEffect, useCallback } from 'react';
-import Icon from './Icon';
+﻿import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
+
+import Icon from './Icon';
 import {
   getNotifications,
   getUnreadCount,
@@ -11,7 +11,7 @@ import {
 } from '../../api/notifications';
 import { useNotificationSocket } from '../../hooks/useNotificationSocket';
 
-/** "5 menit lalu" tanpa library tanggal â€” kebutuhannya cuma satu baris ini. */
+/** "5 menit lalu" tanpa library tanggal. */
 function relativeTime(iso: string): string {
   const seconds = Math.round((Date.now() - new Date(iso).getTime()) / 1000);
   if (seconds < 60) return 'baru saja';
@@ -23,7 +23,7 @@ function relativeTime(iso: string): string {
   return days === 1 ? 'kemarin' : `${days} hari lalu`;
 }
 
-/** Notifikasi order diarahkan ke halaman order seller, sisanya sesuai tipenya. */
+/** Notifikasi order diarahkan ke halaman order seller, sisanya sesuai tipe. */
 function linkFor(notification: Notification): string | undefined {
   switch (notification.type) {
     case 'ORDER_NEW':
@@ -58,14 +58,12 @@ const NotificationBell: React.FC = () => {
     }
   }, []);
 
-  // Badge dimuat sekali saat mount; setelah itu WebSocket yang memperbaruinya.
   useEffect(() => {
     getUnreadCount()
       .then((response) => setUnreadCount(response.data.data.unreadCount))
       .catch(() => setUnreadCount(0));
   }, []);
 
-  // WebSocket: orderan masuk langsung mendorong badge + isi list, tanpa polling.
   useNotificationSocket((payload) => {
     if (payload.event === 'unread-count') {
       setUnreadCount(payload.data.unreadCount);
@@ -93,9 +91,9 @@ const NotificationBell: React.FC = () => {
   };
 
   const markAsRead = async (id: string) => {
-    // Optimistic: badge dan gaya "belum dibaca" ikut berubah sebelum server
-    // menjawab. Nilai unreadCount yang benar tetap datang dari response/socket.
-    setNotifications((prev) => prev.map((n) => (n.id === id ? { ...n, read: true } : n)));
+    setNotifications((prev) =>
+      prev.map((n) => (n.id === id ? { ...n, read: true } : n))
+    );
     try {
       const response = await readNotification(id);
       setUnreadCount(response.data.data.unreadCount);
@@ -116,75 +114,219 @@ const NotificationBell: React.FC = () => {
 
   return (
     <div className="relative" ref={dropdownRef}>
-      {/* Bell Icon */}
+      {/* ── Bell button — TIDAK punya warna sendiri, inherit dari navbar ── */}
       <button
+        type="button"
         onClick={toggleOpen}
-        className="relative p-2 rounded-full hover:bg-[#f2f4f6] transition-colors"
+        className="relative flex items-center justify-center"
         aria-label="Notifikasi"
+        aria-expanded={isOpen}
       >
-        <Icon name="bell" size={20} className="text-[#434655]" />
+        {/* Icon tanpa class warna → ikut currentColor parent (navbar wrapper) */}
+        <Icon name="bell" size={20} />
+
+        {/* Badge unread — merah brand #FF4646, ring putih biar pop di kedua mode */}
         {unreadCount > 0 && (
-          <span className="absolute -top-0.5 -right-0.5 bg-[#ba1a1a] text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center">
+          <span
+            className="
+              absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center
+              justify-center rounded-full bg-[#FF4646] px-0.5 text-[9px]
+              font-bold leading-none text-white ring-2 ring-white
+            "
+          >
             {unreadCount > 9 ? '9+' : unreadCount}
           </span>
         )}
       </button>
 
-      {/* Dropdown */}
+      {/* ── Dropdown — palet brand NeedBuy ── */}
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-80 bg-white rounded-2xl shadow-xl border border-[#e0e3e5] overflow-hidden z-50 animate-slideDown">
-          <div className="flex items-center justify-between px-4 py-3 border-b border-[#e0e3e5]">
-            <span className="text-[13px] font-bold text-[#191c1e]">Notifikasi</span>
+        <div
+          className="
+            absolute right-0 top-full z-50 mt-2 w-[340px] overflow-hidden
+            rounded-2xl border border-[#E8ECF4] bg-white
+            shadow-[0_18px_50px_rgba(32,36,45,0.15)] notif-dropdown-in
+          "
+        >
+          {/* Header */}
+          <div
+            className="
+              flex items-center justify-between border-b border-[#E8ECF4]
+              px-4 py-3
+            "
+          >
+            <div className="flex items-center gap-2">
+              <span
+                className="
+                  flex h-7 w-7 items-center justify-center rounded-lg
+                  bg-[#538CDB]/10
+                "
+              >
+                <Icon name="bell" size={14} className="text-[#538CDB]" />
+              </span>
+              <span className="text-[13px] font-bold text-[#20242D]">
+                Notifikasi
+              </span>
+              {unreadCount > 0 && (
+                <span
+                  className="
+                    rounded-full bg-[#FF4646] px-1.5 py-0.5 text-[9px]
+                    font-bold text-white
+                  "
+                >
+                  {unreadCount}
+                </span>
+              )}
+            </div>
+
             {unreadCount > 0 && (
               <button
+                type="button"
                 onClick={markAllAsRead}
-                className="text-[11px] text-[#004ac6] hover:underline"
+                className="
+                  text-[11px] font-semibold text-[#538CDB] transition-colors
+                  hover:text-[#467BC7]
+                "
               >
-                Mark all as read
+                Tandai semua dibaca
               </button>
             )}
           </div>
 
-          <div className="max-h-72 overflow-y-auto">
+          {/* List */}
+          <div className="max-h-80 overflow-y-auto">
             {loading ? (
-              <div className="px-4 py-6 text-center text-[13px] text-[#737686]">Memuatâ€¦</div>
+              <div className="space-y-1 p-2">
+                {Array.from({ length: 3 }).map((_, i) => (
+                  <div key={i} className="flex gap-3 rounded-xl p-3">
+                    <div className="h-9 w-9 shrink-0 animate-pulse rounded-lg bg-[#F5F7FB]" />
+                    <div className="flex-1 space-y-2">
+                      <div className="h-3 w-3/4 animate-pulse rounded-full bg-[#F5F7FB]" />
+                      <div className="h-3 w-1/2 animate-pulse rounded-full bg-[#F5F7FB]" />
+                    </div>
+                  </div>
+                ))}
+              </div>
             ) : error ? (
-              <div className="px-4 py-6 text-center text-[13px] text-[#ba1a1a]">{error}</div>
+              <div
+                className="
+                  px-4 py-8 text-center text-[12px] font-medium text-[#FF4646]
+                "
+              >
+                {error}
+              </div>
             ) : notifications.length === 0 ? (
-              <div className="px-4 py-6 text-center text-[13px] text-[#737686]">
-                No notifications
+              <div className="px-4 py-10 text-center">
+                <div
+                  className="
+                    mx-auto flex h-12 w-12 items-center justify-center
+                    rounded-full bg-[#F5F7FB]
+                  "
+                >
+                  <Icon name="bell" size={20} className="text-[#A2A8B3]" />
+                </div>
+                <p className="mt-3 text-[13px] font-semibold text-[#20242D]">
+                  Tidak ada notifikasi
+                </p>
+                <p className="mt-1 text-[11px] text-[#A2A8B3]">
+                  Semua kabar baik, belum ada update baru.
+                </p>
               </div>
             ) : (
               notifications.map((notification) => {
                 const link = linkFor(notification);
-                const body = (
+                const isUnread = !notification.read;
+
+                const content = (
                   <>
-                    <p className="text-[13px] font-semibold text-[#191c1e]">
-                      {notification.title}
-                    </p>
-                    <p className="text-[12px] text-[#737686] mt-0.5">{notification.message}</p>
-                    {notification.order && (
-                      <p className="text-[11px] text-[#434655] mt-1">
-                        {notification.order.orderNumber}
-                        {notification.order.orderType ? ` Â· ${notification.order.orderType}` : ''}
-                        {' Â· '}
-                        {notification.order.items
-                          .map((item) => `${item.productName} x${item.quantity}`)
-                          .join(', ')}
-                      </p>
-                    )}
-                    <p className="text-[10px] text-[#c3c6d7] mt-1">
-                      {relativeTime(notification.createdAt)}
-                    </p>
+                    <div className="flex items-start gap-3">
+                      {/* Icon indicator */}
+                      <span
+                        className={`
+                          mt-0.5 flex h-8 w-8 shrink-0 items-center
+                          justify-center rounded-lg
+                          ${
+                            isUnread
+                              ? 'bg-[#538CDB]/10 text-[#538CDB]'
+                              : 'bg-[#F5F7FB] text-[#A2A8B3]'
+                          }
+                        `}
+                      >
+                        <Icon
+                          name={
+                            notification.type === 'LOW_STOCK'
+                              ? 'alert'
+                              : notification.type === 'PAYMENT'
+                                ? 'card'
+                                : 'orders'
+                          }
+                          size={15}
+                        />
+                      </span>
+
+                      {/* Body */}
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-start justify-between gap-2">
+                          <p
+                            className={`
+                              text-[13px] leading-snug
+                              ${
+                                isUnread
+                                  ? 'font-semibold text-[#20242D]'
+                                  : 'font-medium text-[#20242D]'
+                              }
+                            `}
+                          >
+                            {notification.title}
+                          </p>
+                          {isUnread && (
+                            <span
+                              className="
+                                mt-1 h-1.5 w-1.5 shrink-0 rounded-full
+                                bg-[#538CDB]
+                              "
+                            />
+                          )}
+                        </div>
+
+                        <p className="mt-0.5 line-clamp-2 text-[11px] leading-relaxed text-[#737A87]">
+                          {notification.message}
+                        </p>
+
+                        {notification.order && (
+                          <p className="mt-1 font-mono text-[10px] text-[#434655]">
+                            {notification.order.orderNumber}
+                            {notification.order.orderType
+                              ? ` · ${notification.order.orderType}`
+                              : ''}
+                            {' · '}
+                            {notification.order.items
+                              .map((item) => `${item.productName} x${item.quantity}`)
+                              .join(', ')}
+                          </p>
+                        )}
+
+                        <p className="mt-1 text-[10px] text-[#A2A8B3]">
+                          {relativeTime(notification.createdAt)}
+                        </p>
+                      </div>
+                    </div>
                   </>
                 );
+
+                const itemClass = `
+                  block w-full px-3 py-2.5 text-left transition-colors
+                  ${
+                    isUnread
+                      ? 'bg-[#F5F5FF] hover:bg-[#EEF5FF]'
+                      : 'hover:bg-[#F5F7FB]'
+                  }
+                `;
 
                 return (
                   <div
                     key={notification.id}
-                    className={`px-4 py-3 border-b border-[#f2f4f6] last:border-0 transition-colors hover:bg-[#f8f9fb] ${
-                      !notification.read ? 'bg-[#f2f6ff]' : ''
-                    }`}
+                    className="border-b border-[#F5F7FB] last:border-0"
                   >
                     {link ? (
                       <Link
@@ -193,17 +335,17 @@ const NotificationBell: React.FC = () => {
                           markAsRead(notification.id);
                           setIsOpen(false);
                         }}
-                        className="block"
+                        className={itemClass}
                       >
-                        {body}
+                        {content}
                       </Link>
                     ) : (
                       <button
                         type="button"
                         onClick={() => markAsRead(notification.id)}
-                        className="block w-full text-left"
+                        className={itemClass}
                       >
-                        {body}
+                        {content}
                       </button>
                     )}
                   </div>
@@ -211,8 +353,40 @@ const NotificationBell: React.FC = () => {
               })
             )}
           </div>
+
+          {/* Footer */}
+          <Link
+            to="/notifications"
+            onClick={() => setIsOpen(false)}
+            className="
+              flex items-center justify-between border-t border-[#E8ECF4]
+              px-4 py-2.5 text-[12px] font-semibold text-[#538CDB]
+              transition-colors hover:bg-[#F5F7FB]
+            "
+          >
+            Lihat semua notifikasi
+            <Icon name="arrowRight" size={13} />
+          </Link>
         </div>
       )}
+
+      {/* Animasi dropdown */}
+      <style>{`
+        @keyframes notif-dropdown-in {
+          0% {
+            opacity: 0;
+            transform: translateY(-4px) scale(0.98);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+        .notif-dropdown-in {
+          animation: notif-dropdown-in 0.18s cubic-bezier(0.22, 0.9, 0.35, 1) both;
+          transform-origin: top right;
+        }
+      `}</style>
     </div>
   );
 };

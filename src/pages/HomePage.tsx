@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import PromoCarousel from '../components/layout/PromoCarousel';
-import { NeedPayStrip } from '../components/ui/NeedPayNote';
+import { NeedPayStrip, PaymentTile, PAYMENT_METHODS, } from '../components/ui/NeedPayNote';
 import HeroSection from '../components/home/HeroSection';
 import HomeBackground from '../components/home/HomeBackground';
 import HomeSearch from '../components/home/HomeSearch';
@@ -128,6 +128,7 @@ const HomePage: React.FC = () => {
           onSubmit={handleSearch}
           suggestOpen={suggestOpen}
           setSuggestOpen={setSuggestOpen}
+          showSuggestions={false}
         />
 
         <div className="pt-5 sm:pt-7">
@@ -138,9 +139,7 @@ const HomePage: React.FC = () => {
           />
         </div>
 
-        {/* ─────────────────────────────────────────
-            NEEDPAY STRIP — dengan Section Heading
-        ───────────────────────────────────────── */}
+
         <section className="mx-auto w-full max-w-6xl px-4 pt-5 sm:px-8">
           <div
             className="
@@ -149,7 +148,8 @@ const HomePage: React.FC = () => {
               backdrop-blur-md sm:p-6
             "
           >
-            <div className="mb-4 flex items-center justify-between">
+            {/* Header */}
+            <div className="mb-5 flex items-center justify-between gap-3">
               <div>
                 <p
                   className="
@@ -183,7 +183,49 @@ const HomePage: React.FC = () => {
               </Link>
             </div>
 
-            <NeedPayStrip />
+            {/* Konten: banner kiri + metode pembayaran kanan */}
+            <div className="flex flex-col gap-5 lg:flex-row lg:items-center">
+              {/* Banner saldo (NeedPayStrip) */}
+              <NeedPayStrip className="w-full lg:w-[430px] lg:shrink-0" />
+
+              {/* Pembatas vertikal halus */}
+              <div className="hidden h-24 w-px bg-[#E8ECF4] lg:block" />
+
+              {/* Grid metode pembayaran */}
+              <div className="min-w-0 flex-1">
+                <div className="mb-2.5 flex items-center justify-between">
+                  <p
+                    className="
+                      text-[10px] font-semibold uppercase tracking-[0.18em]
+                      text-[#737A87]
+                    "
+                  >
+                    Isi saldo lewat
+                  </p>
+
+                  <span
+                    className="
+                      inline-flex items-center gap-1.5 text-[10px] font-medium
+                      text-[#A2A8B3]
+                    "
+                  >
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
+                    Gratis biaya admin
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-4 gap-2 sm:grid-cols-8">
+                  {PAYMENT_METHODS.map((method) => (
+                    <PaymentTile key={method.label} method={method} />
+                  ))}
+                </div>
+
+                <p className="mt-3 text-[11px] leading-relaxed text-[#737A87]">
+                  Satu saldo untuk semua transaksi di NeedBuy — checkout tinggal
+                  satu ketukan.
+                </p>
+              </div>
+            </div>
           </div>
         </section>
 

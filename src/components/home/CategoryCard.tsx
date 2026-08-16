@@ -10,6 +10,8 @@ export type PopularCategory = {
   sold: number;
   products: number;
   cheapest: number;
+  /** Opsional — nanti diisi dari dashboard admin saat endpoint tersedia */
+  imageUrl?: string | null;
 };
 
 const getCategoryIcon = (name: string, slug: string): IconName => {
@@ -69,6 +71,8 @@ interface CategoryCardProps {
 }
 
 const CategoryCard: React.FC<CategoryCardProps> = ({ category, rank }) => {
+  const isTopThree = rank <= 3;
+
   return (
     <Link
       to={`/categories/${category.slug}`}
@@ -90,63 +94,89 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category, rank }) => {
         "
       />
 
-      {/* Dekorasi: circle border tipis di pojok (sama seperti card Login/NeedPay) */}
+      {/* Dekorasi: titik kuning di pojok kanan atas */}
       <span
         className="
-          pointer-events-none absolute -right-6 -top-6 h-16 w-16
-          rounded-full border border-[#538CDB]/10
-        "
-      />
-      <span
-        className="
-          pointer-events-none absolute right-6 top-6 h-1.5 w-1.5
+          pointer-events-none absolute right-5 top-5 h-1.5 w-1.5
           rounded-full bg-[#FFD500]
         "
       />
 
+      {/* Circle border tipis di pojok kanan bawah */}
+      <span
+        className="
+          pointer-events-none absolute -bottom-6 -right-6 h-16 w-16
+          rounded-full border border-[#538CDB]/10
+        "
+      />
+
       <div className="relative flex items-center gap-4">
-        {/* Icon container — gradient biru (sama seperti logo "N" Navbar) */}
+        {/* ── KOTAK GAMBAR KATEGORI ──
+            Sekarang: fallback gradient + icon.
+            Nanti: otomatis render gambar dari dashboard admin
+            begitu `imageUrl` terisi. */}
         <span
           className="
-            relative flex h-12 w-12 shrink-0 items-center justify-center
-            overflow-hidden rounded-xl bg-gradient-to-br from-[#5B93E0]
-            to-[#3A66AC] text-white shadow-[0_4px_12px_rgba(83,140,219,0.25)]
-            transition-all duration-300 group-hover:-translate-y-0.5
-            group-hover:shadow-[0_6px_16px_rgba(83,140,219,0.30)]
+            relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl
+            shadow-[0_6px_16px_rgba(83,140,219,0.18)] ring-1 ring-[#E8ECF4]
           "
         >
-          {/* Decorative circle kecil di pojok (callback ke logo "N") */}
-          <span
-            className="
-              pointer-events-none absolute -right-1 -top-1 h-3 w-3
-              rounded-full border border-white/25
-            "
-          />
-          <Icon
-            name={getCategoryIcon(category.name, category.slug)}
-            size={21}
-            className="text-white"
-          />
+          {category.imageUrl ? (
+            /* ✅ Gambar asli dari admin */
+            <img
+              src={category.imageUrl}
+              alt={category.name}
+              loading="lazy"
+              draggable={false}
+              className="
+                h-full w-full select-none object-cover
+                transition-transform duration-500 group-hover:scale-105
+              "
+            />
+          ) : (
+            /* 🕐 Fallback sementara: gradient biru + icon + dekorasi */
+            <span
+              className="
+                relative flex h-full w-full items-center justify-center
+                overflow-hidden bg-gradient-to-br from-[#5B93E0] to-[#3A66AC]
+              "
+            >
+              <span className="pointer-events-none absolute -right-2 -top-2 h-6 w-6 rounded-full border border-white/25" />
+              <span className="pointer-events-none absolute -bottom-3 -left-3 h-8 w-8 rounded-full border border-white/15" />
+              <Icon
+                name={getCategoryIcon(category.name, category.slug)}
+                size={24}
+                className="
+                  text-white transition-transform duration-300
+                  group-hover:scale-110
+                "
+              />
+            </span>
+          )}
 
-          {/* Badge rank — dengan aksen kuning di pinggir */}
+          {/* Badge rank — menumpuk di pojok kiri atas gambar.
+              Top 3 = kuning (podium), sisanya putih/biru */}
           <span
-            className="
-              absolute -left-2 -top-2 flex h-5 w-5 items-center
-              justify-center rounded-full border-2 border-white bg-[#538CDB]
-              text-[9px] font-bold text-white shadow-[0_2px_8px_rgba(83,140,219,0.30)]
-            "
+            className={`
+              absolute left-1.5 top-1.5 flex h-5 min-w-5 items-center
+              justify-center rounded-full px-1 text-[9px] font-bold
+              shadow-sm backdrop-blur-sm
+              ${
+                isTopThree
+                  ? 'bg-[#FFD500] text-[#20242D]'
+                  : 'bg-white/90 text-[#538CDB]'
+              }
+            `}
           >
             {rank}
-            {/* Titik kuning kecil di pinggir badge (callback ke elemen dekoratif) */}
-            <span className="pointer-events-none absolute -right-0.5 top-0.5 h-1 w-1 rounded-full bg-[#FFD500]" />
           </span>
         </span>
 
-        {/* Content */}
+        {/* ── Konten: nama + stats ── */}
         <span className="min-w-0 flex-1">
           <span
             className="
-              block truncate text-[14px] font-bold leading-tight
+              block truncate text-[15px] font-bold leading-tight
               text-[#20242D] transition-colors duration-200
               group-hover:text-[#538CDB]
             "
@@ -154,12 +184,14 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category, rank }) => {
             {category.name}
           </span>
 
-          <span className="mt-1 block text-[11px] text-[#737A87]">
-            {category.sold.toLocaleString('id-ID')} terjual
-          </span>
-
-          <span className="mt-0.5 block text-[11px] font-semibold text-[#538CDB]">
-            Mulai {formatRupiah(category.cheapest)}
+          <span className="mt-1.5 flex items-center gap-2 text-[11px]">
+            <span className="text-[#737A87]">
+              {category.sold.toLocaleString('id-ID')} terjual
+            </span>
+            <span className="h-1 w-1 shrink-0 rounded-full bg-[#D8DEE9]" />
+            <span className="truncate font-semibold text-[#538CDB]">
+              Mulai {formatRupiah(category.cheapest)}
+            </span>
           </span>
         </span>
 

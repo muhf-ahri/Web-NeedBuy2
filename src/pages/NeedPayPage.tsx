@@ -1,11 +1,15 @@
-// src/pages/NeedPayPage.tsx
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import Icon from '../components/ui/Icon';
-import Button from '../components/ui/Button';
-import BalanceCard from '../components/ui/BalanceCard';
+
+import NeedPayBalanceCard from '../components/needpay/NeedPayBalanceCard';
+import NeedPayTopup from '../components/needpay/NeedPayTopUp';
+import NeedPayWithdraw from '../components/needpay/NeedPayWithdraw';
+import NeedPayHistory from '../components/needpay/NeedPayHistory';
+
 import { formatRupiah } from '../utils/currency';
 import { payWithSnap } from '../utils/snap';
 import { getAccessToken } from '../api/auth';
@@ -25,98 +29,21 @@ import {
 
 const QUICK_AMOUNTS = [50_000, 100_000, 250_000, 500_000, 1_000_000];
 
-const TX_LABEL: Record<WalletTransaction['type'], string> = {
-  TOPUP: 'Isi Saldo',
-  PAYMENT: 'Pembayaran',
-  REFUND: 'Pengembalian',
-  WITHDRAWAL: 'Penarikan',
-};
-
-const STATUS_LABEL: Record<WalletTransaction['status'], string> = {
-  PENDING: 'Menunggu',
-  SUCCESS: 'Berhasil',
-  FAILED: 'Gagal',
-  EXPIRED: 'Kadaluwarsa',
-};
-
-const STATUS_STYLE: Record<WalletTransaction['status'], { bg: string; text: string }> = {
-  PENDING: { bg: 'bg-[#fff4e0]', text: 'text-[#b45309]' },
-  SUCCESS: { bg: 'bg-[#d7f5dc]', text: 'text-[#156b32]' },
-  FAILED: { bg: 'bg-[#ffe0e0]', text: 'text-[#a33131]' },
-  EXPIRED: { bg: 'bg-[#f2f4f6]', text: 'text-[#737686]' },
-};
-
-const TransactionRow: React.FC<{ tx: WalletTransaction }> = ({ tx }) => {
-  const isCredit = tx.type === 'TOPUP' || tx.type === 'REFUND';
-  const settled = tx.status === 'SUCCESS';
-  const statusStyle = STATUS_STYLE[tx.status];
-
-  return (
-    <li className="flex items-center gap-3 border-b border-[#e0e3e5] py-3.5 last:border-0">
-      <div className="min-w-0 flex-1">
-        <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-[14px] font-semibold text-[#191c1e]">
-            {TX_LABEL[tx.type]}
-          </span>
-          {!settled && (
-            <span className={`rounded-full px-2 py-0.5 text-[10px] font-medium ${statusStyle.bg} ${statusStyle.text}`}>
-              {STATUS_LABEL[tx.status]}
-            </span>
-          )}
-        </div>
-        {tx.type === 'WITHDRAWAL' && tx.bankName && (
-          <span className="mt-0.5 block text-[11px] text-[#737686]">
-            {tx.bankName} · {tx.bankAccount} a.n. {tx.bankAccountName}
-          </span>
-        )}
-        <span className="mt-0.5 block text-[11px] text-[#737686]">
-          {new Date(tx.createdAt).toLocaleString('id-ID', {
-            day: 'numeric',
-            month: 'short',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-          })}
-        </span>
-      </div>
-
-      <div className="shrink-0 text-right">
-        <span
-          className={`block text-[15px] font-bold ${
-            !settled
-              ? 'text-[#737686]'
-              : isCredit
-                ? 'text-[#156b32]'
-                : 'text-[#191c1e]'
-          }`}
-        >
-          {isCredit ? '+' : '−'} {formatRupiah(tx.amount)}
-        </span>
-        {settled && tx.balanceAfter && (
-          <span className="block text-[10px] text-[#737686]">
-            Sisa {formatRupiah(tx.balanceAfter)}
-          </span>
-        )}
-      </div>
-    </li>
-  );
-};
-
 const NeedPayPage: React.FC = () => {
   const navigate = useNavigate();
   const isAuthed = !!getAccessToken();
+  const topupRef = useRef<HTMLElement>(null);
 
   const [wallet, setWallet] = useState<Wallet | null>(null);
   const [transactions, setTransactions] = useState<WalletTransaction[]>([]);
   const [loading, setLoading] = useState(true);
+
   const [amount, setAmount] = useState('');
   const [busy, setBusy] = useState(false);
+
+  const [wdBusy, setWdBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
-
-  const [wdOpen, setWdOpen] = useState(false);
-  const [wdBusy, setWdBusy] = useState(false);
-  const [wd, setWd] = useState({ amount: '', bankName: '', bankAccount: '', bankAccountName: '' });
 
   const refresh = useCallback(async () => {
     if (!isAuthed) {
@@ -129,10 +56,16 @@ const NeedPayPage: React.FC = () => {
         getWalletTransactions({ limit: 20 }),
       ]);
 
-      const pending = txRes.data.filter((tx) => tx.type === 'TOPUP' && tx.status === 'PENDING');
+      const pending = txRes.data.filter(
+        (tx) => tx.type === 'TOPUP' && tx.status === 'PENDING'
+      );
       if (pending.length > 0) {
-        const results = await Promise.allSettled(pending.map((tx) => syncTopup(tx.id)));
-        const changed = results.some((r) => r.status === 'fulfilled' && r.value.synced);
+        const results = await Promise.allSettled(
+          pending.map((tx) => syncTopup(tx.id))
+        );
+        const changed = results.some(
+          (r) => r.status === 'fulfilled' && r.value.synced
+        );
         if (changed) {
           const [freshWallet, freshTx] = await Promise.all([
             getWallet(),
@@ -158,12 +91,19 @@ const NeedPayPage: React.FC = () => {
     refresh();
   }, [refresh]);
 
+  const handleScrollToTopup = () => {
+    topupRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
   const handleTopup = async () => {
     const nominal = Number(amount);
     if (!Number.isInteger(nominal) || nominal < MIN_TOPUP || nominal > MAX_TOPUP) {
-      setError(`Isi nominal antara ${formatRupiah(MIN_TOPUP)} dan ${formatRupiah(MAX_TOPUP)}.`);
+      setError(
+        `Isi nominal antara ${formatRupiah(MIN_TOPUP)} dan ${formatRupiah(MAX_TOPUP)}.`
+      );
       return;
     }
+
     setBusy(true);
     setError(null);
     setNotice(null);
@@ -192,22 +132,24 @@ const NeedPayPage: React.FC = () => {
     }
   };
 
-  /**
-   * Saldo dipotong server begitu pengajuan dibuat, jadi tidak ada jendela di mana
-   * satu saldo bisa diajukan dua kali. Kalau admin menolak, saldonya balik lagi.
-   */
-  const handleWithdraw = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (wdBusy) return;
-
-    const nominal = Number(wd.amount);
-    if (!Number.isInteger(nominal) || nominal < MIN_WITHDRAWAL || nominal > MAX_WITHDRAWAL) {
+  const handleWithdraw = async (data: {
+    amount: number;
+    bankName: string;
+    bankAccount: string;
+    bankAccountName: string;
+  }) => {
+    const nominal = data.amount;
+    if (
+      !Number.isInteger(nominal) ||
+      nominal < MIN_WITHDRAWAL ||
+      nominal > MAX_WITHDRAWAL
+    ) {
       setError(
         `Nominal penarikan antara ${formatRupiah(MIN_WITHDRAWAL)} dan ${formatRupiah(MAX_WITHDRAWAL)}.`
       );
       return;
     }
-    if (!/^[0-9-]{6,30}$/.test(wd.bankAccount.trim())) {
+    if (!/^[0-9-]{6,30}$/.test(data.bankAccount.trim())) {
       setError('Nomor rekeningnya cuma boleh angka, 6–30 digit.');
       return;
     }
@@ -216,15 +158,10 @@ const NeedPayPage: React.FC = () => {
     setError(null);
     setNotice(null);
     try {
-      await requestWithdrawal({
-        amount: nominal,
-        bankName: wd.bankName.trim(),
-        bankAccount: wd.bankAccount.trim(),
-        bankAccountName: wd.bankAccountName.trim(),
-      });
-      setWd({ amount: '', bankName: '', bankAccount: '', bankAccountName: '' });
-      setWdOpen(false);
-      setNotice('Pengajuan penarikan udah masuk antrean admin. Saldo kamu udah dipotong sekarang.');
+      await requestWithdrawal(data);
+      setNotice(
+        'Pengajuan penarikan udah masuk antrean admin. Saldo kamu udah dipotong sekarang.'
+      );
       await refresh();
     } catch (err: any) {
       setError(err?.message ?? 'Gagal ngajuin penarikan, coba lagi ya');
@@ -233,20 +170,57 @@ const NeedPayPage: React.FC = () => {
     }
   };
 
+  /* ── Login prompt ── */
   if (!isAuthed) {
     return (
-      <div className="min-h-screen flex flex-col bg-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+      <div
+        className="min-h-screen flex flex-col bg-[#F5F5FF]"
+        style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+      >
         <Navbar />
-        <main className="flex-1 max-w-2xl mx-auto w-full px-5 sm:px-10 py-16 flex items-center justify-center">
-          <div className="text-center">
-            <div className="w-20 h-20 rounded-full bg-[#f2f4f6] flex items-center justify-center mx-auto mb-4">
-              <Icon name="wallet" size={32} className="text-[#737686]" />
+        <main className="flex flex-1 items-center justify-center px-4 py-16 sm:px-8">
+          <div className="w-full max-w-md">
+            <div
+              className="
+                overflow-hidden rounded-[24px] border border-white/80
+                bg-white/95 p-8 text-center shadow-[0_18px_50px_rgba(32,36,45,0.10)]
+                backdrop-blur-sm
+              "
+            >
+              <span
+                className="
+                  relative mx-auto flex h-16 w-16 items-center justify-center
+                  overflow-hidden rounded-2xl bg-gradient-to-br
+                  from-[#5B93E0] to-[#3A66AC] shadow-[0_8px_20px_rgba(83,140,219,0.30)]
+                "
+              >
+                <span className="pointer-events-none absolute -right-1.5 -top-1.5 h-4 w-4 rounded-full border border-white/25" />
+                <Icon name="wallet" size={26} className="text-white" />
+              </span>
+
+              <h2 className="mt-5 text-[22px] font-bold text-[#20242D]">
+                Login untuk Akses NeedPay
+              </h2>
+              <p className="mt-2 text-[13px] text-[#737A87]">
+                Kelola saldo dan bayar lebih cepat dengan NeedPay.
+              </p>
+
+              <button
+                type="button"
+                onClick={() => navigate('/login')}
+                className="
+                  mt-6 inline-flex h-11 items-center justify-center gap-2
+                  rounded-full bg-[#538CDB] px-8 text-sm font-semibold
+                  text-white shadow-[0_7px_18px_rgba(83,140,219,0.25)]
+                  transition-all hover:bg-[#467BC7]
+                  hover:shadow-[0_9px_22px_rgba(83,140,219,0.30)]
+                  active:scale-[0.99]
+                "
+              >
+                Login Sekarang
+                <Icon name="arrowRight" size={15} className="text-white" />
+              </button>
             </div>
-            <h2 className="text-2xl font-bold text-[#191c1e]">Login untuk Akses NeedPay</h2>
-            <p className="text-[#737686] mt-2 mb-6">Kelola saldo dan bayar lebih cepat dengan NeedPay.</p>
-            <Button variant="primary" onClick={() => navigate('/login')} className="px-8">
-              Login Sekarang
-            </Button>
           </div>
         </main>
         <Footer />
@@ -255,265 +229,100 @@ const NeedPayPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#f8f9fb]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+    <div
+      className="min-h-screen flex flex-col bg-[#F5F5FF]"
+      style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+    >
       <Navbar />
 
-      <main className="flex-1 max-w-3xl mx-auto w-full px-5 sm:px-10 py-8">
-        <div className="mb-6">
-          <h1 className="text-[28px] font-bold text-[#191c1e]">NeedPay</h1>
-          <p className="text-[15px] text-[#737686]">Dompet digital untuk transaksi cepat di NeedBuy.</p>
+      <main className="flex-1 mx-auto w-full max-w-3xl px-4 py-8 sm:px-8">
+        {/* Heading */}
+        <div className="mb-6 flex items-center gap-3">
+          <div className="min-w-0">
+            <p
+              className="
+                text-[10px] font-semibold uppercase tracking-[0.18em]
+                text-[#538CDB]
+              "
+            >
+              Dompet digital
+            </p>
+            <h1 className="text-[24px] font-extrabold leading-tight text-[#20242D] sm:text-[28px]">
+              NeedPay
+            </h1>
+          </div>
         </div>
 
         {/* Error / Notice */}
         {error && (
-          <div className="bg-[#ffdad6] border border-[#ba1a1a]/20 rounded-2xl px-4 py-3 mb-4">
-            <p className="text-[13px] text-[#93000a] flex items-center gap-2">
-              <Icon name="alert" size={16} className="text-[#93000a]" />
-              {error}
-            </p>
-          </div>
-        )}
-        {notice && (
-          <div className="bg-[#d7f5dc] border border-[#156b32]/20 rounded-2xl px-4 py-3 mb-4">
-            <p className="text-[13px] text-[#156b32] flex items-center gap-2">
-              <Icon name="check" size={16} className="text-[#156b32]" />
-              {notice}
-            </p>
-          </div>
-        )}
-
-        {/* Balance Card */}
-        <BalanceCard balance={wallet?.balance ?? 0} walletId={wallet?.id} loading={loading} />
-
-        {/* Top Up Section */}
-        <section className="mt-8 bg-white rounded-2xl border border-[#e0e3e5] p-6">
-          <h2 className="text-[16px] font-bold text-[#191c1e] flex items-center gap-2">
-            <Icon name="plus" size={18} className="text-[#004ac6]" />
-            Isi Saldo
-          </h2>
-
-          <div className="mt-4 flex flex-wrap gap-2">
-            {QUICK_AMOUNTS.map((value) => {
-              const picked = Number(amount) === value;
-              return (
-                <button
-                  key={value}
-                  type="button"
-                  onClick={() => setAmount(String(value))}
-                  className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${
-                    picked
-                      ? 'bg-[#004ac6] text-white shadow-md scale-105'
-                      : 'bg-[#f2f4f6] text-[#434655] hover:bg-[#dbe1ff] hover:text-[#004ac6]'
-                  }`}
-                >
-                  {formatRupiah(value)}
-                </button>
-              );
-            })}
-          </div>
-
-          <div className="mt-4 flex flex-col sm:flex-row gap-3">
-            <div className="relative flex-1">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#737686] font-semibold text-sm">Rp</span>
-              <input
-                type="number"
-                inputMode="numeric"
-                min={MIN_TOPUP}
-                max={MAX_TOPUP}
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-                placeholder={`Min ${formatRupiah(MIN_TOPUP)}`}
-                className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-[#c3c6d7] text-sm outline-none focus:border-[#004ac6] focus:ring-2 focus:ring-[#004ac6]/20 transition"
-              />
-            </div>
-            <button
-              onClick={handleTopup}
-              disabled={busy || !amount}
-              className="flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl bg-[#004ac6] hover:bg-[#003ea8] text-white font-semibold text-sm transition-colors disabled:opacity-50 whitespace-nowrap"
+          <div
+            className="
+              mb-4 flex items-center gap-3 rounded-2xl border
+              border-[#FF4646]/20 bg-[#FFF0F0] px-4 py-3 backdrop-blur-sm
+            "
+          >
+            <span
+              className="
+                flex h-8 w-8 shrink-0 items-center justify-center
+                rounded-full bg-[#FF4646]/15
+              "
             >
-              {busy && <Icon name="clock" size={16} className="animate-spin" />}
-              {busy ? 'Memproses...' : 'Isi Saldo'}
-            </button>
+              <Icon name="alert" size={15} className="text-[#FF4646]" />
+            </span>
+            <p className="text-[13px] font-medium text-[#C73535]">{error}</p>
           </div>
+        )}
 
-          <p className="mt-2 text-[11px] text-[#737686] flex items-center gap-1.5">
-            <Icon name="lock" size={12} />
-            Pembayaran aman melalui Midtrans
-          </p>
-        </section>
-
-        {/* Withdrawal Section */}
-        <section className="mt-6 bg-white rounded-2xl border border-[#e0e3e5] p-6">
-          <div className="flex items-start justify-between gap-4">
-            <div className="min-w-0">
-              <h2 className="text-[16px] font-bold text-[#191c1e] flex items-center gap-2">
-                <Icon name="wallet" size={18} className="text-[#004ac6]" />
-                Tarik Saldo
-              </h2>
-              <p className="mt-1 text-[13px] text-[#737686]">
-                Cairkan saldo NeedPay ke rekening bank kamu. Admin yang bakal ninjau
-                pengajuannya, biasanya 1–2 hari kerja.
-              </p>
-            </div>
-            {!wdOpen && (
-              <Button
-                variant="outline"
-                onClick={() => {
-                  setError(null);
-                  setWdOpen(true);
-                }}
-                className="shrink-0 text-sm"
-              >
-                Ajukan
-              </Button>
-            )}
+        {notice && (
+          <div
+            className="
+              mb-4 flex items-center gap-3 rounded-2xl border
+              border-[#22C55E]/20 bg-[#F0FDF4] px-4 py-3 backdrop-blur-sm
+            "
+          >
+            <span
+              className="
+                flex h-8 w-8 shrink-0 items-center justify-center
+                rounded-full bg-[#22C55E]/15
+              "
+            >
+              <Icon name="check" size={15} className="text-[#22C55E]" />
+            </span>
+            <p className="text-[13px] font-medium text-[#166534]">{notice}</p>
           </div>
+        )}
 
-          {wdOpen && (
-            <form className="mt-5 space-y-4" onSubmit={handleWithdraw}>
-              <div>
-                <label
-                  htmlFor="wd-amount"
-                  className="block text-[13px] font-medium text-[#737686] mb-1"
-                >
-                  Nominal Penarikan
-                </label>
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#737686] font-semibold text-sm">
-                    Rp
-                  </span>
-                  <input
-                    id="wd-amount"
-                    type="number"
-                    inputMode="numeric"
-                    min={MIN_WITHDRAWAL}
-                    max={MAX_WITHDRAWAL}
-                    required
-                    value={wd.amount}
-                    onChange={(e) => setWd({ ...wd, amount: e.target.value })}
-                    placeholder={`Min ${formatRupiah(MIN_WITHDRAWAL)}`}
-                    className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-[#c3c6d7] text-sm outline-none focus:border-[#004ac6] focus:ring-2 focus:ring-[#004ac6]/20 transition"
-                  />
-                </div>
-                <p className="mt-1 text-[11px] text-[#737686]">
-                  Saldo tersedia {formatRupiah(wallet?.balance ?? 0)}.
-                </p>
-              </div>
+        {/* Card saldo */}
+        <NeedPayBalanceCard
+          balance={wallet?.balance ?? 0}
+          walletId={wallet?.id}
+          loading={loading}
+          onTopUp={handleScrollToTopup}
+        />
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label
-                    htmlFor="wd-bank"
-                    className="block text-[13px] font-medium text-[#737686] mb-1"
-                  >
-                    Nama Bank
-                  </label>
-                  <input
-                    id="wd-bank"
-                    type="text"
-                    required
-                    minLength={2}
-                    maxLength={60}
-                    value={wd.bankName}
-                    onChange={(e) => setWd({ ...wd, bankName: e.target.value })}
-                    placeholder="BCA"
-                    className="w-full px-3 py-2.5 rounded-xl border border-[#c3c6d7] text-sm outline-none focus:border-[#004ac6] focus:ring-2 focus:ring-[#004ac6]/20 transition"
-                  />
-                </div>
-                <div>
-                  <label
-                    htmlFor="wd-account"
-                    className="block text-[13px] font-medium text-[#737686] mb-1"
-                  >
-                    Nomor Rekening
-                  </label>
-                  <input
-                    id="wd-account"
-                    type="text"
-                    inputMode="numeric"
-                    required
-                    value={wd.bankAccount}
-                    onChange={(e) => setWd({ ...wd, bankAccount: e.target.value })}
-                    placeholder="1234567890"
-                    className="w-full px-3 py-2.5 rounded-xl border border-[#c3c6d7] text-sm outline-none focus:border-[#004ac6] focus:ring-2 focus:ring-[#004ac6]/20 transition"
-                  />
-                </div>
-              </div>
+        {/* Card Tambah Saldo */}
+        <div ref={topupRef}>
+          <NeedPayTopup
+            amount={amount}
+            onAmountChange={setAmount}
+            onSubmit={handleTopup}
+            busy={busy}
+            quickAmounts={QUICK_AMOUNTS}
+            minTopup={MIN_TOPUP}
+          />
+        </div>
 
-              <div>
-                <label
-                  htmlFor="wd-holder"
-                  className="block text-[13px] font-medium text-[#737686] mb-1"
-                >
-                  Nama Pemilik Rekening
-                </label>
-                <input
-                  id="wd-holder"
-                  type="text"
-                  required
-                  minLength={2}
-                  maxLength={80}
-                  value={wd.bankAccountName}
-                  onChange={(e) => setWd({ ...wd, bankAccountName: e.target.value })}
-                  placeholder="Sesuai buku tabungan"
-                  className="w-full px-3 py-2.5 rounded-xl border border-[#c3c6d7] text-sm outline-none focus:border-[#004ac6] focus:ring-2 focus:ring-[#004ac6]/20 transition"
-                />
-                <p className="mt-1 text-[11px] text-[#737686]">
-                  Pastikan datanya bener. Saldo langsung dipotong pas kamu ngajuin, dan balik
-                  lagi kalau pengajuannya ditolak.
-                </p>
-              </div>
+        {/* Card Cairkan Rekening */}
+        <NeedPayWithdraw
+          balance={wallet?.balance ?? 0}
+          onSubmit={handleWithdraw}
+          busy={wdBusy}
+          minWithdrawal={MIN_WITHDRAWAL}
+          maxWithdrawal={MAX_WITHDRAWAL}
+        />
 
-              <div className="flex flex-wrap gap-3">
-                <Button
-                  type="submit"
-                  variant="primary"
-                  disabled={wdBusy}
-                  className="px-6 py-2.5 text-sm"
-                >
-                  {wdBusy ? 'Ngirim…' : 'Ajukan Penarikan'}
-                </Button>
-                <Button
-                  type="button"
-                  variant="outline"
-                  disabled={wdBusy}
-                  onClick={() => setWdOpen(false)}
-                  className="px-6 py-2.5 text-sm"
-                >
-                  Batal
-                </Button>
-              </div>
-            </form>
-          )}
-        </section>
-
-        {/* Transaction History */}
-        <section className="mt-6 bg-white rounded-2xl border border-[#e0e3e5] p-6">
-          <h2 className="text-[16px] font-bold text-[#191c1e] flex items-center gap-2">
-            <Icon name="orders" size={18} className="text-[#004ac6]" />
-            Riwayat Transaksi
-          </h2>
-
-          {loading ? (
-            <div className="mt-4 space-y-2">
-              <div className="h-14 bg-[#f2f4f6] rounded-xl animate-pulse" />
-              <div className="h-14 bg-[#f2f4f6] rounded-xl animate-pulse" />
-              <div className="h-14 bg-[#f2f4f6] rounded-xl animate-pulse" />
-            </div>
-          ) : transactions.length === 0 ? (
-            <div className="mt-4 text-center py-8">
-              <Icon name="wallet" size={32} className="text-[#c3c6d7] mx-auto mb-2" />
-              <p className="text-[#737686]">Belum ada transaksi.</p>
-              <p className="text-[12px] text-[#c3c6d7]">Isi saldo untuk memulai.</p>
-            </div>
-          ) : (
-            <ul className="mt-2">
-              {transactions.map((tx) => (
-                <TransactionRow key={tx.id} tx={tx} />
-              ))}
-            </ul>
-          )}
-        </section>
+        {/* Card Aktivitas Akun */}
+        <NeedPayHistory transactions={transactions} loading={loading} />
       </main>
 
       <Footer />

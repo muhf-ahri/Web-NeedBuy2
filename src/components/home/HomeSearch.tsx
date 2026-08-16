@@ -10,9 +10,10 @@ interface HomeSearchProps {
   onSubmit: (e: React.SyntheticEvent<HTMLFormElement>) => void;
   suggestOpen: boolean;
   setSuggestOpen: (open: boolean) => void;
+  /** Set `false` di HomePage kalau tidak mau menampilkan suggestions */
+  showSuggestions?: boolean;
 }
 
-/* ── Contoh placeholder yang berganti-ganti (voice NeedBuy: santai, helpful) ── */
 const PLACEHOLDER_LINES = [
   'Contoh: laptop buat edit video, budget 15 juta...',
   'Contoh: sepatu lari untuk kaki lebar...',
@@ -29,11 +30,11 @@ const HomeSearch: React.FC<HomeSearchProps> = ({
   onSubmit,
   suggestOpen,
   setSuggestOpen,
+  showSuggestions = true,
 }) => {
   const [placeholderIdx, setPlaceholderIdx] = useState(0);
   const [showAnimatedPlaceholder, setShowAnimatedPlaceholder] = useState(true);
 
-  /* Ganti contoh placeholder otomatis (hormati prefers-reduced-motion) */
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
@@ -44,22 +45,22 @@ const HomeSearch: React.FC<HomeSearchProps> = ({
     return () => window.clearInterval(timer);
   }, []);
 
-  /* Matikan placeholder animasi saat user mulai mengetik / fokus */
   useEffect(() => {
     setShowAnimatedPlaceholder(!value && !suggestOpen);
   }, [value, suggestOpen]);
 
   return (
     <section className="mx-auto w-full max-w-6xl px-4 pt-7 sm:px-8">
-      {/* Entrance animation: fade-in + slide-up */}
+      {/* ── FIX: `z-40` supaya dropdown suggestions SELALU di atas
+             carousel & section lain (mereka punya backdrop-blur yang
+             membuat stacking context sendiri) ── */}
       <div
         className="
-          relative w-full overflow-visible rounded-[24px] border
-          border-white/80 bg-white/95 p-5 shadow-[0_18px_50px_rgba(32,36,45,0.08)]
-          backdrop-blur-sm home-search-enter sm:p-6
+          home-search-enter relative z-40 w-full overflow-visible
+          rounded-[24px] border border-white/80 bg-white/95 p-5
+          shadow-[0_18px_50px_rgba(32,36,45,0.08)] backdrop-blur-sm sm:p-6
         "
       >
-        {/* Eyebrow + heading (pola SectionHeading, compact) */}
         <div className="mb-3 flex items-center justify-between gap-3">
           <div className="min-w-0">
             <p
@@ -79,12 +80,8 @@ const HomeSearch: React.FC<HomeSearchProps> = ({
               Apa yang kamu cari hari ini?
             </h2>
           </div>
-
-          {/* Icon dekoratif (callback ke logo "N") */}
-
         </div>
 
-        {/* Input bar */}
         <form
           onSubmit={onSubmit}
           className="
@@ -94,7 +91,6 @@ const HomeSearch: React.FC<HomeSearchProps> = ({
             focus-within:bg-white focus-within:shadow-[0_6px_20px_rgba(83,140,219,0.12)]
           "
         >
-          {/* Icon search — berdenyut halus saat fokus */}
           <span
             className="
               relative flex h-8 w-8 shrink-0 items-center justify-center
@@ -105,11 +101,13 @@ const HomeSearch: React.FC<HomeSearchProps> = ({
             <Icon
               name="search"
               size={15}
-              className="text-[#737A87] transition-colors duration-300 group-focus-within/input:text-[#538CDB]"
+              className="
+                text-[#737A87] transition-colors duration-300
+                group-focus-within/input:text-[#538CDB]
+              "
             />
           </span>
 
-          {/* Input dengan placeholder animasi */}
           <div className="relative min-w-0 flex-1">
             <input
               type="text"
@@ -120,22 +118,18 @@ const HomeSearch: React.FC<HomeSearchProps> = ({
               }}
               onFocus={() => setSuggestOpen(true)}
               onBlur={() => {
-                // Beri delay kecil agar klik suggestion tidak langsung menutup
                 setTimeout(() => setSuggestOpen(false), 150);
               }}
               onKeyDown={(e) => {
                 if (e.key === 'Escape') setSuggestOpen(false);
               }}
-              placeholder={
-                showAnimatedPlaceholder ? '' : 'Cari produk...'
-              }
+              placeholder={showAnimatedPlaceholder ? '' : 'Cari produk...'}
               className="
                 min-w-0 w-full bg-transparent py-2 text-[13px]
                 text-[#20242D] outline-none placeholder:text-[#A2A8B3]
               "
             />
 
-            {/* Placeholder animasi — slide-up + fade, sama seperti HeroSection */}
             {showAnimatedPlaceholder && (
               <span
                 aria-hidden="true"
@@ -157,7 +151,6 @@ const HomeSearch: React.FC<HomeSearchProps> = ({
             )}
           </div>
 
-          {/* Submit button — rounded-full biru brand (pola tombol form Login) */}
           <button
             type="submit"
             className="
@@ -173,8 +166,8 @@ const HomeSearch: React.FC<HomeSearchProps> = ({
             <Icon name="arrowRight" size={15} className="text-white" />
           </button>
 
-          {/* Suggestions dropdown */}
-          {suggestOpen && (
+          {/* ── Suggestions: hanya render kalau showSuggestions=true ── */}
+          {showSuggestions && suggestOpen && (
             <SearchSuggestions
               term={value}
               onPick={() => setSuggestOpen(false)}
@@ -182,7 +175,6 @@ const HomeSearch: React.FC<HomeSearchProps> = ({
           )}
         </form>
 
-        {/* Indicator placeholder dots — bisa diklik */}
         {showAnimatedPlaceholder && (
           <div className="mt-3 flex justify-center gap-1.5">
             {PLACEHOLDER_LINES.map((line, i) => (
@@ -206,7 +198,6 @@ const HomeSearch: React.FC<HomeSearchProps> = ({
         )}
       </div>
 
-      {/* Keyframes */}
       <style>{`
         @keyframes home-search-enter {
           0%   { opacity: 0; transform: translateY(12px); }
