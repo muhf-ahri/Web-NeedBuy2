@@ -9,6 +9,7 @@ import Navbar from '../components/layout/Navbar';
 import PromoCarousel from '../components/layout/PromoCarousel';
 import Footer from '../components/layout/Footer';
 import ProductCard from '../components/ui/ProductCard';
+import Reveal from '../components/ui/Reveal';
 
 import { useCategories } from '../hooks/useCategories';
 import { useProducts } from '../hooks/useProducts';
@@ -26,7 +27,9 @@ const CONDITIONS = ['Baru', 'Seperti Baru', 'Refurbished'];
 
 const PAGE_SIZE = 24;
 
-// ─── Page ──────────────────────────────────────────────────────────────────────
+/** Stagger delay — dibatasi biar 24 card tidak nunggu terlalu lama. */
+const stagger = (index: number, base = 50) => Math.min(index, 11) * base;
+
 const CategoriesPage: React.FC = () => {
   const navigate = useNavigate();
   const { categories: apiCategories, loading: catLoading } = useCategories();
@@ -127,19 +130,25 @@ const CategoriesPage: React.FC = () => {
     >
       <Navbar />
 
-      <PromoCarousel
-        saleProducts={saleProducts}
-        loading={productsLoading}
-        className="mx-auto w-full max-w-[1600px] px-5 pt-6 sm:px-10"
-      />
+      {/* ── Carousel promo (reveal) ── */}
+      <Reveal direction="up" duration={800}>
+        <PromoCarousel
+          saleProducts={saleProducts}
+          loading={productsLoading}
+          className="mx-auto w-full max-w-[1600px] px-4 pt-5 sm:px-6 sm:pt-6 lg:px-10"
+        />
+      </Reveal>
 
-      <div className="mx-auto w-full max-w-[1600px] px-5 pt-5 sm:px-10">
-        <NeedPayStrip />
-      </div>
+      {/* ── NeedPay strip (reveal) ── */}
+      <Reveal direction="up" delay={100}>
+        <div className="mx-auto w-full max-w-[1600px] px-4 pt-4 sm:px-6 sm:pt-5 lg:px-10">
+          <NeedPayStrip />
+        </div>
+      </Reveal>
 
-      <main className="flex-1 mx-auto w-full max-w-[1600px] px-5 py-8 sm:px-10">
-        <div className="flex items-start gap-8">
-          {/* ── Desktop Sidebar — sticky + scroll independen ── */}
+      <main className="flex-1 mx-auto w-full max-w-[1600px] px-4 py-6 sm:px-6 sm:py-8 lg:px-10">
+        <div className="flex items-start gap-6 lg:gap-8">
+          {/* ── Desktop Sidebar — sticky + scroll independen + reveal dari kiri ── */}
           <aside
             className="
               sticky top-24 hidden w-60 shrink-0 lg:block
@@ -153,169 +162,199 @@ const CategoriesPage: React.FC = () => {
               [&::-webkit-scrollbar-thumb]:bg-[#D8DEE9]
             "
           >
-            <FilterSidebar
-              categories={rootCategories}
-              selectedCategories={selectedCategories}
-              onCategoryChange={toggleCategory}
-              categoriesLoading={catLoading}
-              priceMin={priceMin}
-              priceMax={priceMax}
-              onPriceMinChange={setPriceMin}
-              onPriceMaxChange={setPriceMax}
-              conditions={CONDITIONS}
-              selectedConditions={activeConditions}
-              onConditionChange={toggleCondition}
-              onClearAll={clearAll}
-              hasActiveFilters={hasActiveFilters}
-            />
+            <Reveal direction="left" duration={700}>
+              <FilterSidebar
+                categories={rootCategories}
+                selectedCategories={selectedCategories}
+                onCategoryChange={toggleCategory}
+                categoriesLoading={catLoading}
+                priceMin={priceMin}
+                priceMax={priceMax}
+                onPriceMinChange={setPriceMin}
+                onPriceMaxChange={setPriceMax}
+                conditions={CONDITIONS}
+                selectedConditions={activeConditions}
+                onConditionChange={toggleCondition}
+                onClearAll={clearAll}
+                hasActiveFilters={hasActiveFilters}
+              />
+            </Reveal>
           </aside>
 
           {/* ── Main ── */}
           <div className="min-w-0 flex-1">
             {/* Top bar */}
-            <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
-              <div className="flex items-center gap-3">
-                <button
-                  onClick={() => setMobileFilterOpen(true)}
-                  className="
-                    flex items-center gap-1.5 rounded-full border
-                    border-[#E8ECF4] bg-white px-3.5 py-1.5 text-[13px]
-                    font-semibold text-[#20242D] transition-colors
-                    hover:border-[#538CDB] hover:text-[#538CDB] lg:hidden
-                  "
-                >
-                  <Icon name="filter" size={14} />
-                  Filter
-                </button>
-                <p className="text-[13px] text-[#737A87]">
-                  Menampilkan{' '}
-                  {productsLoading ? '...' : `${total} produk`}
-                </p>
-              </div>
+            <Reveal direction="up">
+              <div className="mb-5 flex flex-wrap items-center justify-between gap-3 sm:mb-6 sm:gap-4">
+                <div className="flex min-w-0 items-center gap-3">
+                  <button
+                    onClick={() => setMobileFilterOpen(true)}
+                    className="
+                      flex items-center gap-1.5 rounded-full border
+                      border-[#E8ECF4] bg-white px-3.5 py-1.5 text-[13px]
+                      font-semibold text-[#20242D] transition-colors
+                      hover:border-[#538CDB] hover:text-[#538CDB] lg:hidden
+                    "
+                  >
+                    <Icon name="filter" size={14} />
+                    Filter
+                    {hasActiveFilters && (
+                      <span className="flex h-4 min-w-4 items-center justify-center rounded-full bg-[#538CDB] px-1 text-[9px] font-bold text-white">
+                        {selectedCategories.length + activeConditions.length + (priceMin || priceMax ? 1 : 0)}
+                      </span>
+                    )}
+                  </button>
+                  <p className="truncate text-[12px] text-[#737A87] sm:text-[13px]">
+                    Menampilkan{' '}
+                    {productsLoading ? '...' : `${total} produk`}
+                  </p>
+                </div>
 
-              <div className="relative shrink-0">
-                <select
-                  value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value)}
-                  className="
-                    cursor-pointer appearance-none rounded-full border
-                    border-[#E8ECF4] bg-white py-1.5 pl-4 pr-9 text-[13px]
-                    font-medium text-[#20242D] outline-none transition-colors
-                    focus:border-[#538CDB]
-                  "
-                >
-                  {SORT_OPTIONS.map((opt) => (
-                    <option key={opt}>{opt}</option>
-                  ))}
-                </select>
-                <Icon
-                  name="chevronDown"
-                  size={14}
-                  className="
-                    pointer-events-none absolute right-3 top-1/2
-                    -translate-y-1/2 text-[#737A87]
-                  "
-                />
+                <div className="relative w-full sm:w-auto sm:shrink-0">
+                  <select
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value)}
+                    className="
+                      w-full cursor-pointer appearance-none rounded-full
+                      border border-[#E8ECF4] bg-white py-1.5 pl-4 pr-9
+                      text-[13px] font-medium text-[#20242D] outline-none
+                      transition-colors focus:border-[#538CDB] sm:w-auto
+                    "
+                  >
+                    {SORT_OPTIONS.map((opt) => (
+                      <option key={opt}>{opt}</option>
+                    ))}
+                  </select>
+                  <Icon
+                    name="chevronDown"
+                    size={14}
+                    className="
+                      pointer-events-none absolute right-3 top-1/2
+                      -translate-y-1/2 text-[#737A87]
+                    "
+                  />
+                </div>
               </div>
-            </div>
+            </Reveal>
 
             {/* Active category chips */}
             {selectedCategories.length > 0 && (
-              <div className="mb-4 flex flex-wrap gap-2">
-                {selectedCategories.map((slug) => {
-                  const cat = rootCategories.find((c) => c.slug === slug);
-                  return (
-                    <span
-                      key={slug}
-                      className="
-                        flex items-center gap-1.5 rounded-full
-                        bg-[#538CDB]/10 px-3 py-1 text-[12px] font-semibold
-                        text-[#538CDB]
-                      "
-                    >
-                      {cat?.name ?? slug}
-                      <button
-                        onClick={() => toggleCategory(slug)}
-                        aria-label="Hapus filter"
-                        className="transition-colors hover:text-[#467BC7]"
+              <Reveal direction="up">
+                <div className="mb-4 flex flex-wrap gap-2">
+                  {selectedCategories.map((slug) => {
+                    const cat = rootCategories.find((c) => c.slug === slug);
+                    return (
+                      <span
+                        key={slug}
+                        className="
+                          flex items-center gap-1.5 rounded-full
+                          bg-[#538CDB]/10 px-3 py-1 text-[12px] font-semibold
+                          text-[#538CDB]
+                        "
                       >
-                        <Icon name="close" size={12} />
-                      </button>
-                    </span>
-                  );
-                })}
-              </div>
+                        {cat?.name ?? slug}
+                        <button
+                          onClick={() => toggleCategory(slug)}
+                          aria-label="Hapus filter"
+                          className="transition-colors hover:text-[#467BC7]"
+                        >
+                          <Icon name="close" size={12} />
+                        </button>
+                      </span>
+                    );
+                  })}
+                </div>
+              </Reveal>
             )}
 
             {/* Product grid */}
             {productsLoading ? (
               <div
                 className="
-                  grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4
-                  xl:grid-cols-5 2xl:grid-cols-6
+                  grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4
+                  md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6
                 "
               >
-                {Array.from({ length: PAGE_SIZE }).map((_, i) => (
-                  <div
-                    key={i}
-                    className="
-                      animate-pulse overflow-hidden rounded-2xl border
-                      border-white/80 bg-white/95
-                    "
-                  >
-                    <div className="aspect-[4/3] bg-[#F5F7FB]" />
-                    <div className="p-4">
-                      <div className="mb-2 h-3 w-20 rounded-full bg-[#F5F7FB]" />
-                      <div className="mb-2 h-4 rounded-full bg-[#F5F7FB]" />
-                      <div className="mb-3 h-3 w-24 rounded-full bg-[#F5F7FB]" />
-                      <div className="flex justify-between">
-                        <div className="h-6 w-16 rounded-full bg-[#F5F7FB]" />
-                        <div className="h-8 w-8 rounded-full bg-[#F5F7FB]" />
+                {Array.from({ length: 12 }).map((_, i) => (
+                  <Reveal key={i} direction="up" delay={stagger(i)} className="h-full">
+                    <div
+                      className="
+                        h-full animate-pulse overflow-hidden rounded-2xl
+                        border border-white/80 bg-white/95
+                      "
+                    >
+                      <div className="aspect-[4/3] bg-[#F5F7FB]" />
+                      <div className="p-3.5 sm:p-4">
+                        <div className="mb-2 h-3 w-20 rounded-full bg-[#F5F7FB]" />
+                        <div className="mb-2 h-4 rounded-full bg-[#F5F7FB]" />
+                        <div className="mb-3 h-3 w-24 rounded-full bg-[#F5F7FB]" />
+                        <div className="flex justify-between">
+                          <div className="h-6 w-16 rounded-full bg-[#F5F7FB]" />
+                          <div className="h-8 w-8 rounded-full bg-[#F5F7FB]" />
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </Reveal>
                 ))}
               </div>
             ) : apiProducts.length === 0 ? (
-              <div className="py-20 text-center">
-                <div
-                  className="
-                    mx-auto flex h-14 w-14 items-center justify-center
-                    rounded-full bg-white shadow-[0_8px_24px_rgba(32,36,45,0.06)]
-                  "
-                >
-                  <Icon name="search" size={22} className="text-[#A2A8B3]" />
+              <Reveal direction="up">
+                <div className="rounded-[24px] border border-dashed border-[#D8DEE9] bg-white/70 py-16 text-center backdrop-blur-sm">
+                  <div
+                    className="
+                      mx-auto flex h-14 w-14 items-center justify-center
+                      rounded-full bg-gradient-to-br from-[#5B93E0] to-[#3A66AC]
+                      shadow-[0_8px_20px_rgba(83,140,219,0.30)]
+                    "
+                  >
+                    <Icon name="search" size={22} className="text-white" />
+                  </div>
+                  <p className="mt-4 text-[14px] font-semibold text-[#20242D]">
+                    {productsError ? 'Gagal memuat produk' : 'Tidak ada produk yang cocok'}
+                  </p>
+                  <p className="mx-auto mt-1 max-w-sm px-4 text-[12px] text-[#737A87]">
+                    {productsError
+                      ? productsError
+                      : 'Coba ubah atau hapus beberapa filter.'}
+                  </p>
+                  {hasActiveFilters && !productsError && (
+                    <button
+                      onClick={clearAll}
+                      className="
+                        mt-4 inline-flex items-center gap-1.5 rounded-full
+                        bg-[#538CDB] px-4 py-2 text-[12px] font-semibold
+                        text-white shadow-[0_6px_16px_rgba(83,140,219,0.25)]
+                        transition-all hover:bg-[#467BC7] active:scale-[0.99]
+                      "
+                    >
+                      <Icon name="close" size={12} />
+                      Hapus semua filter
+                    </button>
+                  )}
                 </div>
-                <p className="mt-4 text-[14px] font-semibold text-[#20242D]">
-                  {productsError
-                    ? 'Gagal memuat produk'
-                    : 'Tidak ada produk yang cocok'}
-                </p>
-                <p className="mt-1 text-[12px] text-[#737A87]">
-                  {productsError
-                    ? productsError
-                    : 'Coba ubah atau hapus beberapa filter.'}
-                </p>
-              </div>
+              </Reveal>
             ) : (
               <>
                 <div
                   className="
-                    grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4
-                    xl:grid-cols-5 2xl:grid-cols-6
+                    grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4
+                    md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6
                   "
                 >
-                  {apiProducts.map((p) => (
-                    <ProductCard
+                  {apiProducts.map((p, index) => (
+                    <Reveal
                       key={p.id}
-                      product={p}
-                      onNavigate={handleNavigate}
-                    />
+                      direction="up"
+                      delay={stagger(index)}
+                      className="h-full"
+                    >
+                      <ProductCard product={p} onNavigate={handleNavigate} />
+                    </Reveal>
                   ))}
                 </div>
 
                 {totalPages > 1 && (
-                  <div className="mt-8">
+                  <Reveal direction="up" className="mt-8">
                     <Pagination
                       currentPage={page}
                       totalPages={totalPages}
@@ -323,7 +362,7 @@ const CategoriesPage: React.FC = () => {
                       totalItems={total}
                       pageSize={PAGE_SIZE}
                     />
-                  </div>
+                  </Reveal>
                 )}
               </>
             )}
@@ -341,8 +380,9 @@ const CategoriesPage: React.FC = () => {
 
           <div
             className="
-              absolute bottom-0 right-0 top-0 flex w-80 max-w-[85vw]
-              flex-col bg-white shadow-[-12px_0_40px_rgba(32,36,45,0.15)]
+              drawer-enter absolute bottom-0 right-0 top-0 flex w-80
+              max-w-[85vw] flex-col bg-white
+              shadow-[-12px_0_40px_rgba(32,36,45,0.15)]
             "
           >
             {/* Header drawer */}
@@ -413,6 +453,16 @@ const CategoriesPage: React.FC = () => {
       )}
 
       <Footer />
+
+      <style>{`
+        @keyframes drawer-enter {
+          0% { transform: translateX(100%); }
+          100% { transform: translateX(0); }
+        }
+        .drawer-enter {
+          animation: drawer-enter 0.28s cubic-bezier(0.22, 0.9, 0.35, 1) both;
+        }
+      `}</style>
     </div>
   );
 };

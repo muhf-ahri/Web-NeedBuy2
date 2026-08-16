@@ -65,26 +65,6 @@ const Footer: React.FC = () => {
             >
               <span
                 className="
-                  flex
-                  h-9
-                  w-9
-                  items-center
-                  justify-center
-                  rounded-xl
-                  bg-[#538CDB]
-                  text-sm
-                  font-bold
-                  text-white
-                  shadow-[0_5px_14px_rgba(83,140,219,0.18)]
-                  transition-transform
-                  group-hover:-translate-y-0.5
-                "
-              >
-                N
-              </span>
-
-              <span
-                className="
                   text-lg
                   font-bold
                   tracking-tight

@@ -67,7 +67,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onNavigate }) => {
     <div
       onClick={handleClick}
       className="
-        group flex cursor-pointer flex-col overflow-hidden rounded-2xl
+        group flex h-full cursor-pointer flex-col overflow-hidden rounded-2xl
         border border-white/80 bg-white/95 shadow-[0_8px_24px_rgba(32,36,45,0.06)]
         backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5
         hover:shadow-[0_14px_36px_rgba(32,36,45,0.10)]

@@ -77,10 +77,10 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category, rank }) => {
     <Link
       to={`/categories/${category.slug}`}
       className="
-        group relative overflow-hidden rounded-[24px] border border-white/80
-        bg-white/95 p-4 shadow-[0_12px_32px_rgba(32,36,45,0.06)]
+        group relative block h-full overflow-hidden rounded-[24px] border
+        border-white/80 bg-white/95 p-4 shadow-[0_8px_24px_rgba(32,36,45,0.06)]
         backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5
-        hover:shadow-[0_18px_44px_rgba(32,36,45,0.10)]
+        hover:shadow-[0_14px_36px_rgba(32,36,45,0.10)]
         focus-visible:outline-2 focus-visible:outline-offset-2
         focus-visible:outline-[#538CDB]
       "

@@ -1,62 +1,42 @@
-// src/pages/SearchPage.tsx
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
+
+import ProductCard from '../components/ui/ProductCard';
+
+import SearchShell from '../components/search/SearchShell';
+import SearchHero from '../components/search/SearchHero';
+import SearchToolbar, { SORT_OPTIONS } from '../components/search/SearchToolbar';
+import StoreCard from '../components/search/StoreCard';
+import OpenedStoreHeader from '../components/search/OpenedStoreHeader';
+import SearchEmptyState from '../components/search/SearchEmptyState';
+import SearchErrorBanner from '../components/search/SearchErrorBanner';
 import Icon from '../components/ui/Icon';
-import DiscountBadge, { PriceWithDiscount } from '../components/ui/DiscountBadge';
-import SearchSuggestions from '../components/ui/SearchSuggestions';
-import Navbar from '../components/layout/Navbar';
-import Footer from '../components/layout/Footer';
+
 import { getProducts, type GetProductsParams } from '../api/products';
 import { getSeller, searchSellers, type Seller } from '../api/sellers';
-import type { Product } from '../types';
 import { getAccessToken } from '../api/auth';
 import { useCart as useCartContext } from '../contexts/CartContext';
 import { useWishlistContext } from '../contexts/WishlistContext';
 import { addToCart } from '../api/cart';
-
-const SORT_OPTIONS = [
-  { label: 'Relevansi', value: undefined },
-  { label: 'Harga: Rendah ke Tinggi', value: 'price_asc' },
-  { label: 'Harga: Tinggi ke Rendah', value: 'price_desc' },
-  { label: 'Terbaru', value: 'newest' },
-  { label: 'Rating Tertinggi', value: 'rating' },
-  { label: 'Terlaris', value: 'sold' },
-] as const;
-
-/** Logo toko, dengan inisial nama sebagai cadangan kalau tokonya belum punya logo. */
-const StoreLogo: React.FC<{ store: Seller; size: number }> = ({ store, size }) => (
-  <div
-    className="shrink-0 overflow-hidden rounded-xl border border-[#e0e3e5] bg-[#dbe1ff] flex items-center justify-center"
-    style={{ width: size, height: size }}
-  >
-    {store.logoUrl ? (
-      <img src={store.logoUrl} alt="" className="h-full w-full object-cover" />
-    ) : (
-      <span className="font-bold text-[#004ac6]" style={{ fontSize: size / 2.6 }}>
-        {store.storeName.charAt(0).toUpperCase()}
-      </span>
-    )}
-  </div>
-);
+import type { Product } from '../types';
 
 const SearchPage: React.FC = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { refreshCartCount } = useCartContext();
+  const { toggle: toggleWishlistContext } = useWishlistContext();
+
   const initialQuery = searchParams.get('q') ?? '';
   const [query, setQuery] = useState(initialQuery);
   const [input, setInput] = useState(initialQuery);
   const qFromUrl = searchParams.get('q') ?? '';
-  /** Diisi saat user mengklik sebuah toko di hasil pencarian. */
   const sellerFromUrl = searchParams.get('seller');
 
-  // Sinkronkan state dengan URL. handleSubmit hanya navigate, dan komponen ini
-  // tidak di-remount saat search param berubah — tanpa efek ini, pencarian ulang
-  // dari halaman ini (atau Navbar) tidak pernah memicu fetch ulang.
   useEffect(() => {
     setQuery(qFromUrl);
     setInput(qFromUrl);
   }, [qFromUrl]);
+
   const [sort, setSort] = useState<string>('Relevansi');
   const [suggestOpen, setSuggestOpen] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
@@ -65,17 +45,19 @@ const SearchPage: React.FC = () => {
   const [storesError, setStoresError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const { savedIds: wishlistIds, toggle: toggleWishlistContext } = useWishlistContext();
 
   const isAuthed = !!getAccessToken();
 
   const fetchResults = useCallback(async () => {
-    // Mode "buka toko": produk dibatasi ke satu toko, kata kunci tidak dipakai.
     if (sellerFromUrl) {
       setLoading(true);
       setError(null);
       try {
-        const params: GetProductsParams = { sellerId: sellerFromUrl, limit: 50, page: 1 };
+        const params: GetProductsParams = {
+          sellerId: sellerFromUrl,
+          limit: 50,
+          page: 1,
+        };
         if (sort !== 'Relevansi') {
           const opt = SORT_OPTIONS.find((o) => o.label === sort);
           if (opt?.value) params.sort = opt.value;
@@ -105,6 +87,7 @@ const SearchPage: React.FC = () => {
       setLoading(false);
       return;
     }
+
     setLoading(true);
     setError(null);
     try {
@@ -117,8 +100,7 @@ const SearchPage: React.FC = () => {
         const opt = SORT_OPTIONS.find((o) => o.label === sort);
         if (opt?.value) params.sort = opt.value;
       }
-      // Toko dicari lewat endpoint terpisah: pencarian produk hanya cocok ke
-      // nama/deskripsi produk, jadi nama toko tidak akan pernah ketemu di sana.
+
       const [productRes, storeRes] = await Promise.allSettled([
         getProducts(params),
         searchSellers(query.trim(), 6),
@@ -128,19 +110,19 @@ const SearchPage: React.FC = () => {
         setProducts(productRes.value.data);
       } else {
         setProducts([]);
-        setError(productRes.reason?.message ?? 'Gagal muat hasil pencarian, coba lagi ya');
+        setError(
+          productRes.reason?.message ?? 'Gagal muat hasil pencarian, coba lagi ya'
+        );
       }
 
-      // Gagalnya pencarian toko tidak menjatuhkan hasil produk, TAPI juga tidak
-      // ditelan diam-diam: versi sebelumnya memakai `.catch(() => [])`, sehingga
-      // bagian Toko yang error terlihat persis sama dengan "tidak ada toko yang
-      // cocok" — tidak mungkin dibedakan user maupun saat menelusuri masalah.
       if (storeRes.status === 'fulfilled') {
         setStores(storeRes.value.items);
         setStoresError(null);
       } else {
         setStores([]);
-        setStoresError(storeRes.reason?.message ?? 'Gagal muat daftar toko, coba lagi ya');
+        setStoresError(
+          storeRes.reason?.message ?? 'Gagal muat daftar toko, coba lagi ya'
+        );
       }
     } catch (err: any) {
       setError(err.message ?? 'Gagal muat hasil pencarian, coba lagi ya');
@@ -159,17 +141,10 @@ const SearchPage: React.FC = () => {
     navigate(`/search?q=${encodeURIComponent(input.trim())}`);
   };
 
-  const toggleWishlist = async (e: React.MouseEvent, productId: string) => {
-    e.stopPropagation();
-    if (!isAuthed) {
-      navigate('/login');
-      return;
-    }
-    try {
-      await toggleWishlistContext(productId);
-    } catch (err: any) {
-      setError(err.message ?? 'Gagal update wishlist, coba lagi ya');
-    }
+  const handleClear = () => {
+    setInput('');
+    setQuery('');
+    navigate('/search');
   };
 
   const handleAddToCart = async (e: React.MouseEvent, productId: string) => {
@@ -186,233 +161,143 @@ const SearchPage: React.FC = () => {
     }
   };
 
-  const primaryImage = (p: Product) =>
-    p.images.find((img) => img.isPrimary)?.url ||
-    p.images[0]?.url ||
-    'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&q=80';
+  const handleNavigate = (slug: string) => navigate(`/products/${slug}`);
+
+  // Build summary text
+  const summary = openedStore
+    ? loading
+      ? 'Bentar, muat produk tokonya...'
+      : `${products.length} produk di toko ini`
+    : query.trim()
+      ? loading
+        ? 'Nyari...'
+        : `${products.length} produk untuk "${query}"`
+      : 'Ketik dulu mau cari produk atau toko apa';
 
   return (
-    <div className="min-h-screen flex flex-col bg-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-      <Navbar />
+    <SearchShell>
+      <SearchHero
+        input={input}
+        onInputChange={setInput}
+        onSubmit={handleSubmit}
+        suggestOpen={suggestOpen}
+        setSuggestOpen={setSuggestOpen}
+        onClear={handleClear}
+      />
 
-      <main className="flex-1 max-w-[1600px] mx-auto w-full px-5 sm:px-10 py-8">
-        <h1 className="text-[28px] font-bold text-[#191c1e] mb-4">Hasil Pencarian</h1>
+      {error && <SearchErrorBanner message={error} variant="error" />}
 
-        <form onSubmit={handleSubmit} className="relative mb-6">
-          <Icon name="search" size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-[#737686]" />
-          <input
-            type="text"
-            value={input}
-            onChange={(e) => {
-              setInput(e.target.value);
-              setSuggestOpen(true);
-            }}
-            onFocus={() => setSuggestOpen(true)}
-            onBlur={() => setSuggestOpen(false)}
-            onKeyDown={(e) => { if (e.key === 'Escape') setSuggestOpen(false); }}
-            placeholder="Mau cari apa hari ini?"
-            className="w-full pl-12 pr-12 py-3 bg-[#f2f4f6] rounded-full text-sm outline-none focus:ring-2 focus:ring-[#004ac6]/20 focus:bg-white border border-transparent focus:border-[#004ac6] transition"
-          />
-          {input && (
-            <button
-              type="button"
-              onClick={() => { setInput(''); setQuery(''); }}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-[#737686] hover:text-[#191c1e]"
+      {/* Header toko yang dibuka */}
+      {openedStore && (
+        <OpenedStoreHeader
+          store={openedStore}
+          onClose={() => navigate('/search')}
+        />
+      )}
+
+      {/* Error pencarian toko */}
+      {!openedStore && !loading && storesError && (
+        <SearchErrorBanner
+          message={`Pencarian toko gagal: ${storesError}`}
+          variant="warning"
+        />
+      )}
+
+      {/* Toko yang cocok */}
+      {!openedStore && !loading && stores.length > 0 && (
+        <section className="mb-7">
+          <div className="mb-3 flex items-center gap-2">
+            <span
+              className="
+                flex h-6 w-6 items-center justify-center rounded-lg
+                bg-[#538CDB]/10
+              "
             >
-              <Icon name="close" size={16} className="" />
-            </button>
-          )}
-
-          {suggestOpen && (
-            <SearchSuggestions term={input} onPick={() => setSuggestOpen(false)} />
-          )}
-        </form>
-
-        {error && (
-          <div className="bg-[#ffdad6] border border-[#ba1a1a]/20 rounded-2xl px-4 py-3 mb-4">
-            <p className="text-[13px] text-[#93000a]">{error}</p>
-          </div>
-        )}
-
-        {/* Header toko yang sedang dibuka */}
-        {openedStore && (
-          <div className="mb-6 flex items-start gap-4 rounded-2xl border border-[#e0e3e5] bg-[#f8f9fb] p-5">
-            <StoreLogo store={openedStore} size={64} />
-            <div className="min-w-0 flex-1">
-              <div className="flex flex-wrap items-center gap-2">
-                <h2 className="text-[18px] font-bold text-[#191c1e]">{openedStore.storeName}</h2>
-                {openedStore.vacationMode && (
-                  <span className="rounded-full bg-[#fff4e0] px-2 py-0.5 text-[11px] font-semibold text-[#b45309]">
-                    Sedang libur
-                  </span>
-                )}
-              </div>
-              {openedStore.description && (
-                <p className="mt-1 text-[13px] text-[#434655]">{openedStore.description}</p>
-              )}
-              <p className="mt-1.5 text-[12px] text-[#737686]">
-                <Icon name="star" size={12} className="inline text-[#f59e0b]" />{' '}
-                {Number(openedStore.rating).toFixed(1)} · {openedStore._count?.products ?? 0} produk
-              </p>
-            </div>
-            <button
-              onClick={() => navigate('/search')}
-              className="shrink-0 text-[12px] text-[#004ac6] hover:underline"
+              <Icon name="store" size={13} className="text-[#538CDB]" />
+            </span>
+            <p
+              className="
+                text-[11px] font-bold uppercase tracking-[0.16em]
+                text-[#737A87]
+              "
             >
-              Tutup
-            </button>
-          </div>
-        )}
-
-        {/* Pencarian toko gagal — ditampilkan, bukan disembunyikan sebagai
-            "tidak ada hasil". */}
-        {!openedStore && !loading && storesError && (
-          <div className="mb-6 rounded-2xl border border-[#ffe0b0] bg-[#fff4e0] px-4 py-3">
-            <p className="text-[13px] text-[#b45309]">Pencarian toko gagal: {storesError}</p>
-          </div>
-        )}
-
-        {/* Toko yang cocok dengan kata kunci */}
-        {!openedStore && !loading && stores.length > 0 && (
-          <section className="mb-7">
-            <h2 className="mb-3 text-[13px] font-bold uppercase tracking-wide text-[#737686]">
               Toko ({stores.length})
-            </h2>
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-              {stores.map((store) => (
-                <button
-                  key={store.id}
-                  onClick={() => navigate(`/search?seller=${store.id}`)}
-                  className="flex items-start gap-3 rounded-2xl border border-[#e0e3e5] bg-white p-4 text-left transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
-                >
-                  <StoreLogo store={store} size={48} />
-                  <div className="min-w-0 flex-1">
-                    <div className="flex flex-wrap items-center gap-1.5">
-                      <span className="truncate text-[14px] font-semibold text-[#191c1e]">
-                        {store.storeName}
-                      </span>
-                      {store.vacationMode && (
-                        <span className="rounded-full bg-[#fff4e0] px-1.5 py-0.5 text-[10px] font-semibold text-[#b45309]">
-                          Libur
-                        </span>
-                      )}
-                    </div>
-                    <p className="mt-0.5 line-clamp-2 text-[12px] text-[#737686]">
-                      {store.description || 'Toko ini belum nulis deskripsi.'}
-                    </p>
-                    <p className="mt-1 text-[11px] text-[#737686]">
-                      <Icon name="star" size={11} className="inline text-[#f59e0b]" />{' '}
-                      {Number(store.rating).toFixed(1)} · {store._count?.products ?? 0} produk
-                    </p>
-                  </div>
-                </button>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* Toolbar */}
-        <div className="flex items-center justify-between mb-5 gap-3 flex-wrap">
-          <p className="text-[13px] text-[#737686]">
-            {openedStore
-              ? loading
-                ? 'Bentar, muat produk tokonya...'
-                : `${products.length} produk di toko ini`
-              : query.trim()
-                ? loading
-                  ? 'Nyari...'
-                  : `${products.length} produk untuk "${query}"`
-                : 'Ketik dulu mau cari produk atau toko apa'}
-          </p>
-          <div className="relative shrink-0">
-            <select
-              value={sort}
-              onChange={(e) => setSort(e.target.value)}
-              className="appearance-none bg-white border border-[#c3c6d7] rounded-full pl-3 pr-8 py-1.5 text-[13px] text-[#191c1e] outline-none focus:border-[#004ac6] cursor-pointer transition-colors"
-            >
-              {SORT_OPTIONS.map((opt) => <option key={opt.label}>{opt.label}</option>)}
-            </select>
-            <Icon name="chevronDown" size={14} className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-[#737686]" />
-          </div>
-        </div>
-
-        {loading ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4">
-            {[...Array(6)].map((_, i) => (
-              <div key={i} className="bg-white rounded-2xl border border-[#e0e3e5] overflow-hidden animate-pulse">
-                <div className="aspect-4/3 bg-[#f2f4f6]" />
-                <div className="p-4 space-y-2">
-                  <div className="h-4 bg-[#f2f4f6] rounded w-20" />
-                  <div className="h-5 bg-[#f2f4f6] rounded" />
-                  <div className="h-6 bg-[#f2f4f6] rounded w-24" />
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : openedStore && products.length === 0 ? (
-          <div className="text-center py-20">
-            <Icon name="product" size={48} className="text-[#c3c6d7] mx-auto mb-4" />
-            <p className="text-[#737686]">Toko ini belum nayangin produk apa pun.</p>
-          </div>
-        ) : query.trim() && products.length === 0 ? (
-          <div className="text-center py-20">
-            <Icon name="search" size={48} className="text-[#c3c6d7] mx-auto mb-4" />
-            <p className="text-[#737686]">Tidak ada produk yang cocok dengan "{query}".</p>
-            <p className="text-[12px] text-[#c3c6d7] mt-1">
-              {stores.length > 0
-                ? 'Tapi ada toko yang cocok — lihat di bagian Toko di atas.'
-                : 'Coba pakai kata kunci lain ya.'}
             </p>
           </div>
-        ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4">
-            {products.map((p) => (
-              <div
-                key={p.id}
-                onClick={() => navigate(`/products/${p.slug}`)}
-                className="group bg-white rounded-2xl border border-[#e0e3e5] overflow-hidden hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 flex flex-col cursor-pointer"
-              >
-                <div className="relative aspect-4/3 bg-[#f2f4f6] overflow-hidden">
-                  <img
-                    src={primaryImage(p)}
-                    alt={p.name}
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
-                  />
-                  <DiscountBadge discountPercent={p.discountPercent} price={p.price} />
-                  <button
-                    onClick={(e) => toggleWishlist(e, p.id)}
-                    className="absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-sm hover:bg-white transition-colors"
-                    aria-label="Simpan ke wishlist"
-                  >
-                    <Icon name="heart" size={13} className={`transition-colors ${wishlistIds.has(p.id) ? 'text-[#004ac6]' : 'text-[#737686]'}`} />
-                  </button>
-                </div>
-                <div className="p-3.5 flex flex-col flex-1">
-                  <span className="block truncate text-[11px] font-semibold text-[#004ac6] uppercase tracking-wide">
-                    {p.seller.storeName}
-                  </span>
-                  <h3 className="mt-1 text-[13px] font-semibold text-[#191c1e] leading-snug line-clamp-2 flex-1">
-                    {p.name}
-                  </h3>
-                  <div className="mt-2 flex items-end justify-between gap-1">
-                    <PriceWithDiscount price={p.price} discountPercent={p.discountPercent} />
-                    <button
-                      onClick={(e) => handleAddToCart(e, p.id)}
-                      className="w-8 h-8 shrink-0 rounded-full bg-[#191c1e] hover:bg-[#004ac6] text-white flex items-center justify-center transition-colors duration-200"
-                      aria-label="Tambah ke keranjang"
-                    >
-                      <Icon name="cart" size={14} className="" />
-                    </button>
-                  </div>
-                </div>
-              </div>
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {stores.map((store) => (
+              <StoreCard
+                key={store.id}
+                store={store}
+                onClick={() => navigate(`/search?seller=${store.id}`)}
+              />
             ))}
           </div>
-        )}
-      </main>
+        </section>
+      )}
 
-      <Footer />
-    </div>
+      {/* Toolbar */}
+      {(query.trim() || openedStore) && (
+        <SearchToolbar
+          sort={sort}
+          onSortChange={setSort}
+          summary={summary}
+        />
+      )}
+
+      {/* Hasil */}
+      {loading ? (
+        <div
+          className="
+            grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4
+            xl:grid-cols-5 2xl:grid-cols-6
+          "
+        >
+          {[...Array(6)].map((_, i) => (
+            <div
+              key={i}
+              className="
+                animate-pulse overflow-hidden rounded-2xl border
+                border-white/80 bg-white/95
+              "
+            >
+              <div className="aspect-[4/3] bg-[#F5F7FB]" />
+              <div className="space-y-2 p-4">
+                <div className="h-3 w-20 rounded-full bg-[#F5F7FB]" />
+                <div className="h-4 rounded-full bg-[#F5F7FB]" />
+                <div className="h-3 w-24 rounded-full bg-[#F5F7FB]" />
+                <div className="h-6 w-16 rounded-full bg-[#F5F7FB]" />
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : !query.trim() && !openedStore ? (
+        <SearchEmptyState variant="no-query" />
+      ) : openedStore && products.length === 0 ? (
+        <SearchEmptyState variant="empty-store" />
+      ) : products.length === 0 ? (
+        <SearchEmptyState
+          variant="no-products"
+          query={query}
+          hasStores={stores.length > 0}
+        />
+      ) : (
+        <div
+          className="
+            grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4
+            xl:grid-cols-5 2xl:grid-cols-6
+          "
+        >
+          {products.map((p) => (
+            <ProductCard
+              key={p.id}
+              product={p}
+              onNavigate={handleNavigate}
+            />
+          ))}
+        </div>
+      )}
+    </SearchShell>
   );
 };
 

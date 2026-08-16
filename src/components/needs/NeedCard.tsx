@@ -1,0 +1,231 @@
+import React from 'react';
+
+import Icon from '../ui/Icon';
+import RecommendationRow from './RecommendationRow';
+import { formatRupiah } from '../../utils/currency';
+import type { Need, Recommendation } from '../../api/needs';
+
+const STATUS_STYLE: Record<
+  string,
+  { bg: string; text: string; dot: string }
+> = {
+  DRAFT: {
+    bg: 'bg-[#F5F7FB]',
+    text: 'text-[#737A87]',
+    dot: 'bg-[#A2A8B3]',
+  },
+  PARSED: {
+    bg: 'bg-[#FFF7E0]',
+    text: 'text-[#B45309]',
+    dot: 'bg-[#FFD500]',
+  },
+  PROCESSED: {
+    bg: 'bg-[#538CDB]/15',
+    text: 'text-[#538CDB]',
+    dot: 'bg-[#538CDB]',
+  },
+  COMPLETED: {
+    bg: 'bg-[#DCFCE7]',
+    text: 'text-[#166534]',
+    dot: 'bg-[#22C55E]',
+  },
+};
+
+interface NeedCardProps {
+  need: Need;
+  isActive: boolean;
+  recs: Recommendation[];
+  recLoading: boolean;
+  busyId: string | null;
+  onOpenRecommendations: (needId: string) => void;
+  onMakePlan: (need: Need) => void;
+  onOpenProduct: (slug: string) => void;
+  onAddToCart: (e: React.MouseEvent, productId: string) => void;
+}
+
+const NeedCard: React.FC<NeedCardProps> = ({
+  need,
+  isActive,
+  recs,
+  recLoading,
+  busyId,
+  onOpenRecommendations,
+  onMakePlan,
+  onOpenProduct,
+  onAddToCart,
+}) => {
+  const status = STATUS_STYLE[need.status] ?? STATUS_STYLE.DRAFT;
+  const isDraft = need.status === 'DRAFT';
+
+  return (
+    <div
+      className="
+        overflow-hidden rounded-[24px] border border-white/80 bg-white/95
+        p-5 shadow-[0_8px_24px_rgba(32,36,45,0.06)] backdrop-blur-sm
+        transition-all duration-200 hover:shadow-[0_14px_36px_rgba(32,36,45,0.10)]
+      "
+    >
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        {/* Info */}
+        <div className="min-w-0 flex-1">
+          <div className="flex flex-wrap items-center gap-2">
+            <p
+              className="
+                line-clamp-2 text-[14px] font-semibold text-[#20242D]
+              "
+            >
+              {need.rawInput}
+            </p>
+            <span
+              className={`
+                inline-flex shrink-0 items-center gap-1 rounded-full px-2
+                py-0.5 text-[10px] font-semibold ${status.bg} ${status.text}
+              `}
+            >
+              <span className={`h-1.5 w-1.5 rounded-full ${status.dot}`} />
+              {need.status}
+            </span>
+          </div>
+
+          <p className="mt-1 line-clamp-1 text-[12px] text-[#737A87]">
+            {need.goal ?? 'Belum dianalisis'}
+            {need.budget ? (
+              <>
+                <span className="mx-1.5 text-[#D8DEE9]">·</span>
+                Budget{' '}
+                <span className="font-semibold text-[#20242D]">
+                  {formatRupiah(need.budget)}
+                </span>
+              </>
+            ) : null}
+            {need.location ? (
+              <>
+                <span className="mx-1.5 text-[#D8DEE9]">·</span>
+                {need.location}
+              </>
+            ) : null}
+          </p>
+        </div>
+
+        {/* Actions */}
+        <div className="flex flex-wrap items-center gap-2">
+          <button
+            type="button"
+            onClick={() => onOpenRecommendations(need.id)}
+            disabled={isDraft}
+            className="
+              flex h-9 items-center gap-1.5 rounded-full bg-[#538CDB] px-4
+              text-[12px] font-semibold text-white
+              shadow-[0_4px_12px_rgba(83,140,219,0.25)] transition-all
+              duration-200 hover:bg-[#467BC7] active:scale-[0.98]
+              disabled:cursor-not-allowed disabled:bg-[#A2A8B3]
+              disabled:shadow-none
+            "
+          >
+            <Icon name="spark" size={13} />
+            Rekomendasi
+          </button>
+          <button
+            type="button"
+            onClick={() => onMakePlan(need)}
+            disabled={isDraft || busyId === `plan-${need.id}`}
+            className="
+              flex h-9 items-center gap-1.5 rounded-full border
+              border-[#538CDB] bg-white px-4 text-[12px] font-semibold
+              text-[#538CDB] transition-all duration-200 hover:bg-[#538CDB]
+              hover:text-white active:scale-[0.98]
+              disabled:cursor-not-allowed disabled:opacity-50
+            "
+          >
+            {busyId === `plan-${need.id}` ? (
+              <Icon name="clock" size={12} className="animate-spin" />
+            ) : (
+              <Icon name="plan" size={12} />
+            )}
+            Jadikan Rencana
+          </button>
+        </div>
+      </div>
+
+      {/* Rekomendasi panel */}
+      {isActive && (
+        <div className="mt-4 border-t border-[#E8ECF4] pt-4">
+          <div className="mb-3 flex items-center gap-2">
+            <span
+              className="
+                flex h-6 w-6 items-center justify-center rounded-lg
+                bg-[#538CDB]/10
+              "
+            >
+              <Icon name="spark" size={12} className="text-[#538CDB]" />
+            </span>
+            <p className="text-[12px] font-bold text-[#20242D]">
+              Rekomendasi Produk
+            </p>
+            <span className="text-[11px] text-[#A2A8B3]">
+              ({recs.length} hasil)
+            </span>
+          </div>
+
+          {recLoading ? (
+            <div className="space-y-2">
+              {Array.from({ length: 3 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="
+                    flex animate-pulse items-center gap-3 rounded-2xl
+                    bg-[#F5F7FB] p-3
+                  "
+                >
+                  <div className="h-16 w-16 shrink-0 rounded-xl bg-[#E8ECF4]" />
+                  <div className="flex-1 space-y-2">
+                    <div className="h-2.5 w-20 rounded-full bg-[#E8ECF4]" />
+                    <div className="h-3 w-3/4 rounded-full bg-[#E8ECF4]" />
+                    <div className="h-2.5 w-1/2 rounded-full bg-[#E8ECF4]" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : recs.length === 0 ? (
+            <div
+              className="
+                rounded-2xl border border-dashed border-[#D8DEE9]
+                bg-white/70 py-10 text-center
+              "
+            >
+              <div
+                className="
+                  mx-auto flex h-11 w-11 items-center justify-center
+                  rounded-full bg-[#F5F7FB]
+                "
+              >
+                <Icon name="product" size={18} className="text-[#A2A8B3]" />
+              </div>
+              <p className="mt-3 text-[13px] font-semibold text-[#20242D]">
+                Belum ada rekomendasi
+              </p>
+              <p className="mt-1 text-[11px] text-[#737A87]">
+                Proses kebutuhan ini dulu supaya AI bisa mencarikan produk
+                yang pas.
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-2">
+              {recs.map((rec) => (
+                <RecommendationRow
+                  key={rec.id}
+                  rec={rec}
+                  onOpen={() => onOpenProduct(rec.product.slug)}
+                  onAddToCart={onAddToCart}
+                  busy={busyId === rec.product.id}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default NeedCard;

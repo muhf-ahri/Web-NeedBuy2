@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { getPublicSettings } from './api/admin';
+import ScrollToTop from './components/layout/ScrollToTop';
 import { AuthProvider } from './contexts/AuthContext';
 import { CartProvider } from './contexts/CartContext';
 import { WishlistProvider } from './contexts/WishlistContext';
@@ -86,6 +87,7 @@ function App() {
       <CartProvider>
         <WishlistProvider>
           <BrowserRouter>
+          <ScrollToTop/>
             <Routes>
               {/* Home */}
               <Route path="/" element={<HomePage />} />

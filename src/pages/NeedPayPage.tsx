@@ -9,6 +9,7 @@ import NeedPayBalanceCard from '../components/needpay/NeedPayBalanceCard';
 import NeedPayTopup from '../components/needpay/NeedPayTopUp';
 import NeedPayWithdraw from '../components/needpay/NeedPayWithdraw';
 import NeedPayHistory from '../components/needpay/NeedPayHistory';
+import NeedPayLoginPrompt from '../components/needpay/NeedPayLoginPrompt';
 
 import { formatRupiah } from '../utils/currency';
 import { payWithSnap } from '../utils/snap';
@@ -172,60 +173,7 @@ const NeedPayPage: React.FC = () => {
 
   /* ── Login prompt ── */
   if (!isAuthed) {
-    return (
-      <div
-        className="min-h-screen flex flex-col bg-[#F5F5FF]"
-        style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
-      >
-        <Navbar />
-        <main className="flex flex-1 items-center justify-center px-4 py-16 sm:px-8">
-          <div className="w-full max-w-md">
-            <div
-              className="
-                overflow-hidden rounded-[24px] border border-white/80
-                bg-white/95 p-8 text-center shadow-[0_18px_50px_rgba(32,36,45,0.10)]
-                backdrop-blur-sm
-              "
-            >
-              <span
-                className="
-                  relative mx-auto flex h-16 w-16 items-center justify-center
-                  overflow-hidden rounded-2xl bg-gradient-to-br
-                  from-[#5B93E0] to-[#3A66AC] shadow-[0_8px_20px_rgba(83,140,219,0.30)]
-                "
-              >
-                <span className="pointer-events-none absolute -right-1.5 -top-1.5 h-4 w-4 rounded-full border border-white/25" />
-                <Icon name="wallet" size={26} className="text-white" />
-              </span>
-
-              <h2 className="mt-5 text-[22px] font-bold text-[#20242D]">
-                Login untuk Akses NeedPay
-              </h2>
-              <p className="mt-2 text-[13px] text-[#737A87]">
-                Kelola saldo dan bayar lebih cepat dengan NeedPay.
-              </p>
-
-              <button
-                type="button"
-                onClick={() => navigate('/login')}
-                className="
-                  mt-6 inline-flex h-11 items-center justify-center gap-2
-                  rounded-full bg-[#538CDB] px-8 text-sm font-semibold
-                  text-white shadow-[0_7px_18px_rgba(83,140,219,0.25)]
-                  transition-all hover:bg-[#467BC7]
-                  hover:shadow-[0_9px_22px_rgba(83,140,219,0.30)]
-                  active:scale-[0.99]
-                "
-              >
-                Login Sekarang
-                <Icon name="arrowRight" size={15} className="text-white" />
-              </button>
-            </div>
-          </div>
-        </main>
-        <Footer />
-      </div>
-    );
+    return <NeedPayLoginPrompt />;
   }
 
   return (
