@@ -113,18 +113,7 @@ const HeroSection: React.FC<{
               {/* Brand row */}
               <div className="flex items-center gap-2">
                 <span
-                  className="
-                    relative flex h-8 w-8 items-center justify-center
-                    overflow-hidden rounded-lg bg-gradient-to-br
-                    from-[#5B93E0] to-[#3A66AC] text-[11px] font-bold
-                    text-white shadow-[0_4px_12px_rgba(83,140,219,0.25)]
-                  "
-                >
-                  <span className="pointer-events-none absolute -right-1 -top-1 h-2.5 w-2.5 rounded-full border border-white/25" />
-                  N
-                </span>
-                <span
-                  className="text-[15px] font-bold tracking-tight text-[#20242D]"
+                  className="text-[15px] font-bold tracking-tight text-[#538CDB]"
                   style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
                 >
                   NeedBuy

@@ -209,3 +209,41 @@ input[type="number"] {
 input[type="number"] {
   appearance: textfield;
 }
+
+/* ═══════════════════════════════════════════════════════════
+   SCROLL REVEAL ANIMATION (global — dipakai di semua halaman)
+   ═══════════════════════════════════════════════════════════ */
+
+.reveal {
+  will-change: transform, opacity;
+  transition-timing-function: cubic-bezier(0.22, 0.9, 0.35, 1);
+  transition-property: transform, opacity;
+}
+
+/* Arah animasi */
+.reveal-up { opacity: 0; transform: translateY(24px); }
+.reveal-up.is-visible { opacity: 1; transform: translateY(0); }
+
+.reveal-down { opacity: 0; transform: translateY(-24px); }
+.reveal-down.is-visible { opacity: 1; transform: translateY(0); }
+
+.reveal-left { opacity: 0; transform: translateX(-24px); }
+.reveal-left.is-visible { opacity: 1; transform: translateX(0); }
+
+.reveal-right { opacity: 0; transform: translateX(24px); }
+.reveal-right.is-visible { opacity: 1; transform: translateX(0); }
+
+.reveal-scale { opacity: 0; transform: scale(0.96); }
+.reveal-scale.is-visible { opacity: 1; transform: scale(1); }
+
+.reveal-fade { opacity: 0; }
+.reveal-fade.is-visible { opacity: 1; }
+
+/* Accessibility: matikan animasi buat user yang prefer reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}

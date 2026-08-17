@@ -10,32 +10,12 @@ import {
   type Notification,
 } from '../../api/notifications';
 import { useNotificationSocket } from '../../hooks/useNotificationSocket';
+// ✅ typo fix: notfications → notifications
+import { relativeTime, linkFor, metaFor } from '../notifications/notfications.helpers';
 
-/** "5 menit lalu" tanpa library tanggal. */
-function relativeTime(iso: string): string {
-  const seconds = Math.round((Date.now() - new Date(iso).getTime()) / 1000);
-  if (seconds < 60) return 'baru saja';
-  const minutes = Math.round(seconds / 60);
-  if (minutes < 60) return `${minutes} menit lalu`;
-  const hours = Math.round(minutes / 60);
-  if (hours < 24) return `${hours} jam lalu`;
-  const days = Math.round(hours / 24);
-  return days === 1 ? 'kemarin' : `${days} hari lalu`;
-}
-
-/** Notifikasi order diarahkan ke halaman order seller, sisanya sesuai tipe. */
-function linkFor(notification: Notification): string | undefined {
-  switch (notification.type) {
-    case 'ORDER_NEW':
-    case 'ORDER_STATUS':
-    case 'PAYMENT':
-      return '/seller/orders';
-    case 'LOW_STOCK':
-      return '/seller/products';
-    default:
-      return undefined;
-  }
-}
+// ❌ HAPUS dua fungsi lokal ini — sudah di-import dari helper:
+// function relativeTime(iso: string): string { ... }
+// function linkFor(notification: Notification): string | undefined { ... }
 
 const NotificationBell: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -114,7 +94,6 @@ const NotificationBell: React.FC = () => {
 
   return (
     <div className="relative" ref={dropdownRef}>
-      {/* ── Bell button — TIDAK punya warna sendiri, inherit dari navbar ── */}
       <button
         type="button"
         onClick={toggleOpen}
@@ -122,10 +101,8 @@ const NotificationBell: React.FC = () => {
         aria-label="Notifikasi"
         aria-expanded={isOpen}
       >
-        {/* Icon tanpa class warna → ikut currentColor parent (navbar wrapper) */}
         <Icon name="bell" size={20} />
 
-        {/* Badge unread — merah brand #FF4646, ring putih biar pop di kedua mode */}
         {unreadCount > 0 && (
           <span
             className="
@@ -139,7 +116,6 @@ const NotificationBell: React.FC = () => {
         )}
       </button>
 
-      {/* ── Dropdown — palet brand NeedBuy ── */}
       {isOpen && (
         <div
           className="
@@ -149,31 +125,11 @@ const NotificationBell: React.FC = () => {
           "
         >
           {/* Header */}
-          <div
-            className="
-              flex items-center justify-between border-b border-[#E8ECF4]
-              px-4 py-3
-            "
-          >
+          <div className="flex items-center justify-between border-b border-[#E8ECF4] px-4 py-3">
             <div className="flex items-center gap-2">
-              <span
-                className="
-                  flex h-7 w-7 items-center justify-center rounded-lg
-                  bg-[#538CDB]/10
-                "
-              >
-                <Icon name="bell" size={14} className="text-[#538CDB]" />
-              </span>
-              <span className="text-[13px] font-bold text-[#20242D]">
-                Notifikasi
-              </span>
+              <span className="text-[13px] font-bold text-[#538CBD]">Notifikasi</span>
               {unreadCount > 0 && (
-                <span
-                  className="
-                    rounded-full bg-[#FF4646] px-1.5 py-0.5 text-[9px]
-                    font-bold text-white
-                  "
-                >
+                <span className="rounded-full bg-[#FF4646] px-1.5 py-0.5 text-[9px] font-bold text-white">
                   {unreadCount}
                 </span>
               )}
@@ -183,10 +139,7 @@ const NotificationBell: React.FC = () => {
               <button
                 type="button"
                 onClick={markAllAsRead}
-                className="
-                  text-[11px] font-semibold text-[#538CDB] transition-colors
-                  hover:text-[#467BC7]
-                "
+                className="text-[11px] font-semibold text-[#538CDB] transition-colors hover:text-[#467BC7]"
               >
                 Tandai semua dibaca
               </button>
@@ -208,21 +161,12 @@ const NotificationBell: React.FC = () => {
                 ))}
               </div>
             ) : error ? (
-              <div
-                className="
-                  px-4 py-8 text-center text-[12px] font-medium text-[#FF4646]
-                "
-              >
+              <div className="px-4 py-8 text-center text-[12px] font-medium text-[#FF4646]">
                 {error}
               </div>
             ) : notifications.length === 0 ? (
               <div className="px-4 py-10 text-center">
-                <div
-                  className="
-                    mx-auto flex h-12 w-12 items-center justify-center
-                    rounded-full bg-[#F5F7FB]
-                  "
-                >
+                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[#F5F7FB]">
                   <Icon name="bell" size={20} className="text-[#A2A8B3]" />
                 </div>
                 <p className="mt-3 text-[13px] font-semibold text-[#20242D]">
@@ -236,98 +180,63 @@ const NotificationBell: React.FC = () => {
               notifications.map((notification) => {
                 const link = linkFor(notification);
                 const isUnread = !notification.read;
+                const meta = metaFor(notification);
 
                 const content = (
-                  <>
-                    <div className="flex items-start gap-3">
-                      {/* Icon indicator */}
-                      <span
-                        className={`
-                          mt-0.5 flex h-8 w-8 shrink-0 items-center
-                          justify-center rounded-lg
-                          ${
-                            isUnread
-                              ? 'bg-[#538CDB]/10 text-[#538CDB]'
-                              : 'bg-[#F5F7FB] text-[#A2A8B3]'
-                          }
-                        `}
-                      >
-                        <Icon
-                          name={
-                            notification.type === 'LOW_STOCK'
-                              ? 'alert'
-                              : notification.type === 'PAYMENT'
-                                ? 'card'
-                                : 'orders'
-                          }
-                          size={15}
-                        />
-                      </span>
+                  <div className="flex items-start gap-3">
+                    <span
+                      className={`
+                        mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center
+                        rounded-lg ${isUnread ? `${meta.bg} ${meta.text}` : 'bg-[#F5F7FB] text-[#A2A8B3]'}
+                      `}
+                    >
+                      <Icon name={meta.icon} size={15} />
+                    </span>
 
-                      {/* Body */}
-                      <div className="min-w-0 flex-1">
-                        <div className="flex items-start justify-between gap-2">
-                          <p
-                            className={`
-                              text-[13px] leading-snug
-                              ${
-                                isUnread
-                                  ? 'font-semibold text-[#20242D]'
-                                  : 'font-medium text-[#20242D]'
-                              }
-                            `}
-                          >
-                            {notification.title}
-                          </p>
-                          {isUnread && (
-                            <span
-                              className="
-                                mt-1 h-1.5 w-1.5 shrink-0 rounded-full
-                                bg-[#538CDB]
-                              "
-                            />
-                          )}
-                        </div>
-
-                        <p className="mt-0.5 line-clamp-2 text-[11px] leading-relaxed text-[#737A87]">
-                          {notification.message}
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-start justify-between gap-2">
+                        <p
+                          className={`
+                            text-[13px] leading-snug
+                            ${isUnread ? 'font-semibold text-[#20242D]' : 'font-medium text-[#20242D]'}
+                          `}
+                        >
+                          {notification.title}
                         </p>
-
-                        {notification.order && (
-                          <p className="mt-1 font-mono text-[10px] text-[#434655]">
-                            {notification.order.orderNumber}
-                            {notification.order.orderType
-                              ? ` · ${notification.order.orderType}`
-                              : ''}
-                            {' · '}
-                            {notification.order.items
-                              .map((item) => `${item.productName} x${item.quantity}`)
-                              .join(', ')}
-                          </p>
+                        {isUnread && (
+                          <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-[#538CDB]" />
                         )}
-
-                        <p className="mt-1 text-[10px] text-[#A2A8B3]">
-                          {relativeTime(notification.createdAt)}
-                        </p>
                       </div>
+
+                      <p className="mt-0.5 line-clamp-2 text-[11px] leading-relaxed text-[#737A87]">
+                        {notification.message}
+                      </p>
+
+                      {notification.order && (
+                        <p className="mt-1 font-mono text-[10px] text-[#434655]">
+                          {notification.order.orderNumber}
+                          {notification.order.orderType ? ` · ${notification.order.orderType}` : ''}
+                          {' · '}
+                          {notification.order.items
+                            .map((item) => `${item.productName} x${item.quantity}`)
+                            .join(', ')}
+                        </p>
+                      )}
+
+                      <p className="mt-1 text-[10px] text-[#A2A8B3]">
+                        {relativeTime(notification.createdAt)}
+                      </p>
                     </div>
-                  </>
+                  </div>
                 );
 
                 const itemClass = `
                   block w-full px-3 py-2.5 text-left transition-colors
-                  ${
-                    isUnread
-                      ? 'bg-[#F5F5FF] hover:bg-[#EEF5FF]'
-                      : 'hover:bg-[#F5F7FB]'
-                  }
+                  ${isUnread ? 'bg-[#F5F5FF] hover:bg-[#EEF5FF]' : 'hover:bg-[#F5F7FB]'}
                 `;
 
                 return (
-                  <div
-                    key={notification.id}
-                    className="border-b border-[#F5F7FB] last:border-0"
-                  >
+                  <div key={notification.id} className="border-b border-[#F5F7FB] last:border-0">
                     {link ? (
                       <Link
                         to={link}
@@ -370,17 +279,10 @@ const NotificationBell: React.FC = () => {
         </div>
       )}
 
-      {/* Animasi dropdown */}
       <style>{`
         @keyframes notif-dropdown-in {
-          0% {
-            opacity: 0;
-            transform: translateY(-4px) scale(0.98);
-          }
-          100% {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-          }
+          0% { opacity: 0; transform: translateY(-4px) scale(0.98); }
+          100% { opacity: 1; transform: translateY(0) scale(1); }
         }
         .notif-dropdown-in {
           animation: notif-dropdown-in 0.18s cubic-bezier(0.22, 0.9, 0.35, 1) both;

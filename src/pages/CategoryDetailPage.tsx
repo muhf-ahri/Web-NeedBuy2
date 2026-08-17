@@ -1,131 +1,232 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
+
 import Icon from '../components/ui/Icon';
-import DiscountBadge, { PriceWithDiscount } from '../components/ui/DiscountBadge';
+import ProductCard from '../components/ui/ProductCard';
+import CategoriesEmptyState from '../components/categories/CategoriesEmptyState';
+import Reveal from '../components/ui/Reveal';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
+
 import { useCategories } from '../hooks/useCategories';
 import { useCategoryDetail } from '../hooks/useCategoryDetail';
 import { useProductsByCategory } from '../hooks/useProductsByCategory';
-import { addToCart } from '../api/cart';
-import { useAuth } from '../contexts/AuthContext';
-import { useCart } from '../contexts/CartContext';
-import { useWishlist } from '../hooks/useWishlist';
 import type { Product } from '../types';
 
-const SORT_OPTIONS = ['Relevansi', 'Harga: Rendah ke Tinggi', 'Harga: Tinggi ke Rendah', 'Terbaru'];
+const SORT_OPTIONS = [
+  'Relevansi',
+  'Harga: Rendah ke Tinggi',
+  'Harga: Tinggi ke Rendah',
+  'Terbaru',
+];
 const CONDITIONS = ['Baru', 'Seperti Baru', 'Refurbished'];
 
-// ─── Sub-components ────────────────────────────────────────────────────────────
+/** Helper stagger — dibatasi biar tidak lama di banyak card */
+const stagger = (index: number, base = 60) => Math.min(index, 11) * base;
 
-const ProductCard: React.FC<{ product: Product; onNavigate: (slug: string) => void }> = ({ product, onNavigate }) => {
-  const [added, setAdded] = useState(false);
-  const navigate = useNavigate();
-  const { isAuthenticated } = useAuth();
-  const { refreshCartCount } = useCart();
-  const { saved: wishlisted, busy: wishlistBusy, toggle: toggleWishlist } = useWishlist(product.id);
-  const primaryImage = product.images.find(img => img.isPrimary)?.url || product.images[0]?.url || 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&q=80';
-  
-  const handleToggleWishlist = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (!isAuthenticated) {
-      navigate('/login');
-      return;
-    }
-    toggleWishlist();
-  };
-  const handleAddToCart = async (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (!isAuthenticated) {
-      navigate('/login');
-      return;
-    }
-    try {
-      await addToCart(product.id, 1);
-      await refreshCartCount();
-      setAdded(true);
-      setTimeout(() => setAdded(false), 1500);
-    } catch {
-      setAdded(false);
-    }
-  };
-
-  return (
-    <div
-      onClick={() => onNavigate(product.slug)}
-      className="group bg-white rounded-2xl border border-[#e0e3e5] overflow-hidden hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 flex flex-col cursor-pointer"
-    >
-      <div className="relative aspect-4/3 bg-[#f2f4f6] overflow-hidden">
-        <img
-          src={primaryImage}
-          alt={product.name}
-          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
-        />
-        <DiscountBadge discountPercent={product.discountPercent} price={product.price} />
-        <button
-          onClick={handleToggleWishlist}
-          disabled={wishlistBusy}
-          className="absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-sm hover:bg-white transition-colors"
-          aria-label="Simpan ke wishlist"
-        >
-          <Icon name="heart" size={14} className={`transition-colors ${wishlisted ? 'text-[#004ac6]' : 'text-[#737686]'}`} />
-        </button>
-      </div>
-      <div className="p-3.5 flex flex-col flex-1">
-        <span className="block truncate text-[11px] font-semibold text-[#004ac6] uppercase tracking-wide">
-          {product.seller.storeName}
-        </span>
-        <h3 className="mt-1 text-[13px] font-semibold text-[#191c1e] leading-snug line-clamp-2 flex-1">
-          {product.name}
-        </h3>
-        <div className="flex items-center gap-1 mt-1">
-          <svg className="w-3 h-3 text-[#ffb020] fill-[#ffb020] shrink-0" viewBox="0 0 16 16">
-            <path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.192L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z" />
-          </svg>
-          <span className="text-[11px] text-[#737686]">{product.rating}</span>
-        </div>
-        <div className="mt-2 flex items-end justify-between gap-1">
-          <PriceWithDiscount price={product.price} discountPercent={product.discountPercent} />
-          <button
-            onClick={handleAddToCart}
-            className="w-8 h-8 shrink-0 rounded-full bg-[#191c1e] hover:bg-[#004ac6] text-white flex items-center justify-center transition-colors duration-200"
-            aria-label="Tambah ke keranjang"
-          >
-            {added ? <Icon name="check" size={14} className="" /> : <Icon name="cart" size={14} className="" />}
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const FilterSection: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => (
-  <div className="py-4 border-b border-[#e0e3e5] last:border-0">
-    <p className="text-[11px] font-bold text-[#737686] uppercase tracking-wider mb-3">{title}</p>
+/** Section filter — dipakai di sidebar desktop & drawer mobile */
+const FilterSection: React.FC<{ title: string; children: React.ReactNode }> = ({
+  title,
+  children,
+}) => (
+  <div className="border-b border-[#F5F7FB] py-4 last:border-0">
+    <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.14em] text-[#737A87]">
+      {title}
+    </p>
     {children}
   </div>
 );
 
-// ─── Page ──────────────────────────────────────────────────────────────────────
+/**
+ * Isi filter (kategori radio + price + kondisi).
+ * Dipakai di sidebar desktop DAN drawer mobile biar konsisten.
+ */
+const FilterBody: React.FC<{
+  rootCategories: any[];
+  currentSlug: string;
+  catLoading: boolean;
+  priceMin: string;
+  priceMax: string;
+  activeConditions: string[];
+  onCategoryChange: (slug: string) => void;
+  onPriceMinChange: (v: string) => void;
+  onPriceMaxChange: (v: string) => void;
+  onToggleCondition: (cond: string) => void;
+  onClearAll: () => void;
+  hasActive: boolean;
+}> = ({
+  rootCategories,
+  currentSlug,
+  catLoading,
+  priceMin,
+  priceMax,
+  activeConditions,
+  onCategoryChange,
+  onPriceMinChange,
+  onPriceMaxChange,
+  onToggleCondition,
+  onClearAll,
+  hasActive,
+}) => {
+  const inputCls =
+    'w-full rounded-lg border border-[#E8ECF4] bg-[#F5F7FB] pl-7 pr-2 py-2 text-[12px] text-[#20242D] outline-none placeholder:text-[#A2A8B3] transition-all focus:border-[#538CDB] focus:bg-white focus:shadow-[0_3px_10px_rgba(83,140,219,0.10)]';
+
+  return (
+    <div>
+      <div className="mb-3 flex items-center justify-between">
+        <p className="text-[13px] font-bold text-[#20242D]">Filter</p>
+        {hasActive && (
+          <button
+            type="button"
+            onClick={onClearAll}
+            className="text-[11px] font-semibold text-[#538CDB] hover:underline"
+          >
+            Reset
+          </button>
+        )}
+      </div>
+
+      {/* Pindah kategori (radio — navigate ke slug lain) */}
+      <FilterSection title="Pindah Kategori">
+        <div className="space-y-1.5">
+          {catLoading
+            ? Array.from({ length: 5 }).map((_, i) => (
+                <div key={i} className="h-4 w-28 animate-pulse rounded-full bg-[#F5F7FB]" />
+              ))
+            : rootCategories.map((cat) => {
+                const active = cat.slug === currentSlug;
+                return (
+                  <button
+                    key={cat.slug}
+                    type="button"
+                    onClick={() => onCategoryChange(cat.slug)}
+                    className="group flex w-full items-center gap-2 text-left"
+                  >
+                    <span
+                      className={`
+                        flex h-4 w-4 shrink-0 items-center justify-center
+                        rounded-full border transition-colors
+                        ${
+                          active
+                            ? 'border-[#538CDB] bg-[#538CDB]'
+                            : 'border-[#D8DEE9] group-hover:border-[#538CDB]'
+                        }
+                      `}
+                    >
+                      {active && (
+                        <span className="h-1.5 w-1.5 rounded-full bg-white" />
+                      )}
+                    </span>
+                    <span
+                      className={`
+                        truncate text-[13px] transition-colors
+                        ${
+                          active
+                            ? 'font-semibold text-[#538CDB]'
+                            : 'text-[#434655] group-hover:text-[#20242D]'
+                        }
+                      `}
+                    >
+                      {cat.name}
+                    </span>
+                  </button>
+                );
+              })}
+        </div>
+      </FilterSection>
+
+      {/* Rentang harga */}
+      <FilterSection title="Rentang Harga">
+        <div className="flex items-center gap-2">
+          <div className="relative flex-1">
+            <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[11px] font-semibold text-[#737A87]">
+              Rp
+            </span>
+            <input
+              type="number"
+              inputMode="numeric"
+              placeholder="Min"
+              value={priceMin}
+              onChange={(e) => onPriceMinChange(e.target.value)}
+              className={`${inputCls} [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none`}
+            />
+          </div>
+          <span className="text-[12px] text-[#A2A8B3]">–</span>
+          <div className="relative flex-1">
+            <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[11px] font-semibold text-[#737A87]">
+              Rp
+            </span>
+            <input
+              type="number"
+              inputMode="numeric"
+              placeholder="Maks"
+              value={priceMax}
+              onChange={(e) => onPriceMaxChange(e.target.value)}
+              className={`${inputCls} [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none`}
+            />
+          </div>
+        </div>
+      </FilterSection>
+
+      {/* Kondisi */}
+      <FilterSection title="Kondisi">
+        <div className="flex flex-wrap gap-2">
+          {CONDITIONS.map((cond) => {
+            const active = activeConditions.includes(cond);
+            return (
+              <button
+                key={cond}
+                type="button"
+                onClick={() => onToggleCondition(cond)}
+                className={`
+                  rounded-full border px-3 py-1.5 text-[11px] font-semibold
+                  transition-all duration-200 active:scale-[0.97]
+                  ${
+                    active
+                      ? 'border-[#538CDB] bg-[#538CDB] text-white shadow-[0_4px_12px_rgba(83,140,219,0.25)]'
+                      : 'border-[#E8ECF4] bg-white text-[#434655] hover:border-[#538CDB] hover:text-[#538CDB]'
+                  }
+                `}
+              >
+                {cond}
+              </button>
+            );
+          })}
+        </div>
+      </FilterSection>
+    </div>
+  );
+};
+
 const CategoryDetailPage: React.FC = () => {
   const { slug = 'technology' } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const handleNavigate = (productSlug: string) => navigate(`/products/${productSlug}`);
 
-  // Fetch category detail from API
   const { category, loading: catLoading, notFound } = useCategoryDetail(slug);
-  // Fetch all categories for sidebar
   const { categories: allCategories } = useCategories();
   const rootCategories = allCategories.filter((c) => !c.parentId);
-  
-  // Fetch products by category from API
-  const { products: apiProducts, loading: productsLoading, error: productsError, categoryName } = useProductsByCategory(slug);
-  
-  // Filter state
+
+  const {
+    products: apiProducts,
+    loading: productsLoading,
+    error: productsError,
+    categoryName,
+  } = useProductsByCategory(slug);
+
   const [priceMin, setPriceMin] = useState('');
   const [priceMax, setPriceMax] = useState('');
   const [sortBy, setSortBy] = useState(SORT_OPTIONS[0]);
   const [activeConditions, setActiveConditions] = useState<string[]>([]);
+  const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
+
+  /* Lock body scroll saat drawer mobile terbuka */
+  useEffect(() => {
+    document.body.style.overflow = mobileFilterOpen ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileFilterOpen]);
 
   const toggleCondition = (cond: string) => {
     setActiveConditions((prev) =>
@@ -139,18 +240,17 @@ const CategoryDetailPage: React.FC = () => {
     setActiveConditions([]);
   };
 
-  // Navigate to different category when filter radio clicked
   const handleCategoryChange = (targetSlug: string) => {
     if (targetSlug !== slug) {
       navigate(`/categories/${targetSlug}`);
     }
   };
 
-  // Apply price filter + sort to API products
+  const hasActiveFilters = Boolean(priceMin || priceMax || activeConditions.length > 0);
+
   const filtered = useMemo(() => {
     let list = [...apiProducts];
-    
-    // Apply price filter
+
     if (priceMin || priceMax) {
       const min = priceMin ? parseInt(priceMin) : 0;
       const max = priceMax ? parseInt(priceMax) : Infinity;
@@ -159,204 +259,361 @@ const CategoryDetailPage: React.FC = () => {
         return price >= min && price <= max;
       });
     }
-    
-    // Kondisi: tanpa pilihan berarti semua kondisi ikut tampil.
+
     if (activeConditions.length > 0) {
       list = list.filter((p) => activeConditions.includes(p.condition ?? 'Baru'));
     }
 
-    // Apply sort
     if (sortBy === 'Harga: Rendah ke Tinggi') {
       list.sort((a, b) => parseInt(a.price) - parseInt(b.price));
     } else if (sortBy === 'Harga: Tinggi ke Rendah') {
       list.sort((a, b) => parseInt(b.price) - parseInt(a.price));
     } else if (sortBy === 'Terbaru') {
-      list.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+      list.sort(
+        (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      );
     }
-    
+
     return list;
   }, [apiProducts, priceMin, priceMax, activeConditions, sortBy]);
 
+  const pageTitle = category?.name || categoryName || slug;
+
   return (
-    <div className="min-h-screen flex flex-col bg-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+    <div
+      className="min-h-screen flex flex-col bg-[#F5F5FF]"
+      style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+    >
       <Navbar />
 
-      <main className="flex-1 max-w-[1600px] mx-auto w-full px-5 sm:px-10 py-8">
-        <div className="flex gap-8 items-start">
-
-          {/* ── Filter Sidebar ── */}
-          <aside className="hidden lg:block w-56 shrink-0 sticky top-24">
-            <div className="flex items-center justify-between mb-2">
-              <h2 className="text-[15px] font-bold text-[#191c1e]">Filter</h2>
-              {(priceMin || priceMax || activeConditions.length > 0) && (
-                <button onClick={clearAll} className="text-[12px] text-[#004ac6] hover:underline">
-                  Clear All
-                </button>
-              )}
-            </div>
-
-            {/* Category radio — navigates to the selected category */}
-            <FilterSection title="Kategori">
-              <div className="space-y-2">
-                {rootCategories.length === 0
-                  ? Array.from({ length: 5 }).map((_, i) => (
-                      <div key={i} className="h-4 bg-[#e0e3e5] rounded-full animate-pulse w-28" />
-                    ))
-                  : rootCategories.map((cat) => {
-                      const active = cat.slug === slug;
-                      return (
-                        <button
-                          key={cat.slug}
-                          onClick={() => handleCategoryChange(cat.slug)}
-                          className="flex items-center gap-2 w-full text-left group"
-                        >
-                          <span
-                            className={`w-4 h-4 rounded-full border flex items-center justify-center transition-colors shrink-0 ${
-                              active ? 'border-[#004ac6] bg-[#004ac6]' : 'border-[#c3c6d7] group-hover:border-[#004ac6]'
-                            }`}
-                          >
-                            {active && <span className="w-1.5 h-1.5 rounded-full bg-white" />}
-                          </span>
-                          <span
-                            className={`text-[13px] transition-colors ${
-                              active ? 'text-[#004ac6] font-semibold' : 'text-[#434655] group-hover:text-[#191c1e]'
-                            }`}
-                          >
-                            {cat.name}
-                          </span>
-                        </button>
-                      );
-                    })}
+      <main className="flex-1 mx-auto w-full max-w-[1600px] px-4 py-8 sm:px-8 lg:px-10">
+        <div className="flex items-start gap-6 lg:gap-8">
+          {/* ── Desktop Sidebar — sticky + scroll independen ── */}
+          <aside
+            className="
+              sticky top-24 hidden w-60 shrink-0 lg:block
+              max-h-[calc(100vh-7.5rem)] overflow-y-auto overscroll-contain
+              pb-2 pr-2
+              [scrollbar-width:thin]
+              [scrollbar-color:#D8DEE9_transparent]
+              [&::-webkit-scrollbar]:w-1.5
+              [&::-webkit-scrollbar-track]:bg-transparent
+              [&::-webkit-scrollbar-thumb]:rounded-full
+              [&::-webkit-scrollbar-thumb]:bg-[#D8DEE9]
+            "
+          >
+            <Reveal direction="left" duration={700}>
+              <div
+                className="
+                  rounded-[20px] border border-white/80 bg-white/95 p-4
+                  shadow-[0_8px_24px_rgba(32,36,45,0.06)] backdrop-blur-sm
+                "
+              >
+                <FilterBody
+                  rootCategories={rootCategories}
+                  currentSlug={slug}
+                  catLoading={catLoading}
+                  priceMin={priceMin}
+                  priceMax={priceMax}
+                  activeConditions={activeConditions}
+                  onCategoryChange={handleCategoryChange}
+                  onPriceMinChange={setPriceMin}
+                  onPriceMaxChange={setPriceMax}
+                  onToggleCondition={toggleCondition}
+                  onClearAll={clearAll}
+                  hasActive={hasActiveFilters}
+                />
               </div>
-            </FilterSection>
-
-            {/* Price range filter */}
-            <FilterSection title="Rentang Harga">
-              <div className="flex items-center gap-2">
-                <div className="flex-1 relative">
-                  <span className="absolute left-2 top-1/2 -translate-y-1/2 text-[11px] text-[#737686]">Rp</span>
-                  <input
-                    type="number"
-                    placeholder="Min"
-                    value={priceMin}
-                    onChange={(e) => setPriceMin(e.target.value)}
-                    className="w-full pl-7 pr-2 py-1.5 text-[12px] border border-[#c3c6d7] rounded-lg outline-none focus:border-[#004ac6] transition-colors"
-                  />
-                </div>
-                <span className="text-[#737686] text-[12px]">–</span>
-                <div className="flex-1 relative">
-                  <span className="absolute left-2 top-1/2 -translate-y-1/2 text-[11px] text-[#737686]">Rp</span>
-                  <input
-                    type="number"
-                    placeholder="Maks"
-                    value={priceMax}
-                    onChange={(e) => setPriceMax(e.target.value)}
-                    className="w-full pl-7 pr-2 py-1.5 text-[12px] border border-[#c3c6d7] rounded-lg outline-none focus:border-[#004ac6] transition-colors"
-                  />
-                </div>
-              </div>
-            </FilterSection>
-
-            {/* Condition */}
-            <FilterSection title="Kondisi">
-              <div className="flex flex-wrap gap-2">
-                {CONDITIONS.map((cond) => (
-                  <button
-                    key={cond}
-                    onClick={() => toggleCondition(cond)}
-                    className={`px-3 py-1 rounded-full text-[12px] font-medium border transition-colors duration-200 ${
-                      activeConditions.includes(cond)
-                        ? 'bg-[#191c1e] text-white border-[#191c1e]'
-                        : 'bg-white text-[#434655] border-[#c3c6d7] hover:border-[#004ac6] hover:text-[#004ac6]'
-                    }`}
-                  >
-                    {cond}
-                  </button>
-                ))}
-              </div>
-            </FilterSection>
+            </Reveal>
           </aside>
 
-          {/* ── Main Content ── */}
-          <div className="flex-1 min-w-0">
-            {/* Header row */}
-            <div className="flex items-center justify-between mb-6 gap-4 flex-wrap">
-              <div>
+          {/* ── Main ── */}
+          <div className="min-w-0 flex-1">
+            {/* Breadcrumb + Header */}
+            <Reveal direction="up">
+              <div className="mb-6">
                 <Link
                   to="/categories"
-                  className="inline-flex items-center gap-1.5 text-[13px] text-[#434655] hover:text-[#004ac6] transition-colors mb-2"
+                  className="
+                    mb-2 inline-flex items-center gap-1.5 rounded-full
+                    bg-white px-3 py-1.5 text-[12px] font-semibold
+                    text-[#737A87] shadow-sm transition-all duration-200
+                    hover:text-[#538CDB]
+                    hover:shadow-[0_4px_12px_rgba(83,140,219,0.12)]
+                  "
                 >
-                  <Icon name="arrowLeft" size={14} className="" />
+                  <Icon name="arrowLeft" size={13} />
                   Semua Kategori
                 </Link>
+
                 {catLoading ? (
-                  <div className="h-6 w-40 bg-[#e0e3e5] rounded-full animate-pulse mt-1" />
+                  <div className="mt-2 space-y-2">
+                    <div className="h-7 w-56 animate-pulse rounded-full bg-[#E8ECF4]" />
+                    <div className="h-3 w-80 animate-pulse rounded-full bg-[#E8ECF4]" />
+                  </div>
                 ) : notFound ? (
-                  <h1 className="text-[22px] font-bold text-[#ba1a1a]">Kategorinya nggak ketemu</h1>
+                  <h1 className="mt-2 text-[22px] font-bold text-[#FF4646] sm:text-[26px]">
+                    Kategorinya nggak ketemu
+                  </h1>
                 ) : (
                   <>
-                    <h1 className="text-[22px] font-bold text-[#191c1e]">
-                      {category?.name || categoryName || slug}
+                    <div className="mt-2 flex items-center gap-2">
+                      <span
+                        className="
+                          inline-flex items-center gap-1.5 rounded-full
+                          bg-[#538CDB]/10 px-2.5 py-1
+                        "
+                      >
+                        <span className="h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
+                        <p
+                          className="
+                            text-[9px] font-bold uppercase tracking-[0.20em]
+                            text-[#538CDB]
+                          "
+                        >
+                          Kategori
+                        </p>
+                      </span>
+                    </div>
+                    <h1
+                      className="
+                        mt-2 text-[24px] font-extrabold leading-tight
+                        tracking-tight text-[#20242D] sm:text-[28px]
+                      "
+                    >
+                      {pageTitle}
                     </h1>
                     {category?.description && (
-                      <p className="text-[13px] text-[#737686] mt-0.5">{category.description}</p>
+                      <p className="mt-1.5 max-w-2xl text-[13px] text-[#737A87]">
+                        {category.description}
+                      </p>
                     )}
                   </>
                 )}
-                <p className="text-[13px] text-[#737686] mt-1">
-                  Menampilkan {productsLoading ? '...' : `${filtered.length} hasil`}
-                </p>
               </div>
+            </Reveal>
 
-              {/* Sort */}
-              <div className="relative shrink-0">
-                <select
-                  value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value)}
-                  className="appearance-none bg-white border border-[#c3c6d7] rounded-full pl-3 pr-8 py-1.5 text-[13px] text-[#191c1e] outline-none focus:border-[#004ac6] cursor-pointer transition-colors"
-                >
-                  {SORT_OPTIONS.map((opt) => <option key={opt}>{opt}</option>)}
-                </select>
-                <Icon name="chevronDown" size={14} className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-[#737686]" />
+            {/* Top bar: tombol filter mobile + count + sort */}
+            <Reveal direction="up">
+              <div className="mb-5 flex flex-wrap items-center justify-between gap-3 sm:mb-6">
+                <div className="flex min-w-0 items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setMobileFilterOpen(true)}
+                    className="
+                      flex items-center gap-1.5 rounded-full border
+                      border-[#E8ECF4] bg-white px-3.5 py-1.5 text-[13px]
+                      font-semibold text-[#20242D] transition-colors
+                      hover:border-[#538CDB] hover:text-[#538CDB] lg:hidden
+                    "
+                  >
+                    <Icon name="filter" size={14} />
+                    Filter
+                    {hasActiveFilters && (
+                      <span
+                        className="
+                          flex h-4 min-w-4 items-center justify-center
+                          rounded-full bg-[#538CDB] px-1 text-[9px]
+                          font-bold text-white
+                        "
+                      >
+                        {activeConditions.length + (priceMin || priceMax ? 1 : 0)}
+                      </span>
+                    )}
+                  </button>
+                  <p className="truncate text-[12px] text-[#737A87] sm:text-[13px]">
+                    Menampilkan{' '}
+                    {productsLoading ? '...' : `${filtered.length} produk`}
+                  </p>
+                </div>
+
+                <div className="relative w-full sm:w-auto sm:shrink-0">
+                  <select
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value)}
+                    className="
+                      w-full cursor-pointer appearance-none rounded-full
+                      border border-[#E8ECF4] bg-white py-1.5 pl-4 pr-9
+                      text-[13px] font-medium text-[#20242D] outline-none
+                      transition-colors focus:border-[#538CDB] sm:w-auto
+                    "
+                  >
+                    {SORT_OPTIONS.map((opt) => (
+                      <option key={opt}>{opt}</option>
+                    ))}
+                  </select>
+                  <Icon
+                    name="chevronDown"
+                    size={14}
+                    className="
+                      pointer-events-none absolute right-3 top-1/2
+                      -translate-y-1/2 text-[#737A87]
+                    "
+                  />
+                </div>
               </div>
-            </div>
+            </Reveal>
 
-            {/* Product grid */}
+            {/* Product grid / empty / loading */}
             {productsLoading ? (
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4">
-                {[...Array(6)].map((_, i) => (
-                  <div key={i} className="bg-white rounded-2xl border border-[#e0e3e5] overflow-hidden animate-pulse">
-                    <div className="aspect-4/3 bg-[#f2f4f6]" />
-                    <div className="p-4">
-                      <div className="h-4 bg-[#f2f4f6] rounded mb-2 w-20" />
-                      <div className="h-5 bg-[#f2f4f6] rounded mb-2" />
-                      <div className="h-4 bg-[#f2f4f6] rounded mb-3 w-24" />
-                      <div className="flex justify-between">
-                        <div className="h-6 bg-[#f2f4f6] rounded w-16" />
-                        <div className="w-8 h-8 rounded-full bg-[#f2f4f6]" />
+              <div
+                className="
+                  grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4
+                  md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6
+                "
+              >
+                {Array.from({ length: 12 }).map((_, i) => (
+                  <Reveal key={i} direction="up" delay={stagger(i)} className="h-full">
+                    <div
+                      className="
+                        h-full animate-pulse overflow-hidden rounded-2xl
+                        border border-white/80 bg-white/95
+                      "
+                    >
+                      <div className="aspect-[4/3] bg-[#F5F7FB]" />
+                      <div className="space-y-2 p-3.5">
+                        <div className="h-3 w-20 rounded-full bg-[#F5F7FB]" />
+                        <div className="h-4 rounded-full bg-[#F5F7FB]" />
+                        <div className="h-3 w-24 rounded-full bg-[#F5F7FB]" />
+                        <div className="flex justify-between">
+                          <div className="h-6 w-16 rounded-full bg-[#F5F7FB]" />
+                          <div className="h-8 w-8 rounded-full bg-[#F5F7FB]" />
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </Reveal>
                 ))}
               </div>
             ) : filtered.length === 0 ? (
-              <div className="text-center py-20 text-[#737686]">
-                {productsError ? (
-                  <p>Gagal memuat produk: {productsError}</p>
-                ) : (
-                  <p>Nggak ada produk yang cocok sama filter ini.</p>
-                )}
-              </div>
+              <Reveal direction="up">
+                <CategoriesEmptyState
+                  variant={
+                    productsError
+                      ? 'error'
+                      : hasActiveFilters
+                        ? 'no-match'
+                        : 'detail-empty'
+                  }
+                  onRetry={() => navigate(0)}
+                  onClearFilters={clearAll}
+                  onExplore={() => navigate('/')}
+                  onBack={() => navigate('/categories')}
+                />
+              </Reveal>
             ) : (
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4">
-                {filtered.map((p) => <ProductCard key={p.id} product={p} onNavigate={handleNavigate} />)}
+              <div
+                className="
+                  grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4
+                  md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6
+                "
+              >
+                {filtered.map((p: Product, index) => (
+                  <Reveal
+                    key={p.id}
+                    direction="up"
+                    delay={stagger(index)}
+                    className="h-full"
+                  >
+                    <ProductCard product={p} onNavigate={handleNavigate} />
+                  </Reveal>
+                ))}
               </div>
             )}
           </div>
         </div>
       </main>
 
+      {/* ── Mobile Filter Drawer ── */}
+      {mobileFilterOpen && (
+        <div className="fixed inset-0 z-50 lg:hidden">
+          <div
+            className="absolute inset-0 bg-[#20242D]/40 backdrop-blur-sm"
+            onClick={() => setMobileFilterOpen(false)}
+          />
+          <div
+            className="
+              drawer-enter absolute bottom-0 right-0 top-0 flex w-80
+              max-w-[85vw] flex-col bg-white
+              shadow-[-12px_0_40px_rgba(32,36,45,0.15)]
+            "
+          >
+            {/* Header drawer */}
+            <div className="flex items-center justify-between border-b border-[#E8ECF4] px-5 py-4">
+              <span className="flex items-center gap-2 text-[15px] font-bold text-[#20242D]">
+                <span
+                  className="
+                    flex h-6 w-6 items-center justify-center rounded-lg
+                    bg-[#538CDB]/10
+                  "
+                >
+                  <Icon name="filter" size={13} className="text-[#538CDB]" />
+                </span>
+                Filter
+              </span>
+              <button
+                type="button"
+                onClick={() => setMobileFilterOpen(false)}
+                className="
+                  rounded-full p-1.5 text-[#737A87] transition-colors
+                  hover:bg-[#F5F7FB] hover:text-[#20242D]
+                "
+                aria-label="Tutup filter"
+              >
+                <Icon name="close" size={16} />
+              </button>
+            </div>
+
+            {/* Body drawer */}
+            <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-4">
+              <FilterBody
+                rootCategories={rootCategories}
+                currentSlug={slug}
+                catLoading={catLoading}
+                priceMin={priceMin}
+                priceMax={priceMax}
+                activeConditions={activeConditions}
+                onCategoryChange={(s) => {
+                  handleCategoryChange(s);
+                  setMobileFilterOpen(false);
+                }}
+                onPriceMinChange={setPriceMin}
+                onPriceMaxChange={setPriceMax}
+                onToggleCondition={toggleCondition}
+                onClearAll={clearAll}
+                hasActive={hasActiveFilters}
+              />
+            </div>
+
+            {/* Footer drawer */}
+            <div className="border-t border-[#E8ECF4] p-4">
+              <button
+                type="button"
+                onClick={() => setMobileFilterOpen(false)}
+                className="
+                  w-full rounded-full bg-[#538CDB] py-2.5 text-[14px]
+                  font-semibold text-white
+                  shadow-[0_7px_18px_rgba(83,140,219,0.25)] transition-all
+                  hover:bg-[#467BC7] active:scale-[0.99]
+                "
+              >
+                Terapkan Filter
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <Footer />
+
+      <style>{`
+        @keyframes drawer-enter {
+          0% { transform: translateX(100%); }
+          100% { transform: translateX(0); }
+        }
+        .drawer-enter {
+          animation: drawer-enter 0.28s cubic-bezier(0.22, 0.9, 0.35, 1) both;
+        }
+      `}</style>
     </div>
   );
 };

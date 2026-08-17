@@ -459,45 +459,6 @@ const HomePage: React.FC = () => {
       <div className="mt-auto">
         <Footer />
       </div>
-
-      {/* ─── Global CSS untuk scroll reveal ─── */}
-      <style>{`
-        /* Base state: elemen belum terlihat */
-        .reveal {
-          will-change: transform, opacity;
-          transition-timing-function: cubic-bezier(0.22, 0.9, 0.35, 1);
-          transition-property: transform, opacity;
-        }
-
-        /* Dari bawah */
-        .reveal-up { opacity: 0; transform: translateY(24px); }
-        .reveal-up.is-visible { opacity: 1; transform: translateY(0); }
-
-        /* Dari atas */
-        .reveal-down { opacity: 0; transform: translateY(-24px); }
-        .reveal-down.is-visible { opacity: 1; transform: translateY(0); }
-
-        /* Dari kiri */
-        .reveal-left { opacity: 0; transform: translateX(-24px); }
-        .reveal-left.is-visible { opacity: 1; transform: translateX(0); }
-
-        /* Dari kanan */
-        .reveal-right { opacity: 0; transform: translateX(24px); }
-        .reveal-right.is-visible { opacity: 1; transform: translateX(0); }
-
-        /* Scale in */
-        .reveal-scale { opacity: 0; transform: scale(0.96); }
-        .reveal-scale.is-visible { opacity: 1; transform: scale(1); }
-
-        /* Fade only */
-        .reveal-fade { opacity: 0; }
-        .reveal-fade.is-visible { opacity: 1; }
-
-        /* Reduce motion — langsung tampil tanpa animasi */
-        @media (prefers-reduced-motion: reduce) {
-          .reveal { opacity: 1 !important; transform: none !important; }
-        }
-      `}</style>
     </div>
   );
 };

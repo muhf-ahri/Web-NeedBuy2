@@ -28,6 +28,7 @@ import NeedPayPage from './pages/NeedPayPage';
 import TrackingPage from './pages/TrackingPage';
 import MessagesPage from './pages/MessagesPage';
 import LegalPage from './pages/LegalPage';
+import NotificationPage from './pages/NotificationsPage'
 
 // Seller pages
 import RequireSeller from './components/RequireSeller';
@@ -125,6 +126,9 @@ function App() {
               {/* Orders — halaman pembeli. `OrdersPage` (jamak) itu panel admin,
                   bukan ini: tertukar sejak OrdersPage.tsx di-rename ke OrderPage.tsx. */}
               <Route path="/orders" element={<OrderPage />} />
+
+              {/* Notifikasi */}
+              <Route path="/notifications" element={< NotificationPage/>}/>
 
               {/* Kupon */}
               <Route path="/coupons" element={<CouponsPage />} />

@@ -10,6 +10,7 @@ import PromoCarousel from '../components/layout/PromoCarousel';
 import Footer from '../components/layout/Footer';
 import ProductCard from '../components/ui/ProductCard';
 import Reveal from '../components/ui/Reveal';
+import CategoriesEmptyState from '../components/categories/CategoriesEmptyState'
 
 import { useCategories } from '../hooks/useCategories';
 import { useProducts } from '../hooks/useProducts';
@@ -297,41 +298,16 @@ const CategoriesPage: React.FC = () => {
                   </Reveal>
                 ))}
               </div>
-            ) : apiProducts.length === 0 ? (
+           ) : apiProducts.length === 0 ? (
               <Reveal direction="up">
-                <div className="rounded-[24px] border border-dashed border-[#D8DEE9] bg-white/70 py-16 text-center backdrop-blur-sm">
-                  <div
-                    className="
-                      mx-auto flex h-14 w-14 items-center justify-center
-                      rounded-full bg-gradient-to-br from-[#5B93E0] to-[#3A66AC]
-                      shadow-[0_8px_20px_rgba(83,140,219,0.30)]
-                    "
-                  >
-                    <Icon name="search" size={22} className="text-white" />
-                  </div>
-                  <p className="mt-4 text-[14px] font-semibold text-[#20242D]">
-                    {productsError ? 'Gagal memuat produk' : 'Tidak ada produk yang cocok'}
-                  </p>
-                  <p className="mx-auto mt-1 max-w-sm px-4 text-[12px] text-[#737A87]">
-                    {productsError
-                      ? productsError
-                      : 'Coba ubah atau hapus beberapa filter.'}
-                  </p>
-                  {hasActiveFilters && !productsError && (
-                    <button
-                      onClick={clearAll}
-                      className="
-                        mt-4 inline-flex items-center gap-1.5 rounded-full
-                        bg-[#538CDB] px-4 py-2 text-[12px] font-semibold
-                        text-white shadow-[0_6px_16px_rgba(83,140,219,0.25)]
-                        transition-all hover:bg-[#467BC7] active:scale-[0.99]
-                      "
-                    >
-                      <Icon name="close" size={12} />
-                      Hapus semua filter
-                    </button>
-                  )}
-                </div>
+                <CategoriesEmptyState
+                  variant={
+                    productsError ? 'error' : hasActiveFilters ? 'no-match' : 'empty'
+                  }
+                  onRetry={() => navigate(0)}          // reload halaman
+                  onClearFilters={clearAll}            // hapus semua filter
+                  onExplore={() => navigate('/')}      // ke beranda
+                />
               </Reveal>
             ) : (
               <>
