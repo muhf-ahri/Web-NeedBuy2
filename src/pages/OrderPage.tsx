@@ -11,6 +11,7 @@ import OrdersHistoryList from '../components/orders/OrderHistoryList';
 import OrderDetailModal from '../components/orders/OrderDetailModal';
 import ReviewModal from '../components/orders/ReviewModal';
 import OrdersEmptyState from '../components/orders/OrdersEmptyState';
+import OrdersErrorState from '../components/orders/OrdersErrorState'; 
 import OrdersLoginPrompt from '../components/orders/OrdersLoginPormpt';
 
 import {
@@ -42,6 +43,7 @@ const OrderPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabKey>('ALL');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [reloadKey, setReloadKey] = useState(0); // ✏️ EDIT: state retry
 
   const [selected, setSelected] = useState<Order | null>(null);
   const [busy, setBusy] = useState(false);
@@ -56,6 +58,12 @@ const OrderPage: React.FC = () => {
   const [uploadingMedia, setUploadingMedia] = useState(false);
 
   const isAuthed = !!getAccessToken();
+
+  /* ✏️ EDIT: handler retry — dipanggil dari card Waduh.png */
+  const retry = () => {
+    setError(null);
+    setReloadKey((k) => k + 1);
+  };
 
   const fetchOrders = useCallback(async () => {
     if (!isAuthed) return;
@@ -75,9 +83,10 @@ const OrderPage: React.FC = () => {
     }
   }, [isAuthed, activeTab]);
 
+  /* ✏️ EDIT: tambah reloadKey ke deps supaya retry memicu refetch */
   useEffect(() => {
     fetchOrders();
-  }, [fetchOrders]);
+  }, [fetchOrders, reloadKey]);
 
   const openDetail = async (id: string) => {
     setError(null);
@@ -292,11 +301,15 @@ const OrderPage: React.FC = () => {
     return <OrdersLoginPrompt />;
   }
 
+  /* ✏️ EDIT: deteksi gagal total (fetch awal gagal & belum ada data) */
+  const showFatalError = !loading && Boolean(error) && orders.length === 0;
+
   return (
     <OrdersShell>
       <OrdersHero totalCount={orders.length} loading={loading} />
 
-      {error && (
+      {/* ✏️ EDIT: banner error INLINE untuk aksi (bukan fatal) + close button */}
+      {error && !showFatalError && (
         <div
           className="
             mb-5 flex items-center gap-3 rounded-2xl border
@@ -311,13 +324,25 @@ const OrderPage: React.FC = () => {
           >
             <Icon name="alert" size={15} className="text-[#FF4646]" />
           </span>
-          <p className="text-[13px] font-medium text-[#C73535]">{error}</p>
+          <p className="flex-1 text-[13px] font-medium text-[#C73535]">
+            {error}
+          </p>
+          <button
+            type="button"
+            onClick={() => setError(null)}
+            className="shrink-0 rounded-full p-1 text-[#C73535] hover:bg-white"
+            aria-label="Tutup"
+          >
+            <Icon name="close" size={14} />
+          </button>
         </div>
       )}
 
       <OrdersTabs activeTab={activeTab} onChange={setActiveTab} />
 
+      {/* ✏️ EDIT: 4 cabang conditional */}
       {loading ? (
+        /* 1. LOADING → skeleton */
         <div className="space-y-4">
           {Array.from({ length: 3 }).map((_, i) => (
             <div
@@ -329,11 +354,17 @@ const OrderPage: React.FC = () => {
             />
           ))}
         </div>
+      ) : showFatalError ? (
+        /* 2. GAGAL TOTAL → card Waduh.png dengan retry */
+        <OrdersErrorState onRetry={retry} errorMessage={error ?? undefined} />
       ) : orders.length === 0 ? (
+        /* 3. TERHUBUNG + KOSONG → card bebek (empty state per tab) */
         <OrdersEmptyState tab={activeTab} />
       ) : activeTab === 'HISTORY' ? (
+        /* 4a. TERHUBUNG + ADA DATA + tab HISTORY */
         <OrdersHistoryList orders={orders} onOpen={openDetail} />
       ) : (
+        /* 4b. TERHUBUNG + ADA DATA + tab lainnya */
         <div className="space-y-3">
           {orders.map((order) => (
             <OrderCard key={order.id} order={order} onOpen={openDetail} />

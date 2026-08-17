@@ -8,6 +8,7 @@ import NeedsCreateForm from '../components/needs/NeedsCreateForm';
 import NeedCard from '../components/needs/NeedCard';
 import NeedsEmptyState from '../components/needs/NeedsEmptyState';
 import NeedsLoginPrompt from '../components/needs/NeedsLoginPrompt';
+import NeedsErrorState from '../components/needs/NeedsErrorState';
 
 import {
   getNeeds,
@@ -31,6 +32,7 @@ const NeedsPage: React.FC = () => {
   const [needs, setNeeds] = useState<Need[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [reloadKey, setReloadKey] = useState(0);
 
   // Create need flow
   const [showCreate, setShowCreate] = useState(false);
@@ -50,6 +52,12 @@ const NeedsPage: React.FC = () => {
 
   const isAuthed = !!getAccessToken();
 
+  /* ── Retry: naikkan reloadKey → fetchNeeds jalan ulang ── */
+  const retry = () => {
+    setError(null);
+    setReloadKey((k) => k + 1);
+  };
+
   const fetchNeeds = useCallback(async () => {
     if (!isAuthed) {
       setLoading(false);
@@ -67,9 +75,10 @@ const NeedsPage: React.FC = () => {
     }
   }, [isAuthed]);
 
+  /* ── Refetch saat reloadKey berubah (selain fetchNeeds sendiri) ── */
   useEffect(() => {
     fetchNeeds();
-  }, [fetchNeeds]);
+  }, [fetchNeeds, reloadKey]);
 
   const handleCreate = async () => {
     if (!rawInput.trim()) return;
@@ -178,6 +187,9 @@ const NeedsPage: React.FC = () => {
     return <NeedsLoginPrompt />;
   }
 
+  /* ── Deteksi gagal total (fetch awal gagal & belum ada data) ── */
+  const showFatalError = !loading && Boolean(error) && needs.length === 0;
+
   return (
     <NeedsShell>
       <NeedsHero
@@ -185,8 +197,8 @@ const NeedsPage: React.FC = () => {
         onToggle={() => setShowCreate((s) => !s)}
       />
 
-      {/* Error global */}
-      {error && (
+      {/* ── Banner error untuk aksi (create/confirm/dll) — bisa di-dismiss ── */}
+      {error && !showFatalError && (
         <div
           className="
             mb-5 flex items-center gap-3 rounded-2xl border
@@ -201,7 +213,17 @@ const NeedsPage: React.FC = () => {
           >
             <Icon name="alert" size={15} className="text-[#FF4646]" />
           </span>
-          <p className="text-[13px] font-medium text-[#C73535]">{error}</p>
+          <p className="flex-1 text-[13px] font-medium text-[#C73535]">
+            {error}
+          </p>
+          <button
+            type="button"
+            onClick={() => setError(null)}
+            className="shrink-0 rounded-full p-1 text-[#C73535] hover:bg-white"
+            aria-label="Tutup"
+          >
+            <Icon name="close" size={14} />
+          </button>
         </div>
       )}
 
@@ -219,8 +241,9 @@ const NeedsPage: React.FC = () => {
         />
       )}
 
-      {/* List */}
+      {/* ── Konten utama: 4 cabang ── */}
       {loading ? (
+        /* 1. LOADING → skeleton */
         <div className="space-y-4">
           {Array.from({ length: 2 }).map((_, i) => (
             <div
@@ -232,9 +255,14 @@ const NeedsPage: React.FC = () => {
             />
           ))}
         </div>
+      ) : showFatalError ? (
+        /* 2. GAGAL TOTAL → card Waduh.png */
+        <NeedsErrorState onRetry={retry} errorMessage={error ?? undefined} />
       ) : needs.length === 0 && !showCreate ? (
+        /* 3. TERHUBUNG + KOSONG → card bebek (Ayo.png) */
         <NeedsEmptyState onWrite={() => setShowCreate(true)} />
       ) : (
+        /* 4. TERHUBUNG + ADA DATA → list need cards */
         <div className="space-y-4">
           {needs.map((need) => (
             <NeedCard

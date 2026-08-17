@@ -1,4 +1,3 @@
-// src/components/ui/Icon.tsx
 import React from 'react';
 
 export type IconName =
@@ -37,6 +36,9 @@ export type IconName =
   | 'trending'
   | 'alert'
   | 'arrowRight'
+  | 'arrowUp'      
+  | 'arrowDown'    
+  | 'moon'         
   | 'dashboard'
   | 'product'
   | 'analytics'
@@ -64,7 +66,8 @@ export type IconName =
   | 'roles'
   | 'image'
   | 'file-text'
-  | 'globe';
+  | 'globe'
+  | 'menu';
 
 const PATHS: Record<IconName, string> = {
   chevronUp: 'M4.5 15.5 12 8l7.5 7.5a1.2 1.2 0 0 0 1.7-1.7l-8.3-8.3a1.2 1.2 0 0 0-1.7 0l-8.3 8.3a1.2 1.2 0 0 0 1.7 1.7Z',
@@ -119,37 +122,29 @@ const PATHS: Record<IconName, string> = {
   arrowRight:
     'M13.3 4.3a1.1 1.1 0 0 1 1.55 0l6.5 6.5a1.1 1.1 0 0 1 0 1.55l-6.5 6.5a1.1 1.1 0 1 1-1.55-1.55l4.62-4.62H3.6a1.1 1.1 0 0 1 0-2.2h14.32L13.3 5.85a1.1 1.1 0 0 1 0-1.55Z',
 
-  // ===== IKON BARU UNTUK SELLER =====
-  // Dashboard — solid fill
+  // ✏️ BARU: arrowUp — panah naik (untuk GrowthBadge, changePoint)
+  arrowUp:
+    'M12 3.5a1 1 0 0 1 .7.3l6 6a1 1 0 0 1-1.4 1.4L13 6.9V20a1 1 0 1 1-2 0V6.9L6.7 11.2a1 1 0 0 1-1.4-1.4l6-6a1 1 0 0 1 .7-.3Z',
+
+  // ✏️ BARU: arrowDown — panah turun (untuk GrowthBadge negatif)
+  arrowDown:
+    'M12 20.5a1 1 0 0 1-.7-.3l-6-6a1 1 0 0 1 1.4-1.4L11 17.1V4a1 1 0 1 1 2 0v13.1l4.3-4.3a1 1 0 0 1 1.4 1.4l-6 6a1 1 0 0 1-.7.3Z',
+
+  // ✏️ BARU: moon — bulan (untuk VacationToggle saat mode libur nonaktif)
+  moon:
+    'M21.5 15a1 1 0 0 1-1.1.7 8.5 8.5 0 0 1-7.1-12.8 1 1 0 0 1 1.7-1 9.5 9.5 0 0 0 7.5 11.4 1 1 0 0 1-1 1.7ZM12 7.5a6.5 6.5 0 0 0 .5 13c2.5 0 4.7-1.5 5.7-3.7a7.5 7.5 0 0 1-6.2-9.3Z',
+
+  // ===== IKON UNTUK SELLER =====
   dashboard: 'M4 4h6v6H4V4zm10 0h6v6h-6V4zM4 14h6v6H4v-6zm10 0h6v6h-6v-6z',
-
-  // Product — solid fill (icon paket/box)
   product: 'M12 2L2 7v10l10 5 10-5V7l-10-5zm0 2.18l7.6 3.8L12 11.82 4.4 7.98 12 4.18zM4 9.5v7.6l7 3.5v-7.6L4 9.5zm16 0l-7 3.5v7.6l7-3.5V9.5z',
-
-  // Analytics — solid fill (chart bar)
   analytics: 'M21 19H3V5h2v12h16v2zm-4-8h2v6h-2v-6zm-4-4h2v10h-2V7zm-4 2h2v6H9V9zM5 13h2v2H5v-2z',
-
-  // Settings — solid fill (gear/roda gigi) — full color
   settings: 'M12 2a1 1 0 0 1 .94.66l.28.84c.24.08.46.2.66.34l.82-.36a1 1 0 0 1 1.28.48l.44.78a1 1 0 0 1-.12 1.18l-.54.66c.04.26.06.52.06.78s-.02.52-.06.78l.54.66a1 1 0 0 1 .12 1.18l-.44.78a1 1 0 0 1-1.28.48l-.82-.36c-.2.14-.42.26-.66.34l-.28.84A1 1 0 0 1 12 20a1 1 0 0 1-.94-.66l-.28-.84a2.5 2.5 0 0 1-.66-.34l-.82.36a1 1 0 0 1-1.28-.48l-.44-.78a1 1 0 0 1 .12-1.18l.54-.66a3.5 3.5 0 0 1 0-1.56l-.54-.66A1 1 0 0 1 8.08 8.9l.44-.78a1 1 0 0 1 1.28-.48l.82.36c.2-.14.42-.26.66-.34l.28-.84A1 1 0 0 1 12 2zm0 5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7z',
-
-  // Shop — solid fill (toko)
   shop: 'M4 3h16a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm0 6h16v10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9zm3 2v4h4v-4H7z',
-
-  // Upload — solid fill
   upload: 'M12 3a1 1 0 0 1 1 1v8.59l2.3-2.29a1 1 0 1 1 1.4 1.42l-4 4a1 1 0 0 1-1.4 0l-4-4a1 1 0 1 1 1.4-1.42l2.3 2.29V4a1 1 0 0 1 1-1zM5 19h14a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2z',
-
-  // Edit — solid fill (pencil)
   edit: 'M18.5 3.5l2 2L7 19l-3 1 1-3L18.5 3.5zM20 2l-1.5 1.5 2 2L22 4l-2-2z',
-
-  // Eye — solid fill (lihat)
   eye: 'M12 5C7 5 3 8 1 12c2 4 6 7 11 7s9-3 11-7c-2-4-6-7-11-7zm0 10a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0-2a1 1 0 1 0 0-2 1 1 0 0 0 0 2z',
-
-  // Bell — solid fill (lonceng notifikasi)
   bell: 'M12 22a2 2 0 0 0 2-2h-4a2 2 0 0 0 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z',
-
-  // wallet — solid fill (dompet)
   wallet: 'M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm0 4v10h16V8H4zm4 2h8v2H8v-2z',
-
   users: 'M12 12a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9zm0 1.8c-3.9 0-7 2.2-7 4.9 0 1.3 1 2.3 2.3 2.3h9.4c1.3 0 2.3-1 2.3-2.3 0-2.7-3.1-4.9-7-4.9z',
   store: 'M4 3h16a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm0 6h16v10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9zm3 2v4h4v-4H7z',
   categories: 'M5 5h6v6H5V5zm0 8h6v6H5v-6zm8-8h6v6h-6V5zm0 8h6v6h-6v-6z',
@@ -167,6 +162,7 @@ const PATHS: Record<IconName, string> = {
   image: 'M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm0 2v9.6l4.3-4.3a1 1 0 0 1 1.4 0l3.1 3.1 2.5-2.5a1 1 0 0 1 1.4 0L20 14.6V6H4zm4.5 1.5a1.75 1.75 0 1 1 0 3.5 1.75 1.75 0 0 1 0-3.5z',
   'file-text': 'M6 2h8l6 6v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm7 1.8V9h5.2L13 3.8zM8 12h8v2H8v-2zm0 4h8v2H8v-2z',
   globe: 'M12 2.5a9.5 9.5 0 1 0 0 19 9.5 9.5 0 0 0 0-19zm0 2c1.3 0 2.6 1.9 3.2 4.8H8.8C9.4 6.4 10.7 4.5 12 4.5zM6.8 9.3a13.6 13.6 0 0 0-.3 2.7c0 .93.1 1.84.3 2.7H4.7a7.5 7.5 0 0 1 0-5.4h2.1zm1.7 0h7a12.5 12.5 0 0 1 0 5.4h-7a12.5 12.5 0 0 1 0-5.4zm8.7 0h2.1a7.5 7.5 0 0 1 0 5.4h-2.1c.2-.86.3-1.77.3-2.7 0-.93-.1-1.84-.3-2.7zM8.8 16.4h6.4c-.6 2.9-1.9 4.8-3.2 4.8s-2.6-1.9-3.2-4.8z',
+  menu: 'M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z',
 };
 
 interface IconProps extends React.SVGProps<SVGSVGElement> {

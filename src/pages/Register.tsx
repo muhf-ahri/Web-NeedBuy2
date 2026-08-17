@@ -8,7 +8,7 @@ import SocialLogin from '../components/forms/SocialLogin';
 
 import { register, setAuthTokens } from '../api/auth';
 
-import loginImg from '../assets/login.png';
+import loginImg from '../assets/login.jpg';
 
 const Register: React.FC = () => {
   const [loading, setLoading] = useState(false);

@@ -7,6 +7,7 @@ import Footer from '../layout/Footer';
 import PlanCard from './PlanCard';
 import CategoryModal from './CategoryModal';
 import PlansLoginPrompt from './PlansLoginPrompt';
+import PlansEmptyState from './PlansEmptyState';
 
 import { useShoppingPlans } from '../../hooks/useShoppingPlans';
 import { getAccessToken } from '../../api/auth';
@@ -20,13 +21,12 @@ const PlansListView: React.FC<PlansListViewProps> = ({ onSelect }) => {
   const [showCreate, setShowCreate] = useState(false);
   const isAuthed = !!getAccessToken();
 
-  /* ── BELUM LOGIN → langsung tampilkan card login,
-        list view tidak di-render sama sekali ── */
+  /* ── Belum login → card login bergambar ── */
   if (!isAuthed) {
     return <PlansLoginPrompt />;
   }
 
-  /* ── Loading skeleton (hanya untuk user login) ── */
+  /* ── Loading skeleton ── */
   if (loading) {
     return (
       <Shell>
@@ -43,7 +43,6 @@ const PlansListView: React.FC<PlansListViewProps> = ({ onSelect }) => {
     );
   }
 
-  /* ── SUDAH LOGIN → list view normal ── */
   return (
     <Shell>
       {/* Header */}
@@ -81,78 +80,27 @@ const PlansListView: React.FC<PlansListViewProps> = ({ onSelect }) => {
             lampu — terus checkout sekaligus tanpa centang satu-satu.
           </p>
         </div>
-
-        <button
-          type="button"
-          onClick={() => setShowCreate(true)}
-          className="
-            flex h-11 shrink-0 items-center gap-2 rounded-full
-            bg-[#538CDB] px-5 text-[13px] font-semibold text-white
-            shadow-[0_7px_18px_rgba(83,140,219,0.25)] transition-all
-            duration-200 hover:bg-[#467BC7]
-            hover:shadow-[0_9px_22px_rgba(83,140,219,0.30)]
-            active:scale-[0.99]
-          "
-        >
-          <Icon name="plus" size={15} />
-          Buat Kategori
-        </button>
       </div>
 
-      {/* Error */}
-      {error && (
-        <div
-          className="
-            mt-6 flex items-center gap-2 rounded-2xl border
-            border-[#FF4646]/20 bg-[#FFF0F0] px-4 py-3 backdrop-blur-sm
-          "
-        >
-          <Icon name="alert" size={15} className="shrink-0 text-[#FF4646]" />
-          <p className="text-[13px] font-medium text-[#C73535]">{error}</p>
+      {/* ── ERROR → card Waduh.png (ganti banner merah polos) ── */}
+      {error ? (
+        <div className="mt-8">
+          <PlansEmptyState
+            variant="error"
+            errorMessage={error}
+            onRetry={refetch}
+          />
         </div>
-      )}
-
-      {/* Empty / Grid */}
-      {plans.length === 0 ? (
-        <div
-          className="
-            mt-8 rounded-[24px] border border-dashed border-[#D8DEE9]
-            bg-white/70 py-16 text-center backdrop-blur-sm
-          "
-        >
-          <div
-            className="
-              mx-auto flex h-16 w-16 items-center justify-center
-              rounded-full bg-gradient-to-br from-[#5B93E0] to-[#3A66AC]
-              shadow-[0_8px_20px_rgba(83,140,219,0.30)]
-            "
-          >
-            <Icon name="grid" size={24} className="text-white" />
-          </div>
-          <p className="mt-4 text-[16px] font-bold text-[#20242D]">
-            Belum ada rencana belanja
-          </p>
-          <p className="mx-auto mt-1 max-w-sm text-[13px] text-[#737A87]">
-            Bikin kategori pertamamu supaya belanja lebih terarah dan hemat
-            waktu.
-          </p>
-          <button
-            type="button"
-            onClick={() => setShowCreate(true)}
-            className="
-              mt-5 inline-flex items-center gap-2 rounded-full bg-[#538CDB]
-              px-5 py-2.5 text-[13px] font-semibold text-white
-              shadow-[0_7px_18px_rgba(83,140,219,0.25)] transition-all
-              hover:bg-[#467BC7]
-              hover:shadow-[0_9px_22px_rgba(83,140,219,0.30)]
-              active:scale-[0.99]
-            "
-          >
-            <Icon name="plus" size={14} />
-            Buat Kategori Pertama
-          </button>
+      ) : plans.length === 0 ? (
+        /* ── EMPTY → card Ayo.png (ganti dashed lama) ── */
+        <div className="mt-8">
+          <PlansEmptyState
+            variant="empty"
+            onCreate={() => setShowCreate(true)}
+          />
         </div>
       ) : (
+        /* ── Grid kategori ── */
         <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
           {plans.map((plan) => (
             <PlanCard
@@ -164,7 +112,7 @@ const PlansListView: React.FC<PlansListViewProps> = ({ onSelect }) => {
         </div>
       )}
 
-      {/* Modal buat kategori — hanya muncul saat sudah login */}
+      {/* Modal buat kategori */}
       {showCreate && (
         <CategoryModal
           onClose={() => setShowCreate(false)}

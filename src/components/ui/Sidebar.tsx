@@ -11,38 +11,48 @@ export interface SidebarItem {
 interface SidebarProps {
   items: SidebarItem[];
   className?: string;
-  /** Judul opsional yang ditampilkan di header drawer mobile */
+  /** Judul header drawer mobile */
   title?: string;
+  /**
+   * Controlled mode: buka/tutup drawer dikontrol parent
+   * (mis. tombol hamburger di header). Kalau tidak diisi,
+   * Sidebar render trigger sendiri (perilaku lama).
+   */
+  mobileOpen?: boolean;
+  onMobileClose?: () => void;
 }
 
-/**
- * Sidebar dengan dua mode otomatis:
- * - Desktop (lg+): static sidebar dengan pill sliding
- * - Mobile (<lg): tombol hamburger + drawer slide dari kiri
- *
- * Animasi pill sliding dipertahankan di kedua mode.
- */
 const Sidebar: React.FC<SidebarProps> = ({
   items,
   className = '',
   title = 'Menu',
+  mobileOpen,
+  onMobileClose,
 }) => {
   const location = useLocation();
   const listRef = useRef<HTMLUListElement>(null);
+
+  const isControlled = typeof mobileOpen === 'boolean';
+  const [internalOpen, setInternalOpen] = useState(false);
+  const drawerOpen = isControlled ? mobileOpen : internalOpen;
+
+  const closeDrawer = () => {
+    if (isControlled) onMobileClose?.();
+    else setInternalOpen(false);
+  };
 
   /* Posisi pill indicator */
   const [pill, setPill] = useState<{ top: number; height: number } | null>(null);
   const [mounted, setMounted] = useState(false);
 
-  /* Drawer state (mobile) */
-  const [drawerOpen, setDrawerOpen] = useState(false);
-
   /* Auto-close drawer saat route berubah */
   useEffect(() => {
-    setDrawerOpen(false);
+    if (isControlled) onMobileClose?.();
+    else setInternalOpen(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
 
-  /* Lock body scroll saat drawer mobile terbuka */
+  /* Lock body scroll saat drawer terbuka */
   useEffect(() => {
     document.body.style.overflow = drawerOpen ? 'hidden' : '';
     return () => {
@@ -50,7 +60,7 @@ const Sidebar: React.FC<SidebarProps> = ({
     };
   }, [drawerOpen]);
 
-  /* Hitung posisi pill setiap pathname / items berubah */
+  /* Hitung posisi pill */
   useEffect(() => {
     const list = listRef.current;
     if (!list) return;
@@ -76,7 +86,7 @@ const Sidebar: React.FC<SidebarProps> = ({
     }
   }, [location.pathname, items, mounted, drawerOpen]);
 
-  /* ── Isi sidebar (di-render di desktop & drawer mobile) ── */
+  /* ── Isi sidebar (dipakai di desktop & drawer) ── */
   const sidebarContent = (
     <nav
       className={`
@@ -104,7 +114,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                 : 'none',
             }}
           >
-            <span className="absolute left-0 top-1/2 h-5 w-0.5 -translate-y-1/2 rounded-full bg-[#538CDB]" />
+            <span className="absolute left-0 top-1/2 h-5 w-0.5 -translate-y-1/2 rounded-r-full bg-[#538CDB]" />
             <span className="absolute -left-1 top-1/2 h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-[#FFD500]" />
           </span>
         )}
@@ -174,70 +184,71 @@ const Sidebar: React.FC<SidebarProps> = ({
       {/* ── Desktop: static sidebar ── */}
       <div className="hidden lg:block">{sidebarContent}</div>
 
-      {/* ── Mobile: hamburger trigger + drawer ── */}
-      <div className="lg:hidden">
-        {/* Trigger hamburger */}
-        <button
-          type="button"
-          onClick={() => setDrawerOpen(true)}
-          className="
-            flex items-center gap-2 rounded-full border border-[#E8ECF4]
-            bg-white/95 px-3.5 py-2 text-[13px] font-semibold text-[#20242D]
-            shadow-sm backdrop-blur-sm transition-all duration-200
-            hover:border-[#538CDB] hover:text-[#538CDB]
-            hover:shadow-[0_4px_14px_rgba(83,140,219,0.12)]
-            active:scale-[0.98]
-          "
-          aria-label="Buka menu"
-        >
-          <span className="flex h-5 w-5 items-center justify-center rounded-md bg-[#538CDB]/10 text-[#538CDB]">
-            <Icon name="menu" size={14} />
-          </span>
-          Menu
-        </button>
+      {/* ── Trigger legacy — HANYA kalau tidak controlled ── */}
+      {!isControlled && (
+        <div className="lg:hidden">
+          <button
+            type="button"
+            onClick={() => setInternalOpen(true)}
+            className="
+              flex h-9 w-9 items-center justify-center rounded-full border
+              border-[#E8ECF4] bg-white/95 text-[#20242D] shadow-sm
+              backdrop-blur-sm transition-all duration-200
+              hover:border-[#538CDB] hover:text-[#538CDB] active:scale-[0.95]
+            "
+            aria-label="Buka menu"
+          >
+            <Icon name="menu" size={16} />
+          </button>
+        </div>
+      )}
 
-        {/* Drawer */}
-        {drawerOpen && (
-          <div className="fixed inset-0 z-50 lg:hidden">
-            {/* Backdrop */}
-            <div
-              className="absolute inset-0 bg-[#20242D]/40 backdrop-blur-sm sidebar-backdrop-enter"
-              onClick={() => setDrawerOpen(false)}
-            />
+      {/* ── Drawer mobile ── */}
+      {drawerOpen && (
+        <div className="fixed inset-0 z-50 lg:hidden">
+          {/* Backdrop */}
+          <div
+            className="absolute inset-0 bg-[#20242D]/40 backdrop-blur-sm sidebar-backdrop-enter"
+            onClick={closeDrawer}
+          />
 
-            {/* Panel drawer — slide dari kiri */}
-            <aside className="sidebar-drawer-enter absolute bottom-0 left-0 top-0 flex w-72 max-w-[85vw] flex-col bg-[#F5F5FF] shadow-[12px_0_40px_rgba(32,36,45,0.15)]">
-              {/* Header drawer */}
-              <div className="flex items-center justify-between border-b border-[#E8ECF4] px-5 py-4">
-                <span className="flex items-center gap-2 text-[15px] font-bold text-[#20242D]">
-                  <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-[#538CDB]/10">
-                    <Icon name="grid" size={13} className="text-[#538CDB]" />
-                  </span>
-                  {title}
+          {/* Panel drawer — slide dari kiri */}
+          <aside
+            className="
+              sidebar-drawer-enter absolute bottom-0 left-0 top-0 flex w-72
+              max-w-[85vw] flex-col bg-[#F5F5FF]
+              shadow-[12px_0_40px_rgba(32,36,45,0.15)]
+            "
+          >
+            {/* Header drawer */}
+            <div className="flex items-center justify-between border-b border-[#E8ECF4] px-5 py-4">
+              <span className="flex items-center gap-2 text-[15px] font-bold text-[#20242D]">
+                <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-[#538CDB]/10">
+                  <Icon name="grid" size={13} className="text-[#538CDB]" />
                 </span>
-                <button
-                  type="button"
-                  onClick={() => setDrawerOpen(false)}
-                  className="
-                    rounded-full p-1.5 text-[#737A87] transition-colors
-                    hover:bg-white hover:text-[#20242D]
-                  "
-                  aria-label="Tutup menu"
-                >
-                  <Icon name="close" size={16} />
-                </button>
-              </div>
+                {title}
+              </span>
+              <button
+                type="button"
+                onClick={closeDrawer}
+                className="
+                  rounded-full p-1.5 text-[#737A87] transition-colors
+                  hover:bg-white hover:text-[#20242D]
+                "
+                aria-label="Tutup menu"
+              >
+                <Icon name="close" size={16} />
+              </button>
+            </div>
 
-              {/* Body drawer */}
-              <div className="flex-1 overflow-y-auto overscroll-contain p-4">
-                {sidebarContent}
-              </div>
-            </aside>
-          </div>
-        )}
-      </div>
+            {/* Body drawer */}
+            <div className="flex-1 overflow-y-auto overscroll-contain p-4">
+              {sidebarContent}
+            </div>
+          </aside>
+        </div>
+      )}
 
-      {/* Animasi drawer mobile */}
       <style>{`
         @keyframes sidebar-drawer-enter {
           0% { transform: translateX(-100%); }
@@ -246,7 +257,6 @@ const Sidebar: React.FC<SidebarProps> = ({
         .sidebar-drawer-enter {
           animation: sidebar-drawer-enter 0.3s cubic-bezier(0.22, 0.9, 0.35, 1) both;
         }
-
         @keyframes sidebar-backdrop-enter {
           0% { opacity: 0; }
           100% { opacity: 1; }

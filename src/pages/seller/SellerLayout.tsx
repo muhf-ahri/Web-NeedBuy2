@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import Sidebar from '../../components/ui/Sidebar';
@@ -14,8 +14,6 @@ const navItems: SidebarItem[] = [
   { to: '/seller/orders', label: 'Order Masuk', icon: 'orders' },
   { to: '/seller/chats', label: 'Chat Pembeli', icon: 'chat' },
   { to: '/seller/analytics', label: 'Analitik Toko', icon: 'analytics' },
-  // Dompet penjual sama dengan dompet akun — halaman NeedPay yang sudah ada
-  // dipakai ulang, bukan bikin halaman saldo kedua yang isinya sama.
   { to: '/seller/wallet', label: 'Saldo & Penarikan', icon: 'wallet' },
   { to: '/seller/settings', label: 'Setelan', icon: 'settings' },
 ];
@@ -26,6 +24,7 @@ interface SellerLayoutProps {
 
 const SellerLayout: React.FC<SellerLayoutProps> = ({ children }) => {
   const { user } = useAuth();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <div
@@ -45,30 +44,41 @@ const SellerLayout: React.FC<SellerLayoutProps> = ({ children }) => {
             sm:px-6 lg:px-10
           "
         >
-          {/* Logo + branding */}
-          <Link
-            to="/seller/dashboard"
-            className="group flex items-center gap-2.5"
-          >
-              {/* Dekorasi titik kuning signature */}
-            <div className="flex flex-col leading-none">
-              <span className="text-[15px] font-extrabold tracking-tight text-[#538CBD]">
-                NeedBuy
-              </span>
-              <span
-                className="
-                  mt-0.5 text-[9px] font-bold uppercase tracking-[0.18em]
-                  text-[#538CDB]
-                "
-              >
-                Seller Center
-              </span>
-            </div>
-          </Link>
+          {/* Kiri: hamburger (mobile) + logo */}
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen(true)}
+              className="
+                flex h-9 w-9 items-center justify-center rounded-full
+                text-[#20242D] transition-all duration-200
+                hover:bg-[#F5F7FB] hover:text-[#538CDB] active:scale-[0.95]
+                lg:hidden
+              "
+              aria-label="Buka menu"
+            >
+              <Icon name="menu" size={18} />
+            </button>
 
-          {/* Right side: Lihat Toko + Notification + Profile */}
+            <Link to="/seller/dashboard" className="group flex items-center gap-2.5">
+              <div className="flex flex-col leading-none">
+                <span className="text-[15px] font-extrabold tracking-tight text-[#538CDB]">
+                  NeedBuy
+                </span>
+                <span
+                  className="
+                    mt-0.5 text-[9px] font-bold uppercase tracking-[0.18em]
+                    text-[#538CDB]
+                  "
+                >
+                  Seller Center
+                </span>
+              </div>
+            </Link>
+          </div>
+
+          {/* Kanan: Lihat Toko + Notification + Profile */}
           <div className="flex items-center gap-2 sm:gap-3">
-            {/* Tombol "Lihat Toko" — pill button, hidden di mobile kecil */}
             <Link
               to="/"
               className="
@@ -85,27 +95,27 @@ const SellerLayout: React.FC<SellerLayoutProps> = ({ children }) => {
             </Link>
 
             <NotificationBell />
-            <ProfileDropdown
-              sellerName={user?.name ?? user?.username ?? 'Seller'}
-            />
+            <ProfileDropdown sellerName={user?.name ?? user?.username ?? 'Seller'} />
           </div>
         </div>
       </header>
 
-      {/* ── Body: sidebar + konten ──
-          - Mobile (<lg): flex-col → sidebar (hamburger trigger) di atas konten
-          - Desktop (lg+): flex-row → sidebar kiri (static), konten kanan
-      */}
+      {/* ── Body: sidebar + konten ── */}
       <div
         className="
           mx-auto flex max-w-7xl flex-col gap-4 px-4 py-6 sm:gap-5 sm:px-6
           lg:flex-row lg:gap-8 lg:px-10
         "
       >
-        {/* Sidebar container */}
+        {/* Sidebar container — drawer dikontrol dari header */}
         <div className="lg:w-60 lg:shrink-0">
           <div className="lg:sticky lg:top-24">
-            <Sidebar items={navItems} title="Menu Seller" />
+            <Sidebar
+              items={navItems}
+              title="Menu Seller"
+              mobileOpen={mobileMenuOpen}
+              onMobileClose={() => setMobileMenuOpen(false)}
+            />
           </div>
         </div>
 
