@@ -21,10 +21,8 @@ const SORT_OPTIONS = [
 ];
 const CONDITIONS = ['Baru', 'Seperti Baru', 'Refurbished'];
 
-/** Helper stagger — dibatasi biar tidak lama di banyak card */
 const stagger = (index: number, base = 60) => Math.min(index, 11) * base;
 
-/** Section filter — dipakai di sidebar desktop & drawer mobile */
 const FilterSection: React.FC<{ title: string; children: React.ReactNode }> = ({
   title,
   children,
@@ -37,10 +35,6 @@ const FilterSection: React.FC<{ title: string; children: React.ReactNode }> = ({
   </div>
 );
 
-/**
- * Isi filter (kategori radio + price + kondisi).
- * Dipakai di sidebar desktop DAN drawer mobile biar konsisten.
- */
 const FilterBody: React.FC<{
   rootCategories: any[];
   currentSlug: string;
@@ -86,7 +80,6 @@ const FilterBody: React.FC<{
         )}
       </div>
 
-      {/* Pindah kategori (radio — navigate ke slug lain) */}
       <FilterSection title="Pindah Kategori">
         <div className="space-y-1.5">
           {catLoading
@@ -135,7 +128,6 @@ const FilterBody: React.FC<{
         </div>
       </FilterSection>
 
-      {/* Rentang harga */}
       <FilterSection title="Rentang Harga">
         <div className="flex items-center gap-2">
           <div className="relative flex-1">
@@ -151,7 +143,7 @@ const FilterBody: React.FC<{
               className={`${inputCls} [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none`}
             />
           </div>
-          <span className="text-[12px] text-[#A2A8B3]">–</span>
+          <span className="text-[11px] font-medium text-[#A2A8B3]">s/d</span>
           <div className="relative flex-1">
             <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[11px] font-semibold text-[#737A87]">
               Rp
@@ -168,7 +160,6 @@ const FilterBody: React.FC<{
         </div>
       </FilterSection>
 
-      {/* Kondisi */}
       <FilterSection title="Kondisi">
         <div className="flex flex-wrap gap-2">
           {CONDITIONS.map((cond) => {
@@ -220,7 +211,6 @@ const CategoryDetailPage: React.FC = () => {
   const [activeConditions, setActiveConditions] = useState<string[]>([]);
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
 
-  /* Lock body scroll saat drawer mobile terbuka */
   useEffect(() => {
     document.body.style.overflow = mobileFilterOpen ? 'hidden' : '';
     return () => {
@@ -288,7 +278,6 @@ const CategoryDetailPage: React.FC = () => {
 
       <main className="flex-1 mx-auto w-full max-w-[1600px] px-4 py-8 sm:px-8 lg:px-10">
         <div className="flex items-start gap-6 lg:gap-8">
-          {/* ── Desktop Sidebar — sticky + scroll independen ── */}
           <aside
             className="
               sticky top-24 hidden w-60 shrink-0 lg:block
@@ -327,9 +316,7 @@ const CategoryDetailPage: React.FC = () => {
             </Reveal>
           </aside>
 
-          {/* ── Main ── */}
           <div className="min-w-0 flex-1">
-            {/* Breadcrumb + Header */}
             <Reveal direction="up">
               <div className="mb-6">
                 <Link
@@ -393,7 +380,6 @@ const CategoryDetailPage: React.FC = () => {
               </div>
             </Reveal>
 
-            {/* Top bar: tombol filter mobile + count + sort */}
             <Reveal direction="up">
               <div className="mb-5 flex flex-wrap items-center justify-between gap-3 sm:mb-6">
                 <div className="flex min-w-0 items-center gap-3">
@@ -454,7 +440,6 @@ const CategoryDetailPage: React.FC = () => {
               </div>
             </Reveal>
 
-            {/* Product grid / empty / loading */}
             {productsLoading ? (
               <div
                 className="
@@ -523,7 +508,6 @@ const CategoryDetailPage: React.FC = () => {
         </div>
       </main>
 
-      {/* ── Mobile Filter Drawer ── */}
       {mobileFilterOpen && (
         <div className="fixed inset-0 z-50 lg:hidden">
           <div
@@ -537,7 +521,6 @@ const CategoryDetailPage: React.FC = () => {
               shadow-[-12px_0_40px_rgba(32,36,45,0.15)]
             "
           >
-            {/* Header drawer */}
             <div className="flex items-center justify-between border-b border-[#E8ECF4] px-5 py-4">
               <span className="flex items-center gap-2 text-[15px] font-bold text-[#20242D]">
                 <span
@@ -563,7 +546,6 @@ const CategoryDetailPage: React.FC = () => {
               </button>
             </div>
 
-            {/* Body drawer */}
             <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-4">
               <FilterBody
                 rootCategories={rootCategories}
@@ -584,7 +566,6 @@ const CategoryDetailPage: React.FC = () => {
               />
             </div>
 
-            {/* Footer drawer */}
             <div className="border-t border-[#E8ECF4] p-4">
               <button
                 type="button"

@@ -1,4 +1,3 @@
-// src/pages/admin/PaymentsPage.tsx
 import React, { useCallback, useEffect, useState } from 'react';
 import AdminLayout from './AdminLayout';
 import FilterBar from '../../components/ui/filter/FilterBar';
@@ -55,7 +54,6 @@ const PaymentsPage: React.FC = () => {
     { label: 'Dikembalikan', value: 'REFUNDED' },
   ];
 
-  // Cuma dua metode yang benar-benar ada di sistem ini.
   const methodOptions = [
     { label: 'Semua Metode', value: '' },
     { label: 'Midtrans', value: 'MIDTRANS' },

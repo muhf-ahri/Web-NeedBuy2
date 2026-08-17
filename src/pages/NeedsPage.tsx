@@ -34,7 +34,6 @@ const NeedsPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [reloadKey, setReloadKey] = useState(0);
 
-  // Create need flow
   const [showCreate, setShowCreate] = useState(false);
   const [rawInput, setRawInput] = useState('');
   const [creating, setCreating] = useState(false);
@@ -44,7 +43,6 @@ const NeedsPage: React.FC = () => {
     clarificationQuestions: ClarificationItem[];
   } | null>(null);
 
-  // Recommendations
   const [activeNeedId, setActiveNeedId] = useState<string | null>(null);
   const [recs, setRecs] = useState<Recommendation[]>([]);
   const [recLoading, setRecLoading] = useState(false);
@@ -52,7 +50,6 @@ const NeedsPage: React.FC = () => {
 
   const isAuthed = !!getAccessToken();
 
-  /* ── Retry: naikkan reloadKey → fetchNeeds jalan ulang ── */
   const retry = () => {
     setError(null);
     setReloadKey((k) => k + 1);
@@ -75,7 +72,6 @@ const NeedsPage: React.FC = () => {
     }
   }, [isAuthed]);
 
-  /* ── Refetch saat reloadKey berubah (selain fetchNeeds sendiri) ── */
   useEffect(() => {
     fetchNeeds();
   }, [fetchNeeds, reloadKey]);
@@ -182,12 +178,10 @@ const NeedsPage: React.FC = () => {
     }
   };
 
-  /* ── Belum login ── */
   if (!isAuthed) {
     return <NeedsLoginPrompt />;
   }
 
-  /* ── Deteksi gagal total (fetch awal gagal & belum ada data) ── */
   const showFatalError = !loading && Boolean(error) && needs.length === 0;
 
   return (
@@ -197,7 +191,6 @@ const NeedsPage: React.FC = () => {
         onToggle={() => setShowCreate((s) => !s)}
       />
 
-      {/* ── Banner error untuk aksi (create/confirm/dll) — bisa di-dismiss ── */}
       {error && !showFatalError && (
         <div
           className="
@@ -227,7 +220,6 @@ const NeedsPage: React.FC = () => {
         </div>
       )}
 
-      {/* Create form */}
       {showCreate && (
         <NeedsCreateForm
           rawInput={rawInput}
@@ -241,9 +233,7 @@ const NeedsPage: React.FC = () => {
         />
       )}
 
-      {/* ── Konten utama: 4 cabang ── */}
       {loading ? (
-        /* 1. LOADING → skeleton */
         <div className="space-y-4">
           {Array.from({ length: 2 }).map((_, i) => (
             <div
@@ -256,13 +246,10 @@ const NeedsPage: React.FC = () => {
           ))}
         </div>
       ) : showFatalError ? (
-        /* 2. GAGAL TOTAL → card Waduh.png */
         <NeedsErrorState onRetry={retry} errorMessage={error ?? undefined} />
       ) : needs.length === 0 && !showCreate ? (
-        /* 3. TERHUBUNG + KOSONG → card bebek (Ayo.png) */
         <NeedsEmptyState onWrite={() => setShowCreate(true)} />
       ) : (
-        /* 4. TERHUBUNG + ADA DATA → list need cards */
         <div className="space-y-4">
           {needs.map((need) => (
             <NeedCard

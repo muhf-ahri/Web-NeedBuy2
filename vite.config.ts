@@ -8,6 +8,6 @@ export default defineConfig({
     tailwindcss()
   ],
   optimizeDeps: {
-    include: ['react', 'react-dom', 'react-router-dom', 'framer-motion', 'lucide-react', 'axios'],
+    include: ['react', 'react-dom', 'react-router-dom', 'framer-motion', 'axios'],
   },
 })

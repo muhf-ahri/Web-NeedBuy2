@@ -21,12 +21,10 @@ const PlansListView: React.FC<PlansListViewProps> = ({ onSelect }) => {
   const [showCreate, setShowCreate] = useState(false);
   const isAuthed = !!getAccessToken();
 
-  /* ── Belum login → card login bergambar ── */
   if (!isAuthed) {
     return <PlansLoginPrompt />;
   }
 
-  /* ── Loading skeleton ── */
   if (loading) {
     return (
       <Shell>
@@ -45,7 +43,7 @@ const PlansListView: React.FC<PlansListViewProps> = ({ onSelect }) => {
 
   return (
     <Shell>
-      {/* Header */}
+      
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div className="min-w-0">
           <div className="mb-2 flex items-center gap-2">
@@ -76,13 +74,12 @@ const PlansListView: React.FC<PlansListViewProps> = ({ onSelect }) => {
             Rencana Belanja
           </h1>
           <p className="mt-2 max-w-xl text-[13px] leading-relaxed text-[#737A87]">
-            Kelompokkan belanjaanmu per kategori — mis. "Kamar" isi kipas &
-            lampu — terus checkout sekaligus tanpa centang satu-satu.
+            Kelompokkan belanjaanmu per kategori, misalnya "Kamar" isi kipas dan
+            lampu, lalu checkout sekaligus dengan mudah.
           </p>
         </div>
       </div>
 
-      {/* ── ERROR → card Waduh.png (ganti banner merah polos) ── */}
       {error ? (
         <div className="mt-8">
           <PlansEmptyState
@@ -92,7 +89,7 @@ const PlansListView: React.FC<PlansListViewProps> = ({ onSelect }) => {
           />
         </div>
       ) : plans.length === 0 ? (
-        /* ── EMPTY → card Ayo.png (ganti dashed lama) ── */
+        
         <div className="mt-8">
           <PlansEmptyState
             variant="empty"
@@ -100,7 +97,7 @@ const PlansListView: React.FC<PlansListViewProps> = ({ onSelect }) => {
           />
         </div>
       ) : (
-        /* ── Grid kategori ── */
+        
         <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
           {plans.map((plan) => (
             <PlanCard
@@ -112,7 +109,6 @@ const PlansListView: React.FC<PlansListViewProps> = ({ onSelect }) => {
         </div>
       )}
 
-      {/* Modal buat kategori */}
       {showCreate && (
         <CategoryModal
           onClose={() => setShowCreate(false)}
@@ -127,7 +123,6 @@ const PlansListView: React.FC<PlansListViewProps> = ({ onSelect }) => {
   );
 };
 
-/* ── Shell wrapper ── */
 const Shell: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <div
     className="min-h-screen flex flex-col bg-[#F5F5FF]"
@@ -141,7 +136,6 @@ const Shell: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   </div>
 );
 
-/* ── Skeleton header ── */
 const HeaderSkeleton: React.FC = () => (
   <div className="space-y-3">
     <div className="h-5 w-32 animate-pulse rounded-full bg-[#E8ECF4]" />

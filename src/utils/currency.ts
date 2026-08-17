@@ -1,5 +1,3 @@
-// src/utils/currency.ts
-// Central helper — format angka ke Rupiah Indonesia
 export const formatRupiah = (amount: number | string): string => {
   const num = typeof amount === 'string' ? parseFloat(amount) : amount;
   return new Intl.NumberFormat('id-ID', {

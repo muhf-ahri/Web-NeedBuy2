@@ -1,6 +1,3 @@
-// src/types/index.ts
-
-// ─── API Response wrapper ──────────────────────────────────────────────────────
 export interface ApiResponse<T> {
   success: boolean;
   data: T;
@@ -17,9 +14,8 @@ export interface ApiErrorResponse {
   requestId?: string;
 }
 
-// ─── Category ──────────────────────────────────────────────────────────────────
 export interface Category {
-  id: string;         // UUID dari backend
+  id: string;         
   name: string;
   slug: string;
   parentId?: string | null;
@@ -27,22 +23,21 @@ export interface Category {
   description?: string;
 }
 
-// ─── Product (from backend API) ───────────────────────────────────────
 export interface Product {
   id: string;
   name: string;
   slug: string;
-  price: string; // API returns string
+  price: string; 
   stock: number;
-  rating: string; // API returns string
+  rating: string; 
   soldCount: number;
-  /** 0 = tidak sedang promo. Harga coret = price / (1 - discountPercent/100). */
+  
   discountPercent: number;
-  /** Diskon grosir: minimal beli agar potongannya berlaku. null = tidak ada penawaran. */
+  
   bulkMinQty: number | null;
-  /** Potongan grosir dalam persen. Selalu sepasang dengan bulkMinQty. */
+  
   bulkDiscountPercent: number | null;
-  /** Hanya ada di response list. Produk tanpa atribut `kondisi` dikirim sebagai "Baru". */
+  
   condition?: string;
   isActive: boolean;
   createdAt: string;
@@ -74,14 +69,12 @@ export interface PaginatedResponse<T> {
   };
 }
 
-// Additional product detail fields (from /products/:slug)
 export interface ProductAttribute {
   id: string;
   attrKey: string;
   attrValue: string;
 }
 
-/** Profil toko di halaman produk — lebih lengkap dari `Product['seller']`. */
 export interface ProductDetailSeller {
   id: string;
   storeName: string;

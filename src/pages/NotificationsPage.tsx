@@ -35,7 +35,6 @@ const NotificationsPage: React.FC = () => {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
 
-  /* ── Load initial list ── */
   const loadInitial = useCallback(async () => {
     setLoading(true);
     setError(null);
@@ -59,7 +58,6 @@ const NotificationsPage: React.FC = () => {
     loadInitial();
   }, [loadInitial]);
 
-  /* ── Load more (pagination) ── */
   const loadMore = async () => {
     if (loadingMore || !hasMore) return;
     setLoadingMore(true);
@@ -76,7 +74,6 @@ const NotificationsPage: React.FC = () => {
     }
   };
 
-  /* ── Realtime via socket ── */
   useNotificationSocket((payload) => {
     if (payload.event === 'unread-count') {
       setUnreadCount(payload.data.unreadCount);
@@ -88,7 +85,6 @@ const NotificationsPage: React.FC = () => {
     }
   });
 
-  /* ── Actions ── */
   const handleRead = async (id: string) => {
     setNotifications((prev) =>
       prev.map((n) => (n.id === id ? { ...n, read: true } : n))
@@ -111,7 +107,6 @@ const NotificationsPage: React.FC = () => {
     }
   };
 
-  /* ── Derived data ── */
   const filtered =
     tab === 'UNREAD' ? notifications.filter((n) => !n.read) : notifications;
 
@@ -128,7 +123,7 @@ const NotificationsPage: React.FC = () => {
       <Navbar />
 
       <main className="flex-1 mx-auto w-full max-w-4xl px-4 py-8 sm:px-8">
-        {/* ── Header ── */}
+
         <Reveal direction="up">
           <div className="mb-6">
             <div className="mb-2 flex items-center gap-2">
@@ -151,15 +146,13 @@ const NotificationsPage: React.FC = () => {
                   Notifikasi
                 </h1>
                 <p className="mt-2 max-w-xl text-[13px] leading-relaxed text-[#737A87]">
-                  Semua kabar penting tentang pesanan, pembayaran, dan stok —
-                  tersaji di satu tempat.
+                  Semua kabar penting tentang pesanan, pembayaran, dan stok dalam satu tempat.
                 </p>
               </div>
             </div>
           </div>
         </Reveal>
 
-        {/* ── Error banner ── */}
         {error && (
           <Reveal direction="up">
             <div
@@ -193,7 +186,6 @@ const NotificationsPage: React.FC = () => {
           </Reveal>
         )}
 
-        {/* ── Tabs + action ── */}
         <Reveal direction="up">
           <div
             className="
@@ -259,7 +251,6 @@ const NotificationsPage: React.FC = () => {
           </div>
         </Reveal>
 
-        {/* ── List / empty / loading ── */}
         {loading ? (
           <div
             className="

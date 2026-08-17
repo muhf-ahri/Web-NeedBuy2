@@ -54,7 +54,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
 }) => {
   return (
     <div>
-      {/* Header */}
+      
       <div className="mb-2 flex items-center justify-between">
         <h2 className="flex items-center gap-2 text-[15px] font-bold text-[#20242D]">
           <span
@@ -81,7 +81,6 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
         )}
       </div>
 
-      {/* Kategori */}
       <div className="border-b border-[#E8ECF4] py-4">
         <SectionTitle>Kategori</SectionTitle>
         <CategoryFilter
@@ -92,7 +91,6 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
         />
       </div>
 
-      {/* Rentang Harga */}
       <div className="border-b border-[#E8ECF4] py-4">
         <SectionTitle>Rentang Harga</SectionTitle>
         <PriceRangeFilter
@@ -103,7 +101,6 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
         />
       </div>
 
-      {/* Kondisi */}
       <div className="py-4">
         <SectionTitle>Kondisi</SectionTitle>
         <ConditionFilter

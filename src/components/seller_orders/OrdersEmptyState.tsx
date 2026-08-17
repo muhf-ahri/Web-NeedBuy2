@@ -37,7 +37,7 @@ const OrdersEmptyState: React.FC<OrdersEmptyStateProps> = ({
         ]}
         primaryAction={onRetry ? { label: 'Coba Lagi', icon: 'arrowRight', onClick: onRetry } : undefined}
         secondaryAction={{ label: 'Muat Ulang Halaman', icon: 'arrowRight', onClick: () => window.location.reload() }}
-        bottomTagline="Jangan panik — coba lagi sebentar lagi"
+        bottomTagline="Jangan panik, coba lagi sebentar lagi"
       />
     );
   }
@@ -66,7 +66,7 @@ const OrdersEmptyState: React.FC<OrdersEmptyStateProps> = ({
       pillColor="blue"
       eyebrow="Belum ada order"
       title="Order masuk akan muncul di sini"
-      subtitle="Sabar ya — begitu ada pembeli yang checkout, ordernya langsung muncul di daftar ini."
+      subtitle="Sabar ya: begitu ada pembeli yang checkout, ordernya langsung muncul di daftar ini."
       bottomTagline="Pantau paketmu dari checkout sampai tiba"
     />
   );

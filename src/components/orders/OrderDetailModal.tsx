@@ -38,7 +38,6 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
 }) => {
   const navigate = useNavigate();
 
-  /* Lock body scroll + ESC */
   useEffect(() => {
     const prev = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
@@ -67,7 +66,7 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
           backdrop-blur-sm
         "
       >
-        {/* Header */}
+
         <div className="flex items-start justify-between gap-3 border-b border-[#E8ECF4] px-5 py-4 sm:px-6">
           <div className="min-w-0">
             <div className="mb-1 flex items-center gap-2">
@@ -114,10 +113,8 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
           </button>
         </div>
 
-        {/* Body */}
         <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-5 sm:px-6">
           <div className="space-y-5">
-            {/* Payment info */}
             <div
               className="
                 flex flex-wrap items-center justify-between gap-2
@@ -135,7 +132,6 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
               </span>
             </div>
 
-            {/* Items */}
             <div>
               <p
                 className="
@@ -205,7 +201,6 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
               </div>
             </div>
 
-            {/* Address */}
             {order.address && (
               <div>
                 <p
@@ -237,7 +232,6 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
               </div>
             )}
 
-            {/* Totals */}
             <div className="rounded-2xl bg-[#F5F7FB] p-4">
               <div className="space-y-2 text-[12px]">
                 <div className="flex justify-between">
@@ -271,7 +265,6 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
           </div>
         </div>
 
-        {/* Footer actions */}
         <div
           className="
             flex flex-wrap gap-2 border-t border-[#E8ECF4] bg-white/95

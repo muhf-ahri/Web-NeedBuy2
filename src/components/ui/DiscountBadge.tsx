@@ -1,17 +1,9 @@
-// src/components/ui/DiscountBadge.tsx
 import React from 'react';
 import { formatRupiah } from '../../utils/currency';
 
-/** Harga sebelum diskon (lihat catatan `discountPercent` di types/index.ts). */
 export const strikePrice = (price: string | number, discountPercent: number): number =>
   Math.round(Number(price) / (1 - discountPercent / 100));
 
-/**
- * Penanda diskon paling kecil: `-25%` merah.
- *
- * Satu bentuk yang sama dipakai di kartu produk, baris daftar harga beranda,
- * dan halaman detail — jadi user belajar sekali, lalu mengenalinya di mana pun.
- */
 export const DiscountChip: React.FC<{ discountPercent: number; className?: string }> = ({
   discountPercent,
   className = '',
@@ -24,13 +16,6 @@ export const DiscountChip: React.FC<{ discountPercent: number; className?: strin
     </span>
   ) : null;
 
-/**
- * Harga di badan kartu: harga sekarang, plus harga coret dan persen diskon
- * kalau memang sedang promo.
- *
- * Badge mengambang saja tidak cukup — infonya baru kebaca setelah di-hover,
- * padahal di layar sentuh tidak ada hover sama sekali.
- */
 export const PriceWithDiscount: React.FC<{
   price: string;
   discountPercent: number;
@@ -55,20 +40,8 @@ export const PriceWithDiscount: React.FC<{
   );
 };
 
-/**
- * Label diskon mengambang di atas gambar produk.
- *
- * Tidak merender apa pun kalau produknya tidak sedang promo, jadi pemanggil
- * cukup menaruhnya di dalam wadah `relative` tanpa mengecek apa-apa dulu.
- *
- * Interaksinya murni CSS (`group-hover`) — hover badge memunculkan harga coret
- * dan nominal hematnya. Tanpa state, tanpa listener, dan tetap kebaca di layar
- * sentuh karena angka persennya sudah tampil di badge itu sendiri.
- */
 const DiscountBadge: React.FC<{
-  /** Persen diskon dari API. 0 = tidak promo. */
   discountPercent: number;
-  /** Harga setelah diskon (string dari API). */
   price: string;
   className?: string;
 }> = ({ discountPercent, price, className = '' }) => {
@@ -83,8 +56,6 @@ const DiscountBadge: React.FC<{
         -{discountPercent}%
       </span>
 
-      {/* Detail muncul saat badge di-hover; pointer-events-none supaya tidak
-          menghalangi klik ke kartu produk di baliknya. */}
       <span
         className="pointer-events-none absolute left-0 top-full mt-1.5 w-max max-w-[11rem] rounded-lg bg-[#191c1e] px-2.5 py-1.5 text-[11px] leading-tight text-white opacity-0 shadow-lg transition-opacity duration-200 group-hover/disc:opacity-100"
         role="note"

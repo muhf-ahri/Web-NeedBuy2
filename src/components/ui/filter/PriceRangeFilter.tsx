@@ -9,7 +9,7 @@ interface PriceRangeFilterProps {
   onMaxChange: (value: string) => void;
   minPlaceholder?: string;
   maxPlaceholder?: string;
-  /** Delay (ms) sebelum onChange ke parent — default 400 */
+  
   debounceMs?: number;
 }
 
@@ -22,18 +22,14 @@ const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
   maxPlaceholder = 'Maks',
   debounceMs = 400,
 }) => {
-  /* Internal state — selalu sinkron dengan keyboard user, jadi input
-     tidak pernah "terkunci". Parent hanya dapat update setelah debounce. */
   const [localMin, setLocalMin] = useState(minValue);
   const [localMax, setLocalMax] = useState(maxValue);
 
-  // Sinkronisasi internal ← external (mis. reset dari parent)
   useEffect(() => setLocalMin(minValue), [minValue]);
   useEffect(() => setLocalMax(maxValue), [maxValue]);
 
-  // Debounce ke parent — parent tidak dibombardir onChange tiap keystroke
   useEffect(() => {
-    if (localMin === minValue) return; // sudah sinkron, skip
+    if (localMin === minValue) return; 
     const timer = setTimeout(() => onMinChange(localMin), debounceMs);
     return () => clearTimeout(timer);
   }, [localMin, debounceMs, minValue, onMinChange]);
@@ -56,7 +52,7 @@ const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
   return (
     <div className="space-y-1.5">
       <div className="flex items-center gap-1.5">
-        {/* Input Min */}
+        
         <div
           className="
             flex h-8 min-w-0 flex-1 items-center rounded-full border
@@ -85,9 +81,8 @@ const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
           />
         </div>
 
-        <span className="shrink-0 text-[10px] text-[#A2A8B3]">–</span>
+        <span className="shrink-0 text-[10px] font-medium text-[#A2A8B3]">s/d</span>
 
-        {/* Input Max */}
         <div
           className="
             flex h-8 min-w-0 flex-1 items-center rounded-full border
@@ -117,7 +112,6 @@ const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
         </div>
       </div>
 
-      {/* Reset */}
       {hasValue && (
         <button
           type="button"

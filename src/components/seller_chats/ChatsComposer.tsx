@@ -30,7 +30,6 @@ const ChatsComposer: React.FC<ChatsComposerProps> = ({
   const [photoUrl, setPhotoUrl] = useState<string | null>(null);
 
   const handleSend = (e: React.FormEvent) => {
-    // photoUrl ikut ke parent lewat handler (dikelola di ChatsPage state)
     onSend(e);
   };
 

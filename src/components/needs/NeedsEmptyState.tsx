@@ -7,11 +7,6 @@ interface NeedsEmptyStateProps {
   onWrite: () => void;
 }
 
-/**
- * Empty state halaman Kebutuhan — struktur card identik dengan
- * NeedPayNote, tapi TERBALIK: konten kiri, gambar kanan,
- * gelombang putih di tepi kiri panel gambar.
- */
 const NeedsEmptyState: React.FC<NeedsEmptyStateProps> = ({ onWrite }) => (
   <figure
     className="
@@ -20,7 +15,7 @@ const NeedsEmptyState: React.FC<NeedsEmptyStateProps> = ({ onWrite }) => (
       backdrop-blur-sm
     "
   >
-    {/* ── Mobile: gambar banner di atas ── */}
+    
     <div className="relative h-44 md:hidden">
       <img
         src={catatanImg}
@@ -43,21 +38,19 @@ const NeedsEmptyState: React.FC<NeedsEmptyStateProps> = ({ onWrite }) => (
 
       <div className="absolute bottom-3 left-4 flex items-center gap-2 text-[10px] text-white/90">
         <span className="h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
-        <span className="truncate">Ceritain kebutuhanmu — kami yang cariin</span>
+        <span className="truncate">Ceritain kebutuhanmu, kami yang cariin</span>
       </div>
     </div>
 
-    {/* ── Desktop: konten KIRI, gambar KANAN ── */}
     <div className="grid md:grid-cols-[1.1fr_0.9fr]">
-      {/* Panel kiri: konten */}
+      
       <section className="flex items-center bg-white px-6 py-7 sm:px-8 lg:px-10">
         <div className="mx-auto w-full max-w-lg">
-          {/* Brand mobile */}
+          
           <div className="mb-4 md:hidden">
             <p className="text-xs font-semibold text-[#538CDB]">Kebutuhan</p>
           </div>
 
-          {/* Eyebrow */}
           <p
             className="
               mb-2 text-[10px] font-semibold uppercase tracking-[0.18em]
@@ -81,7 +74,6 @@ const NeedsEmptyState: React.FC<NeedsEmptyStateProps> = ({ onWrite }) => (
             yang paling pas buat kamu.
           </p>
 
-          {/* Box "cara kerjanya" */}
           <div className="mt-5 rounded-2xl bg-[#F5F7FB] px-5 py-4">
             <p
               className="
@@ -138,7 +130,6 @@ const NeedsEmptyState: React.FC<NeedsEmptyStateProps> = ({ onWrite }) => (
             </ul>
           </div>
 
-          {/* CTA full-width */}
           <button
             type="button"
             onClick={onWrite}
@@ -151,13 +142,12 @@ const NeedsEmptyState: React.FC<NeedsEmptyStateProps> = ({ onWrite }) => (
               active:scale-[0.99]
             "
           >
-            <Icon name="spark" size={16} className="text-white" />
+            <Icon name="layers" size={16} className="text-white" />
             Tulis Kebutuhan Pertama
           </button>
         </div>
       </section>
 
-      {/* Panel kanan: gambar Catatan.jpg + gelombang di tepi KIRI */}
       <section className="relative hidden min-h-[420px] overflow-hidden md:block">
         <img
           src={catatanImg}
@@ -169,12 +159,8 @@ const NeedsEmptyState: React.FC<NeedsEmptyStateProps> = ({ onWrite }) => (
           "
         />
 
-        {/* Overlay gradasi bawah */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#20242D]/55 via-transparent to-transparent" />
 
-        {/* ── Gelombang putih di tepi KIRI (di-mirror) ──
-            Path sama persis dengan NeedPayNote, cuma dibalik
-            horizontal pakai -scale-x-100 */}
         <svg
           className="
             pointer-events-none absolute inset-y-0 left-0 h-full w-16
@@ -195,7 +181,6 @@ const NeedsEmptyState: React.FC<NeedsEmptyStateProps> = ({ onWrite }) => (
           />
         </svg>
 
-        {/* Label pill — pindah ke kanan atas */}
         <div
           className="
             absolute right-6 top-6 z-10 inline-flex items-center gap-1.5
@@ -207,7 +192,6 @@ const NeedsEmptyState: React.FC<NeedsEmptyStateProps> = ({ onWrite }) => (
           Kebutuhan
         </div>
 
-        {/* Text ringkas — pindah ke kanan bawah, rata kanan */}
         <div className="absolute bottom-5 right-6 z-10 text-right text-white">
           <p
             className="
@@ -218,7 +202,7 @@ const NeedsEmptyState: React.FC<NeedsEmptyStateProps> = ({ onWrite }) => (
             Belanja pintar
           </p>
           <p className="mt-0.5 text-[11px] text-white/90">
-            Ceritain kebutuhanmu — kami yang cariin produknya
+            Ceritain kebutuhanmu: kami yang cariin produknya
           </p>
         </div>
       </section>

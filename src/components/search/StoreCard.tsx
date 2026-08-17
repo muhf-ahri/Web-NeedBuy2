@@ -28,7 +28,7 @@ const StoreCard: React.FC<StoreCardProps> = ({
         hover:shadow-[0_14px_36px_rgba(32,36,45,0.10)]
       "
     >
-      {/* Logo toko */}
+      
       <div
         className="
           shrink-0 overflow-hidden rounded-xl bg-[#F5F7FB] ring-1
@@ -55,7 +55,6 @@ const StoreCard: React.FC<StoreCardProps> = ({
         )}
       </div>
 
-      {/* Info */}
       <div className="min-w-0 flex-1">
         <div className="flex flex-wrap items-center gap-1.5">
           <span

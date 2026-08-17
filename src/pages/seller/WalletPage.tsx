@@ -48,7 +48,6 @@ const WalletPage: React.FC = () => {
     setError(null);
   };
 
-  /* ── Load wallet data ── */
   const refresh = useCallback(async () => {
     setLoading(true);
     setError(null);
@@ -93,7 +92,6 @@ const WalletPage: React.FC = () => {
     refresh();
   }, [refresh, reloadKey]);
 
-  /* ── Topup handler ── */
   const handleTopup = async () => {
     const nominal = Number(amount);
     if (!Number.isInteger(nominal) || nominal < MIN_TOPUP || nominal > MAX_TOPUP) {
@@ -131,7 +129,6 @@ const WalletPage: React.FC = () => {
     }
   };
 
-  /* ── Withdraw handler ── */
   const handleWithdraw = async (data: {
     amount: number;
     bankName: string;
@@ -150,7 +147,7 @@ const WalletPage: React.FC = () => {
       return;
     }
     if (!/^[0-9-]{6,30}$/.test(data.bankAccount.trim())) {
-      setError('Nomor rekeningnya cuma boleh angka, 6–30 digit.');
+      setError('Nomor rekening hanya boleh angka, 6 sampai 30 digit.');
       return;
     }
 
@@ -160,23 +157,21 @@ const WalletPage: React.FC = () => {
     try {
       await requestWithdrawal(data);
       setNotice(
-        'Pengajuan penarikan udah masuk antrean admin. Saldo kamu udah dipotong sekarang.'
+        'Pengajuan penarikan sudah masuk antrean admin. Saldo kamu sudah dipotong sekarang.'
       );
       await refresh();
     } catch (err: any) {
-      setError(err?.message ?? 'Gagal ngajuin penarikan, coba lagi ya');
+      setError(err?.message ?? 'Gagal mengajukan penarikan, silakan coba lagi');
     } finally {
       setWdBusy(false);
     }
   };
 
-  /* ── Deteksi gagal total (server down) ── */
   const showFatalError = !loading && !wallet && Boolean(error);
 
   return (
     <SellerLayout>
       <div className="space-y-5 sm:space-y-6">
-        {/* ── Header ── */}
         <Reveal direction="up">
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div className="min-w-0">
@@ -192,7 +187,7 @@ const WalletPage: React.FC = () => {
                 Dompet Penjual
               </h1>
               <p className="mt-1 max-w-xl text-[12px] leading-relaxed text-[#737A87] sm:text-[13px]">
-                Kelola saldo hasil penjualan tokomu — isi saldo untuk belanja cepat, atau tarik ke rekening bank.
+                Kelola saldo hasil penjualan toko, isi saldo belanja, atau tarik ke rekening bank.
               </p>
             </div>
 
@@ -208,14 +203,12 @@ const WalletPage: React.FC = () => {
           </div>
         </Reveal>
 
-        {/* ── Gagal total → card error ── */}
         {showFatalError ? (
           <Reveal direction="up">
             <SellerWalletErrorState onRetry={retry} />
           </Reveal>
         ) : (
           <>
-            {/* ── Error / Notice banners ── */}
             {error && (
               <Reveal direction="up">
                 <div
@@ -278,7 +271,6 @@ const WalletPage: React.FC = () => {
               </Reveal>
             )}
 
-            {/* ── Card saldo ── */}
             <Reveal direction="up" delay={80}>
               <NeedPayBalanceCard
                 balance={wallet?.balance ?? 0}
@@ -292,7 +284,6 @@ const WalletPage: React.FC = () => {
               />
             </Reveal>
 
-            {/* ── Card Tambah Saldo ── */}
             <Reveal direction="up" delay={160}>
               <div id="topup-section">
                 <NeedPayTopup
@@ -306,7 +297,6 @@ const WalletPage: React.FC = () => {
               </div>
             </Reveal>
 
-            {/* ── Card Cairkan Rekening ── */}
             <Reveal direction="up" delay={240}>
               <NeedPayWithdraw
                 balance={wallet?.balance ?? 0}
@@ -317,7 +307,6 @@ const WalletPage: React.FC = () => {
               />
             </Reveal>
 
-            {/* ── Card Aktivitas Akun ── */}
             <Reveal direction="up" delay={320}>
               <NeedPayHistory transactions={transactions} loading={loading} />
             </Reveal>

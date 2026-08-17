@@ -1,7 +1,6 @@
 import apiClient from './client';
 import type { ApiResponse } from '../types';
 
-// ─── Types ─────────────────────────────────────────────────────────────────────
 export interface PreviewLine {
   cartItemId: string;
   productId: string;
@@ -9,10 +8,10 @@ export interface PreviewLine {
   productSlug: string;
   imageUrl: string | null;
   quantity: number;
-  /** Varian yang dipilih, ikut disnapshot ke order saat checkout. */
+  
   variant: string | null;
   price: string;
-  /** Sudah memuat potongan grosir kalau jumlahnya memenuhi. */
+  
   subtotal: string;
   bulkDiscountPercent: number;
 }
@@ -42,7 +41,6 @@ export interface CheckoutPreview {
   canCheckout: boolean;
 }
 
-/** NEEDPAY memotong saldo dompet saat checkout — ordernya langsung lunas. */
 export type PaymentMethod = 'MIDTRANS' | 'COD' | 'NEEDPAY';
 
 export interface CreatedOrderPayment {
@@ -59,26 +57,19 @@ export interface CreatedOrderPayment {
   paymentError?: string;
 }
 
-// ─── Checkout Endpoints ────────────────────────────────────────────────────────
-
-/**
- * POST /checkout/preview - Preview orders (no writes).
- * `cartItemIds` kosong = seluruh isi keranjang.
- */
 export const previewCheckout = (shippingCost: number = 0, cartItemIds?: string[]) =>
   apiClient.post<ApiResponse<CheckoutPreview>>('/checkout/preview', {
     shippingCost,
     ...(cartItemIds?.length ? { cartItemIds } : {}),
   });
 
-/** POST /checkout - Confirm checkout (requires Idempotency-Key) */
 export const confirmCheckout = (
   data: {
     addressId: string;
     cartItemIds?: string[];
     shippingCost?: number;
     notes?: string;
-    /** Kode kupon yang sudah diklaim. Server yang menghitung potongannya. */
+    
     couponCode?: string;
     paymentMethod?: PaymentMethod;
   },

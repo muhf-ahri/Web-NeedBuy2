@@ -30,7 +30,6 @@ const OrdersFilters: React.FC<OrdersFiltersProps> = ({
 }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  /* Auto-scroll pill aktif ke tengah saat status berubah */
   useEffect(() => {
     if (!scrollRef.current) return;
     const active = scrollRef.current.querySelector<HTMLElement>('[data-active="true"]');
@@ -48,7 +47,7 @@ const OrdersFilters: React.FC<OrdersFiltersProps> = ({
         shadow-[0_6px_18px_rgba(32,36,45,0.05)] backdrop-blur-sm sm:p-4
       "
     >
-      {/* Search */}
+      
       <div className="relative">
         <Icon
           name="search"
@@ -87,7 +86,6 @@ const OrdersFilters: React.FC<OrdersFiltersProps> = ({
         )}
       </div>
 
-      {/* Status pills — scroll horizontal di mobile */}
       <div
         ref={scrollRef}
         className="

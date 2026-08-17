@@ -37,7 +37,7 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
 
   return (
     <Sheet title="Tambah Produk" onClose={onClose} maxWidth="max-w-xl">
-      {/* Search input */}
+      
       <div
         className="
           group relative flex items-center rounded-full border

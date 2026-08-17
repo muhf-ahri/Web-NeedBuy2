@@ -1,6 +1,6 @@
 import React from 'react';
 
-// ✅ previewOf dari ChatMessageBody (helper UI), type dari api/messages
+import Avatar from '../ui/Avatar';
 import { previewOf } from '../ui/ChatMessageBody';
 import type { Conversation } from '../../api/messages';
 
@@ -21,14 +21,6 @@ const ChatsConversationItem: React.FC<ChatsConversationItemProps> = ({
   active,
   onClick,
 }) => {
-  const initials = (conversation.buyer.name || 'U')
-    .split(' ')
-    .map((w) => w[0])
-    .filter(Boolean)
-    .slice(0, 2)
-    .join('')
-    .toUpperCase();
-
   return (
     <li>
       <button
@@ -44,22 +36,16 @@ const ChatsConversationItem: React.FC<ChatsConversationItemProps> = ({
           }
         `}
       >
-        {/* Active indicator */}
         {active && (
           <span className="absolute left-0 top-1/2 h-8 w-0.5 -translate-y-1/2 rounded-r-full bg-[#538CDB]" />
         )}
 
-        {/* Avatar */}
         <div className="relative shrink-0">
-          <span
-            className="
-              flex h-11 w-11 items-center justify-center rounded-full
-              bg-gradient-to-br from-[#5B93E0] to-[#3A66AC] text-[12px]
-              font-extrabold text-white ring-2 ring-white
-            "
-          >
-            {initials}
-          </span>
+          <Avatar
+            src={conversation.buyer.avatarUrl}
+            name={conversation.buyer.name}
+            className="h-11 w-11 text-[12px]"
+          />
           {conversation.unreadCount > 0 && (
             <span
               className="
@@ -73,7 +59,6 @@ const ChatsConversationItem: React.FC<ChatsConversationItemProps> = ({
           )}
         </div>
 
-        {/* Info */}
         <div className="min-w-0 flex-1">
           <div className="flex items-center justify-between gap-2">
             <span

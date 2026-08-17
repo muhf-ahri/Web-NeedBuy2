@@ -1,22 +1,14 @@
-// src/components/ui/VerifyEmailBanner.tsx
 import React, { useState } from 'react';
 import Icon from './Icon';
 import { resendVerification } from '../../api/auth';
 import { useAuth } from '../../contexts/AuthContext';
 
-/**
- * Muncul cuma buat akun yang emailnya belum diverifikasi. Ini satu-satunya
- * pintu masuk ke `POST /auth/resend-verification` — tanpa ini, user yang
- * emailnya nggak sampai nggak punya cara minta kirim ulang.
- */
 const VerifyEmailBanner: React.FC = () => {
   const { user } = useAuth();
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [failed, setFailed] = useState(false);
 
-  // `undefined` = backend versi lama yang belum mengirim field ini. Diamkan,
-  // jangan tuduh user belum verifikasi hanya karena datanya nggak ada.
   if (!user || user.emailVerifiedAt !== null) return null;
 
   const handleResend = async () => {

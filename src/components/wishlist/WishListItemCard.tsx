@@ -76,7 +76,6 @@ const WishlistItemCard: React.FC<WishlistItemCardProps> = ({
       "
     >
       <div className="flex items-center gap-3 sm:gap-4">
-        {/* Gambar */}
         <button
           type="button"
           onClick={onOpen}
@@ -98,7 +97,6 @@ const WishlistItemCard: React.FC<WishlistItemCardProps> = ({
           )}
         </button>
 
-        {/* Info */}
         <button
           type="button"
           onClick={onOpen}
@@ -141,22 +139,18 @@ const WishlistItemCard: React.FC<WishlistItemCardProps> = ({
             )}
           </div>
 
-          {/* Harga — selalu kelihatan di mobile */}
           <p className="mt-1 text-[14px] font-bold text-[#538CDB] sm:hidden">
             {formatRupiah(product.price)}
           </p>
         </button>
 
-        {/* Harga desktop */}
         <p className="hidden shrink-0 text-[14px] font-bold text-[#538CDB] sm:block">
           {formatRupiah(product.price)}
         </p>
 
-        {/* Actions desktop */}
         {actions('hidden sm:flex')}
       </div>
 
-      {/* Actions mobile — full width di bawah */}
       {actions('mt-3 sm:hidden')}
     </div>
   );

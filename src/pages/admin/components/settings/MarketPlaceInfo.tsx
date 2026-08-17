@@ -1,4 +1,3 @@
-// src/pages/admin/components/settings/MarketplaceInfo.tsx
 import React, { useState } from 'react';
 import Icon from '../../../../components/ui/Icon';
 import Button from '../../../../components/ui/Button';
@@ -7,8 +6,6 @@ import type { SettingsCardProps } from '../../SettingsPage';
 
 const DEFAULT_NAME = 'NeedBuy';
 
-// Role bukan setelan — nilainya enum di database (UserRole), jadi ditampilkan
-// sebagai fakta, bukan kolom isian yang menipu.
 const ROLES = ['Administrator', 'Seller', 'Buyer'];
 
 const MarketplaceInfo: React.FC<SettingsCardProps> = ({ values, onSave }) => {
@@ -113,7 +110,7 @@ const MarketplaceInfo: React.FC<SettingsCardProps> = ({ values, onSave }) => {
 
   return (
     <div className="space-y-5">
-      {/* ── Nama Marketplace ── */}
+      
       <div className="group flex items-start justify-between gap-4 rounded-xl p-3 -mx-3 transition-colors hover:bg-[#f8f9fb]">
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
@@ -131,7 +128,6 @@ const MarketplaceInfo: React.FC<SettingsCardProps> = ({ values, onSave }) => {
         </button>
       </div>
 
-      {/* ── Deskripsi ── */}
       <div className="group flex items-start justify-between gap-4 rounded-xl p-3 -mx-3 transition-colors hover:bg-[#f8f9fb]">
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
@@ -151,7 +147,6 @@ const MarketplaceInfo: React.FC<SettingsCardProps> = ({ values, onSave }) => {
         </button>
       </div>
 
-      {/* ── Roles (read-only) ── */}
       <div className="rounded-xl p-3 -mx-3">
         <div className="flex items-center gap-2">
           <Icon name="users" size={16} className="text-[#737686]" />

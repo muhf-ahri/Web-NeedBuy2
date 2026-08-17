@@ -32,7 +32,7 @@ const ChatsEmptyState: React.FC<ChatsEmptyStateProps> = ({
         ]}
         primaryAction={onRetry ? { label: 'Coba Lagi', icon: 'arrowRight', onClick: onRetry } : undefined}
         secondaryAction={{ label: 'Muat Ulang Halaman', icon: 'arrowRight', onClick: () => window.location.reload() }}
-        bottomTagline="Jangan panik — coba lagi sebentar lagi"
+        bottomTagline="Jangan panik, coba lagi sebentar lagi"
       />
     );
   }

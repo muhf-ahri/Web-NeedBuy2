@@ -23,7 +23,7 @@ const SettingsErrorState: React.FC<SettingsErrorStateProps> = ({ onRetry }) => (
     ]}
     primaryAction={{ label: 'Coba Lagi', icon: 'arrowRight', onClick: onRetry }}
     secondaryAction={{ label: 'Muat Ulang Halaman', icon: 'arrowRight', onClick: () => window.location.reload() }}
-    bottomTagline="Setelanmu aman — coba lagi sebentar lagi"
+    bottomTagline="Setelan toko tetap aman, coba lagi sebentar lagi"
   />
 );
 

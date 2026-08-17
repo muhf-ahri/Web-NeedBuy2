@@ -1,4 +1,3 @@
-// src/pages/admin/components/settings/RegionalSettings.tsx
 import React, { useState } from 'react';
 import Button from '../../../../components/ui/Button';
 import Icon from '../../../../components/ui/Icon';
@@ -37,7 +36,7 @@ const RegionalSettings: React.FC<SettingsCardProps> = ({ values, onSave }) => {
 
   return (
     <div className="space-y-5">
-      {/* ── Mata Uang (read-only) ── */}
+      
       <div className="rounded-xl p-3 -mx-3">
         <div className="flex items-center gap-2">
           <Icon name="wallet" size={16} className="text-[#737686]" />
@@ -53,7 +52,6 @@ const RegionalSettings: React.FC<SettingsCardProps> = ({ values, onSave }) => {
         </p>
       </div>
 
-      {/* ── Zona Waktu ── */}
       {isEditing ? (
         <div className="space-y-4 animate-slideDown">
           {error && (
@@ -73,7 +71,7 @@ const RegionalSettings: React.FC<SettingsCardProps> = ({ values, onSave }) => {
             >
               {Object.entries(TIMEZONES).map(([value, label]) => (
                 <option key={value} value={value}>
-                  {value} — {label}
+                  {value}: {label}
                 </option>
               ))}
             </select>

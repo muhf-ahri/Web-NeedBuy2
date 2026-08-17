@@ -1,4 +1,3 @@
-// src/api/categories.ts
 import apiClient from './client';
 import type { ApiResponse, Category } from '../types';
 
@@ -18,10 +17,6 @@ export interface UpdateCategoryRequest {
   parentId?: string | null;
 }
 
-/**
- * Baris kategori versi panel admin: rata (bukan pohon), termasuk yang
- * nonaktif, plus jumlah produk & sub-kategori yang menempel.
- */
 export interface AdminCategory {
   id: string;
   name: string;
@@ -35,14 +30,13 @@ export interface AdminCategory {
 
 export const getAdminCategories = async (): Promise<AdminCategory[]> => {
   const res = await apiClient.get<ApiResponse<AdminCategory[]>>('/categories/admin/all');
-  return res.data.data;
+  return Array.isArray(res.data?.data) ? res.data.data : [];
 };
 
 export const getCategories = async (): Promise<Category[]> => {
   const res = await apiClient.get<ApiResponse<Category[]>>('/categories');
-  return res.data.data;
+  return Array.isArray(res.data?.data) ? res.data.data : [];
 };
-
 
 export const createCategory = async (data: CreateCategoryRequest): Promise<Category> => {
   const res = await apiClient.post<ApiResponse<Category>>('/categories', data);

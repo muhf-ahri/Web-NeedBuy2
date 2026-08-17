@@ -1,8 +1,3 @@
-// src/components/ui/ChatMessageBody.tsx
-//
-// Isi satu gelembung chat. Dipakai halaman chat pembeli DAN penjual, supaya
-// foto dan kartu pesanan tampil sama di kedua sisi — kalau tidak, salah satu
-// sisi cepat atau lambat ketinggalan kolom baru.
 import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Icon from './Icon';
@@ -11,10 +6,6 @@ import type { ChatMessage } from '../../api/messages';
 
 const API_ORIGIN = (import.meta.env.VITE_API_BASE_URL as string | undefined) ?? '';
 
-/**
- * URL gambar disajikan di luar `/api/v1` (lihat modul uploads), jadi prefix API
- * dipotong dulu — kalau tidak, gambarnya minta ke path yang tidak ada.
- */
 export const uploadSrc = (url: string): string => {
   try {
     const base = new URL(API_ORIGIN, window.location.origin);
@@ -24,12 +15,6 @@ export const uploadSrc = (url: string): string => {
   }
 };
 
-/**
- * Ringkasan satu baris untuk daftar percakapan.
- *
- * Pesan foto punya `body` null — tanpa ini, daftarnya menulis "Belum ada pesan"
- * padahal barusan ada foto masuk.
- */
 export const previewOf = (message: ChatMessage | null): string => {
   if (!message) return 'Belum ada pesan nih';
   if (message.body) return message.body;
@@ -46,8 +31,7 @@ export const ChatMessageBody: React.FC<{ message: ChatMessage; mine: boolean }> 
 
   return (
     <>
-      {/* Kartu pesanan: dikirim otomatis waktu checkout. Bisa diketuk supaya
-          nomor pesanan di chat bukan sekadar teks yang harus disalin. */}
+
       {message.orderId && (
         <button
           type="button"
@@ -92,10 +76,6 @@ export const ChatMessageBody: React.FC<{ message: ChatMessage; mine: boolean }> 
   );
 };
 
-/**
- * Tombol lampirkan foto. Mengunggah dulu, baru menyerahkan URL-nya ke
- * pemanggil — jadi pesan tidak pernah terkirim menunjuk gambar yang gagal naik.
- */
 export const AttachPhotoButton: React.FC<{
   disabled?: boolean;
   onUploaded: (url: string) => void;
@@ -134,8 +114,6 @@ export const AttachPhotoButton: React.FC<{
         className="hidden"
         onChange={(e) => {
           const file = e.target.files?.[0];
-          // Direset supaya memilih berkas yang SAMA dua kali tetap memicu
-          // onChange.
           e.target.value = '';
           if (file) pick(file);
         }}
@@ -153,7 +131,6 @@ export const AttachPhotoButton: React.FC<{
   );
 };
 
-/** Pratinjau foto yang sudah diunggah tapi belum dikirim. */
 export const PendingPhoto: React.FC<{ url: string; onRemove: () => void }> = ({ url, onRemove }) => (
   <div className="mb-2 flex items-center gap-2 rounded-xl border border-[#dbe1ff] bg-[#f7f9ff] p-2">
     <img src={uploadSrc(url)} alt="" className="h-12 w-12 rounded-lg object-cover" />

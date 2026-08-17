@@ -26,7 +26,7 @@ const LogoUploader: React.FC<LogoUploaderProps> = ({
 
   return (
     <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-      {/* Preview / placeholder */}
+      
       <div
         className="
           relative flex h-24 w-24 shrink-0 items-center justify-center
@@ -57,7 +57,6 @@ const LogoUploader: React.FC<LogoUploaderProps> = ({
           </div>
         )}
 
-        {/* Dekorasi titik kuning saat ada logo */}
         {logoUrl && !uploading && (
           <span
             className="
@@ -68,7 +67,6 @@ const LogoUploader: React.FC<LogoUploaderProps> = ({
         )}
       </div>
 
-      {/* Aksi */}
       <div className="flex-1 min-w-0">
         <input
           ref={inputRef}
@@ -113,7 +111,7 @@ const LogoUploader: React.FC<LogoUploaderProps> = ({
         </div>
 
         <p className="mt-2 text-[11px] leading-relaxed text-[#737A87]">
-          PNG, JPG, WebP, atau GIF — maks 3 MB. Logo akan disimpan bersama
+          Format PNG, JPG, WebP, atau GIF, maksimal 3 MB. Logo akan disimpan bersama
           setelan lainnya saat kamu tekan <span className="font-semibold text-[#538CDB]">Simpan</span>.
         </p>
       </div>

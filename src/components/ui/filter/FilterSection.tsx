@@ -1,4 +1,3 @@
-// src/components/ui/FilterSection.tsx
 import React from 'react';
 
 interface FilterSectionProps {

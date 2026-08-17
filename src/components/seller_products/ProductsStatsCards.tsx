@@ -15,7 +15,7 @@ const ProductsStatsCards: React.FC<ProductsStatsCardsProps> = ({
   const cards = [
     {
       title: 'Produk Tayang',
-      value: stats?.active ?? '—',
+      value: stats?.active ?? 0,
       icon: 'eye' as const,
       iconBg: 'bg-[#F0FDF4]',
       iconText: 'text-[#166534]',
@@ -24,7 +24,7 @@ const ProductsStatsCards: React.FC<ProductsStatsCardsProps> = ({
     },
     {
       title: 'Stok Habis',
-      value: stats?.outOfStock ?? '—',
+      value: stats?.outOfStock ?? 0,
       icon: 'alert' as const,
       iconBg: 'bg-[#FFF0F0]',
       iconText: 'text-[#FF4646]',
@@ -33,7 +33,7 @@ const ProductsStatsCards: React.FC<ProductsStatsCardsProps> = ({
     },
     {
       title: 'Draf',
-      value: stats?.drafts ?? '—',
+      value: stats?.drafts ?? 0,
       icon: 'edit' as const,
       iconBg: 'bg-[#F5F7FB]',
       iconText: 'text-[#737A87]',
@@ -55,7 +55,7 @@ const ProductsStatsCards: React.FC<ProductsStatsCardsProps> = ({
             sm:p-4
           "
         >
-          {/* Dekorasi titik kuning */}
+          
           <span
             className="
               pointer-events-none absolute right-3 top-3 h-1 w-1

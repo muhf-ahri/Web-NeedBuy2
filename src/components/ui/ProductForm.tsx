@@ -56,12 +56,10 @@ const EMPTY_FORM: FormState = {
 
 const MAX_IMAGES = 5;
 
-/** Class input konsisten dengan design system NeedBuy */
 const inputCls =
   'w-full rounded-xl border border-[#E8ECF4] bg-[#F5F7FB] px-3.5 py-2.5 text-[13px] text-[#20242D] outline-none placeholder:text-[#A2A8B3] transition-all duration-200 focus:border-[#538CDB] focus:bg-white focus:shadow-[0_4px_16px_rgba(83,140,219,0.10)] [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none';
 const inputErrorCls = '!border-[#FF4646] focus:!border-[#FF4646] focus:!shadow-[0_4px_16px_rgba(255,70,70,0.10)]';
 
-/** Wrapper section dengan eyebrow + icon — konsisten antar form */
 const Section: React.FC<{
   eyebrow: string;
   title: string;
@@ -128,7 +126,6 @@ const ProductForm: React.FC<ProductFormProps> = ({
     })) ?? []
   );
 
-  /* Lock body scroll + ESC */
   useEffect(() => {
     const prev = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
@@ -260,13 +257,11 @@ const ProductForm: React.FC<ProductFormProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center sm:p-4">
-      {/* Backdrop */}
       <div
         className="absolute inset-0 bg-[#20242D]/50 backdrop-blur-sm product-form-backdrop"
         onClick={onClose}
       />
 
-      {/* Modal card */}
       <div
         className="
           product-form-enter relative flex w-full max-w-2xl flex-col
@@ -275,9 +270,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
           backdrop-blur-sm max-h-[92vh] sm:rounded-[24px]
         "
       >
-        {/* ── Header sticky ── */}
         <div className="relative flex items-center justify-between border-b border-[#E8ECF4] bg-white/95 px-5 py-4 backdrop-blur-sm sm:px-6">
-          {/* Dekorasi */}
           <span className="pointer-events-none absolute -right-8 -top-8 h-20 w-20 rounded-full border border-[#538CDB]/10" />
           <span className="pointer-events-none absolute right-12 top-5 h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
 
@@ -318,12 +311,10 @@ const ProductForm: React.FC<ProductFormProps> = ({
           </button>
         </div>
 
-        {/* ── Body scrollable ── */}
         <form
           onSubmit={handleSubmit}
           className="flex-1 space-y-6 overflow-y-auto overscroll-contain px-5 py-5 sm:px-6 sm:py-6"
         >
-          {/* Error banner */}
           {submitError && (
             <div
               className="
@@ -345,7 +336,6 @@ const ProductForm: React.FC<ProductFormProps> = ({
             </div>
           )}
 
-          {/* ── Section: Informasi Dasar ── */}
           <Section
             eyebrow="Bagian 1"
             title="Informasi Dasar"
@@ -375,7 +365,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
                   onChange={(e) => setField('categoryId', e.target.value)}
                   className={`${inputCls} cursor-pointer ${errors.categoryId ? inputErrorCls : ''}`}
                 >
-                  <option value="">— Pilih kategori —</option>
+                  <option value="">Pilih kategori</option>
                   {categories.map((cat) => (
                     <option key={cat.id} value={cat.id}>
                       {cat.name}
@@ -391,7 +381,6 @@ const ProductForm: React.FC<ProductFormProps> = ({
             </div>
           </Section>
 
-          {/* ── Section: Harga & Stok ── */}
           <Section
             eyebrow="Bagian 2"
             title="Harga & Stok"
@@ -427,13 +416,12 @@ const ProductForm: React.FC<ProductFormProps> = ({
             </div>
           </Section>
 
-          {/* ── Section: Diskon ── */}
           <Section
             eyebrow="Bagian 3"
             title="Diskon & Grosir"
             icon={
               <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#F0FDF4]">
-                <Icon name="spark" size={14} className="text-[#166534]" />
+                <Icon name="tag" size={14} className="text-[#166534]" />
               </span>
             }
           >
@@ -490,7 +478,6 @@ const ProductForm: React.FC<ProductFormProps> = ({
             </div>
           </Section>
 
-          {/* ── Section: Gambar Produk ── */}
           <Section
             eyebrow="Bagian 4"
             title="Gambar Produk"
@@ -507,7 +494,6 @@ const ProductForm: React.FC<ProductFormProps> = ({
               )
             }
           >
-            {/* Preview thumbnails */}
             {imageUrls.length > 0 && (
               <div className="mb-3 grid grid-cols-4 gap-2 sm:grid-cols-5">
                 {imageUrls.map((url, index) => (
@@ -555,7 +541,6 @@ const ProductForm: React.FC<ProductFormProps> = ({
               </div>
             )}
 
-            {/* Upload area */}
             <div
               className={`
                 relative overflow-hidden rounded-2xl border-2 border-dashed
@@ -567,7 +552,6 @@ const ProductForm: React.FC<ProductFormProps> = ({
                 }
               `}
             >
-              {/* Dekorasi */}
               <span className="pointer-events-none absolute -right-6 -top-6 h-16 w-16 rounded-full border border-[#538CDB]/10" />
 
               <input
@@ -622,7 +606,6 @@ const ProductForm: React.FC<ProductFormProps> = ({
             )}
           </Section>
 
-          {/* ── Section: Spesifikasi & Model ── */}
           <Section
             eyebrow="Bagian 5"
             title="Spesifikasi & Model"
@@ -741,7 +724,6 @@ const ProductForm: React.FC<ProductFormProps> = ({
             )}
           </Section>
 
-          {/* ── Section: Deskripsi & Status ── */}
           <Section
             eyebrow="Bagian 6"
             title="Deskripsi & Status"
@@ -785,11 +767,9 @@ const ProductForm: React.FC<ProductFormProps> = ({
             </div>
           </Section>
 
-          {/* Spacer biar konten tidak ketutup footer sticky di mobile */}
           <div className="h-2" />
         </form>
 
-        {/* ── Footer sticky ── */}
         <div className="flex gap-2 border-t border-[#E8ECF4] bg-white/95 p-4 backdrop-blur-sm sm:gap-3 sm:px-6">
           <Button
             type="button"

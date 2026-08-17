@@ -52,7 +52,6 @@ const NeedPayTopup: React.FC<NeedPayTopupProps> = ({
         </span>
       </div>
 
-      {/* Quick amounts */}
       <div className="mt-5">
         <p
           className="
@@ -87,7 +86,6 @@ const NeedPayTopup: React.FC<NeedPayTopupProps> = ({
         </div>
       </div>
 
-      {/* Input + Submit */}
       <div className="mt-5 flex flex-col gap-3 sm:flex-row">
         <div className="relative flex-1">
           <span

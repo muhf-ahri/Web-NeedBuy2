@@ -1,8 +1,6 @@
 import apiClient from './client';
 import type { ApiResponse } from '../types';
 
-// Envelope admin selalu membawa `meta` untuk endpoint berhalaman — `ApiResponse`
-// yang umum tidak punya field itu, jadi dilebarkan di sini saja.
 export interface PaginationMeta {
   page: number;
   limit: number;
@@ -16,8 +14,6 @@ export interface Paginated<T> extends ApiResponse<T[]> {
 
 export type SellerStatus = 'ACTIVE' | 'SUSPENDED';
 
-// ─── Dashboard ─────────────────────────────────────────────────────────────────
-
 export interface AdminDashboard {
   users: { total: number };
   sellers: { total: number; active: number; suspended: number };
@@ -25,14 +21,13 @@ export interface AdminDashboard {
   needs: { total: number; completed: number };
   orders: { total: number; paid: number };
   revenue: {
-    /** Potongan platform per order yang dibayar, dari AdminConfig. */
     commissionPercent: number;
-    /** Omzet kotor semua toko — uang yang berputar, bukan pendapatan aplikasi. */
+
     gmv: number;
-    /** Bagian pemilik aplikasi. Ini yang tampil sebagai "Total Pendapatan". */
+
     platform: number;
   };
-  /** `revenue` per bulan sudah berupa komisi platform; `gmv` omzet mentahnya. */
+
   revenueSeries: { month: string; gmv: number; revenue: number }[];
   topCategories: { name: string; revenue: number; percentage: number }[];
   recentOrders: {
@@ -44,7 +39,7 @@ export interface AdminDashboard {
     status: string;
     createdAt: string;
   }[];
-  /** Listing yang belum diaktifkan. Skema belum punya alur approval terpisah. */
+
   pendingProducts: {
     total: number;
     items: { id: string; name: string; store: string }[];
@@ -54,13 +49,6 @@ export interface AdminDashboard {
 export const getDashboard = () =>
   apiClient.get<ApiResponse<AdminDashboard>>('/admin/dashboard');
 
-// ─── Analytics ─────────────────────────────────────────────────────────────────
-
-/**
- * Semua angka di sini adalah jendela 30 hari terakhir dibanding 30 hari
- * sebelumnya. `changes` bernilai null kalau periode sebelumnya nol — jangan
- * ditampilkan sebagai 0%, itu klaim yang berbeda.
- */
 export interface AdminAnalytics {
   windowDays: number;
   totals: { revenue: number; orders: number; activeUsers: number; conversionRate: number };
@@ -78,8 +66,6 @@ export interface AdminAnalytics {
 
 export const getAnalytics = () =>
   apiClient.get<ApiResponse<AdminAnalytics>>('/admin/analytics');
-
-// ─── Users ─────────────────────────────────────────────────────────────────────
 
 export interface AdminUser {
   id: string;
@@ -110,8 +96,6 @@ export const getUsers = (params: {
   limit?: number;
 }) => apiClient.get<Paginated<AdminUser>>('/admin/users', { params });
 
-// ─── Stores ────────────────────────────────────────────────────────────────────
-
 export interface AdminStore {
   id: string;
   storeName: string;
@@ -119,15 +103,15 @@ export interface AdminStore {
   ownerEmail: string;
   products: number;
   orders: number;
-  /** Omzet kotor toko, sebelum potongan platform. */
+
   revenue: number;
-  /** Potongan platform — dijumlahkan dari komisi yang dibekukan per order. */
+
   commission: number;
-  /** Yang jadi hak penjual: revenue - commission. */
+
   netRevenue: number;
   rating: number;
   status: SellerStatus;
-  /** Libur yang diatur penjual — bukan pembekuan oleh admin. */
+
   vacationMode: boolean;
   createdAt: string;
 }
@@ -140,14 +124,12 @@ export const getStores = (params: {
   limit?: number;
 }) => apiClient.get<Paginated<AdminStore>>('/admin/stores', { params });
 
-/** Bekukan atau aktifkan kembali toko. `reason` ikut tercatat di audit log. */
 export const setStoreStatus = (sellerId: string, status: SellerStatus, reason?: string) =>
   apiClient.patch<ApiResponse<{ changed: boolean }>>(`/admin/sellers/${sellerId}/status`, {
     status,
     ...(reason ? { reason } : {}),
   });
 
-// ─── Orders ────────────────────────────────────────────────────────────────────
 
 export type OrderStatus =
   | 'WAITING_PAYMENT'
@@ -159,11 +141,6 @@ export type OrderStatus =
 
 export type PaymentStatus = 'PENDING' | 'PAID' | 'FAILED' | 'EXPIRED' | 'REFUNDED';
 
-/**
- * Nilai uang datang sebagai string: backend menyimpannya `Decimal` dan
- * mengirim apa adanya supaya tidak ada pembulatan diam-diam di JSON.
- * Konversi ke number cuma dilakukan tepat sebelum diformat.
- */
 export interface AdminOrder {
   id: string;
   orderNumber: string;
@@ -185,7 +162,6 @@ export const getOrders = (params: {
   limit?: number;
 }) => apiClient.get<Paginated<AdminOrder>>('/admin/orders', { params });
 
-// ─── Products ──────────────────────────────────────────────────────────────────
 
 export interface AdminProduct {
   id: string;
@@ -193,7 +169,6 @@ export interface AdminProduct {
   sku: string | null;
   price: string;
   stock: number;
-  /** Skema ini nggak punya alur approval terpisah: belum aktif = antrean itu sendiri. */
   isActive: boolean;
   createdAt: string;
   category: { id: string; name: string };
@@ -209,20 +184,17 @@ export const getProducts = (params: {
   limit?: number;
 }) => apiClient.get<Paginated<AdminProduct>>('/admin/products', { params });
 
-/** Moderasi katalog lintas toko. `reason` ikut tercatat di audit log. */
 export const setProductActive = (productId: string, isActive: boolean, reason?: string) =>
   apiClient.patch<ApiResponse<{ changed: boolean; isActive: boolean }>>(
     `/admin/products/${productId}/active`,
     { isActive, ...(reason ? { reason } : {}) }
   );
 
-// ─── Reviews ───────────────────────────────────────────────────────────────────
 
 export interface AdminReview {
   id: string;
   rating: number;
   comment: string | null;
-  /** Disembunyikan, bukan dihapus — rating produk dihitung dari yang tampil. */
   isHidden: boolean;
   createdAt: string;
   user: { id: string; name: string };
@@ -247,18 +219,14 @@ export const setReviewHidden = (reviewId: string, isHidden: boolean, reason?: st
     { isHidden, ...(reason ? { reason } : {}) }
   );
 
-// ─── Payments ──────────────────────────────────────────────────────────────────
 
-/** Cuma dua metode yang mungkin ada di skema ini: Snap Midtrans dan COD. */
 export type PaymentMethod = 'MIDTRANS' | 'COD';
 
 export interface AdminPayment {
   id: string;
   status: PaymentStatus;
   method: string | null;
-  /** ID yang dikirim ke Midtrans — ini "ID transaksi" versi kita. */
   midtransOrderId: string;
-  /** Diisi Midtrans setelah transaksi benar-benar dibuat; null untuk COD. */
   midtransTransactionId: string | null;
   paidAt: string | null;
   createdAt: string;
@@ -278,7 +246,6 @@ export const getPayments = (params: {
   limit?: number;
 }) => apiClient.get<Paginated<AdminPayment>>('/admin/payments', { params });
 
-// ─── Coupons ───────────────────────────────────────────────────────────────────
 
 export type CouponType = 'PERCENT' | 'FIXED' | 'FREE_SHIPPING';
 export type CouponCategory = 'SHIPPING' | 'CASHBACK' | 'DISCOUNT';
@@ -324,18 +291,10 @@ export interface CreateCouponPayload {
 export const createCoupon = (data: CreateCouponPayload) =>
   apiClient.post<ApiResponse<AdminCoupon>>('/admin/coupons', data);
 
-/** Kode kupon nggak bisa diubah setelah terbit — pembeli sudah memegangnya. */
 export const updateCoupon = (id: string, data: Partial<Omit<CreateCouponPayload, 'code'>>) =>
   apiClient.patch<ApiResponse<AdminCoupon>>(`/admin/coupons/${id}`, data);
 
-// ─── Withdrawals ───────────────────────────────────────────────────────────────
 
-/**
- * Penarikan bukan tabel sendiri di backend — dia baris mutasi dompet bertipe
- * WITHDRAWAL, jadi statusnya memakai status transaksi dompet:
- * PENDING = menunggu admin, SUCCESS = dana sudah ditransfer, FAILED = ditolak
- * (saldo penjual sudah dikembalikan otomatis).
- */
 export type WithdrawalStatus = 'PENDING' | 'SUCCESS' | 'FAILED';
 
 export interface AdminWithdrawal {
@@ -365,14 +324,12 @@ export const getWithdrawals = (params: {
   limit?: number;
 }) => apiClient.get<Paginated<AdminWithdrawal>>('/admin/withdrawals', { params });
 
-/** APPROVE nggak menyentuh saldo — nominalnya sudah dipotong saat diajukan. */
 export const decideWithdrawal = (id: string, action: 'APPROVE' | 'REJECT', reason?: string) =>
   apiClient.patch<ApiResponse<AdminWithdrawal>>(`/admin/withdrawals/${id}`, {
     action,
     ...(reason ? { reason } : {}),
   });
 
-// ─── Reports ───────────────────────────────────────────────────────────────────
 
 export type ReportTargetType = 'PRODUCT' | 'SELLER' | 'REVIEW';
 export type ReportPriority = 'LOW' | 'MEDIUM' | 'HIGH';
@@ -382,7 +339,6 @@ export interface AdminReport {
   id: string;
   targetType: ReportTargetType;
   targetId: string;
-  /** Nama sasaran saat dilaporkan — snapshot, jadi tetap terbaca walau produknya dihapus. */
   targetLabel: string;
   reason: string;
   description: string | null;
@@ -407,9 +363,7 @@ export const updateReport = (
   data: { status?: ReportStatus; priority?: ReportPriority; resolution?: string }
 ) => apiClient.patch<ApiResponse<AdminReport>>(`/admin/reports/${id}`, data);
 
-// ─── Configs ───────────────────────────────────────────────────────────────────
 
-/** Key yang diterima backend. Bebas-bikin-key ditolak 422. */
 export const CONFIG_KEYS = {
   MARKETPLACE_NAME: 'MARKETPLACE_NAME',
   MARKETPLACE_DESCRIPTION: 'MARKETPLACE_DESCRIPTION',
@@ -430,13 +384,11 @@ export const getConfigs = () => apiClient.get<ApiResponse<AdminConfigs>>('/admin
 export const setConfig = (key: ConfigKey, value: string) =>
   apiClient.post<ApiResponse<{ success: boolean }>>('/admin/configs', { key, value });
 
-/** Simpan beberapa key sekaligus. Backend hanya punya endpoint per-key. */
 export const setConfigs = async (entries: Partial<Record<ConfigKey, string>>) => {
   for (const [key, value] of Object.entries(entries)) {
     await setConfig(key as ConfigKey, value ?? '');
   }
 };
 
-/** Branding publik — dipakai buat judul tab & favicon, tidak butuh login. */
 export const getPublicSettings = () =>
   apiClient.get<ApiResponse<Record<string, string>>>('/public/settings');

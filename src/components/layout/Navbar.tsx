@@ -32,13 +32,15 @@ const QUICK_ACTIONS: Array<{
   { to: '/messages', label: 'Pesan', icon: 'chat' },
   { to: '/categories', label: 'Kategori', icon: 'grid' },
   { to: '/plans', label: 'Rencana', icon: 'plan' },
-  { to: '/needs', label: 'Kebutuhan', icon: 'spark' },
+  { to: '/needs', label: 'Kebutuhan', icon: 'layers' },
   { to: '/wishlist', label: 'Wishlist', icon: 'heart' },
 ];
 
-const Navbar: React.FC<NavbarProps> = ({ avatarUrl, showSearch = true }) => {
+const Navbar: React.FC<NavbarProps> = ({ avatarUrl: avatarUrlProp, showSearch = true }) => {
   const { cartCount } = useCart();
   const { user } = useAuth();
+
+  const avatarUrl = avatarUrlProp ?? user?.avatarUrl ?? undefined;
 
   const showDashboard = hasDashboard(user?.role);
   const isAdmin = user?.role === 'ADMIN';
@@ -60,7 +62,6 @@ const Navbar: React.FC<NavbarProps> = ({ avatarUrl, showSearch = true }) => {
       ? location.pathname === '/'
       : location.pathname.startsWith(path);
 
-  /* Track scroll */
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', onScroll, { passive: true });
@@ -68,14 +69,12 @@ const Navbar: React.FC<NavbarProps> = ({ avatarUrl, showSearch = true }) => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  /* Focus input saat search dibuka */
   useEffect(() => {
     if (searchOpen) {
       setTimeout(() => searchInputRef.current?.focus(), 50);
     }
   }, [searchOpen]);
 
-  /* Klik di luar navbar → tutup search */
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (navRef.current && !navRef.current.contains(e.target as Node)) {
@@ -111,7 +110,6 @@ const Navbar: React.FC<NavbarProps> = ({ avatarUrl, showSearch = true }) => {
     setSearchQuery('');
   };
 
-  /* ── Form search (dipakai di overlay desktop & panel mobile) ── */
   const searchForm = (
     <form
       onSubmit={handleSearchSubmit}
@@ -151,7 +149,6 @@ const Navbar: React.FC<NavbarProps> = ({ avatarUrl, showSearch = true }) => {
 
   return (
     <header className="sticky top-0 z-50 group">
-      {/* ── NAVBAR MENTOK: full-width, tanpa rounded, tanpa margin atas ── */}
       <nav
         ref={navRef}
         className={`
@@ -164,9 +161,7 @@ const Navbar: React.FC<NavbarProps> = ({ avatarUrl, showSearch = true }) => {
           }
         `}
       >
-        {/* ── MAIN BAR ── */}
         <div className="relative flex h-[60px] items-center gap-3 px-4 sm:px-6 lg:px-8">
-          {/* LOGO */}
           <Link
             to="/"
             className="group/logo flex shrink-0 items-center gap-2.5"
@@ -189,9 +184,7 @@ const Navbar: React.FC<NavbarProps> = ({ avatarUrl, showSearch = true }) => {
             </span>
           </Link>
 
-          {/* ── AREA TENGAH: nav links + search overlay (desktop) ── */}
           <div className="relative hidden h-full flex-1 md:block">
-            {/* Nav links — fade out saat search terbuka */}
             <div
               className={`
                 flex h-full items-center justify-center gap-1
@@ -255,8 +248,6 @@ const Navbar: React.FC<NavbarProps> = ({ avatarUrl, showSearch = true }) => {
               })}
             </div>
 
-            {/* Search overlay — mengambil alih area tengah,
-                TIDAK menimpa nav links (karena nav links fade out) */}
             {showSearch && (
               <div
                 className={`
@@ -284,9 +275,7 @@ const Navbar: React.FC<NavbarProps> = ({ avatarUrl, showSearch = true }) => {
             )}
           </div>
 
-          {/* ── RIGHT ACTIONS ── */}
           <div className="ml-auto flex items-center gap-1">
-            {/* Search toggle */}
             {showSearch && (
               <button
                 onClick={() => {
@@ -312,7 +301,6 @@ const Navbar: React.FC<NavbarProps> = ({ avatarUrl, showSearch = true }) => {
               </button>
             )}
 
-            {/* DASHBOARD */}
             {showDashboard && (
               <Link
                 to={dashboardPathFor(user?.role)}
@@ -339,7 +327,6 @@ const Navbar: React.FC<NavbarProps> = ({ avatarUrl, showSearch = true }) => {
               </Link>
             )}
 
-            {/* WISHLIST */}
             <Link
               to="/wishlist"
               className={`
@@ -356,7 +343,6 @@ const Navbar: React.FC<NavbarProps> = ({ avatarUrl, showSearch = true }) => {
               <Icon name="heart" size={17} />
             </Link>
 
-            {/* NOTIFICATION */}
             <div
               className={`
                 flex h-9 w-9 items-center justify-center rounded-full
@@ -371,7 +357,6 @@ const Navbar: React.FC<NavbarProps> = ({ avatarUrl, showSearch = true }) => {
               <NotificationBell />
             </div>
 
-            {/* CART */}
             <Link
               to="/cart"
               className={`
@@ -400,7 +385,6 @@ const Navbar: React.FC<NavbarProps> = ({ avatarUrl, showSearch = true }) => {
               )}
             </Link>
 
-            {/* PROFILE */}
             <Link
               to="/profile"
               className={`
@@ -427,8 +411,6 @@ const Navbar: React.FC<NavbarProps> = ({ avatarUrl, showSearch = true }) => {
             </Link>
           </div>
 
-          {/* ── MOBILE SEARCH PANEL — overlay di bawah bar,
-              tidak mendorong quick actions ── */}
           {showSearch && (
             <div
               className={`
@@ -453,7 +435,6 @@ const Navbar: React.FC<NavbarProps> = ({ avatarUrl, showSearch = true }) => {
           )}
         </div>
 
-        {/* ── MOBILE QUICK ACTIONS ── */}
         <div
           className={`
             border-t transition-all duration-500 ease-out md:hidden

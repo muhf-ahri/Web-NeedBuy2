@@ -1,4 +1,3 @@
-// src/components/ui/PriceRangeFilter.tsx
 import React from 'react';
 
 interface PriceRangeFilterProps {
@@ -34,7 +33,7 @@ const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
           className={inputClassName}
         />
       </div>
-      <span className="text-[#737686] text-[12px]">–</span>
+      <span className="text-[#737686] text-[11px] font-medium">s/d</span>
       <div className="flex-1 relative">
         <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[11px] text-[#737686]">Rp</span>
         <input

@@ -1,8 +1,8 @@
-// src/pages/MessagesPage.tsx
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
+import Avatar from '../components/ui/Avatar';
 import Icon from '../components/ui/Icon';
 import { ChatMessageBody, AttachPhotoButton, PendingPhoto, previewOf } from '../components/ui/ChatMessageBody';
 import { useAuth } from '../contexts/AuthContext';
@@ -16,9 +16,10 @@ import {
 } from '../api/messages';
 import { getAccessToken } from '../api/auth';
 
-// ponytail: realtime lewat polling 4 detik. Ganti ke WebSocket kalau jumlah
-// percakapan aktif bikin beban query terasa.
 const POLL_MS = 4000;
+
+const storeFaceOf = (conversation: Conversation) =>
+  conversation.seller.logoUrl ?? conversation.seller.user?.avatarUrl ?? null;
 
 const timeLabel = (iso: string) =>
   new Date(iso).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
@@ -47,8 +48,6 @@ const MessagesPage: React.FC = () => {
     return res.data.data;
   }, []);
 
-  // Muat daftar percakapan; kalau datang dari tombol "Chat penjual", langsung
-  // buka (atau buat) percakapan dengan penjual itu.
   useEffect(() => {
     if (!isAuthed) return;
     let cancelled = false;
@@ -82,7 +81,6 @@ const MessagesPage: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthed, sellerParam]);
 
-  // Isi awal percakapan yang dipilih.
   useEffect(() => {
     if (!activeId) return;
     let cancelled = false;
@@ -99,7 +97,6 @@ const MessagesPage: React.FC = () => {
     };
   }, [activeId]);
 
-  // Polling: hanya minta pesan yang lebih baru dari yang sudah dipegang.
   useEffect(() => {
     if (!activeId) return;
     const timer = setInterval(async () => {
@@ -115,9 +112,7 @@ const MessagesPage: React.FC = () => {
           });
           loadConversations().catch(() => {});
         }
-      } catch {
-        // Gagal satu poll bukan alasan menutup chat — percobaan berikutnya jalan.
-      }
+      } catch {}
     }, POLL_MS);
     return () => clearInterval(timer);
   }, [activeId, messages, loadConversations]);
@@ -129,8 +124,7 @@ const MessagesPage: React.FC = () => {
   const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
     const body = draft.trim();
-    // Foto tanpa teks tetap pesan yang sah — server yang menolak kalau
-    // dua-duanya kosong.
+
     if ((!body && !photoUrl) || !activeId) return;
     setSending(true);
     setError(null);
@@ -196,7 +190,7 @@ const MessagesPage: React.FC = () => {
           </div>
         ) : (
           <div className="grid md:grid-cols-[280px_1fr] gap-4 border border-[#e0e3e5] rounded-2xl overflow-hidden">
-            {/* Daftar percakapan */}
+
             <aside className={`md:border-r border-[#e0e3e5] ${active ? 'hidden md:block' : ''}`}>
               <ul className="divide-y divide-[#e0e3e5] max-h-[70vh] overflow-y-auto">
                 {conversations.map((conversation) => (
@@ -207,26 +201,34 @@ const MessagesPage: React.FC = () => {
                         conversation.id === activeId ? 'bg-[#dbe1ff]' : 'hover:bg-[#f2f4f6]'
                       }`}
                     >
-                      <div className="flex items-center justify-between gap-2">
-                        <span className="text-[13px] font-semibold text-[#101319] truncate">
-                          {conversation.seller.storeName}
-                        </span>
-                        {conversation.unreadCount > 0 && (
-                          <span className="bg-[#004ac6] text-white text-[10px] font-bold rounded-full min-w-5 h-5 px-1.5 flex items-center justify-center">
-                            {conversation.unreadCount > 9 ? '9+' : conversation.unreadCount}
-                          </span>
-                        )}
+                      <div className="flex items-center gap-2.5">
+                        <Avatar
+                          src={storeFaceOf(conversation)}
+                          name={conversation.seller.storeName}
+                          className="h-9 w-9 text-[11px]"
+                        />
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-center justify-between gap-2">
+                            <span className="text-[13px] font-semibold text-[#101319] truncate">
+                              {conversation.seller.storeName}
+                            </span>
+                            {conversation.unreadCount > 0 && (
+                              <span className="bg-[#004ac6] text-white text-[10px] font-bold rounded-full min-w-5 h-5 px-1.5 flex items-center justify-center">
+                                {conversation.unreadCount > 9 ? '9+' : conversation.unreadCount}
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-[12px] text-[#737686] truncate mt-0.5">
+                            {previewOf(conversation.lastMessage)}
+                          </p>
+                        </div>
                       </div>
-                      <p className="text-[12px] text-[#737686] truncate mt-0.5">
-                        {previewOf(conversation.lastMessage)}
-                      </p>
                     </button>
                   </li>
                 ))}
               </ul>
             </aside>
 
-            {/* Ruang chat */}
             <section className="flex flex-col min-h-[60vh] max-h-[70vh]">
               {active && (
                 <header className="flex items-center gap-2 px-4 py-3 border-b border-[#e0e3e5]">
@@ -237,9 +239,11 @@ const MessagesPage: React.FC = () => {
                   >
                     <Icon name="chevronLeft" size={18} />
                   </button>
-                  <span className="w-9 h-9 rounded-full bg-[#dbe1ff] text-[#004ac6] flex items-center justify-center shrink-0">
-                    <Icon name="chat" size={16} />
-                  </span>
+                  <Avatar
+                    src={storeFaceOf(active)}
+                    name={active.seller.storeName}
+                    className="h-9 w-9 text-[11px]"
+                  />
                   <div className="min-w-0">
                     <p className="text-[14px] font-bold text-[#101319] truncate">
                       {active.seller.storeName}
@@ -252,7 +256,7 @@ const MessagesPage: React.FC = () => {
               <div className="flex-1 overflow-y-auto px-4 py-4 space-y-2 bg-[#f8f9fb]">
                 {messages.length === 0 ? (
                   <p className="text-center text-[13px] text-[#737686] py-10">
-                    Mulai percakapan — tanyakan stok, warna, atau estimasi kirim.
+                    Mulai percakapan dengan menanyakan stok, warna, atau estimasi pengiriman.
                   </p>
                 ) : (
                   messages.map((message) => {

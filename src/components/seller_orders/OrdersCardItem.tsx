@@ -48,7 +48,7 @@ const OrdersCardItem: React.FC<OrdersCardItemProps> = ({
       hover:shadow-[0_10px_26px_rgba(32,36,45,0.08)]
     "
   >
-    {/* Header card */}
+
     <div className="flex items-start justify-between gap-2 p-3.5 sm:p-4">
       <div className="min-w-0 flex-1">
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
@@ -83,7 +83,6 @@ const OrdersCardItem: React.FC<OrdersCardItemProps> = ({
       </div>
     </div>
 
-    {/* Aksi */}
     <div className="flex gap-2 border-t border-[#F5F7FB] px-3.5 py-2.5 sm:px-4">
       {action && (
         <button
@@ -131,7 +130,6 @@ const OrdersCardItem: React.FC<OrdersCardItemProps> = ({
       </button>
     </div>
 
-    {/* Expanded detail */}
     {isExpanded && (
       <div className="border-t border-[#F5F7FB] bg-[#F5F5FF]/50 p-3.5 sm:p-4">
         <OrdersExpandedDetail order={order} />

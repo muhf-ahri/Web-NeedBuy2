@@ -1,4 +1,3 @@
-// src/components/home/HomeSearch.tsx
 import React, { useEffect, useState } from 'react';
 
 import Icon from '../ui/Icon';
@@ -10,7 +9,7 @@ interface HomeSearchProps {
   onSubmit: (e: React.SyntheticEvent<HTMLFormElement>) => void;
   suggestOpen: boolean;
   setSuggestOpen: (open: boolean) => void;
-  /** Set `false` di HomePage kalau tidak mau menampilkan suggestions */
+  
   showSuggestions?: boolean;
 }
 
@@ -51,9 +50,7 @@ const HomeSearch: React.FC<HomeSearchProps> = ({
 
   return (
     <section className="mx-auto w-full max-w-6xl px-4 pt-7 sm:px-8">
-      {/* ── FIX: `z-40` supaya dropdown suggestions SELALU di atas
-             carousel & section lain (mereka punya backdrop-blur yang
-             membuat stacking context sendiri) ── */}
+      
       <div
         className="
           home-search-enter relative z-40 w-full overflow-visible
@@ -166,7 +163,6 @@ const HomeSearch: React.FC<HomeSearchProps> = ({
             <Icon name="arrowRight" size={15} className="text-white" />
           </button>
 
-          {/* ── Suggestions: hanya render kalau showSuggestions=true ── */}
           {showSuggestions && suggestOpen && (
             <SearchSuggestions
               term={value}

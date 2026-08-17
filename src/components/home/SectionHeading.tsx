@@ -1,4 +1,3 @@
-// src/components/home/SectionHeading.tsx
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -10,7 +9,7 @@ interface SectionHeadingProps {
   description?: string;
   link?: string;
   linkLabel?: string;
-  /** Variasi visual heading: 'default' = biru brand, 'muted' = hitam */
+
   variant?: 'default' | 'muted';
 }
 
@@ -24,9 +23,9 @@ const SectionHeading: React.FC<SectionHeadingProps> = ({
 }) => {
   return (
     <div className="mb-5 flex items-end justify-between gap-4">
-      {/* ── Kiri: eyebrow + title + description ── */}
+
       <div className="min-w-0">
-        {/* Eyebrow pill dengan titik kuning — callback dekorasi card Login/Hero */}
+
         <div className="flex items-center gap-2">
           <span
             className="
@@ -46,7 +45,6 @@ const SectionHeading: React.FC<SectionHeadingProps> = ({
           </span>
         </div>
 
-        {/* Title */}
         <h2
           className={`
             mt-2 text-[20px] font-extrabold leading-tight tracking-tight
@@ -59,7 +57,6 @@ const SectionHeading: React.FC<SectionHeadingProps> = ({
           `}
         >
           {title}
-          {/* Aksen garis biru kecil di bawah title (callback highlight di Hero) */}
           <span
             className="
               relative inline-block align-baseline
@@ -79,7 +76,6 @@ const SectionHeading: React.FC<SectionHeadingProps> = ({
         )}
       </div>
 
-      {/* ── Kanan: link "Lihat semua" ── */}
       {link && (
         <Link
           to={link}

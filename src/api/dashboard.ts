@@ -79,8 +79,6 @@ export interface ActiveOrders {
   }[];
 }
 
-// Satu endpoint per card: card yang lambat atau gagal tidak menahan card lain.
-
 export const getTotalSales = (period?: DashboardPeriod) =>
   apiClient.get<ApiResponse<TotalSales>>('/dashboard/total-sales', { params: { period } });
 

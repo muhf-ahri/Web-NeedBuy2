@@ -23,7 +23,6 @@ const PAGE_SIZE = 10;
 
 type FilterValue = OrderStatus | 'ALL';
 
-/** Aksi yang boleh dilakukan PENJUAL (COMPLETED & batal = hak pembeli). */
 const SELLER_ACTION: Partial<
   Record<OrderStatus, { to: 'SHIPPED' | 'DELIVERED'; label: string }>
 > = {
@@ -53,7 +52,6 @@ const OrdersPage: React.FC = () => {
   const [actionError, setActionError] = useState<string | null>(null);
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
-  /* Debounce search */
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearch(search.trim());
@@ -62,7 +60,6 @@ const OrdersPage: React.FC = () => {
     return () => clearTimeout(timer);
   }, [search]);
 
-  /* Load orders */
   const load = useCallback(async () => {
     setLoading(true);
     setError(null);
@@ -86,7 +83,6 @@ const OrdersPage: React.FC = () => {
     load();
   }, [load]);
 
-  /* Advance status */
   const advance = async (order: SellerOrder) => {
     const action = SELLER_ACTION[order.status];
     if (!action) return;
@@ -116,12 +112,11 @@ const OrdersPage: React.FC = () => {
   return (
     <SellerLayout>
       <div className="space-y-5 sm:space-y-6">
-        {/* Header */}
+        
         <Reveal direction="up">
           <OrdersHeader totalOrders={meta?.total ?? 0} loading={loading} />
         </Reveal>
 
-        {/* Filters */}
         <Reveal direction="up" delay={80}>
           <OrdersFilters
             search={search}
@@ -134,7 +129,6 @@ const OrdersPage: React.FC = () => {
           />
         </Reveal>
 
-        {/* Action error banner */}
         {actionError && (
           <Reveal direction="up">
             <div
@@ -161,7 +155,6 @@ const OrdersPage: React.FC = () => {
           </Reveal>
         )}
 
-        {/* Main content */}
         <Reveal direction="up">
           {loading ? (
             <div
@@ -204,7 +197,7 @@ const OrdersPage: React.FC = () => {
                 backdrop-blur-sm
               "
             >
-              {/* Tabel desktop */}
+              
               <div className="hidden lg:block">
                 <OrdersTable
                   orders={orders}
@@ -218,7 +211,6 @@ const OrdersPage: React.FC = () => {
                 />
               </div>
 
-              {/* Card list mobile */}
               <div className="p-3 lg:hidden sm:p-4">
                 <OrdersMobileList
                   orders={orders}
@@ -232,7 +224,6 @@ const OrdersPage: React.FC = () => {
                 />
               </div>
 
-              {/* Pagination (shared UI) */}
               {meta && (
                 <Pagination
                   currentPage={meta.page}

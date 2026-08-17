@@ -65,7 +65,6 @@ const Pagination: React.FC<PaginationProps> = ({
         sm:flex-row sm:gap-4 ${className}
       `}
     >
-      {/* Info total — hidden di mobile kecil biar tidak cramped */}
       {showTotal && totalItems !== undefined && (
         <div className="hidden items-center gap-2.5 sm:flex">
           <span
@@ -79,7 +78,7 @@ const Pagination: React.FC<PaginationProps> = ({
           <p className="text-[12px] text-[#737A87]">
             Menampilkan{' '}
             <span className="font-bold text-[#20242D]">{startItem}</span>
-            –
+            {' '}sampai{' '}
             <span className="font-bold text-[#20242D]">{endItem}</span>
             {' '}dari{' '}
             <span className="font-bold text-[#20242D]">{totalItems}</span>
@@ -88,11 +87,10 @@ const Pagination: React.FC<PaginationProps> = ({
         </div>
       )}
 
-      {/* Counter mobile — muncul cuma di mobile kecil (pengganti info di atas) */}
       {showTotal && totalItems !== undefined && (
         <p className="text-[11px] text-[#737A87] sm:hidden">
           <span className="font-bold text-[#20242D] tabular-nums">
-            {startItem}–{endItem}
+            {startItem} sampai {endItem}
           </span>{' '}
           dari{' '}
           <span className="font-bold text-[#20242D] tabular-nums">
@@ -102,9 +100,7 @@ const Pagination: React.FC<PaginationProps> = ({
         </p>
       )}
 
-      {/* Tombol navigasi — compact di mobile */}
       <div className="flex items-center gap-1 sm:gap-1.5">
-        {/* Prev */}
         <button
           type="button"
           onClick={() => goToPage(currentPage - 1)}
@@ -123,7 +119,6 @@ const Pagination: React.FC<PaginationProps> = ({
           <Icon name="chevronLeft" size={15} />
         </button>
 
-        {/* Page numbers */}
         {visiblePages.map((page, index) => {
           if (page === 'ellipsis') {
             return (
@@ -163,7 +158,6 @@ const Pagination: React.FC<PaginationProps> = ({
           );
         })}
 
-        {/* Next */}
         <button
           type="button"
           onClick={() => goToPage(currentPage + 1)}

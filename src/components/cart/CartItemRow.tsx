@@ -38,7 +38,6 @@ const CartItemRow: React.FC<CartItemRowProps> = ({
         ${unavailable ? 'opacity-60' : ''}
       `}
     >
-      {/* ── Kiri: checkbox + gambar + info ── */}
       <div className="flex min-w-0 items-start gap-3">
         <input
           type="checkbox"
@@ -88,15 +87,13 @@ const CartItemRow: React.FC<CartItemRowProps> = ({
 
           {unavailable && (
             <p className="mt-1 text-[11px] font-medium text-[#FF4646]">
-              Stoknya nggak cukup — kurangi jumlahnya atau hapus.
+              Stoknya nggak cukup: kurangi jumlahnya atau hapus.
             </p>
           )}
         </div>
       </div>
 
-      {/* ── Kanan: stepper + subtotal + hapus ── */}
       <div className="flex items-center justify-between gap-3 pl-7 sm:justify-end sm:pl-0">
-        {/* Stepper */}
         <div className="flex items-center rounded-full border border-[#E8ECF4] bg-white">
           <button
             type="button"
@@ -131,12 +128,10 @@ const CartItemRow: React.FC<CartItemRowProps> = ({
           </button>
         </div>
 
-        {/* Subtotal */}
         <span className="w-24 text-right text-[13px] font-bold text-[#20242D] sm:text-[14px]">
           {formatRupiah(item.subtotal)}
         </span>
 
-        {/* Hapus */}
         <button
           type="button"
           onClick={onRemove}

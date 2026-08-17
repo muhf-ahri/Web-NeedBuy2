@@ -33,7 +33,7 @@ const CONFIG: Record<
     ],
     actionLabel: 'Jelajahi Kategori',
     actionIcon: 'grid',
-    bottomText: 'Ketik kata kunci — kami yang cariin',
+    bottomText: 'Ketik kata kunci, kami yang cariin',
   },
   'no-products': {
     eyebrow: 'Hasil kosong',
@@ -46,7 +46,7 @@ const CONFIG: Record<
     ],
     actionLabel: 'Jelajahi Kategori',
     actionIcon: 'grid',
-    bottomText: 'Jangan nyerah — coba kata kunci lain',
+    bottomText: 'Jangan nyerah, coba kata kunci lain',
   },
   'empty-store': {
     eyebrow: 'Toko kosong',
@@ -73,10 +73,10 @@ const SearchEmptyState: React.FC<SearchEmptyStateProps> = ({
 
   const subtitle =
     variant === 'no-query'
-      ? 'Ketik kata kunci di kolom pencarian — produk atau toko — nanti kami bantu temukan yang paling pas.'
+      ? 'Ketik kata kunci di kolom pencarian, produk atau toko, nanti kami bantu temukan yang paling pas.'
       : variant === 'no-products'
         ? hasStores
-          ? `Tidak ada produk untuk "${query}". Tapi ada toko yang cocok — lihat di bagian Toko di atas.`
+          ? `Tidak ada produk untuk "${query}". Tapi ada toko yang cocok, lihat di bagian Toko di atas.`
           : `Tidak ada produk untuk "${query}". Coba pakai kata kunci lain ya.`
         : 'Pemilik toko belum memajang produk apa pun. Coba lagi nanti ya.';
 
@@ -88,7 +88,7 @@ const SearchEmptyState: React.FC<SearchEmptyStateProps> = ({
         backdrop-blur-sm
       "
     >
-      {/* ── Mobile: gambar banner di atas ── */}
+      
       <div className="relative h-44 md:hidden">
         <img
           src={searchImg}
@@ -115,17 +115,15 @@ const SearchEmptyState: React.FC<SearchEmptyStateProps> = ({
         </div>
       </div>
 
-      {/* ── Desktop: konten KIRI, gambar KANAN ── */}
       <div className="grid md:grid-cols-[1.1fr_0.9fr]">
-        {/* Panel kiri: konten */}
+        
         <section className="flex items-center bg-white px-6 py-7 sm:px-8 lg:px-10">
           <div className="mx-auto w-full max-w-lg">
-            {/* Brand mobile */}
+            
             <div className="mb-4 md:hidden">
               <p className="text-xs font-semibold text-[#538CDB]">Pencarian</p>
             </div>
 
-            {/* Eyebrow */}
             <p
               className="
                 mb-2 text-[10px] font-semibold uppercase tracking-[0.18em]
@@ -148,7 +146,6 @@ const SearchEmptyState: React.FC<SearchEmptyStateProps> = ({
               {subtitle}
             </p>
 
-            {/* Box tips — pola box info di NeedPayNote */}
             <div className="mt-5 rounded-2xl bg-[#F5F7FB] px-5 py-4">
               <p
                 className="
@@ -179,7 +176,6 @@ const SearchEmptyState: React.FC<SearchEmptyStateProps> = ({
               </ul>
             </div>
 
-            {/* CTA full-width */}
             {onAction && (
               <button
                 type="button"
@@ -200,7 +196,6 @@ const SearchEmptyState: React.FC<SearchEmptyStateProps> = ({
           </div>
         </section>
 
-        {/* Panel kanan: gambar + gelombang di tepi KIRI */}
         <section className="relative hidden min-h-[420px] overflow-hidden md:block">
           <img
             src={searchImg}
@@ -212,10 +207,8 @@ const SearchEmptyState: React.FC<SearchEmptyStateProps> = ({
             "
           />
 
-          {/* Overlay gradasi bawah */}
           <div className="absolute inset-0 bg-gradient-to-t from-[#20242D]/55 via-transparent to-transparent" />
 
-          {/* Gelombang putih di tepi kiri (di-mirror) */}
           <svg
             className="
               pointer-events-none absolute inset-y-0 left-0 h-full w-16
@@ -236,7 +229,6 @@ const SearchEmptyState: React.FC<SearchEmptyStateProps> = ({
             />
           </svg>
 
-          {/* Label pill kanan atas */}
           <div
             className="
               absolute right-6 top-6 z-10 inline-flex items-center gap-1.5
@@ -248,7 +240,6 @@ const SearchEmptyState: React.FC<SearchEmptyStateProps> = ({
             Pencarian
           </div>
 
-          {/* Dekorasi titik kuning */}
           <div
             className="
               pointer-events-none absolute left-[24%] top-[16%] z-10 h-1.5
@@ -256,7 +247,6 @@ const SearchEmptyState: React.FC<SearchEmptyStateProps> = ({
             "
           />
 
-          {/* Text kanan bawah */}
           <div className="absolute bottom-5 right-6 z-10 text-right text-white">
             <p
               className="

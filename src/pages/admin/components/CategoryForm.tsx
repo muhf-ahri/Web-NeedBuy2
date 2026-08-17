@@ -1,4 +1,3 @@
-// src/components/admin/CategoryForm.tsx
 import React, { useState } from 'react';
 import Icon from '../../../components/ui/Icon';
 import Button from '../../../components/ui/Button';
@@ -61,7 +60,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
       <div className="w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl bg-white shadow-xl">
-        {/* Header */}
+        
         <div className="flex items-center justify-between border-b border-[#e0e3e5] px-5 py-4">
           <h2 className="text-[16px] font-bold text-[#191c1e]">{title}</h2>
           <button
@@ -79,7 +78,6 @@ const CategoryForm: React.FC<CategoryFormProps> = ({
             </div>
           )}
 
-          {/* Nama Kategori */}
           <div>
             <label className="block text-[12px] font-semibold text-[#434655] mb-1">
               Nama Kategori <span className="text-[#ba1a1a]">*</span>
@@ -94,7 +92,6 @@ const CategoryForm: React.FC<CategoryFormProps> = ({
             />
           </div>
 
-          {/* Kategori Induk (hanya untuk child) */}
           {isChild && (
             <div>
               <label className="block text-[12px] font-semibold text-[#434655] mb-1">
@@ -115,7 +112,6 @@ const CategoryForm: React.FC<CategoryFormProps> = ({
             </div>
           )}
 
-          {/* Deskripsi */}
           <div>
             <label className="block text-[12px] font-semibold text-[#434655] mb-1">
               Deskripsi (opsional)
@@ -129,7 +125,6 @@ const CategoryForm: React.FC<CategoryFormProps> = ({
             />
           </div>
 
-          {/* Status Aktif */}
           <label className="flex cursor-pointer items-center gap-2 text-[13px] text-[#434655]">
             <input
               type="checkbox"
@@ -140,7 +135,6 @@ const CategoryForm: React.FC<CategoryFormProps> = ({
             Aktif (kategori akan muncul di halaman pembeli)
           </label>
 
-          {/* Tombol */}
           <div className="flex gap-2 pt-2">
             <Button
               type="submit"

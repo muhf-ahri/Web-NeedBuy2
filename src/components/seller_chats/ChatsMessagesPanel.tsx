@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
+import Avatar from '../ui/Avatar';
 import Icon from '../ui/Icon';
 import ChatsMessageBubble from './ChatsMessageBubble';
 import ChatsComposer from './ChatsComposer';
@@ -38,17 +39,9 @@ const ChatsMessagesPanel: React.FC<ChatsMessagesPanelProps> = ({
     bottomRef.current?.scrollIntoView({ block: 'end', behavior: 'smooth' });
   }, [messages]);
 
-  const initials = (conversation.buyer.name || 'U')
-    .split(' ')
-    .map((w) => w[0])
-    .filter(Boolean)
-    .slice(0, 2)
-    .join('')
-    .toUpperCase();
-
   return (
     <div className="flex h-full flex-col bg-[#F5F5FF]">
-      {/* Header chat */}
+      
       <div
         className="
           shrink-0 border-b border-[#F5F7FB] bg-white/95 px-3 py-3
@@ -71,15 +64,11 @@ const ChatsMessagesPanel: React.FC<ChatsMessagesPanelProps> = ({
             </button>
           )}
 
-          <span
-            className="
-              flex h-10 w-10 shrink-0 items-center justify-center rounded-full
-              bg-gradient-to-br from-[#5B93E0] to-[#3A66AC] text-[12px]
-              font-extrabold text-white ring-2 ring-white
-            "
-          >
-            {initials}
-          </span>
+          <Avatar
+            src={conversation.buyer.avatarUrl}
+            name={conversation.buyer.name}
+            className="h-10 w-10 text-[12px]"
+          />
 
           <div className="min-w-0 flex-1">
             <p className="truncate text-[14px] font-bold text-[#20242D]">
@@ -93,7 +82,6 @@ const ChatsMessagesPanel: React.FC<ChatsMessagesPanelProps> = ({
         </div>
       </div>
 
-      {/* Messages area */}
       <div className="flex-1 overflow-y-auto overscroll-contain px-3 py-4 sm:px-5">
         {messages.length === 0 ? (
           <div className="flex h-full items-center justify-center">
@@ -128,7 +116,6 @@ const ChatsMessagesPanel: React.FC<ChatsMessagesPanelProps> = ({
         )}
       </div>
 
-      {/* Composer */}
       <ChatsComposer
         draft={draft}
         onDraftChange={onDraftChange}

@@ -16,7 +16,7 @@ const SettingsSubmitBar: React.FC<SettingsSubmitBarProps> = ({
   onDismissError,
 }) => (
   <div className="space-y-3">
-    {/* Error inline */}
+    
     {error && (
       <div
         className="
@@ -41,7 +41,6 @@ const SettingsSubmitBar: React.FC<SettingsSubmitBarProps> = ({
       </div>
     )}
 
-    {/* Success banner */}
     {saved && !error && (
       <div
         className="
@@ -58,7 +57,6 @@ const SettingsSubmitBar: React.FC<SettingsSubmitBarProps> = ({
       </div>
     )}
 
-    {/* Submit button */}
     <button
       type="submit"
       disabled={saving}

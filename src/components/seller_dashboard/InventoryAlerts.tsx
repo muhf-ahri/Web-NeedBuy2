@@ -31,7 +31,7 @@ const InventoryAlerts: React.FC<InventoryAlertsProps> = ({
       backdrop-blur-sm sm:p-6
     "
   >
-    {/* Header */}
+    
     <div className="mb-4 flex items-start justify-between gap-3">
       <div className="flex items-center gap-2.5">
         <span
@@ -76,7 +76,6 @@ const InventoryAlerts: React.FC<InventoryAlertsProps> = ({
       )}
     </div>
 
-    {/* Content */}
     {loading ? (
       <div className="space-y-2">
         {Array.from({ length: 3 }).map((_, i) => (

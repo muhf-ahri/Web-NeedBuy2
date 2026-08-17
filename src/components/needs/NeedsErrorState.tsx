@@ -21,7 +21,7 @@ const NeedsErrorState: React.FC<NeedsErrorStateProps> = ({
     title="Kebutuhan nggak bisa dimuat"
     subtitle={
       errorMessage ??
-      'Nggak bisa nyambung ke server, jadi daftar kebutuhanmu gagal diambil. Tenang — datamu aman, cuma koneksinya yang bermasalah.'
+      'Nggak bisa nyambung ke server, jadi daftar kebutuhanmu gagal diambil. Tenang, datamu aman, cuma koneksinya yang bermasalah.'
     }
     tips={[
       'Pastikan koneksi internetmu stabil',
@@ -34,7 +34,7 @@ const NeedsErrorState: React.FC<NeedsErrorStateProps> = ({
       icon: 'arrowRight',
       onClick: () => window.location.reload(),
     }}
-    bottomTagline="Jangan panik — coba lagi sebentar lagi"
+    bottomTagline="Jangan panik, coba lagi sebentar lagi"
   />
 );
 

@@ -12,18 +12,18 @@ interface Action {
 export interface IllustratedCardProps {
   image: string;
   imageAlt?: string;
-  /** Label pill — dipakai di mobile banner, pill desktop, dan tagline kanan bawah */
+
   pillLabel: string;
-  /** Warna eyebrow & pill. 'blue' (default) untuk info, 'red' untuk error */
+
   pillColor?: 'blue' | 'red';
   eyebrow: string;
   title: string;
   subtitle: string;
-  /** Tips bernomor (muncul sebagai box dengan list 1-2-3) */
+
   tips?: string[];
   primaryAction?: Action;
   secondaryAction?: Action;
-  /** Tagline kecil di pojok kanan bawah gambar */
+
   bottomTagline?: string;
 }
 
@@ -64,7 +64,7 @@ const IllustratedCard: React.FC<IllustratedCardProps> = ({
         bg-white/95 shadow-[0_18px_50px_rgba(32,36,45,0.10)] backdrop-blur-sm
       "
     >
-      {/* ── Mobile: banner gambar di atas ── */}
+
       <div className="relative h-44 md:hidden">
         <img
           src={image}
@@ -93,9 +93,7 @@ const IllustratedCard: React.FC<IllustratedCardProps> = ({
         )}
       </div>
 
-      {/* ── Desktop: konten KIRI, gambar KANAN ── */}
       <div className="grid md:grid-cols-[1.1fr_0.9fr]">
-        {/* Panel kiri: konten */}
         <section className="flex items-center bg-white px-6 py-8 sm:px-8 lg:px-10">
           <div className="mx-auto w-full max-w-md">
             <p
@@ -120,7 +118,6 @@ const IllustratedCard: React.FC<IllustratedCardProps> = ({
               {subtitle}
             </p>
 
-            {/* Tips (optional) */}
             {tips && tips.length > 0 && (
               <div className="mt-5 rounded-2xl bg-[#F5F7FB] px-5 py-4">
                 <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#737A87]">
@@ -147,7 +144,6 @@ const IllustratedCard: React.FC<IllustratedCardProps> = ({
               </div>
             )}
 
-            {/* CTA */}
             {(primaryAction || secondaryAction) && (
               <div className="mt-5 flex flex-wrap gap-2">
                 {primaryAction && (
@@ -193,7 +189,6 @@ const IllustratedCard: React.FC<IllustratedCardProps> = ({
           </div>
         </section>
 
-        {/* Panel kanan: gambar + gelombang di tepi kiri */}
         <section className="relative hidden min-h-[420px] overflow-hidden md:block">
           <img
             src={image}
@@ -206,7 +201,6 @@ const IllustratedCard: React.FC<IllustratedCardProps> = ({
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#20242D]/55 via-transparent to-transparent" />
 
-          {/* Gelombang putih */}
           <svg
             className="
               pointer-events-none absolute inset-y-0 left-0 h-full w-16
@@ -223,7 +217,6 @@ const IllustratedCard: React.FC<IllustratedCardProps> = ({
             />
           </svg>
 
-          {/* Pill kanan atas */}
           <div
             className={`
               absolute right-6 top-6 z-10 inline-flex items-center gap-1.5
@@ -235,7 +228,6 @@ const IllustratedCard: React.FC<IllustratedCardProps> = ({
             {pillLabel}
           </div>
 
-          {/* Dekorasi titik kuning */}
           <div
             className="
               pointer-events-none absolute left-[24%] top-[16%] z-10 h-1.5
@@ -243,7 +235,6 @@ const IllustratedCard: React.FC<IllustratedCardProps> = ({
             "
           />
 
-          {/* Text kanan bawah */}
           {bottomTagline && (
             <div className="absolute bottom-5 right-6 z-10 text-right text-white">
               <p

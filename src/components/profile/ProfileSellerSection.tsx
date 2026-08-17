@@ -51,7 +51,7 @@ const ProfileSellerSection: React.FC<ProfileSellerSectionProps> = ({
 
       {seller ? (
         <>
-          {/* Info toko aktif */}
+          
           <div
             className="
               mb-4 overflow-hidden rounded-2xl border border-[#E8ECF4]
@@ -74,7 +74,7 @@ const ProfileSellerSection: React.FC<ProfileSellerSectionProps> = ({
                 <div className="mt-0.5 flex items-center gap-2 text-[11px] text-[#737A87]">
                   <span className="inline-flex items-center gap-1">
                     <Icon name="star" size={11} className="text-[#FFD500]" />
-                    {Number(seller.rating).toFixed(1)}
+                    {Number(seller.rating ?? 0).toFixed(1)}
                   </span>
                   <span className="h-1 w-1 rounded-full bg-[#D8DEE9]" />
                   <span

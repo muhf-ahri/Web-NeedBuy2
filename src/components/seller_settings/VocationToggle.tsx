@@ -24,7 +24,6 @@ const VacationToggle: React.FC<VacationToggleProps> = ({
       }
     `}
   >
-    {/* Icon container */}
     <span
       className={`
         flex h-10 w-10 shrink-0 items-center justify-center rounded-xl
@@ -35,7 +34,6 @@ const VacationToggle: React.FC<VacationToggleProps> = ({
       <Icon name={checked ? 'alert' : 'moon'} size={18} />
     </span>
 
-    {/* Konten */}
     <div className="min-w-0 flex-1">
       <div className="flex items-center justify-between gap-2">
         <p className="text-[13px] font-bold text-[#20242D]">Mode Libur</p>
@@ -62,7 +60,6 @@ const VacationToggle: React.FC<VacationToggleProps> = ({
       </p>
     </div>
 
-    {/* Custom checkbox */}
     <input
       type="checkbox"
       checked={checked}

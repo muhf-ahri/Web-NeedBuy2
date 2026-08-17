@@ -1,4 +1,3 @@
-// src/pages/admin/UsersPage.tsx
 import React, { useEffect, useState } from 'react';
 import AdminLayout from './AdminLayout';
 import Pagination from '../../components/ui/Pagination';
@@ -36,8 +35,6 @@ const UsersPage: React.FC = () => {
     setIsLoading(true);
     setError(null);
 
-    // Query dikirim setelah user berhenti mengetik — tanpa jeda ini setiap
-    // huruf jadi satu request ke endpoint admin yang sudah kena rate limit.
     const timer = setTimeout(() => {
       getUsers({ role: activeTab, q: search.trim() || undefined, page, limit: PAGE_SIZE })
         .then((res) => {
@@ -79,7 +76,6 @@ const UsersPage: React.FC = () => {
           </p>
         </div>
 
-        {/* Tabs */}
         <div className="flex gap-2 border-b border-[#e0e3e5]">
           {(['BUYER', 'SELLER'] as const).map((tab) => (
             <button
@@ -96,7 +92,6 @@ const UsersPage: React.FC = () => {
           ))}
         </div>
 
-        {/* Filter */}
         <div className="flex flex-wrap items-center gap-3">
           <input
             value={search}
@@ -115,7 +110,6 @@ const UsersPage: React.FC = () => {
           </div>
         )}
 
-        {/* Table */}
         <div className="overflow-hidden rounded-2xl border border-[#e0e3e5] bg-white p-5">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
@@ -167,11 +161,6 @@ const UsersPage: React.FC = () => {
                           <td className="py-2.5 text-center">{user.totalOrders}</td>
                           <td className="py-2.5 text-center font-semibold">{formatRupiah(user.totalSpent)}</td>
                           <td className="py-2.5 text-center">
-                            {/* Skema belum punya pembekuan akun pembeli — hanya
-                                Seller yang punya kolom status. Jadi selama
-                                barisnya ada, akunnya memang aktif.
-                                ponytail: baca user.status begitu User punya
-                                kolom status + endpoint suspend. */}
                             <span className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${statusColor.ACTIVE}`}>
                               {statusLabel.ACTIVE}
                             </span>
@@ -182,7 +171,7 @@ const UsersPage: React.FC = () => {
                         <>
                           <td className="py-2.5 text-center font-medium text-[#191c1e]">{user.name}</td>
                           <td className="py-2.5 text-center font-medium text-[#004ac6]">
-                            {user.seller?.storeName ?? '—'}
+                            {user.seller?.storeName ?? 'Belum ada toko'}
                           </td>
                           <td className="py-2.5 text-center">{user.seller?.products ?? 0}</td>
                           <td className="py-2.5 text-center">{user.seller?.orders ?? 0}</td>

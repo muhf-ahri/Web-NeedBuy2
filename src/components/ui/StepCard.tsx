@@ -1,23 +1,12 @@
-// src/components/ui/StepCard.tsx
-//
-// Kartu bernomor untuk alur checkout.
-//
-// Penomorannya BUKAN hiasan: checkout memang berurutan — tidak mungkin memilih
-// cara bayar sebelum jelas barangnya dikirim ke mana. Nomornya berganti jadi
-// centang begitu langkah itu beres, jadi satu elemen yang sama sekaligus
-// menunjukkan urutan dan kemajuan.
-//
-// Warnanya mengikuti kobalt yang sudah jadi satu-satunya warna aksi di
-// aplikasi ini (--nb-cobalt), sama seperti kartu saldo NeedPay.
 import React from 'react';
 import Icon from './Icon';
 
 export const StepCard: React.FC<{
   step: number;
   title: string;
-  /** Ringkasan sebaris di kanan judul — mis. nama penerima yang sudah dipilih. */
+
   hint?: string;
-  /** Langkah beres: nomornya jadi centang. */
+
   done?: boolean;
   action?: React.ReactNode;
   children: React.ReactNode;
@@ -45,10 +34,6 @@ export const StepCard: React.FC<{
   </section>
 );
 
-/**
- * Baris data yang sudah terisi: label kecil di atas, isinya di bawah.
- * Dipakai untuk menampilkan kontak & alamat yang dipilih.
- */
 export const DataRow: React.FC<{ label: string; value?: string | null }> = ({ label, value }) => (
   <div className="min-w-0">
     <dt className="text-[11px] font-semibold uppercase tracking-wide text-[#737686]">{label}</dt>
@@ -58,9 +43,6 @@ export const DataRow: React.FC<{ label: string; value?: string | null }> = ({ la
   </div>
 );
 
-/**
- * Keadaan kosong yang mengajak bertindak, bukan sekadar memberi tahu kosong.
- */
 export const StepEmpty: React.FC<{ text: string; cta: string; onClick: () => void }> = ({
   text,
   cta,
@@ -76,7 +58,6 @@ export const StepEmpty: React.FC<{ text: string; cta: string; onClick: () => voi
   </button>
 );
 
-/** Tombol teks kecil di pojok kanan header kartu. */
 export const StepAction: React.FC<{ onClick: () => void; children: React.ReactNode }> = ({
   onClick,
   children,
@@ -90,10 +71,6 @@ export const StepAction: React.FC<{ onClick: () => void; children: React.ReactNo
   </button>
 );
 
-/**
- * Baris pilihan (alamat, cara bayar, kupon) — satu bentuk untuk ketiganya
- * supaya "yang dipilih" terlihat sama di seluruh halaman.
- */
 export const ChoiceRow: React.FC<{
   selected: boolean;
   disabled?: boolean;

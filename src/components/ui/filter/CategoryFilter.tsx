@@ -62,7 +62,6 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
               }
             `}
           >
-            {/* Checkbox custom */}
             <span
               className={`
                 relative flex h-4 w-4 shrink-0 items-center justify-center
@@ -77,7 +76,6 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
               {active && <Icon name="check" size={11} className="text-white" />}
             </span>
 
-            {/* Label */}
             <span
               className={`
                 min-w-0 flex-1 truncate text-[13px] transition-colors
@@ -92,7 +90,6 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
               {cat.name}
             </span>
 
-            {/* Indicator titik kuning untuk yang aktif (callback dekorasi) */}
             {active && (
               <span
                 className="

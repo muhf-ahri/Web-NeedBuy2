@@ -30,7 +30,6 @@ const SalesChart: React.FC<SalesChartProps> = ({ points, granularity }) => {
   const svgRef = useRef<SVGSVGElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
-  /* Track ukuran container buat adjust padding di mobile */
   const [isSmall, setIsSmall] = useState(false);
 
   useEffect(() => {
@@ -154,21 +153,18 @@ const SalesChart: React.FC<SalesChartProps> = ({ points, granularity }) => {
   const hoveredPoint = hoverIndex !== null ? points[hoverIndex] : null;
   const hoveredXY = hoverIndex !== null ? revenuePoints[hoverIndex] : null;
 
-  /* Responsive X-axis label count */
   const maxLabels = isSmall ? 4 : 8;
   const step = Math.max(1, Math.ceil(points.length / maxLabels));
   const xAxisLabels = points
     .map((p, i) => ({ p, i }))
     .filter(({ i }) => i === 0 || i === points.length - 1 || i % step === 0);
 
-  /* Tooltip position — jaga biar tidak ke luar viewport di mobile */
   const tooltipLeft = hoveredXY ? (hoveredXY.x / width) * 100 : 0;
   const tooltipClampedLeft = Math.min(Math.max(tooltipLeft, 20), 80);
 
   return (
     <div ref={containerRef}>
       <div className="relative">
-        {/* Tooltip */}
         {hoveredPoint && hoveredXY && (
           <div
             className="
@@ -214,7 +210,6 @@ const SalesChart: React.FC<SalesChartProps> = ({ points, granularity }) => {
             </linearGradient>
           </defs>
 
-          {/* Grid + Y-axis labels */}
           {gridLines.map((g, i) => (
             <g key={i}>
               <line
@@ -296,7 +291,6 @@ const SalesChart: React.FC<SalesChartProps> = ({ points, granularity }) => {
           )}
         </svg>
 
-        {/* X-axis labels — responsive */}
         <div
           className={`
             mt-2 flex justify-between text-[9px] text-[#A2A8B3] sm:text-[10px]
@@ -314,7 +308,6 @@ const SalesChart: React.FC<SalesChartProps> = ({ points, granularity }) => {
         </div>
       </div>
 
-      {/* Legend — wrap di mobile */}
       <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-[#F5F7FB] pt-3">
         <span className="flex items-center gap-2 text-[10px] font-medium text-[#737A87] sm:text-[11px]">
           <span className="h-0.5 w-5 rounded-full bg-[#538CDB]" />

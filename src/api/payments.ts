@@ -1,7 +1,6 @@
 import apiClient from './client';
 import type { ApiResponse } from '../types';
 
-// ─── Types ─────────────────────────────────────────────────────────────────────
 export interface Payment {
   id: string;
   status: 'PENDING' | 'PAID' | 'FAILED' | 'EXPIRED' | 'REFUNDED';
@@ -25,20 +24,12 @@ export interface RetryPaymentResult {
   };
 }
 
-// ─── Payment Endpoints ─────────────────────────────────────────────────────────
-
-/** GET /payments/:orderId - Get payment for an order */
 export const getPaymentForOrder = (orderId: string) =>
   apiClient.get<ApiResponse<Payment>>(`/payments/${orderId}`);
 
-/**
- * POST /payments/:orderId/sync - Tarik status dari Midtrans.
- * Dipakai sebagai jaring pengaman kalau notifikasi webhook tidak sampai.
- */
 export const syncPayment = (orderId: string) =>
   apiClient.post<ApiResponse<{ synced: boolean; reason?: string }>>(`/payments/${orderId}/sync`);
 
-/** POST /payments/:orderId/retry - Retry Snap for an order (requires Idempotency-Key) */
 export const retryPayment = (orderId: string, idempotencyKey: string) =>
   apiClient.post<ApiResponse<RetryPaymentResult>>(
     `/payments/${orderId}/retry`,

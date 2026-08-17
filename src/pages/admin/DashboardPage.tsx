@@ -1,4 +1,3 @@
-// src/pages/admin/DashboardPage.tsx
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import AdminLayout from './AdminLayout';
@@ -8,7 +7,6 @@ import { formatRupiah } from '../../utils/currency';
 
 const MONTH_LABEL = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
 
-// Helper untuk mempersingkat angka besar (Rp 2.864.970 -> Rp 2.9 Jt)
 const shortenNumber = (value: number): string => {
   if (value >= 1_000_000_000) {
     return `Rp ${(value / 1_000_000_000).toFixed(1)} M`;
@@ -22,7 +20,6 @@ const shortenNumber = (value: number): string => {
   return `Rp ${value}`;
 };
 
-// Helper untuk mempersingkat angka biasa (1245 -> 1.2K)
 const shortenNumberPlain = (value: number): string => {
   if (value >= 1_000_000) {
     return `${(value / 1_000_000).toFixed(1)}M`;
@@ -131,13 +128,11 @@ const DashboardPage: React.FC = () => {
   return (
     <AdminLayout>
       <div className="space-y-6">
-        {/* Header */}
         <div>
           <h1 className="text-[28px] font-bold text-[#191c1e]">Admin Central</h1>
           <p className="text-[15px] text-[#737686]">Ringkasan marketplace hari ini.</p>
         </div>
 
-        {/* Stats Grid - responsive */}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {stats.map((stat) => (
             <div key={stat.title} className="rounded-2xl border border-[#e0e3e5] bg-white p-4 shadow-sm">
@@ -166,7 +161,6 @@ const DashboardPage: React.FC = () => {
           ))}
         </div>
 
-        {/* Revenue & Top Categories */}
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
           <div className="rounded-2xl border border-[#e0e3e5] bg-white p-5 lg:col-span-2">
             <h2 className="text-[15px] font-bold text-[#191c1e]">
@@ -188,7 +182,7 @@ const DashboardPage: React.FC = () => {
                     return (
                       <div key={point.month} className="flex flex-1 flex-col items-center min-w-0">
                         <div
-                          title={`Komisi ${formatRupiah(point.revenue)} — omzet ${formatRupiah(point.gmv)}`}
+                          title={`Komisi ${formatRupiah(point.revenue)}: omzet ${formatRupiah(point.gmv)}`}
                           className="w-full rounded-t bg-[#004ac6] transition-all duration-300 hover:bg-[#003ea8]"
                           style={{ height: `${height}%`, minHeight: '6px' }}
                         />
@@ -223,7 +217,6 @@ const DashboardPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Recent Orders - responsive table */}
         <div className="rounded-2xl border border-[#e0e3e5] bg-white p-4 sm:p-5 overflow-hidden">
           <h2 className="text-[15px] font-bold text-[#191c1e]">Order Terbaru</h2>
           <div className="mt-3 overflow-x-auto">
@@ -276,7 +269,6 @@ const DashboardPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Pending Approvals & Withdrawal Requests */}
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
           <div className="rounded-2xl border border-[#e0e3e5] bg-white p-4 sm:p-5">
             <div className="flex items-center justify-between gap-2">

@@ -31,7 +31,6 @@ const AnalyticsPage: React.FC = () => {
   const topProducts = useDashboardCard(() => getShopTopProducts(period, 5), [period, reloadKey]);
   const insights = useDashboardCard(() => getShopInsights(period), [period, reloadKey]);
 
-  /* ✏️ EDIT 1 — deteksi gagal total (server down) vs gagal parsial */
   const cards = [revenue, conversion, topProducts, insights];
   const anyLoading = cards.some((c) => c.loading);
   const allFailed = cards.every((c) => Boolean(c.error));
@@ -40,7 +39,7 @@ const AnalyticsPage: React.FC = () => {
   return (
     <SellerLayout>
       <div className="space-y-5 sm:space-y-6">
-        {/* Header + period filter — SELALU tampil */}
+        
         <Reveal direction="up">
           <AnalyticsHeader period={period} onPeriodChange={setPeriod} />
         </Reveal>
@@ -51,7 +50,7 @@ const AnalyticsPage: React.FC = () => {
           </Reveal>
         ) : (
           <>
-            {/* Revenue chart */}
+            
             <Reveal direction="up" delay={80}>
               <div
                 className="
@@ -60,7 +59,7 @@ const AnalyticsPage: React.FC = () => {
                   backdrop-blur-sm sm:p-6
                 "
               >
-                {/* Dekorasi */}
+                
                 <span
                   className="
                     pointer-events-none absolute -right-16 -top-16 h-40 w-40
@@ -118,7 +117,6 @@ const AnalyticsPage: React.FC = () => {
               </div>
             </Reveal>
 
-            {/* Conversion + Top products */}
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 sm:gap-5">
               <Reveal direction="up" delay={160}>
                 <ConversionCard
@@ -142,7 +140,6 @@ const AnalyticsPage: React.FC = () => {
               </Reveal>
             </div>
 
-            {/* Insights */}
             <Reveal direction="up" delay={320}>
               <ShopInsightsCard
                 loading={insights.loading}

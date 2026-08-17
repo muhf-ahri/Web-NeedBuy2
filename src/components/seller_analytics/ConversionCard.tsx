@@ -23,7 +23,6 @@ const ConversionCard: React.FC<ConversionCardProps> = ({
   previousRate,
   previousViews,
 }) => {
-  /* Animasi circular progress dari 0% ke nilai aktual */
   const [animatedRate, setAnimatedRate] = useState(0);
 
   useEffect(() => {
@@ -32,7 +31,6 @@ const ConversionCard: React.FC<ConversionCardProps> = ({
     return () => clearTimeout(t);
   }, [conversionRate, loading, error]);
 
-  /* Stroke dasharray buat circular progress (keliling lingkaran r=40) */
   const radius = 40;
   const circumference = 2 * Math.PI * radius;
   const clampedRate = Math.min(Math.max(animatedRate, 0), 100);
@@ -48,7 +46,7 @@ const ConversionCard: React.FC<ConversionCardProps> = ({
         backdrop-blur-sm sm:p-6
       "
     >
-      {/* Dekorasi */}
+      
       <span
         className="
           pointer-events-none absolute -right-10 -top-10 h-24 w-24
@@ -62,7 +60,6 @@ const ConversionCard: React.FC<ConversionCardProps> = ({
         "
       />
 
-      {/* Header */}
       <div className="mb-4 flex items-center gap-2.5">
         <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#F0FDF4]">
           <Icon name="analytics" size={15} className="text-[#166534]" />
@@ -90,7 +87,7 @@ const ConversionCard: React.FC<ConversionCardProps> = ({
         </div>
       ) : (
         <div className="flex items-center gap-4">
-          {/* Circular progress */}
+          
           <div className="relative shrink-0">
             <svg width="96" height="96" viewBox="0 0 100 100" className="-rotate-90">
               <circle
@@ -130,7 +127,6 @@ const ConversionCard: React.FC<ConversionCardProps> = ({
             </div>
           </div>
 
-          {/* Info */}
           <div className="min-w-0 flex-1">
             <p className="text-[12px] text-[#737A87]">
               <span className="font-bold text-[#20242D] tabular-nums">{orders}</span> order dari{' '}

@@ -6,6 +6,10 @@ interface ProfileHeroProps {
   name: string;
   email: string;
   username: string;
+  avatarUrl?: string | null;
+  onPickPhoto: (file: File) => void;
+  onRemovePhoto: () => void;
+  uploadingPhoto: boolean;
   seller?: {
     id: string;
     storeName: string;
@@ -26,6 +30,10 @@ const ProfileHero: React.FC<ProfileHeroProps> = ({
   name,
   email,
   username,
+  avatarUrl,
+  onPickPhoto,
+  onRemovePhoto,
+  uploadingPhoto,
   seller,
   stats,
   onNavigateOrders,
@@ -36,7 +44,7 @@ const ProfileHero: React.FC<ProfileHeroProps> = ({
 
   return (
     <div className="space-y-4">
-      {/* ── Summary card — gradient biru brand ── */}
+
       <div
         className="
           relative overflow-hidden rounded-[24px] bg-gradient-to-br
@@ -44,7 +52,7 @@ const ProfileHero: React.FC<ProfileHeroProps> = ({
           shadow-[0_18px_50px_rgba(83,140,219,0.30)] sm:p-6
         "
       >
-        {/* Dekorasi */}
+
         <div className="pointer-events-none absolute -right-12 -top-12 h-36 w-36 rounded-full border border-white/15" />
         <div className="pointer-events-none absolute bottom-6 right-10 h-14 w-14 rounded-full border border-white/10" />
 
@@ -54,17 +62,58 @@ const ProfileHero: React.FC<ProfileHeroProps> = ({
           </p>
 
           <div className="flex items-center gap-3">
-            <div
+
+            <label
               className="
-                flex h-14 w-14 shrink-0 items-center justify-center
+                group relative h-14 w-14 shrink-0 cursor-pointer overflow-hidden
                 rounded-2xl bg-white/15 ring-2 ring-white/25 backdrop-blur-sm
                 sm:h-16 sm:w-16
               "
+              title="Ganti foto profil"
             >
-              <span className="text-[18px] font-extrabold text-white sm:text-[20px]">
-                {initials}
+              {avatarUrl ? (
+                <img
+                  src={avatarUrl}
+                  alt="Foto profil kamu"
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                <span
+                  className="
+                    flex h-full w-full items-center justify-center text-[18px]
+                    font-extrabold text-white sm:text-[20px]
+                  "
+                >
+                  {initials}
+                </span>
+              )}
+
+              <span
+                className={`
+                  absolute inset-0 flex items-center justify-center bg-black/45
+                  transition-opacity
+                  ${uploadingPhoto ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}
+                `}
+              >
+                {uploadingPhoto ? (
+                  <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" />
+                ) : (
+                  <Icon name="upload" size={16} className="text-white" />
+                )}
               </span>
-            </div>
+
+              <input
+                type="file"
+                accept="image/png,image/jpeg,image/webp,image/gif"
+                className="hidden"
+                disabled={uploadingPhoto}
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  e.target.value = '';
+                  if (file) onPickPhoto(file);
+                }}
+              />
+            </label>
 
             <div className="min-w-0 flex-1">
               <p className="truncate text-[16px] font-bold leading-tight sm:text-[18px]">
@@ -73,6 +122,19 @@ const ProfileHero: React.FC<ProfileHeroProps> = ({
               <p className="mt-0.5 truncate text-[11px] text-white/75 sm:text-[12px]">
                 {email}
               </p>
+              <button
+                type="button"
+                onClick={avatarUrl ? onRemovePhoto : undefined}
+                disabled={uploadingPhoto || !avatarUrl}
+                className="
+                  mt-1 text-[10px] font-semibold text-white/70 underline-offset-2
+                  transition-colors hover:text-white hover:underline
+                  disabled:cursor-default disabled:no-underline
+                  disabled:hover:text-white/70
+                "
+              >
+                {avatarUrl ? 'Hapus foto' : 'Belum ada foto, klik kotaknya buat unggah'}
+              </button>
             </div>
           </div>
 
@@ -104,7 +166,7 @@ const ProfileHero: React.FC<ProfileHeroProps> = ({
               <div className="mt-2 flex items-center gap-2 text-[10px] text-white/75">
                 <span className="inline-flex items-center gap-1">
                   <Icon name="star" size={10} className="text-[#FFD500]" />
-                  {Number(seller.rating).toFixed(1)}
+                  {Number(seller.rating ?? 0).toFixed(1)}
                 </span>
                 <span className="h-1 w-1 rounded-full bg-white/40" />
                 <span
@@ -125,11 +187,10 @@ const ProfileHero: React.FC<ProfileHeroProps> = ({
             </div>
           )}
 
-          {/* Stats grid */}
           <div className="mt-4 grid grid-cols-3 gap-2">
             {[
               { label: 'Pesanan', value: stats.orders, icon: 'orders' as const },
-              { label: 'Kebutuhan', value: stats.needs, icon: 'spark' as const },
+              { label: 'Kebutuhan', value: stats.needs, icon: 'layers' as const },
               { label: 'Alamat', value: stats.addresses, icon: 'pin' as const },
             ].map((stat) => (
               <div
@@ -152,7 +213,6 @@ const ProfileHero: React.FC<ProfileHeroProps> = ({
         </div>
       </div>
 
-      {/* ── Quick links ── */}
       <div
         className="
           overflow-hidden rounded-[24px] border border-white/80

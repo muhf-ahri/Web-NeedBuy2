@@ -1,4 +1,3 @@
-// src/pages/admin/AnalyticsPage.tsx
 import React, { useEffect, useState } from 'react';
 import AdminLayout from './AdminLayout';
 import StatCard from './components/StatCard';
@@ -103,7 +102,6 @@ const AnalyticsPage: React.FC = () => {
           </div>
         ) : (
           <>
-            {/* Stats Grid */}
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {stats!.map((stat) => (
                 <StatCard
@@ -117,7 +115,6 @@ const AnalyticsPage: React.FC = () => {
               ))}
             </div>
 
-            {/* Revenue Chart & Order Status */}
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
               <div className="rounded-2xl border border-[#e0e3e5] bg-white p-5 lg:col-span-2">
                 <h2 className="text-[15px] font-bold text-[#191c1e]">
@@ -140,7 +137,6 @@ const AnalyticsPage: React.FC = () => {
               </div>
             </div>
 
-            {/* Top Categories & Top Stores */}
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
               <div className="rounded-2xl border border-[#e0e3e5] bg-white p-5">
                 <h2 className="text-[15px] font-bold text-[#191c1e]">Kategori Terlaris</h2>

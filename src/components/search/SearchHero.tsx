@@ -21,7 +21,7 @@ const SearchHero: React.FC<SearchHeroProps> = ({
   onClear,
 }) => (
   <div className="mb-6">
-    {/* Eyebrow + judul */}
+    
     <div className="mb-4">
       <div className="mb-2 flex items-center gap-2">
         <span
@@ -49,12 +49,11 @@ const SearchHero: React.FC<SearchHeroProps> = ({
         Hasil Pencarian
       </h1>
       <p className="mt-2 max-w-xl text-[13px] leading-relaxed text-[#737A87]">
-        Cari produk, toko, atau apa pun yang kamu butuhkan — kami bantu
+        Cari produk, toko, atau apa pun yang kamu butuhkan, kami bantu
         menemukan yang paling pas.
       </p>
     </div>
 
-    {/* Search bar */}
     <form onSubmit={onSubmit} className="relative">
       <div
         className="

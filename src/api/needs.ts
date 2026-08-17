@@ -67,7 +67,7 @@ export interface GetNeedsParams {
 
 export const getNeeds = async (params?: GetNeedsParams): Promise<PaginatedResponse<Need>> => {
   const res = await apiClient.get<ApiResponse<PaginatedResponse<Need>>>('/needs', { params });
-  // Backend returns { success, data: [...], meta } → normalize to { data: [...], meta }
+
   return { data: res.data.data as unknown as Need[], meta: (res.data as any).meta };
 };
 
@@ -163,6 +163,5 @@ export const getRecommendations = async (id: string, page?: number, limit?: numb
   const res = await apiClient.get<ApiResponse<PaginatedResponse<Recommendation>>>(`/needs/${id}/recommendations`, {
     params: { page, limit }
   });
-  // Backend returns { success, data: [...], meta } → normalize to { data: [...], meta }
   return { data: res.data.data as unknown as Recommendation[], meta: (res.data as any).meta };
 };

@@ -23,7 +23,7 @@ const ChatsConversationList: React.FC<ChatsConversationListProps> = ({
   loading,
 }) => (
   <div className="flex h-full flex-col">
-    {/* Search + header */}
+    
     <div className="shrink-0 border-b border-[#F5F7FB] p-3">
       <div className="mb-2 flex items-center justify-between">
         <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#737A87]">
@@ -36,7 +36,6 @@ const ChatsConversationList: React.FC<ChatsConversationListProps> = ({
       <ChatsSearch value={search} onChange={onSearchChange} />
     </div>
 
-    {/* List */}
     <div className="flex-1 overflow-y-auto overscroll-contain">
       {loading ? (
         <div className="space-y-0 divide-y divide-[#F5F7FB]">

@@ -7,7 +7,7 @@ type Variant = 'error' | 'empty' | 'no-match' | 'detail-empty';
 
 interface CategoriesEmptyStateProps {
   variant: Variant;
-  /** Override gambar kalau mau beda per halaman */
+  
   image?: string;
   onRetry?: () => void;
   onClearFilters?: () => void;
@@ -30,14 +30,14 @@ const CONFIG: Record<
     eyebrow: 'Ups, ada masalah',
     title: 'Gagal memuat produk',
     subtitle:
-      'Nggak bisa nyambung ke server. Pastiin server-nya nyala, terus coba lagi ya.',
+      'Nggak bisa nyambung ke server. Pastiin servernya nyala, terus coba lagi ya.',
     tipsTitle: 'Cek dulu ini',
     tips: [
       'Pastikan koneksi internetmu stabil',
       'Cek server backend sudah menyala',
       'Tekan "Coba Lagi" kalau sudah siap',
     ],
-    bottomText: 'Jangan panik — coba lagi sebentar lagi',
+    bottomText: 'Jangan panik, coba lagi sebentar lagi',
   },
   empty: {
     eyebrow: 'Katalog kosong',
@@ -60,7 +60,7 @@ const CONFIG: Record<
     tipsTitle: 'Coba cara ini',
     tips: [
       'Hapus beberapa filter kategori aktif',
-      'Perlebar rentang harga min–maks',
+      'Perlebar rentang harga min sampai maks',
       'Longgarkan filter kondisi barang',
     ],
     bottomText: 'Longgarkan filter, hasilnya bakal muncul',
@@ -90,7 +90,6 @@ const CategoriesEmptyState: React.FC<CategoriesEmptyStateProps> = ({
 }) => {
   const config = CONFIG[variant];
 
-  /* Pilih tombol sesuai variant */
   const primary =
     variant === 'error'
       ? { label: 'Coba Lagi', icon: 'arrowRight' as IconName, onClick: onRetry }
@@ -114,7 +113,7 @@ const CategoriesEmptyState: React.FC<CategoriesEmptyStateProps> = ({
         bg-white/95 shadow-[0_18px_50px_rgba(32,36,45,0.10)] backdrop-blur-sm
       "
     >
-      {/* ── Mobile: gambar banner di atas ── */}
+      
       <div className="relative h-44 md:hidden">
         <img
           src={image}
@@ -138,9 +137,8 @@ const CategoriesEmptyState: React.FC<CategoriesEmptyStateProps> = ({
         </div>
       </div>
 
-      {/* ── Desktop: konten KIRI, gambar KANAN ── */}
       <div className="grid md:grid-cols-[1.1fr_0.9fr]">
-        {/* Panel kiri */}
+        
         <section className="flex items-center bg-white px-6 py-8 sm:px-8 lg:px-10">
           <div className="mx-auto w-full max-w-lg">
             <p
@@ -165,7 +163,6 @@ const CategoriesEmptyState: React.FC<CategoriesEmptyStateProps> = ({
               {config.subtitle}
             </p>
 
-            {/* Box tips */}
             <div className="mt-5 rounded-2xl bg-[#F5F7FB] px-5 py-4">
               <p
                 className="
@@ -195,7 +192,6 @@ const CategoriesEmptyState: React.FC<CategoriesEmptyStateProps> = ({
               </ul>
             </div>
 
-            {/* CTA */}
             <div className="mt-5 flex flex-wrap gap-2">
               {primary.onClick && (
                 <button
@@ -235,7 +231,6 @@ const CategoriesEmptyState: React.FC<CategoriesEmptyStateProps> = ({
           </div>
         </section>
 
-        {/* Panel kanan: gambar + gelombang kiri */}
         <section className="relative hidden min-h-[420px] overflow-hidden md:block">
           <img
             src={image}

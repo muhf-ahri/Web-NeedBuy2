@@ -1,4 +1,3 @@
-// src/pages/admin/components/adminMenu.ts
 import type { IconName } from '../../../components/ui/Icon';
 
 export type MenuItem = {
@@ -7,15 +6,6 @@ export type MenuItem = {
   to: string;
 };
 
-/**
- * Daftar menu sekaligus sumber judul halaman placeholder — App.tsx memakai
-* `/admin/*` yang menjatuhkan semua route belum-jadi ke satu PlaceholderPage,
- * dan halaman itu mencari labelnya di sini. Satu daftar, bukan dua yang harus
- * dijaga tetap sinkron.
- *
- * Berkas terpisah dari AdminSidebar supaya fast refresh tetap jalan: file yang
- * mengekspor komponen sekaligus konstanta bikin Vite me-reload penuh.
- */
 export const menuItems: MenuItem[] = [
   { label: 'Dashboard', icon: 'dashboard', to: '/admin/dashboard' },
   { label: 'Users', icon: 'users', to: '/admin/users' },

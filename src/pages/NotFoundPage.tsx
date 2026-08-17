@@ -1,11 +1,10 @@
-// src/pages/NotFoundPage.tsx
 import React from 'react';
 import NotFoundCard from '../components/ui/NotFoundCard';
 
 const NotFoundPage: React.FC = () => {
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#F5F5FF]">
-      {/* Ambient background, unchanged palette (sama dengan Login) */}
+      
       <div
         className="
           absolute
@@ -21,7 +20,6 @@ const NotFoundPage: React.FC = () => {
       <div className="pointer-events-none absolute bottom-[18%] left-[12%] h-3 w-3 rounded-full bg-[#538CDB]" />
       <div className="pointer-events-none absolute bottom-[13%] right-[18%] h-2.5 w-2.5 rounded-full bg-[#FFD500]" />
 
-      {/* Background illustration — sama seperti Login */}
       <img
         src="/src/assets/404 Not Found.jpg"
         alt=""
@@ -40,7 +38,6 @@ const NotFoundPage: React.FC = () => {
         "
       />
 
-      {/* ── Card di KIRI biar nggak menghalangi bebek (sama seperti Login) ── */}
       <div
         className="
           relative z-10 flex min-h-screen items-center justify-start

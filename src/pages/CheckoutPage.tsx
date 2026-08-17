@@ -1,4 +1,3 @@
-// src/pages/CheckoutPage.tsx
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Icon from '../components/ui/Icon';
@@ -20,8 +19,7 @@ const CheckoutPage: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { refreshCartCount } = useCartContext();
-  // Pilihan item dibawa dari halaman keranjang. Tanpa state (mis. checkout
-  // dibuka langsung lewat URL), server memakai seluruh isi keranjang.
+
   const cartItemIds = (location.state as { cartItemIds?: string[] } | null)?.cartItemIds;
   const [addresses, setAddresses] = useState<Address[]>([]);
   const [selectedAddressId, setSelectedAddressId] = useState<string>('');
@@ -33,11 +31,9 @@ const CheckoutPage: React.FC = () => {
   const [coupons, setCoupons] = useState<Coupon[]>([]);
   const [couponCode, setCouponCode] = useState<string | null>(null);
 
-  // Success / payment state
   const [createdOrders, setCreatedOrders] = useState<CreatedOrderPayment[] | null>(null);
   const [paying, setPaying] = useState(false);
 
-  // Address form modal
   const [showAddressForm, setShowAddressForm] = useState(false);
   const [addressForm, setAddressForm] = useState<AddressFormData>(EMPTY_ADDRESS_FORM);
   const [savingAddress, setSavingAddress] = useState(false);
@@ -57,15 +53,12 @@ const CheckoutPage: React.FC = () => {
         getCoupons('mine'),
       ]);
 
-      // Kupon yang sudah dipakai atau kedaluwarsa tidak ikut ditawarkan.
       setCoupons(
         couponRes.status === 'fulfilled'
           ? couponRes.value.data.data.filter((c) => !c.usedAt && !c.expired)
           : []
       );
 
-      // Saldo gagal dimuat bukan alasan menggagalkan checkout — NeedPay-nya
-      // saja yang tidak bisa dipilih.
       setWalletBalance(walletRes.status === 'fulfilled' ? Number(walletRes.value.balance) : 0);
 
       if (addrRes.status === 'fulfilled') {
@@ -156,13 +149,10 @@ const CheckoutPage: React.FC = () => {
       setCreatedOrders(res.data.data.orders);
       await refreshCartCount();
     } catch (err: any) {
-      setError(err.message ?? 'Checkout-nya gagal, coba lagi ya');
+      setError(err.message ?? 'Checkoutnya gagal, coba lagi ya');
     }
   };
 
-  // Token SELALU dibuat ulang sebelum membayar. Token dari hasil checkout bisa
-  // kedaluwarsa kalau user membayar beberapa jam kemudian (mis. selesai isi
-  // saldo), jadi jangan pernah dipakai ulang asal-asalan.
   const waitForPaymentSync = async (orders: CreatedOrderPayment[]) => {
     for (let i = 0; i < 6; i += 1) {
       await new Promise((r) => setTimeout(r, 2000));
@@ -262,11 +252,9 @@ const CheckoutPage: React.FC = () => {
     );
   }
 
-  // ── Success screen ────────────────────────────────────────────────
   if (createdOrders) {
     const hasOnline = createdOrders.some((o) => o.paymentMethod === 'MIDTRANS');
     const allCod = createdOrders.every((o) => o.paymentMethod === 'COD');
-    // Order NeedPay sudah lunas begitu dibuat — jangan disuruh bayar lagi.
     const allNeedPay = createdOrders.every((o) => o.paymentMethod === 'NEEDPAY');
     const allPaidReady = !hasOnline;
 
@@ -342,7 +330,7 @@ const CheckoutPage: React.FC = () => {
           </div>
           {allPaidReady && (
             <p className="mt-3 text-center text-[11px] text-[#737686]">
-              Pesanan COD langsung diproses penjual — bayar tunai saat barang tiba.
+              Pesanan COD langsung diproses penjual, bayar tunai saat barang tiba.
             </p>
           )}
         </main>
@@ -353,9 +341,6 @@ const CheckoutPage: React.FC = () => {
 
   const canCheckout = !!preview && preview.canCheckout && !!selectedAddressId;
 
-  // Ongkir di aplikasi ini masih nol, jadi subtotal = grand total. Ditulis
-  // sebagai dua nilai terpisah supaya saat ongkir benar-benar dihitung nanti,
-  // syarat minimal belanja tidak diam-diam ikut menghitung ongkir.
   const cartSubtotal = preview ? Number(preview.grandTotal) : 0;
   const cartShipping = 0;
 
@@ -365,12 +350,8 @@ const CheckoutPage: React.FC = () => {
     : 0;
   const payable = Math.max(cartSubtotal + cartShipping - couponCut, 0);
 
-  // Saldo cukup = boleh pilih NeedPay. Server tetap memeriksa ulang saat
-  // checkout — ini cuma supaya user nggak menabrak error yang bisa dicegah.
   const needPayEnough = !!preview && walletBalance >= payable;
 
-  // Alamat terpilih memasok DUA kartu sekaligus: kontak penerima dan alamat
-  // pengiriman. Satu data, dua cara orang memikirkannya.
   const shipTo = addresses.find((a) => a.id === selectedAddressId) ?? null;
 
   return (
@@ -401,7 +382,7 @@ const CheckoutPage: React.FC = () => {
           <div className="mt-6 rounded-2xl border border-[#e0e3e5] bg-white py-20 text-center">
             <Icon name="cart" size={44} className="mx-auto mb-3 text-[#c3c6d7]" />
             <p className="text-[15px] font-semibold text-[#101319]">Keranjangmu masih kosong.</p>
-            <p className="mt-1 text-[13px] text-[#737686]">Pilih barangnya dulu, checkout-nya nanti.</p>
+            <p className="mt-1 text-[13px] text-[#737686]">Pilih barangnya dulu, checkoutnya nanti.</p>
             <button
               onClick={() => navigate('/categories')}
               className="mt-5 rounded-full bg-[#004ac6] px-6 py-2.5 text-[14px] font-semibold text-white transition-colors hover:bg-[#003ea8]"
@@ -411,10 +392,8 @@ const CheckoutPage: React.FC = () => {
           </div>
         ) : (
           <div className="mt-6 grid grid-cols-1 items-start gap-5 lg:grid-cols-3">
-            {/* ── Kiri: langkah 1-3 ── */}
             <div className="space-y-5 lg:col-span-2">
 
-              {/* ── 1. Kontak penerima ── */}
               <StepCard
                 step={1}
                 title="Kontak penerima"
@@ -438,7 +417,6 @@ const CheckoutPage: React.FC = () => {
                 )}
               </StepCard>
 
-              {/* ── 2. Alamat pengiriman ── */}
               <StepCard
                 step={2}
                 title="Alamat pengiriman"
@@ -493,7 +471,6 @@ const CheckoutPage: React.FC = () => {
                 )}
               </StepCard>
 
-              {/* ── 3. Metode pembayaran ── */}
               <StepCard step={3} title="Metode pembayaran" done>
                 <div className="space-y-2">
                   <ChoiceRow
@@ -502,7 +479,7 @@ const CheckoutPage: React.FC = () => {
                   >
                     <span className="block text-[13px] font-semibold text-[#101319]">Bayar online</span>
                     <span className="block text-[11px] text-[#737686]">
-                      Kartu, e-wallet, transfer bank, QRIS — lewat Midtrans
+                      Kartu, e-wallet, transfer bank, QRIS via Midtrans
                     </span>
                   </ChoiceRow>
 
@@ -511,8 +488,6 @@ const CheckoutPage: React.FC = () => {
                     <span className="block text-[11px] text-[#737686]">Bayar tunai saat barang tiba</span>
                   </ChoiceRow>
 
-                  {/* Dinonaktifkan kalau saldo kurang — lebih baik ketahuan di
-                      sini daripada checkout gagal setelah tombolnya ditekan. */}
                   <ChoiceRow
                     selected={paymentMethod === 'NEEDPAY'}
                     disabled={!needPayEnough}
@@ -521,7 +496,7 @@ const CheckoutPage: React.FC = () => {
                     <span className="block text-[13px] font-semibold text-[#101319]">Saldo NeedPay</span>
                     <span className="block text-[11px] text-[#737686]">
                       Saldo kamu {formatRupiah(walletBalance)}
-                      {!needPayEnough && ' — kurang buat pesanan ini'}
+                      {!needPayEnough && ' (kurang untuk pesanan ini)'}
                     </span>
                   </ChoiceRow>
                 </div>
@@ -537,7 +512,6 @@ const CheckoutPage: React.FC = () => {
                 )}
               </StepCard>
 
-              {/* ── Barang yang dibeli ── */}
               <section className="overflow-hidden rounded-2xl border border-[#e0e3e5] bg-white">
                 <header className="border-b border-[#e0e3e5] px-4 py-3 sm:px-5">
                   <h2 className="text-[14px] font-bold text-[#101319]">
@@ -556,8 +530,6 @@ const CheckoutPage: React.FC = () => {
                       </p>
                       <div className="space-y-2">
                         {order.items.map((line) => (
-                          // Tab baru: mengecek produk tidak boleh membuang
-                          // alamat dan cara bayar yang sudah dipilih.
                           <Link
                             key={line.cartItemId}
                             to={`/products/${line.productSlug}`}
@@ -605,17 +577,13 @@ const CheckoutPage: React.FC = () => {
                   <p className="text-[13px] font-semibold text-[#7c3e00]">Ada item yang stoknya kurang</p>
                   {preview.stockProblems.map((sp) => (
                     <p key={sp.cartItemId} className="mt-0.5 text-[12px] text-[#7c3e00]">
-                      {sp.productName ?? 'Produk'} — diminta {sp.requested}, tersedia {sp.available}
+                      {sp.productName ?? 'Produk'}: diminta {sp.requested}, tersedia {sp.available}
                     </p>
                   ))}
                 </div>
               )}
             </div>
 
-            {/* ── Kanan: ringkasan + tombol checkout ──
-                Satu-satunya kartu berwarna penuh di halaman ini. Ini kartu
-                uang, jadi ia memakai bahasa yang sama dengan kartu saldo
-                NeedPay — dan karena cuma satu, matanya langsung ke sana. */}
             <aside className="lg:sticky lg:top-24">
               <div className="overflow-hidden rounded-2xl border border-[#e0e3e5] bg-white">
                 <div className="bg-gradient-to-br from-[#004ac6] to-[#002a7a] p-5 text-white">
@@ -646,7 +614,6 @@ const CheckoutPage: React.FC = () => {
                   </dl>
                 </div>
 
-                {/* ── Kupon ── */}
                 <div className="border-b border-[#e0e3e5] p-4 sm:p-5">
                   <div className="mb-2 flex items-center justify-between gap-2">
                     <p className="text-[13px] font-bold text-[#101319]">Kupon</p>
@@ -708,7 +675,6 @@ const CheckoutPage: React.FC = () => {
                   )}
                 </div>
 
-                {/* ── 4. Tombol checkout ── */}
                 <div className="p-4 sm:p-5">
                   <button
                     onClick={handleCheckout}
@@ -733,15 +699,12 @@ const CheckoutPage: React.FC = () => {
         )}
       </main>
 
-      {/* ── Address form modal ── */}
       {showAddressForm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
           <div className="bg-white rounded-2xl shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
             <div className="flex items-start justify-between gap-3 border-b border-[#e0e3e5] bg-[#f7f9ff] p-4">
               <div>
                 <h3 className="text-[15px] font-bold text-[#101319]">Alamat & kontak penerima</h3>
-                {/* Disebut sebagai satu form karena memang satu data — form ini
-                    yang mengisi kartu 1 DAN kartu 2 sekaligus. */}
                 <p className="mt-0.5 text-[12px] text-[#737686]">Mengisi langkah 1 dan 2 sekaligus.</p>
               </div>
               <button

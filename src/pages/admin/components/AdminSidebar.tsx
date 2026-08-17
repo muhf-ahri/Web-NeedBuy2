@@ -1,4 +1,3 @@
-// src/pages/admin/components/AdminSidebar.tsx
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Icon from '../../../components/ui/Icon';
@@ -9,7 +8,7 @@ const AdminSidebar: React.FC = () => {
 
   const isActive = (to: string) => {
     if (location.pathname === to) return true;
-    // Untuk nested path (misal /admin/users/buyer), tetap aktifkan menu Users
+    
     if (to !== '/admin/dashboard' && location.pathname.startsWith(to)) return true;
     return false;
   };

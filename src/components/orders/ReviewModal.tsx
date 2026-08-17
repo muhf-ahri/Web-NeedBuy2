@@ -36,7 +36,6 @@ const ReviewModal: React.FC<ReviewModalProps> = ({
   onRemoveMedia,
   onSubmit,
 }) => {
-  /* Lock body + ESC */
   useEffect(() => {
     const prev = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
@@ -67,7 +66,7 @@ const ReviewModal: React.FC<ReviewModalProps> = ({
           max-h-[90vh]
         "
       >
-        {/* Header */}
+
         <div className="flex items-center justify-between border-b border-[#E8ECF4] px-5 py-4">
           <div className="flex items-center gap-2.5">
             <span
@@ -95,9 +94,8 @@ const ReviewModal: React.FC<ReviewModalProps> = ({
           </button>
         </div>
 
-        {/* Body */}
         <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-5">
-          {/* Target product */}
+
           {targetItem && (
             <div
               className="
@@ -118,7 +116,6 @@ const ReviewModal: React.FC<ReviewModalProps> = ({
             </div>
           )}
 
-          {/* Rating */}
           <div className="mb-4">
             <p
               className="
@@ -156,7 +153,6 @@ const ReviewModal: React.FC<ReviewModalProps> = ({
             </div>
           </div>
 
-          {/* Comment */}
           <div className="mb-4">
             <label
               htmlFor="review-comment"
@@ -186,7 +182,6 @@ const ReviewModal: React.FC<ReviewModalProps> = ({
             />
           </div>
 
-          {/* Media upload */}
           <div>
             <p
               className="
@@ -273,7 +268,6 @@ const ReviewModal: React.FC<ReviewModalProps> = ({
           </div>
         </div>
 
-        {/* Footer */}
         <div className="border-t border-[#E8ECF4] bg-white/95 px-5 py-4">
           <button
             type="button"

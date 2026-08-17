@@ -81,7 +81,7 @@ export const paymentMethodLabel = (
   method: string | null | undefined
 ): string => {
   if (!method) return 'Bayar Online';
-  if (method === 'COD') return 'COD — Bayar di Tempat';
+  if (method === 'COD') return 'COD, Bayar di Tempat';
   return ONLINE_CHANNELS.includes(method)
     ? `Bayar via ${method}`
     : method;

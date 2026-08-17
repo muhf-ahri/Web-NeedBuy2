@@ -1,7 +1,3 @@
-// src/utils/snap.ts
-// Helper untuk integrasi Midtrans Snap (sandbox). Memuat script Snap.js sekali,
-// lalu menampilkan popup pembayaran untuk token yang diberikan.
-
 const CLIENT_KEY = import.meta.env.VITE_MIDTRANS_CLIENT_KEY as string | undefined;
 
 let loadPromise: Promise<boolean> | null = null;

@@ -5,9 +5,6 @@ import Icon, { type IconName } from '../ui/Icon';
 import { formatRupiah } from '../../utils/currency';
 import type { Product } from '../../types';
 
-/* ── Ilustrasi carousel dari src/assets ──
-   Catatan: sesuai screenshot, Crousel1 berekstensi .jpg —
-   kalau di proyek kamu ternyata .png, tinggal ganti extension-nya. */
 import crousel1 from '../../assets/Crousel1.png';
 import crousel2 from '../../assets/Crousel2.png';
 import crousel3 from '../../assets/Crousel3.png';
@@ -42,7 +39,7 @@ const APP_PROMOS: AppPromo[] = [
     body: 'Tulis apa yang kamu butuhkan dan temukan produk yang paling sesuai dengan kebutuhanmu.',
     cta: 'Coba tulis kebutuhan',
     to: '/needs',
-    icon: 'spark',
+    icon: 'layers',
     illustration: crousel2,
   },
   {
@@ -67,9 +64,6 @@ const APP_PROMOS: AppPromo[] = [
 
 const SLIDE_MS = 6000;
 
-/* =============================================================
-   PANEL KIRI — card gambar ilustrasi (pola panel Login)
-============================================================= */
 const IllustrationPanel: React.FC<{
   icon: IconName;
   image?: string;
@@ -81,7 +75,7 @@ const IllustrationPanel: React.FC<{
       via-[#4A7ECB] to-[#3A66AC] md:flex
     "
   >
-    {/* Tepi gelombang (sama seperti panel branding Login) */}
+
     <svg
       className="pointer-events-none absolute inset-y-0 right-0 h-full w-16 md:w-20"
       viewBox="0 0 100 400"
@@ -99,12 +93,10 @@ const IllustrationPanel: React.FC<{
       />
     </svg>
 
-    {/* Dekorasi minimalis */}
     <div className="pointer-events-none absolute -left-10 -top-10 h-40 w-40 rounded-full border border-white/15" />
     <div className="pointer-events-none absolute bottom-6 left-10 h-24 w-24 rounded-full border border-white/10" />
     <div className="pointer-events-none absolute right-[24%] top-[16%] h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
 
-    {/* Card gambar ilustrasi */}
     <div className="relative z-10 flex h-full w-full items-center justify-center p-7">
       {image ? (
         <div
@@ -122,7 +114,7 @@ const IllustrationPanel: React.FC<{
           />
         </div>
       ) : (
-        /* Fallback kalau tidak ada gambar: icon besar */
+
         <div
           className="
             flex h-24 w-24 items-center justify-center rounded-2xl
@@ -136,9 +128,6 @@ const IllustrationPanel: React.FC<{
   </section>
 );
 
-/* =============================================================
-   SALE SLIDE — produk diskon
-============================================================= */
 const SaleSlide: React.FC<{ product: Product }> = ({ product }) => {
   const image = product.images?.[0]?.url;
 
@@ -216,9 +205,6 @@ const SaleSlide: React.FC<{ product: Product }> = ({ product }) => {
   );
 };
 
-/* =============================================================
-   APP SLIDE — promo fitur (pakai Crousel1–4)
-============================================================= */
 const AppSlide: React.FC<{ promo: AppPromo }> = ({ promo }) => (
   <div className="h-full w-full snap-center shrink-0">
     <div
@@ -279,9 +265,6 @@ const AppSlide: React.FC<{ promo: AppPromo }> = ({ promo }) => (
   </div>
 );
 
-/* =============================================================
-   MAIN CAROUSEL
-============================================================= */
 const DEFAULT_SHELL = 'mx-auto w-full max-w-6xl px-5 sm:px-10 pt-5';
 
 const PromoCarousel: React.FC<{

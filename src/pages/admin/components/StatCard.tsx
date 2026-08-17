@@ -1,4 +1,3 @@
-// src/pages/admin/components/StatCard.tsx
 import React from 'react';
 import Icon, { type IconName } from '../../../components/ui/Icon';
 import { formatRupiah } from '../../../utils/currency';
@@ -6,7 +5,7 @@ import { formatRupiah } from '../../../utils/currency';
 interface StatCardProps {
   title: string;
   value: number | string;
-  /** Persen perubahan. null = periode sebelumnya nol, jadi nggak terhitung. */
+  
   change: number | null;
   changeLabel?: string;
   icon: IconName;

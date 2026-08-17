@@ -1,4 +1,3 @@
-// src/pages/admin/components/TableVoucher.tsx
 import React from 'react';
 import { formatRupiah } from '../../../utils/currency';
 import type { AdminCoupon } from '../../../api/admin';
@@ -11,11 +10,6 @@ interface TableVoucherProps {
   pendingId?: string | null;
 }
 
-/**
- * Backend nggak menyimpan kolom "status" — yang ada cuma `isActive` dan
- * `expiresAt`. Statusnya diturunkan di sini supaya nggak ada dua sumber
- * kebenaran yang bisa selisih.
- */
 type VoucherStatus = 'active' | 'paused' | 'expired';
 
 const deriveStatus = (coupon: AdminCoupon): VoucherStatus => {
@@ -42,7 +36,7 @@ const typeLabel: Record<AdminCoupon['type'], string> = {
 };
 
 const formatDate = (date: string | null) => {
-  if (!date) return '—';
+  if (!date) return ': ';
   return new Date(date).toLocaleDateString('id-ID', {
     day: 'numeric',
     month: 'short',
@@ -111,8 +105,6 @@ const TableVoucher: React.FC<TableVoucherProps> = ({
               </span>
             </td>
             <td className="py-2.5">
-              {/* Kupon nggak pernah dihapus — kupon yang sudah dipakai masih
-                  jadi rujukan order lama. Yang tersedia cuma ditahan/diaktifkan. */}
               <button
                 onClick={() => onToggleActive(voucher)}
                 disabled={pendingId === voucher.id || status === 'expired'}

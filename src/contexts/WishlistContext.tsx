@@ -1,4 +1,3 @@
-// src/contexts/WishlistContext.tsx
 import React, { createContext, useContext, useEffect, useState, useCallback, useMemo } from 'react';
 import { useAuth } from './AuthContext';
 import {
@@ -18,11 +17,6 @@ interface WishlistContextType {
 
 const WishlistContext = createContext<WishlistContextType | null>(null);
 
-/**
- * Daftar wishlist user. Fetch dilakukan SATU KALI per aplikasi (bukan per
- * kartu produk) supaya tidak meledakkan rate limiter. Setelah toggle, list
- * di-refresh ulang supaya selalu sinkron dengan backend.
- */
 export const WishlistProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isAuthenticated } = useAuth();
   const [items, setItems] = useState<SavedProduct[]>([]);
@@ -38,9 +32,7 @@ export const WishlistProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     try {
       const res = await getSavedProducts({ limit: 100 });
       setItems(res.data);
-    } catch {
-      // biarkan state lama; fetch ulang tidak wajib
-    } finally {
+    } catch {} finally {
       setLoading(false);
     }
   }, [isAuthenticated]);

@@ -42,14 +42,13 @@ const OrdersTableRow: React.FC<OrdersTableRowProps> = ({
 }) => (
   <>
     <tr className="group border-b border-[#F5F7FB] transition-colors last:border-0 hover:bg-[#F5F5FF]/60">
-      {/* ID Order */}
+
       <td className="px-4 py-3.5">
         <p className="font-mono text-[11px] font-bold text-[#538CDB]">
           #{order.orderNumber}
         </p>
       </td>
 
-      {/* Pembeli */}
       <td className="px-4 py-3.5">
         <p className="truncate text-[13px] font-semibold text-[#20242D]">
           {order.user.name}
@@ -59,12 +58,10 @@ const OrdersTableRow: React.FC<OrdersTableRowProps> = ({
         </p>
       </td>
 
-      {/* Tanggal */}
       <td className="px-4 py-3.5 whitespace-nowrap text-[12px] text-[#737A87]">
         {formatDate(order.createdAt)}
       </td>
 
-      {/* Total */}
       <td className="px-4 py-3.5 whitespace-nowrap">
         <p className="text-[13px] font-bold text-[#20242D] tabular-nums">
           {formatRupiah(Number(order.total))}
@@ -74,12 +71,10 @@ const OrdersTableRow: React.FC<OrdersTableRowProps> = ({
         </p>
       </td>
 
-      {/* Bayar */}
       <td className="px-4 py-3.5 text-[11px] text-[#434655]">
         {order.statusPembayaranLabel}
       </td>
 
-      {/* Status */}
       <td className="px-4 py-3.5">
         <span
           className={`
@@ -91,7 +86,6 @@ const OrdersTableRow: React.FC<OrdersTableRowProps> = ({
         </span>
       </td>
 
-      {/* Aksi */}
       <td className="px-4 py-3.5 text-right">
         <div className="flex items-center justify-end gap-1">
           {action && (
@@ -141,7 +135,6 @@ const OrdersTableRow: React.FC<OrdersTableRowProps> = ({
       </td>
     </tr>
 
-    {/* Expanded detail */}
     {isExpanded && (
       <tr className="bg-[#F5F5FF]/50">
         <td colSpan={7} className="px-4 py-4 sm:px-6">

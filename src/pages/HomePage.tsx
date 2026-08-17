@@ -24,7 +24,6 @@ import ProductCard from '../components/ui/ProductCard';
 import { getProducts } from '../api/products';
 import type { Product } from '../types';
 
-/** Helper untuk delay stagger — tiap card muncul berurutan. */
 const stagger = (index: number, base = 80) => index * base;
 
 const rankCategories = (products: Product[]): PopularCategory[] => {
@@ -78,8 +77,8 @@ const HomePage: React.FC = () => {
 
         if (cancelled) return;
 
-        setTopSelling(sold.data);
-        setCheapest(byPrice.data);
+        setTopSelling(Array.isArray(sold?.data) ? sold.data : []);
+        setCheapest(Array.isArray(byPrice?.data) ? byPrice.data : []);
       } catch (err: any) {
         if (!cancelled) {
           setError(err?.message ?? 'Gagal muat beranda, coba lagi ya');
@@ -97,12 +96,12 @@ const HomePage: React.FC = () => {
   }, []);
 
   const saleProducts = useMemo(
-    () => topSelling.filter((product) => product.discountPercent > 0),
+    () => (topSelling || []).filter((product) => product.discountPercent > 0),
     [topSelling]
   );
 
   const popularCategories = useMemo(
-    () => rankCategories(topSelling),
+    () => rankCategories(topSelling || []),
     [topSelling]
   );
 
@@ -122,14 +121,8 @@ const HomePage: React.FC = () => {
       <Navbar showSearch={false} />
 
       <HomeBackground>
-        {/* ─────────────────────────────────────────
-            HERO / PROMO CAROUSEL
-        ───────────────────────────────────────── */}
         <HeroSection />
 
-        {/* ─────────────────────────────────────────
-            SEARCH BAR
-        ───────────────────────────────────────── */}
         <HomeSearch
           value={searchQuery}
           onChange={setSearchQuery}
@@ -139,9 +132,6 @@ const HomePage: React.FC = () => {
           showSuggestions={false}
         />
 
-        {/* ─────────────────────────────────────────
-            PROMO CAROUSEL (reveal)
-        ───────────────────────────────────────── */}
         <Reveal direction="up" duration={800}>
           <div className="pt-5 sm:pt-7">
             <PromoCarousel
@@ -152,9 +142,6 @@ const HomePage: React.FC = () => {
           </div>
         </Reveal>
 
-        {/* ─────────────────────────────────────────
-            NEEDPAY STRIP + METODE PEMBAYARAN
-        ───────────────────────────────────────── */}
         <Reveal direction="up" delay={100}>
           <section className="mx-auto w-full max-w-6xl px-4 pt-5 sm:px-8">
             <div
@@ -164,7 +151,6 @@ const HomePage: React.FC = () => {
                 backdrop-blur-md sm:p-5 md:p-6
               "
             >
-              {/* Header */}
               <div className="mb-4 flex items-center justify-between gap-3 sm:mb-5">
                 <div className="min-w-0">
                   <p
@@ -199,16 +185,12 @@ const HomePage: React.FC = () => {
                 </Link>
               </div>
 
-              {/* Konten: banner kiri + metode pembayaran kanan */}
               <div className="flex flex-col gap-5 lg:flex-row lg:items-center">
-                {/* Banner saldo */}
                 <NeedPayStrip className="w-full lg:w-[430px] lg:shrink-0" />
 
-                {/* Pembatas vertikal (desktop) / horizontal (mobile) */}
                 <div className="h-px w-full bg-[#E8ECF4] lg:hidden" />
                 <div className="hidden h-24 w-px bg-[#E8ECF4] lg:block" />
 
-                {/* Grid metode pembayaran */}
                 <div className="min-w-0 flex-1">
                   <div className="mb-2.5 flex items-center justify-between">
                     <p
@@ -231,7 +213,6 @@ const HomePage: React.FC = () => {
                     </span>
                   </div>
 
-                  {/* Grid: 4 kolom mobile, 8 kolom desktop */}
                   <div className="grid grid-cols-4 gap-2 sm:grid-cols-8">
                     {PAYMENT_METHODS.map((method) => (
                       <PaymentTile key={method.label} method={method} />
@@ -239,11 +220,10 @@ const HomePage: React.FC = () => {
                   </div>
 
                   <p className="mt-3 text-[11px] leading-relaxed text-[#737A87]">
-                    Satu saldo untuk semua transaksi di NeedBuy — checkout
+                    Satu saldo untuk semua transaksi di NeedBuy, checkout
                     tinggal satu ketukan.
                   </p>
 
-                  {/* CTA mobile — Link kelola saldo */}
                   <Link to="/needpay" className="mt-3 block sm:hidden">
                     <span
                       className="
@@ -262,9 +242,6 @@ const HomePage: React.FC = () => {
           </section>
         </Reveal>
 
-        {/* ─────────────────────────────────────────
-            ERROR
-        ───────────────────────────────────────── */}
         {error && (
           <Reveal direction="up">
             <div className="mx-auto mt-6 w-full max-w-6xl px-4 sm:px-8">
@@ -290,9 +267,6 @@ const HomePage: React.FC = () => {
           </Reveal>
         )}
 
-        {/* ─────────────────────────────────────────
-            POPULAR CATEGORY
-        ───────────────────────────────────────── */}
         <section className="mx-auto w-full max-w-6xl px-4 pb-3 pt-10 sm:px-8 md:pt-14">
           <Reveal direction="up">
             <SectionHeading
@@ -340,9 +314,6 @@ const HomePage: React.FC = () => {
           )}
         </section>
 
-        {/* ─────────────────────────────────────────
-            TOP SELLING
-        ───────────────────────────────────────── */}
         <section className="mx-auto w-full max-w-6xl px-4 pb-3 pt-8 sm:px-8 md:pt-10">
           <Reveal direction="up">
             <SectionHeading
@@ -354,7 +325,6 @@ const HomePage: React.FC = () => {
             />
           </Reveal>
 
-          {/* Grid responsif: 2 mobile → 3 tablet → 5 desktop */}
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
             {loading
               ? Array.from({ length: 5 }).map((_, i) => (
@@ -387,9 +357,6 @@ const HomePage: React.FC = () => {
           </div>
         </section>
 
-        {/* ─────────────────────────────────────────
-            PRICE LIST
-        ───────────────────────────────────────── */}
         <section className="mx-auto w-full max-w-6xl px-4 pb-20 pt-8 sm:px-8 md:pt-10">
           <Reveal direction="up">
             <div

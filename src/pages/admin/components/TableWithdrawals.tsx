@@ -1,4 +1,3 @@
-// src/pages/admin/components/TableWithdrawals.tsx
 import React from 'react';
 import Icon from '../../../components/ui/Icon';
 import { formatRupiah } from '../../../utils/currency';
@@ -66,8 +65,7 @@ const TableWithdrawals: React.FC<TableWithdrawalsProps> = ({
         const busy = pendingId === withdrawal.id;
         return (
           <tr key={withdrawal.id} className="text-[13px] transition-colors hover:bg-[#f8f9fb]">
-            {/* Backend nggak punya nomor penarikan sendiri — 8 karakter pertama
-                UUID sudah cukup untuk dirujuk manusia tanpa mengarang kolom. */}
+            
             <td className="py-2.5 pr-2 font-medium text-[#004ac6]">
               #{withdrawal.id.slice(0, 8).toUpperCase()}
             </td>
@@ -81,9 +79,9 @@ const TableWithdrawals: React.FC<TableWithdrawalsProps> = ({
               {formatRupiah(withdrawal.amount)}
             </td>
             <td className="py-2.5 pr-2">
-              <div className="text-[#191c1e]">{withdrawal.bankName ?? '—'}</div>
+              <div className="text-[#191c1e]">{withdrawal.bankName ?? 'Belum diisi'}</div>
               <div className="text-[11px] text-[#737686]">
-                {withdrawal.bankAccount ?? '—'}
+                {withdrawal.bankAccount ?? 'Belum diisi'}
                 {withdrawal.bankAccountName ? ` · a.n. ${withdrawal.bankAccountName}` : ''}
               </div>
             </td>
@@ -103,7 +101,7 @@ const TableWithdrawals: React.FC<TableWithdrawalsProps> = ({
                     disabled={busy}
                     className="rounded-lg p-1.5 text-[#156b32] transition-colors hover:bg-[#d7f5dc] disabled:opacity-40"
                     aria-label="Setujui"
-                    title="Setujui — dana sudah ditransfer"
+                    title="Setujui: dana sudah ditransfer"
                   >
                     <Icon name="check" size={16} />
                   </button>
@@ -112,13 +110,13 @@ const TableWithdrawals: React.FC<TableWithdrawalsProps> = ({
                     disabled={busy}
                     className="rounded-lg p-1.5 text-[#ba1a1a] transition-colors hover:bg-[#ffe0e0] disabled:opacity-40"
                     aria-label="Tolak"
-                    title="Tolak — saldo dikembalikan ke penjual"
+                    title="Tolak: saldo dikembalikan ke penjual"
                   >
                     <Icon name="close" size={16} />
                   </button>
                 </div>
               ) : (
-                <span className="text-[11px] text-[#737686]">{withdrawal.note ?? '—'}</span>
+                <span className="text-[11px] text-[#737686]">{withdrawal.note ?? 'Tanpa catatan'}</span>
               )}
             </td>
           </tr>

@@ -10,7 +10,7 @@ interface ProfileDropdownProps {
 }
 
 const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
-  avatarUrl,
+  avatarUrl: avatarUrlProp,
   sellerName = 'Seller',
 }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -44,11 +44,12 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
     },
   ];
 
+  const avatarUrl = avatarUrlProp ?? user?.avatarUrl ?? undefined;
   const initials = (sellerName || 'U').slice(0, 2).toUpperCase();
 
   return (
     <div className="relative" ref={dropdownRef}>
-      {/* ── Avatar button ── */}
+
       <button
         type="button"
         onClick={() => setIsOpen((s) => !s)}
@@ -60,7 +61,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
         aria-label="Menu profil"
         aria-expanded={isOpen}
       >
-        {/* Avatar dengan ring gradient saat active/open */}
+
         <span
           className={`
             relative flex h-9 w-9 items-center justify-center overflow-hidden
@@ -76,7 +77,6 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
               {initials}
             </span>
           )}
-          {/* Titik kuning dekoratif (signature NeedBuy) */}
           <span className="pointer-events-none absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-[#FFD500] ring-2 ring-white" />
         </span>
 
@@ -93,7 +93,6 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
         />
       </button>
 
-      {/* ── Dropdown ── */}
       {isOpen && (
         <div
           className="
@@ -103,13 +102,11 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
             profile-dropdown-enter
           "
         >
-          {/* Header profil */}
           <div
             className="
               relative overflow-hidden border-b border-[#E8ECF4] px-4 py-3.5
             "
           >
-            {/* Dekorasi */}
             <span
               className="
                 pointer-events-none absolute -right-6 -top-6 h-16 w-16
@@ -170,7 +167,6 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
             </div>
           </div>
 
-          {/* Menu */}
           <ul className="p-1.5">
             {menuItems.map((item) => (
               <li key={item.to}>
@@ -208,7 +204,6 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
             ))}
           </ul>
 
-          {/* Logout */}
           <div className="border-t border-[#E8ECF4] p-1.5">
             <button
               type="button"

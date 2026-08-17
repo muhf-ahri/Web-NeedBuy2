@@ -1,4 +1,3 @@
-// src/pages/admin/ReviewsPage.tsx
 import React, { useCallback, useEffect, useState } from 'react';
 import AdminLayout from './AdminLayout';
 import FilterBar from '../../components/ui/filter/FilterBar';
@@ -8,10 +7,6 @@ import { getReviews, setReviewHidden, type AdminReview } from '../../api/admin';
 
 const PAGE_SIZE = 10;
 
-/**
- * Filter "Dilaporkan" belum ada di sini: backend belum punya tabel laporan,
- * jadi ulasan hanya punya dua keadaan — tampil atau disembunyikan admin.
- */
 const ReviewsPage: React.FC = () => {
   const [page, setPage] = useState(1);
   const [visibility, setVisibility] = useState<'' | 'visible' | 'hidden'>('');

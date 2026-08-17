@@ -1,4 +1,3 @@
-// src/pages/CouponsPage.tsx
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/layout/Navbar';
@@ -35,8 +34,6 @@ const CouponCard: React.FC<{
 }> = ({ coupon, busy, onClaim }) => {
   const used = !!coupon.usedAt;
   const dead = used || coupon.expired || coupon.soldOut;
-  // Kategori tak dikenal (kupon lama sebelum kolomnya ada) jatuh ke DISCOUNT
-  // ketimbang bikin kartunya gagal render.
   const skin = COUPON_SKIN[coupon.category] ?? COUPON_SKIN.DISCOUNT;
 
   return (
@@ -45,10 +42,6 @@ const CouponCard: React.FC<{
         dead ? 'opacity-60' : ''
       }`}
     >
-      {/* Stub kiri — bagian yang "disobek", penanda ini kupon bukan kartu biasa.
-          Warnanya dari kategori kupon, jadi jenis untungnya kebaca sebelum
-          satu huruf pun dibaca: hijau = ongkir, ungu = cashback, oranye =
-          potongan harga. */}
       <div
         className="w-24 shrink-0 flex flex-col items-center justify-center gap-1 px-2 border-r border-dashed"
         style={{ backgroundColor: skin.stub, color: skin.ink, borderColor: skin.edge }}
@@ -202,7 +195,6 @@ const CouponsPage: React.FC = () => {
           Klaim kupon sekarang, pakai saat checkout.
         </p>
 
-        {/* Tukar kode */}
         <form onSubmit={handleRedeem} className="flex gap-2 mb-6">
           <input
             value={code}
@@ -231,7 +223,6 @@ const CouponsPage: React.FC = () => {
           </div>
         )}
 
-        {/* Tabs */}
         <div className="flex gap-2 mb-6">
           {TABS.map((item) => (
             <button

@@ -1,4 +1,3 @@
-// src/pages/admin/components/AdminHeader.tsx
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Icon from '../../../components/ui/Icon';
@@ -54,14 +53,11 @@ const AdminHeader: React.FC = () => {
   return (
     <header className="sticky top-0 z-40 border-b border-[#e0e3e5] bg-white">
       <div className="mx-auto flex h-16 max-w-[1600px] items-center justify-between px-5 sm:px-10">
-        {/* Logo */}
         <Link to="/admin/dashboard" className="text-xl font-bold tracking-tight text-[#004ac6]">
           NeedBuy Admin
         </Link>
 
-        {/* Search + Actions */}
         <div className="flex items-center gap-1">
-          {/* Search — dengan animasi expand seperti Navbar */}
           <div ref={searchContainerRef} className="relative flex items-center">
             <div
               className={`flex items-center overflow-hidden transition-all duration-300 ease-in-out ${
@@ -121,10 +117,8 @@ const AdminHeader: React.FC = () => {
             )}
           </div>
 
-          {/* Notification */}
           <NotificationBell />
 
-          {/* Profile Dropdown */}
           <ProfileDropdown sellerName={user?.name ?? 'Admin'} />
         </div>
       </div>

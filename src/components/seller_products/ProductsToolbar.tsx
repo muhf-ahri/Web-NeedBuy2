@@ -25,7 +25,7 @@ const ProductsToolbar: React.FC<ProductsToolbarProps> = ({
       shadow-[0_6px_18px_rgba(32,36,45,0.05)] backdrop-blur-sm sm:p-4
     "
   >
-    {/* Search */}
+    
     <div className="relative min-w-0 flex-1">
       <Icon
         name="search"
@@ -64,7 +64,6 @@ const ProductsToolbar: React.FC<ProductsToolbarProps> = ({
       )}
     </div>
 
-    {/* Info count + tombol tambah mobile */}
     <div className="flex items-center gap-2 sm:gap-3">
       <p className="text-[11px] text-[#737A87] sm:text-[12px]">
         {loading ? 'Memuat...' : (

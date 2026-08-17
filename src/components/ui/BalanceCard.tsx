@@ -1,10 +1,8 @@
-// src/components/ui/BalanceCard.tsx
 import React from 'react';
 import Icon from './Icon';
 import { formatRupiah } from '../../utils/currency';
 
 interface BalanceCardProps {
-  /** Decimal dari API dikirim sebagai string; number tetap diterima. */
   balance: number | string;
   walletId?: string;
   loading?: boolean;
@@ -17,7 +15,7 @@ const BalanceCard: React.FC<BalanceCardProps> = ({
 }) => {
   return (
     <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#004ac6] to-[#002a7a] p-6 text-white shadow-lg">
-      {/* Decorative elements */}
+      
       <div className="absolute -right-12 -top-12 h-32 w-32 rounded-full bg-white/5" />
       <div className="absolute -bottom-8 -left-8 h-24 w-24 rounded-full bg-white/5" />
       <div className="absolute right-8 top-8 opacity-10">

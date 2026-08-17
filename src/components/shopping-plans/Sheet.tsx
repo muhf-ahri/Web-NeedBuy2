@@ -9,17 +9,12 @@ interface SheetProps {
   maxWidth?: string;
 }
 
-/**
- * Cangkang modal — background blur gelap, card putih rounded-[24px],
- * header dengan titik kuning dekoratif (callback design system).
- */
 const Sheet: React.FC<SheetProps> = ({
   title,
   onClose,
   children,
   maxWidth = 'max-w-lg',
 }) => {
-  /* Kunci scroll body saat modal terbuka */
   useEffect(() => {
     const prev = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
@@ -28,7 +23,6 @@ const Sheet: React.FC<SheetProps> = ({
     };
   }, []);
 
-  /* ESC untuk tutup */
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -39,13 +33,12 @@ const Sheet: React.FC<SheetProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      {/* Backdrop */}
+
       <div
         className="absolute inset-0 bg-[#20242D]/50 backdrop-blur-sm"
         onClick={onClose}
       />
 
-      {/* Card modal */}
       <div
         className={`
           sheet-enter relative flex w-full ${maxWidth} flex-col
@@ -54,7 +47,6 @@ const Sheet: React.FC<SheetProps> = ({
           backdrop-blur-sm max-h-[88vh]
         `}
       >
-        {/* Header */}
         <div
           className="
             flex items-center justify-between border-b border-[#E8ECF4]
@@ -86,7 +78,6 @@ const Sheet: React.FC<SheetProps> = ({
           </button>
         </div>
 
-        {/* Body */}
         <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-5">
           {children}
         </div>

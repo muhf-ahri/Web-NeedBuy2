@@ -24,7 +24,6 @@ const TopProductsCard: React.FC<TopProductsCardProps> = ({
   error,
   products,
 }) => {
-  /* Trigger animasi progress bars setelah mount */
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -43,7 +42,7 @@ const TopProductsCard: React.FC<TopProductsCardProps> = ({
         backdrop-blur-sm sm:p-6
       "
     >
-      {/* Dekorasi */}
+
       <span
         className="
           pointer-events-none absolute -right-10 -top-10 h-24 w-24
@@ -57,7 +56,6 @@ const TopProductsCard: React.FC<TopProductsCardProps> = ({
         "
       />
 
-      {/* Header */}
       <div className="mb-4 flex items-center gap-2.5">
         <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#FFF7E0]">
           <Icon name="star" size={15} className="text-[#B45309]" />
@@ -109,7 +107,7 @@ const TopProductsCard: React.FC<TopProductsCardProps> = ({
               <li key={product.productId} className="group">
                 <div className="mb-1 flex items-start justify-between gap-2">
                   <div className="flex min-w-0 items-center gap-2">
-                    {/* Rank badge */}
+
                     <span
                       className={`
                         flex h-5 w-5 shrink-0 items-center justify-center
@@ -156,7 +154,6 @@ const TopProductsCard: React.FC<TopProductsCardProps> = ({
                   </div>
                 </div>
 
-                {/* Progress bar — animasi grow dari kiri */}
                 <div className="h-1.5 w-full overflow-hidden rounded-full bg-[#F5F7FB]">
                   <div
                     className="h-full rounded-full bg-gradient-to-r from-[#5B93E0] to-[#3A66AC]"

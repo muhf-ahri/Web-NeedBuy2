@@ -73,7 +73,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onNavigate }) => {
         hover:shadow-[0_14px_36px_rgba(32,36,45,0.10)]
       "
     >
-      {/* Image */}
       <div className="relative aspect-[4/3] overflow-hidden bg-[#F5F7FB]">
         <img
           src={primaryImage}
@@ -85,13 +84,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onNavigate }) => {
           "
         />
 
-        {/* Badge diskon */}
         <DiscountBadge
           discountPercent={product.discountPercent}
           price={product.price}
         />
 
-        {/* Wishlist button */}
         <button
           onClick={handleToggleWishlist}
           disabled={wishlistBusy}
@@ -114,9 +111,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onNavigate }) => {
         </button>
       </div>
 
-      {/* Content */}
       <div className="flex flex-1 flex-col p-3.5">
-        {/* Store name */}
         <span
           className="
             block truncate text-[11px] font-semibold uppercase
@@ -126,7 +121,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onNavigate }) => {
           {product.seller?.storeName ?? 'Toko'}
         </span>
 
-        {/* Product name */}
         <h3
           className="
             mt-1 line-clamp-2 flex-1 text-[13px] font-semibold
@@ -137,7 +131,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onNavigate }) => {
           {product.name}
         </h3>
 
-        {/* Rating */}
         <div className="mt-1.5 flex items-center gap-1">
         <Icon name="star" size={12} className="shrink-0 text-[#FFD500]" />
         <span className="text-[11px] font-medium text-[#737A87]">
@@ -148,7 +141,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onNavigate }) => {
         </span>
         </div>
 
-        {/* Price + Cart button */}
         <div className="mt-2.5 flex items-end justify-between gap-1">
           <PriceWithDiscount
             price={product.price}

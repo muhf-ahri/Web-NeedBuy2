@@ -1,4 +1,3 @@
-// src/pages/admin/PromotionsPage.tsx
 import React, { useCallback, useEffect, useState } from 'react';
 import AdminLayout from './AdminLayout';
 import FilterBar from '../../components/ui/filter/FilterBar';
@@ -8,14 +7,6 @@ import { getCoupons, updateCoupon, type AdminCoupon } from '../../api/admin';
 
 const PAGE_SIZE = 10;
 
-/**
- * Tab "Flash Sale" belum ada di sini: backend nggak punya model jadwal diskon
- * per produk, jadi satu-satunya promo yang benar-benar bisa dikelola adalah
- * kupon (`/admin/coupons`).
- *
- * Filter status "Kadaluwarsa" juga cuma dihitung di client — backend hanya
- * memfilter `isActive`, dan kupon kadaluwarsa bisa saja masih aktif.
- */
 const PromotionsPage: React.FC = () => {
   const [page, setPage] = useState(1);
   const [statusFilter, setStatusFilter] = useState('');

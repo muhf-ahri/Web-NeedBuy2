@@ -67,7 +67,7 @@ const NeedPayWithdraw: React.FC<NeedPayWithdrawProps> = ({
           <h2 className="text-[17px] font-bold text-[#20242D]">Tarik Saldo</h2>
           <p className="mt-1 max-w-md text-[12px] leading-relaxed text-[#737A87]">
             Cairkan saldo NeedPay ke rekening bank kamu. Admin yang bakal
-            ninjau pengajuannya, biasanya 1–2 hari kerja.
+            ninjau pengajuannya, biasanya 1 sampai 2 hari kerja.
           </p>
         </div>
 

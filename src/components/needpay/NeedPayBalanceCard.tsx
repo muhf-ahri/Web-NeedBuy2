@@ -33,7 +33,6 @@ const NeedPayBalanceCard: React.FC<NeedPayBalanceCardProps> = ({
         backdrop-blur-sm
       "
     >
-      {/* Mobile: gambar di atas */}
       <div className="relative h-44 md:hidden">
         <img
           src={needpayCard}
@@ -59,7 +58,6 @@ const NeedPayBalanceCard: React.FC<NeedPayBalanceCardProps> = ({
       </div>
 
       <div className="grid md:grid-cols-[0.9fr_1.1fr]">
-        {/* Panel kiri: gambar besar */}
         <section className="relative hidden min-h-[420px] overflow-hidden md:block">
           <img
             src={needpayCard}
@@ -102,7 +100,6 @@ const NeedPayBalanceCard: React.FC<NeedPayBalanceCardProps> = ({
           </div>
         </section>
 
-        {/* Panel kanan: saldo + grid payment */}
         <section className="flex items-center bg-white px-6 py-7 sm:px-8 lg:px-10">
           <div className="mx-auto w-full max-w-lg">
             <div className="mb-4 md:hidden">
@@ -127,7 +124,6 @@ const NeedPayBalanceCard: React.FC<NeedPayBalanceCardProps> = ({
               Saldo kamu, siap dipakai.
             </h3>
 
-            {/* Kotak saldo compact */}
             <div
               className="
                 mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 rounded-2xl
@@ -164,7 +160,6 @@ const NeedPayBalanceCard: React.FC<NeedPayBalanceCardProps> = ({
               </p>
             </div>
 
-            {/* Grid metode pembayaran */}
             <div className="mt-5">
               <div className="mb-2 flex items-center justify-between">
                 <p
@@ -218,7 +213,6 @@ const NeedPayBalanceCard: React.FC<NeedPayBalanceCardProps> = ({
               </div>
             </div>
 
-            {/* CTA */}
             <button
               type="button"
               onClick={onTopUp}

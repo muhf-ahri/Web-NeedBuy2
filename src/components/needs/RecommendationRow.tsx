@@ -55,7 +55,7 @@ const RecommendationRow: React.FC<RecommendationRowProps> = ({
         sm:items-center
       "
     >
-      {/* Image */}
+
       <div
         className="
           relative h-20 w-full shrink-0 overflow-hidden rounded-xl
@@ -74,7 +74,6 @@ const RecommendationRow: React.FC<RecommendationRowProps> = ({
           </div>
         )}
 
-        {/* Match score badge */}
         <span
           className="
             absolute left-1.5 top-1.5 rounded-full bg-[#20242D]/85 px-1.5
@@ -85,7 +84,6 @@ const RecommendationRow: React.FC<RecommendationRowProps> = ({
         </span>
       </div>
 
-      {/* Info */}
       <div className="min-w-0 flex-1">
         <div className="flex flex-wrap items-center gap-1.5">
           <span
@@ -124,7 +122,6 @@ const RecommendationRow: React.FC<RecommendationRowProps> = ({
         </div>
       </div>
 
-      {/* Price + Cart */}
       <div className="flex items-center justify-between gap-2 sm:flex-col sm:items-end sm:justify-center">
         <p className="text-[14px] font-bold text-[#538CDB]">
           {formatRupiah(rec.product.price)}

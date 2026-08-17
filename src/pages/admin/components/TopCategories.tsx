@@ -1,4 +1,3 @@
-// src/pages/admin/components/TopCategories.tsx
 import React from 'react';
 import { formatRupiah } from '../../../utils/currency';
 

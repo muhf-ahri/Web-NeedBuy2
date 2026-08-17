@@ -37,7 +37,7 @@ const OrdersHero: React.FC<OrdersHeroProps> = ({ totalCount, loading }) => (
         Pesanan Saya
       </h1>
       <p className="mt-2 max-w-xl text-[13px] leading-relaxed text-[#737A87]">
-        Pantau semua pesananmu di satu tempat — dari menunggu pembayaran
+        Pantau semua pesananmu di satu tempat, dari menunggu pembayaran
         sampai selesai diulas.
         {!loading && (
           <>

@@ -66,7 +66,7 @@ const NeedCard: React.FC<NeedCardProps> = ({
       "
     >
       <div className="flex flex-wrap items-start justify-between gap-3">
-        {/* Info */}
+
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
             <p
@@ -107,7 +107,6 @@ const NeedCard: React.FC<NeedCardProps> = ({
           </p>
         </div>
 
-        {/* Actions */}
         <div className="flex flex-wrap items-center gap-2">
           <button
             type="button"
@@ -122,7 +121,7 @@ const NeedCard: React.FC<NeedCardProps> = ({
               disabled:shadow-none
             "
           >
-            <Icon name="spark" size={13} />
+            <Icon name="zap" size={13} />
             Rekomendasi
           </button>
           <button
@@ -147,7 +146,6 @@ const NeedCard: React.FC<NeedCardProps> = ({
         </div>
       </div>
 
-      {/* Rekomendasi panel */}
       {isActive && (
         <div className="mt-4 border-t border-[#E8ECF4] pt-4">
           <div className="mb-3 flex items-center gap-2">
@@ -157,7 +155,7 @@ const NeedCard: React.FC<NeedCardProps> = ({
                 bg-[#538CDB]/10
               "
             >
-              <Icon name="spark" size={12} className="text-[#538CDB]" />
+              <Icon name="layers" size={12} className="text-[#538CDB]" />
             </span>
             <p className="text-[12px] font-bold text-[#20242D]">
               Rekomendasi Produk

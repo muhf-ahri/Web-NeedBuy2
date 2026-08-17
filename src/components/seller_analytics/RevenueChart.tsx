@@ -10,7 +10,6 @@ interface RevenueChartProps {
   total?: { revenue: string | number; orders: string | number };
 }
 
-/** Label X-axis berdasarkan granularity */
 const labelFor = (iso: string, granularity: string) => {
   const date = new Date(iso);
   if (granularity === 'hour')
@@ -20,7 +19,6 @@ const labelFor = (iso: string, granularity: string) => {
   return date.toLocaleDateString('id-ID', { day: 'numeric', month: 'short' });
 };
 
-/** Format angka ringkas untuk di atas bar */
 const compactValue = (v: number) => {
   if (v >= 1_000_000) return `${(v / 1_000_000).toFixed(1)}jt`;
   if (v >= 1_000) return `${Math.round(v / 1_000)}rb`;
@@ -33,7 +31,6 @@ const RevenueChart: React.FC<RevenueChartProps> = ({
   total,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  /* Trigger animasi grow setelah mount */
   const [mounted, setMounted] = useState(false);
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
   const [isSmall, setIsSmall] = useState(false);
@@ -53,7 +50,6 @@ const RevenueChart: React.FC<RevenueChartProps> = ({
     return () => window.removeEventListener('resize', check);
   }, []);
 
-  /* Empty state */
   if (points.length === 0) {
     return (
       <div
@@ -79,7 +75,6 @@ const RevenueChart: React.FC<RevenueChartProps> = ({
 
   const max = Math.max(...points.map((p) => p.revenue), 1);
 
-  /* Responsive X-axis sampling */
   const maxLabels = isSmall ? 4 : 8;
   const step = Math.max(1, Math.ceil(points.length / maxLabels));
   const xAxisLabels = points
@@ -88,7 +83,6 @@ const RevenueChart: React.FC<RevenueChartProps> = ({
 
   return (
     <div ref={containerRef}>
-      {/* Header dengan total */}
       {total && (
         <div className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-[#737A87]">
           <span>
@@ -107,7 +101,6 @@ const RevenueChart: React.FC<RevenueChartProps> = ({
         </div>
       )}
 
-      {/* Chart container */}
       <div className="relative flex h-56 items-end gap-1 sm:h-64 sm:gap-2">
         {points.map((point, index) => {
           const heightPct = (point.revenue / max) * 100;
@@ -123,7 +116,6 @@ const RevenueChart: React.FC<RevenueChartProps> = ({
               onMouseEnter={() => setHoverIndex(index)}
               onMouseLeave={() => setHoverIndex(null)}
             >
-              {/* Tooltip */}
               {isHovered && (
                 <div
                   className="
@@ -142,7 +134,6 @@ const RevenueChart: React.FC<RevenueChartProps> = ({
                 </div>
               )}
 
-              {/* Value di atas bar */}
               <span
                 className={`
                   mb-1 text-[8px] font-bold tabular-nums transition-all
@@ -157,7 +148,6 @@ const RevenueChart: React.FC<RevenueChartProps> = ({
                 {compactValue(point.revenue)}
               </span>
 
-              {/* Bar — animasi grow dari bawah */}
               <div
                 className={`
                   relative w-full overflow-hidden rounded-t-md
@@ -175,7 +165,6 @@ const RevenueChart: React.FC<RevenueChartProps> = ({
                 }}
                 title={`${labelFor(point.bucket, granularity)} · ${formatRupiah(point.revenue)}`}
               >
-                {/* Shine overlay saat hover */}
                 <span
                   className={`
                     pointer-events-none absolute inset-0 bg-gradient-to-t
@@ -190,7 +179,6 @@ const RevenueChart: React.FC<RevenueChartProps> = ({
         })}
       </div>
 
-      {/* X-axis labels */}
       <div className="mt-2 flex justify-between">
         {xAxisLabels.map(({ p, i }) => (
           <span

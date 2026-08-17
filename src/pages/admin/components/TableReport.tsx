@@ -1,4 +1,3 @@
-// src/pages/admin/components/TableReport.tsx
 import React from 'react';
 import type {
   AdminReport,
@@ -45,7 +44,6 @@ export const targetLabel: Record<ReportTargetType, string> = {
   REVIEW: 'Ulasan',
 };
 
-/** Tombol aksi cuma memajukan satu langkah — nggak ada jalan mundur. */
 const nextStatus: Record<ReportStatus, ReportStatus | null> = {
   OPEN: 'INVESTIGATING',
   INVESTIGATING: 'RESOLVED',
@@ -97,8 +95,7 @@ const TableReport: React.FC<ReportTableProps> = ({
     <>
       {reports.map((report) => (
         <tr key={report.id} className="text-[13px] transition-colors hover:bg-[#f8f9fb]">
-          {/* Backend nggak menyimpan nomor laporan — potongan UUID sudah cukup
-              untuk dirujuk manusia tanpa mengarang kolom baru. */}
+          
           <td className="py-2.5 pr-2 font-medium text-[#004ac6]">
             #{report.id.slice(0, 8).toUpperCase()}
           </td>
@@ -137,7 +134,7 @@ const TableReport: React.FC<ReportTableProps> = ({
                 {nextActionLabel[report.status]}
               </button>
             ) : (
-              <span className="text-[11px] text-[#737686]">—</span>
+              <span className="text-[11px] text-[#737686]">: </span>
             )}
           </td>
         </tr>

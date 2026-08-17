@@ -1,6 +1,3 @@
-// src/components/SellerCard.tsx
-//
-// Kartu profil toko di halaman produk, dengan tombol ikuti.
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Icon from './ui/Icon';
@@ -25,8 +22,6 @@ const SellerCard: React.FC<{ seller: ProductDetailSeller }> = ({ seller }) => {
     setBusy(true);
     setError(null);
     try {
-      // Jumlah pengikut diambil dari respons, bukan ditambah/dikurangi sendiri
-      // di client — kalau ada tab lain yang ikut menekan, hitungan lokal melenceng.
       const res = following ? await unfollowSeller(seller.id) : await followSeller(seller.id);
       setFollowing(res.data.data.following);
       setFollowerCount(res.data.data.followerCount);

@@ -60,7 +60,6 @@ const ShopInsightsCard: React.FC<ShopInsightsCardProps> = ({
   error,
   insights,
 }) => {
-  /* Stagger animasi insights muncul */
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -77,7 +76,7 @@ const ShopInsightsCard: React.FC<ShopInsightsCardProps> = ({
         shadow-[0_8px_24px_rgba(32,36,45,0.06)] backdrop-blur-sm sm:p-6
       "
     >
-      {/* Dekorasi */}
+      
       <span
         className="
           pointer-events-none absolute -right-16 -top-16 h-40 w-40
@@ -97,7 +96,6 @@ const ShopInsightsCard: React.FC<ShopInsightsCardProps> = ({
         "
       />
 
-      {/* Header */}
       <div className="relative mb-4 flex items-center gap-2.5">
         <span
           className="
@@ -106,7 +104,7 @@ const ShopInsightsCard: React.FC<ShopInsightsCardProps> = ({
             shadow-[0_6px_16px_rgba(83,140,219,0.30)]
           "
         >
-          <Icon name="spark" size={16} className="text-white" />
+          <Icon name="analytics" size={16} className="text-white" />
         </span>
         <div>
           <h3 className="text-[14px] font-bold text-[#20242D] sm:text-[15px]">
@@ -134,7 +132,7 @@ const ShopInsightsCard: React.FC<ShopInsightsCardProps> = ({
       ) : insights.length === 0 ? (
         <div className="flex items-center gap-3 rounded-xl bg-white/70 px-4 py-6">
           <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white">
-            <Icon name="spark" size={16} className="text-[#A2A8B3]" />
+            <Icon name="analytics" size={16} className="text-[#A2A8B3]" />
           </span>
           <div>
             <p className="text-[13px] font-semibold text-[#20242D]">
@@ -182,7 +180,7 @@ const ShopInsightsCard: React.FC<ShopInsightsCardProps> = ({
                           ? 'alert'
                           : insight.severity === 'positive'
                             ? 'check'
-                            : 'spark'
+                            : 'trending'
                     }
                     size={12}
                     className={style.iconText}

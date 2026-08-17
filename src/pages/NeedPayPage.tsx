@@ -151,7 +151,7 @@ const NeedPayPage: React.FC = () => {
       return;
     }
     if (!/^[0-9-]{6,30}$/.test(data.bankAccount.trim())) {
-      setError('Nomor rekeningnya cuma boleh angka, 6–30 digit.');
+      setError('Nomor rekening hanya boleh angka, 6 sampai 30 digit.');
       return;
     }
 
@@ -171,7 +171,6 @@ const NeedPayPage: React.FC = () => {
     }
   };
 
-  /* ── Login prompt ── */
   if (!isAuthed) {
     return <NeedPayLoginPrompt />;
   }
@@ -184,7 +183,6 @@ const NeedPayPage: React.FC = () => {
       <Navbar />
 
       <main className="flex-1 mx-auto w-full max-w-3xl px-4 py-8 sm:px-8">
-        {/* Heading */}
         <div className="mb-6 flex items-center gap-3">
           <div className="min-w-0">
             <p
@@ -201,7 +199,6 @@ const NeedPayPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Error / Notice */}
         {error && (
           <div
             className="
@@ -240,7 +237,6 @@ const NeedPayPage: React.FC = () => {
           </div>
         )}
 
-        {/* Card saldo */}
         <NeedPayBalanceCard
           balance={wallet?.balance ?? 0}
           walletId={wallet?.id}
@@ -248,7 +244,6 @@ const NeedPayPage: React.FC = () => {
           onTopUp={handleScrollToTopup}
         />
 
-        {/* Card Tambah Saldo */}
         <div ref={topupRef}>
           <NeedPayTopup
             amount={amount}
@@ -260,7 +255,6 @@ const NeedPayPage: React.FC = () => {
           />
         </div>
 
-        {/* Card Cairkan Rekening */}
         <NeedPayWithdraw
           balance={wallet?.balance ?? 0}
           onSubmit={handleWithdraw}
@@ -269,7 +263,6 @@ const NeedPayPage: React.FC = () => {
           maxWithdrawal={MAX_WITHDRAWAL}
         />
 
-        {/* Card Aktivitas Akun */}
         <NeedPayHistory transactions={transactions} loading={loading} />
       </main>
 

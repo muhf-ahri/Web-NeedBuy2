@@ -28,11 +28,9 @@ const DashboardPage: React.FC = () => {
   const { user } = useAuth();
   const [period, setPeriod] = useState<DashboardPeriod>('week');
 
-  /* ── Key untuk memaksa semua card fetch ulang saat "Coba Lagi" ── */
   const [reloadKey, setReloadKey] = useState(0);
   const retry = () => setReloadKey((k) => k + 1);
 
-  /* Satu endpoint per card — card yang gagal hanya tampilkan error-nya sendiri */
   const sales = useDashboardCard(() => getTotalSales(period), [period, reloadKey]);
   const pending = useDashboardCard(() => getPendingOrders(), [reloadKey]);
   const rating = useDashboardCard(() => getCustomerRating(), [reloadKey]);
@@ -44,7 +42,6 @@ const DashboardPage: React.FC = () => {
   const inventory = useDashboardCard(() => getInventoryAlerts(), [reloadKey]);
   const activeOrders = useDashboardCard(() => getActiveOrders(5), [reloadKey]);
 
-  /* ── Deteksi gagal TOTAL (server down) vs gagal parsial ── */
   const cards = [sales, pending, rating, views, performance, inventory, activeOrders];
   const anyLoading = cards.some((c) => c.loading);
   const allFailed = cards.every((c) => Boolean(c.error));
@@ -62,7 +59,7 @@ const DashboardPage: React.FC = () => {
   return (
     <SellerLayout>
       <div className="space-y-6">
-        {/* ── Header selalu tampil ── */}
+
         <Reveal direction="up">
           <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between">
             <div className="min-w-0">
@@ -92,14 +89,13 @@ const DashboardPage: React.FC = () => {
           </div>
         </Reveal>
 
-        {/* ── GAGAL TOTAL → satu card error bergambar ── */}
         {showFatalError ? (
           <Reveal direction="up">
             <DashboardErrorState onRetry={retry} />
           </Reveal>
         ) : (
           <>
-            {/* ── Stat cards ── */}
+
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 xl:grid-cols-4">
               <Reveal direction="up" delay={0}>
                 <StatCard
@@ -155,7 +151,6 @@ const DashboardPage: React.FC = () => {
               </Reveal>
             </div>
 
-            {/* ── Sales performance chart ── */}
             <Reveal direction="up">
               <div
                 className="
@@ -243,7 +238,6 @@ const DashboardPage: React.FC = () => {
               </div>
             </Reveal>
 
-            {/* ── Inventory + Active orders ── */}
             <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
               <Reveal direction="up">
                 <InventoryAlerts

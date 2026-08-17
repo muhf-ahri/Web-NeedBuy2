@@ -1,4 +1,3 @@
-// src/pages/admin/OrdersPage.tsx
 import React, { useCallback, useEffect, useState } from 'react';
 import AdminLayout from './AdminLayout';
 import FilterBar from '../../components/ui/filter/FilterBar';
@@ -6,7 +5,6 @@ import Pagination from '../../components/ui/Pagination';
 import OrderTable, { statusLabel } from './components/OrderTable';
 import { getOrders, type AdminOrder, type OrderStatus, type PaymentStatus } from '../../api/admin';
 
-/** Tab "Semua" = tanpa filter status, jadi nilainya string kosong. */
 type Tab = '' | Extract<OrderStatus, 'PROCESSING' | 'SHIPPED' | 'COMPLETED' | 'CANCELLED'>;
 
 const TABS: Tab[] = ['', 'PROCESSING', 'SHIPPED', 'COMPLETED', 'CANCELLED'];
@@ -63,7 +61,6 @@ const OrdersPage: React.FC = () => {
           <p className="text-[15px] text-[#737686]">Kelola dan lacak semua pesanan marketplace.</p>
         </div>
 
-        {/* Tabs */}
         <div className="flex gap-2 border-b border-[#e0e3e5]">
           {TABS.map((tab) => (
             <button
@@ -83,7 +80,6 @@ const OrdersPage: React.FC = () => {
           ))}
         </div>
 
-        {/* Filter */}
         <FilterBar
           filters={[
             {
@@ -105,7 +101,6 @@ const OrdersPage: React.FC = () => {
           </div>
         )}
 
-        {/* Table */}
         <div className="overflow-hidden rounded-2xl border border-[#e0e3e5] bg-white p-5">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">

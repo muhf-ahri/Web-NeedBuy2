@@ -36,7 +36,6 @@ const AnalyticsHeader: React.FC<AnalyticsHeaderProps> = ({
       </p>
     </div>
 
-    {/* Period filter pills */}
     <div
       className="
         inline-flex w-fit gap-0.5 rounded-full border border-white/80

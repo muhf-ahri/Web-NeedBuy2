@@ -17,7 +17,7 @@ const SellerWalletErrorState: React.FC<SellerWalletErrorStateProps> = ({
     pillColor="red"
     eyebrow="Ups, ada masalah"
     title="Saldo nggak bisa dimuat"
-    subtitle="Nggak bisa nyambung ke server, jadi data saldo dan riwayat transaksimu gagal diambil. Tenang — saldo dan transaksimu aman, cuma koneksinya yang bermasalah."
+    subtitle="Tidak dapat terhubung ke server saat memuat data saldo dan riwayat transaksi. Saldo dan transaksi kamu aman, silakan coba beberapa saat lagi."
     tips={[
       'Pastikan koneksi internetmu stabil',
       'Cek server backend sudah menyala',
@@ -29,7 +29,7 @@ const SellerWalletErrorState: React.FC<SellerWalletErrorStateProps> = ({
       icon: 'arrowRight',
       onClick: () => window.location.reload(),
     }}
-    bottomTagline="Jangan panik — coba lagi sebentar lagi"
+    bottomTagline="Silakan coba muat ulang beberapa saat lagi"
   />
 );
 

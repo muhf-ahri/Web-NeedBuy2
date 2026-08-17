@@ -10,7 +10,7 @@ export type PopularCategory = {
   sold: number;
   products: number;
   cheapest: number;
-  /** Opsional — nanti diisi dari dashboard admin saat endpoint tersedia */
+
   imageUrl?: string | null;
 };
 
@@ -62,7 +62,7 @@ const getCategoryIcon = (name: string, slug: string): IconName => {
     return 'plan';
   }
 
-  return 'spark';
+  return 'grid';
 };
 
 interface CategoryCardProps {
@@ -85,7 +85,6 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category, rank }) => {
         focus-visible:outline-[#538CDB]
       "
     >
-      {/* Hover glow — biru brand, soft */}
       <span
         className="
           pointer-events-none absolute -right-10 -top-10 h-28 w-28
@@ -94,7 +93,6 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category, rank }) => {
         "
       />
 
-      {/* Dekorasi: titik kuning di pojok kanan atas */}
       <span
         className="
           pointer-events-none absolute right-5 top-5 h-1.5 w-1.5
@@ -102,7 +100,6 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category, rank }) => {
         "
       />
 
-      {/* Circle border tipis di pojok kanan bawah */}
       <span
         className="
           pointer-events-none absolute -bottom-6 -right-6 h-16 w-16
@@ -111,10 +108,6 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category, rank }) => {
       />
 
       <div className="relative flex items-center gap-4">
-        {/* ── KOTAK GAMBAR KATEGORI ──
-            Sekarang: fallback gradient + icon.
-            Nanti: otomatis render gambar dari dashboard admin
-            begitu `imageUrl` terisi. */}
         <span
           className="
             relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl
@@ -122,7 +115,6 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category, rank }) => {
           "
         >
           {category.imageUrl ? (
-            /* ✅ Gambar asli dari admin */
             <img
               src={category.imageUrl}
               alt={category.name}
@@ -134,7 +126,6 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category, rank }) => {
               "
             />
           ) : (
-            /* 🕐 Fallback sementara: gradient biru + icon + dekorasi */
             <span
               className="
                 relative flex h-full w-full items-center justify-center
@@ -154,8 +145,6 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category, rank }) => {
             </span>
           )}
 
-          {/* Badge rank — menumpuk di pojok kiri atas gambar.
-              Top 3 = kuning (podium), sisanya putih/biru */}
           <span
             className={`
               absolute left-1.5 top-1.5 flex h-5 min-w-5 items-center
@@ -172,7 +161,6 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category, rank }) => {
           </span>
         </span>
 
-        {/* ── Konten: nama + stats ── */}
         <span className="min-w-0 flex-1">
           <span
             className="
@@ -195,7 +183,6 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category, rank }) => {
           </span>
         </span>
 
-        {/* Arrow — muncul saat hover */}
         <span
           className="
             ml-auto shrink-0 translate-x-1 text-[#538CDB] opacity-0

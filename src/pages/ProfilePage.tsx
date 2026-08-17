@@ -15,6 +15,8 @@ import ProfilePasswordForm from '../components/profile/ProfilePasswordForm';
 import ProfileLoginPrompt from '../components/profile/ProfileLoginPrompt';
 
 import {
+  getAccessToken,
+  setSessionTokens,
   getUserProfile,
   updateProfile,
   changePassword,
@@ -31,6 +33,7 @@ import {
   EMPTY_ADDRESS_FORM,
   type AddressFormData,
 } from '../utils/address';
+import { ACCEPTED_IMAGE_TYPES, MAX_IMAGE_BYTES, uploadImage } from '../api/uploads';
 import { useAuth } from '../contexts/AuthContext';
 
 interface ProfileData extends UserType {
@@ -49,52 +52,61 @@ interface ProfileData extends UserType {
 
 const ProfilePage: React.FC = () => {
   const navigate = useNavigate();
-  const { logout } = useAuth();
+  const { logout, refreshUser } = useAuth();
+
+  const isAuthed = !!getAccessToken();
 
   const [profile, setProfile] = useState<ProfileData | null>(null);
   const [addresses, setAddresses] = useState<Address[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  /* Address modal */
   const [showAddressForm, setShowAddressForm] = useState(false);
   const [addressForm, setAddressForm] = useState<AddressFormData>(EMPTY_ADDRESS_FORM);
   const [savingAddress, setSavingAddress] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
-  /* Profile form */
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [savingProfile, setSavingProfile] = useState(false);
   const [savedMessage, setSavedMessage] = useState<string | null>(null);
 
-  /* Password form */
+  const [uploadingPhoto, setUploadingPhoto] = useState(false);
+
   const [pw, setPw] = useState({ currentPassword: '', newPassword: '' });
   const [savingPw, setSavingPw] = useState(false);
 
   const loadData = useCallback(async () => {
     setLoading(true);
     setError(null);
-    try {
-      const [profileRes, addrRes] = await Promise.all([
-        getUserProfile(),
-        getAddresses(),
-      ]);
-      const data = profileRes.data.data;
+    const [profileRes, addrRes] = await Promise.allSettled([
+      getUserProfile(),
+      getAddresses(),
+    ]);
+
+    if (profileRes.status === 'fulfilled') {
+      const data = profileRes.value.data.data;
       setProfile(data);
       setName(data.name ?? '');
       setPhone(data.phone ?? '');
-      setAddresses(addrRes.data.data ?? []);
-    } catch (err: any) {
-      setError(err.message ?? 'Gagal muat profil, coba lagi ya');
-    } finally {
-      setLoading(false);
+    } else {
+      setError(profileRes.reason?.message ?? 'Gagal muat profil, coba lagi ya');
     }
+
+    if (addrRes.status === 'fulfilled') {
+      setAddresses(addrRes.value.data.data ?? []);
+    }
+
+    setLoading(false);
   }, []);
 
   useEffect(() => {
+    if (!isAuthed) {
+      setLoading(false);
+      return;
+    }
     loadData();
-  }, [loadData]);
+  }, [isAuthed, loadData]);
 
   const handleSaveProfile = async () => {
     setSavingProfile(true);
@@ -115,18 +127,65 @@ const ProfilePage: React.FC = () => {
     }
   };
 
+  const saveAvatar = async (avatarUrl: string | null) => {
+    const res = await updateProfile({ avatarUrl });
+    setProfile((prev) => (prev ? { ...prev, ...res.data.data } : prev));
+
+    await refreshUser();
+    setSavedMessage(avatarUrl ? 'Foto profil kamu udah keganti.' : 'Foto profil udah dihapus.');
+    setTimeout(() => setSavedMessage(null), 2500);
+  };
+
+  const handlePickPhoto = async (file: File) => {
+    setError(null);
+    setSavedMessage(null);
+
+    if (!ACCEPTED_IMAGE_TYPES.includes(file.type)) {
+      setError('Formatnya harus PNG, JPG, WebP, atau GIF ya. SVG belum didukung.');
+      return;
+    }
+    if (file.size > MAX_IMAGE_BYTES) {
+      setError(`Ukuran fotonya ${(file.size / 1024 / 1024).toFixed(1)} MB, maksimalnya 3 MB.`);
+      return;
+    }
+
+    setUploadingPhoto(true);
+    try {
+      const uploaded = await uploadImage(file);
+      await saveAvatar(uploaded.data.data.url);
+    } catch (err: any) {
+      setError(err.message ?? 'Gagal unggah foto, coba lagi ya');
+    } finally {
+      setUploadingPhoto(false);
+    }
+  };
+
+  const handleRemovePhoto = async () => {
+    setError(null);
+    setSavedMessage(null);
+    setUploadingPhoto(true);
+    try {
+      await saveAvatar(null);
+    } catch (err: any) {
+      setError(err.message ?? 'Gagal hapus foto, coba lagi ya');
+    } finally {
+      setUploadingPhoto(false);
+    }
+  };
+
   const handleChangePassword = async () => {
     if (!pw.currentPassword || !pw.newPassword) return;
     setSavingPw(true);
     setError(null);
     setSavedMessage(null);
     try {
-      await changePassword({
+      const res = await changePassword({
         currentPassword: pw.currentPassword,
         newPassword: pw.newPassword,
       });
+      setSessionTokens(res.data.data.accessToken, res.data.data.refreshToken);
       setPw({ currentPassword: '', newPassword: '' });
-      setSavedMessage('Password udah diganti.');
+      setSavedMessage('Password udah diganti. Perangkat lain otomatis keluar.');
       setTimeout(() => setSavedMessage(null), 2500);
     } catch (err: any) {
       setError(err.message ?? 'Gagal ganti password, coba lagi ya');
@@ -197,7 +256,6 @@ const ProfilePage: React.FC = () => {
     navigate('/');
   };
 
-  /* ── Loading ── */
   if (loading) {
     return (
       <div
@@ -223,8 +281,52 @@ const ProfilePage: React.FC = () => {
     );
   }
 
-  if (!profile) {
+  if (!isAuthed) {
     return <ProfileLoginPrompt />;
+  }
+
+  if (!profile) {
+    return (
+      <div
+        className="min-h-screen flex flex-col bg-[#F5F5FF]"
+        style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+      >
+        <Navbar />
+        <main className="flex flex-1 items-center justify-center px-4 py-10 sm:px-8">
+          <div
+            className="
+              w-full max-w-md rounded-[24px] border border-white/80 bg-white/95
+              px-6 py-8 text-center shadow-[0_18px_50px_rgba(32,36,45,0.10)]
+              backdrop-blur-sm
+            "
+          >
+            <span className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[#FF4646]/15">
+              <Icon name="alert" size={20} className="text-[#FF4646]" />
+            </span>
+            <h1 className="text-[18px] font-extrabold text-[#20242D]">
+              Profil kamu nggak bisa dimuat
+            </h1>
+            <p className="mt-2 text-[13px] leading-relaxed text-[#737A87]">
+              {error ?? 'Ada yang error di jalan. Coba lagi ya.'}
+            </p>
+            <p className="mt-1 text-[12px] text-[#A2A8B3]">
+              Kamu masih login, ini kendala koneksi ke server dan bukan sesi kamu.
+            </p>
+            <button
+              type="button"
+              onClick={loadData}
+              className="
+                mt-5 w-full rounded-2xl bg-[#538CDB] px-4 py-2.5 text-[13px]
+                font-bold text-white transition-colors hover:bg-[#3A66AC]
+              "
+            >
+              Coba lagi
+            </button>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
   }
 
   const stats = {
@@ -241,7 +343,6 @@ const ProfilePage: React.FC = () => {
       <Navbar />
 
       <main className="flex-1 mx-auto w-full max-w-6xl px-4 py-8 sm:px-8">
-        {/* Header */}
         <Reveal direction="up">
           <div className="mb-6">
             <div className="mb-2 flex items-center gap-2">
@@ -266,7 +367,6 @@ const ProfilePage: React.FC = () => {
           <VerifyEmailBanner />
         </Reveal>
 
-        {/* Error */}
         {error && (
           <Reveal direction="up">
             <div
@@ -283,7 +383,6 @@ const ProfilePage: React.FC = () => {
           </Reveal>
         )}
 
-        {/* Success */}
         {savedMessage && (
           <Reveal direction="up">
             <div
@@ -302,14 +401,16 @@ const ProfilePage: React.FC = () => {
           </Reveal>
         )}
 
-        {/* Grid 2 kolom */}
         <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-3">
-          {/* Kolom kiri — hero + quick links */}
           <Reveal direction="up">
             <ProfileHero
               name={profile.name || ''}
               email={profile.email}
               username={profile.username}
+              avatarUrl={profile.avatarUrl}
+              onPickPhoto={handlePickPhoto}
+              onRemovePhoto={handleRemovePhoto}
+              uploadingPhoto={uploadingPhoto}
               seller={profile.seller}
               stats={stats}
               onNavigateOrders={() => navigate('/orders')}
@@ -318,7 +419,6 @@ const ProfilePage: React.FC = () => {
             />
           </Reveal>
 
-          {/* Kolom kanan — form-form */}
           <div className="space-y-5 lg:col-span-2">
             <Reveal direction="up" delay={80}>
               <ProfileInfoForm

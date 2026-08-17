@@ -1,4 +1,3 @@
-// src/hooks/useShoppingPlans.ts
 import { useEffect, useState, useCallback } from 'react';
 import { getPlans, getPlan, createPlan, type ShoppingPlan, type ShoppingPlanSummary, type GetPlansParams } from '../api/plans';
 
@@ -12,9 +11,8 @@ export const useShoppingPlans = (params?: GetPlansParams) => {
     setError(null);
     try {
       const { data } = await getPlans(params);
-      setPlans(data);
+      setPlans(Array.isArray(data) ? data : []);
     } catch (err: any) {
-      console.error('[useShoppingPlans] Error:', err);
       setError(err.message ?? 'Gagal memuat rencana belanja');
     } finally {
       setLoading(false);
@@ -43,9 +41,8 @@ export const useShoppingPlan = (id: string | undefined) => {
     setError(null);
     try {
       const res = await getPlan(id);
-      setPlan(res.data.data);
+      setPlan(res.data?.data ?? null);
     } catch (err: any) {
-      console.error('[useShoppingPlan] Error:', err);
       setError(err.message ?? 'Gagal memuat detail rencana');
     } finally {
       setLoading(false);
@@ -68,9 +65,8 @@ export const useCreatePlan = () => {
     setError(null);
     try {
       const res = await createPlan(data);
-      return res.data.data;
+      return res.data?.data;
     } catch (err: any) {
-      console.error('[useCreatePlan] Error:', err);
       setError(err.message ?? 'Gagal membuat rencana');
       throw err;
     } finally {

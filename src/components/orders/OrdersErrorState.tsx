@@ -21,7 +21,7 @@ const OrdersErrorState: React.FC<OrdersErrorStateProps> = ({
     title="Pesanan nggak bisa dimuat"
     subtitle={
       errorMessage ??
-      'Nggak bisa nyambung ke server, jadi daftar pesananmu gagal diambil. Tenang — pesananmu aman, cuma koneksinya yang bermasalah.'
+      'Nggak bisa nyambung ke server, jadi daftar pesananmu gagal diambil. Tenang, pesananmu aman, cuma koneksinya yang bermasalah.'
     }
     tips={[
       'Pastikan koneksi internetmu stabil',
@@ -34,7 +34,7 @@ const OrdersErrorState: React.FC<OrdersErrorStateProps> = ({
       icon: 'arrowRight',
       onClick: () => window.location.reload(),
     }}
-    bottomTagline="Jangan panik — coba lagi sebentar lagi"
+    bottomTagline="Jangan panik, coba lagi sebentar lagi"
   />
 );
 

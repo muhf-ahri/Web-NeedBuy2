@@ -32,7 +32,7 @@ const ProductsEmptyState: React.FC<ProductsEmptyStateProps> = ({
         title="Gagal memuat produk"
         subtitle={
           errorMessage ??
-          'Tidak bisa memuat daftar produk kamu. Tenang — datamu aman, cuma koneksinya aja yang lagi bermasalah.'
+          'Tidak bisa memuat daftar produk kamu. Tenang, datamu aman, cuma koneksinya aja yang lagi bermasalah.'
         }
         tips={[
           'Pastikan koneksi internetmu stabil',
@@ -49,7 +49,7 @@ const ProductsEmptyState: React.FC<ProductsEmptyStateProps> = ({
           icon: 'arrowRight',
           onClick: () => window.location.reload(),
         }}
-        bottomTagline="Jangan panik — coba lagi sebentar lagi"
+        bottomTagline="Jangan panik, coba lagi sebentar lagi"
       />
     );
   }
@@ -83,7 +83,6 @@ const ProductsEmptyState: React.FC<ProductsEmptyStateProps> = ({
     );
   }
 
-  /* variant === 'empty' */
   return (
     <IllustratedCard
       image={ayoImg}

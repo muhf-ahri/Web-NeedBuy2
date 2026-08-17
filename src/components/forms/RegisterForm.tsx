@@ -1,4 +1,3 @@
-// src/components/forms/RegisterForm.tsx
 import React, { useState } from 'react';
 
 import Input from '../ui/Input';
@@ -67,7 +66,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
 
   return (
     <form onSubmit={handleSubmit} className="space-y-3.5">
-      {/* Username */}
+      
       <Input
         label="Username"
         name="username"
@@ -81,7 +80,6 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
         "
       />
 
-      {/* Email */}
       <Input
         label="Email"
         name="email"
@@ -96,7 +94,6 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
         "
       />
 
-      {/* ── Password & Ulangi Password: BERSEBELAHAN di layar sm+ ── */}
       <div className="grid grid-cols-1 items-start gap-3 sm:grid-cols-2">
         <div>
           <Input
@@ -130,14 +127,12 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
         />
       </div>
 
-      {/* API Error */}
       {error && (
         <div className="rounded-xl bg-[#FFF0F0] px-3 py-2 text-xs text-[#C73535]">
           {error}
         </div>
       )}
 
-      {/* Submit */}
       <Button
         type="submit"
         fullWidth

@@ -55,7 +55,6 @@ interface ProfileAddressSectionProps {
   addresses: Address[];
   onAdd: () => void;
   onDelete: (id: string) => void;
-  /* Modal props */
   showModal: boolean;
   onCloseModal: () => void;
   form: AddressFormData;
@@ -77,7 +76,6 @@ const ProfileAddressSection: React.FC<ProfileAddressSectionProps> = ({
   saving,
   onSubmit,
 }) => {
-  /* Lock body + ESC */
   useEffect(() => {
     if (!showModal) return;
     const prev = document.body.style.overflow;
@@ -227,7 +225,6 @@ const ProfileAddressSection: React.FC<ProfileAddressSectionProps> = ({
         )}
       </div>
 
-      {/* Modal */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4">
           <div

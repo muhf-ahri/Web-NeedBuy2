@@ -1,19 +1,7 @@
-// src/components/RequireSeller.tsx
 import React from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
-/**
- * Penjaga route `/seller/*`.
- *
- * Ini kenyamanan navigasi, BUKAN kontrol akses — otorisasi yang sebenarnya ada
- * di backend (`requireRole("SELLER","ADMIN")` di tiap endpoint dashboard).
- * Tanpa itu, cukup mengubah `user.role` di localStorage sudah membuka halaman.
- *
- * `isLoading` ditunggu dulu: AuthProvider membaca user dari localStorage di
- * effect, jadi render pertama selalu "belum login" dan tanpa penjagaan ini
- * seller yang me-refresh dashboard akan dilempar ke /login.
- */
 const RequireSeller: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user, isLoading } = useAuth();
   const location = useLocation();
@@ -30,11 +18,6 @@ const RequireSeller: React.FC<{ children: React.ReactNode }> = ({ children }) =>
     return <Navigate to="/login" state={{ from: location.pathname }} replace />;
   }
 
-  // SELLER saja. Dulu ADMIN ikut diizinkan karena admin belum punya panel
-  // sendiri — sekarang punya, dan mengizinkannya justru merusak: semua endpoint
-  // /dashboard/* memanggil requireOwnSeller(), sementara akun admin tidak
-  // punya baris Seller. Hasilnya halaman terbuka tapi setiap card 403
-  // "Akun kamu belum terdaftar sebagai penjual".
   if (user.role !== 'SELLER') {
     return <Navigate to={user.role === 'ADMIN' ? '/admin/dashboard' : '/'} replace />;
   }

@@ -6,7 +6,6 @@ interface DashboardErrorStateProps {
   onRetry: () => void;
 }
 
-/** Ikon refresh inline (belum ada di Icon set) */
 const RefreshIcon: React.FC<{ size?: number; className?: string }> = ({
   size = 15,
   className = '',
@@ -37,7 +36,7 @@ const DashboardErrorState: React.FC<DashboardErrorStateProps> = ({
       bg-white/95 shadow-[0_18px_50px_rgba(32,36,45,0.10)] backdrop-blur-sm
     "
   >
-    {/* ── Mobile: banner gambar di atas ── */}
+    
     <div className="relative h-44 md:hidden">
       <img
         src={kosongImg}
@@ -59,7 +58,7 @@ const DashboardErrorState: React.FC<DashboardErrorStateProps> = ({
     </div>
 
     <div className="grid md:grid-cols-[1.1fr_0.9fr]">
-      {/* ── Panel kiri: konten ── */}
+      
       <section className="flex items-center bg-white px-6 py-8 sm:px-8 lg:px-10">
         <div className="mx-auto w-full max-w-lg">
           <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#C73535]">
@@ -77,11 +76,10 @@ const DashboardErrorState: React.FC<DashboardErrorStateProps> = ({
 
           <p className="mt-2 max-w-sm text-[13px] leading-5 text-[#737A87]">
             Nggak bisa nyambung ke server, jadi semua data toko gagal
-            diambil. Tenang — datamu aman, cuma koneksinya aja yang lagi
+            diambil. Tenang: datamu aman, cuma koneksinya aja yang lagi
             bermasalah.
           </p>
 
-          {/* Box tips */}
           <div className="mt-5 rounded-2xl bg-[#F5F7FB] px-5 py-4">
             <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#737A87]">
               Cek dulu ini
@@ -110,7 +108,6 @@ const DashboardErrorState: React.FC<DashboardErrorStateProps> = ({
             </ul>
           </div>
 
-          {/* CTA */}
           <div className="mt-5 flex flex-wrap gap-2">
             <button
               type="button"
@@ -144,7 +141,6 @@ const DashboardErrorState: React.FC<DashboardErrorStateProps> = ({
         </div>
       </section>
 
-      {/* ── Panel kanan: gambar + gelombang ── */}
       <section className="relative hidden min-h-[420px] overflow-hidden md:block">
         <img
           src={kosongImg}
@@ -157,7 +153,6 @@ const DashboardErrorState: React.FC<DashboardErrorStateProps> = ({
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#20242D]/55 via-transparent to-transparent" />
 
-        {/* Gelombang putih di tepi kiri (di-mirror) */}
         <svg
           className="
             pointer-events-none absolute inset-y-0 left-0 h-full w-16
@@ -174,7 +169,6 @@ const DashboardErrorState: React.FC<DashboardErrorStateProps> = ({
           />
         </svg>
 
-        {/* Pill kanan atas */}
         <div
           className="
             absolute right-6 top-6 z-10 inline-flex items-center gap-1.5
@@ -186,13 +180,12 @@ const DashboardErrorState: React.FC<DashboardErrorStateProps> = ({
           Server error
         </div>
 
-        {/* Text kanan bawah */}
         <div className="absolute bottom-5 right-6 z-10 text-right text-white">
           <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/70">
             NeedBuy
           </p>
           <p className="mt-0.5 text-[11px] text-white/90">
-            Jangan panik — coba lagi sebentar lagi
+            Jangan panik: coba lagi sebentar lagi
           </p>
         </div>
       </section>

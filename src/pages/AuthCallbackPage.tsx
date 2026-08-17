@@ -5,18 +5,12 @@ import { useAuth } from '../contexts/AuthContext';
 import { dashboardPathFor } from '../utils/roleHome';
 import Icon from '../components/ui/Icon';
 
-/**
- * Pendaratan setelah `GET /auth/google/callback` di backend selesai. Backend
- * mengirim token lewat query string, halaman ini yang menyimpannya lalu
- * menukar dengan data user via `/auth/me` — token tidak pernah dibiarkan
- * nangkring di URL, jadi langsung dibersihkan setelah dibaca.
- */
 const AuthCallbackPage: React.FC = () => {
   const [params] = useSearchParams();
   const navigate = useNavigate();
   const { refreshUser } = useAuth();
   const [error, setError] = useState<string | null>(null);
-  // StrictMode di dev memasang effect dua kali; token cuma boleh ditukar sekali.
+  
   const handled = useRef(false);
 
   useEffect(() => {
@@ -37,8 +31,7 @@ const AuthCallbackPage: React.FC = () => {
     }
 
     setSessionTokens(accessToken, refreshToken);
-    // Buang token dari URL bar sebelum request apa pun — biar nggak ikut
-    // ke-copy, ke-bookmark, atau nyangkut di history.
+    
     window.history.replaceState(null, '', '/auth/callback');
 
     refreshUser()

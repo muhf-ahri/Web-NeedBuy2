@@ -1,4 +1,3 @@
-// src/pages/admin/components/TableReview.tsx
 import React from 'react';
 import Icon from '../../../components/ui/Icon';
 import type { AdminReview } from '../../../api/admin';
@@ -70,7 +69,7 @@ const TableReview: React.FC<ReviewTableProps> = ({
             <div className="mt-0.5 text-[11px] text-[#737686]">{review.user.name}</div>
           </td>
           <td className="py-2.5 pr-2">
-            <div className="max-w-[240px] truncate text-[#434655]">{review.comment ?? '—'}</div>
+            <div className="max-w-[240px] truncate text-[#434655]">{review.comment ?? 'Tanpa komentar'}</div>
           </td>
           <td className="py-2.5 pr-2">
             <span

@@ -1,11 +1,9 @@
-// src/components/home/HeroSection.tsx
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Icon from '../ui/Icon';
 import heroImg from '../../assets/HeroSection.jpg';
 
-/* ── Slogan e-commerce: simple, catchy, sesuai voice NeedBuy ── */
 const ROTATING_LINES = [
   'dompet tetap aman.',
   'hidup lebih ringan.',
@@ -17,13 +15,11 @@ const ROTATING_LINES = [
 const INTERVAL_MS = 3200;
 
 const HeroSection: React.FC<{
-  /** Pakai `flip` kalau mau bebek di kiri & card di kanan */
   flip?: boolean;
 }> = ({ flip = false }) => {
   const navigate = useNavigate();
   const [index, setIndex] = useState(0);
 
-  /* Ganti slogan otomatis (hormati prefers-reduced-motion) */
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
@@ -43,7 +39,7 @@ const HeroSection: React.FC<{
           shadow-[0_18px_50px_rgba(32,36,45,0.10)]
         "
       >
-        {/* ── Ilustrasi 3 bebek — tidak ditutup card ── */}
+
         <img
           src={heroImg}
           alt="Tiga bebek NeedBuy"
@@ -54,7 +50,6 @@ const HeroSection: React.FC<{
           `}
         />
 
-        {/* Overlay lembut HANYA sisi card — fade sebelum menyentuh bebek */}
         <div
           className={`
             absolute inset-0
@@ -62,7 +57,6 @@ const HeroSection: React.FC<{
           `}
         />
 
-        {/* ── Card hero (chrome sama seperti card Login) ── */}
         <div
           className={`
             relative z-10 flex min-h-[420px] items-center px-4 py-8
@@ -77,7 +71,6 @@ const HeroSection: React.FC<{
               ${flip ? 'ml-auto' : ''}
             `}
           >
-            {/* Strip gelombang gradient di tepi kiri — signature tema NeedBuy */}
             <svg
               className="pointer-events-none absolute inset-y-0 left-0 h-full w-6 sm:w-7"
               viewBox="0 0 40 400"
@@ -104,13 +97,10 @@ const HeroSection: React.FC<{
               />
             </svg>
 
-            {/* Dekorasi halus sudut kanan atas */}
             <div className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full border border-[#538CDB]/10" />
             <div className="pointer-events-none absolute right-6 top-6 h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
 
-            {/* Konten card */}
             <div className="relative z-10 px-6 py-7 pl-9 sm:px-8 sm:pl-10">
-              {/* Brand row */}
               <div className="flex items-center gap-2">
                 <span
                   className="text-[15px] font-bold tracking-tight text-[#538CDB]"
@@ -120,7 +110,6 @@ const HeroSection: React.FC<{
                 </span>
               </div>
 
-              {/* Eyebrow */}
               <p
                 className="
                   mt-4 text-[10px] font-semibold uppercase tracking-[0.18em]
@@ -130,7 +119,6 @@ const HeroSection: React.FC<{
                 Selamat datang di NeedBuy
               </p>
 
-              {/* Judul + slogan berganti */}
               <h1
                 className="
                   mt-2 text-[24px] font-extrabold leading-[1.2]
@@ -138,12 +126,10 @@ const HeroSection: React.FC<{
                 "
               >
                 Belanja cerdas,
-                {/* tinggi dikunci biar layout tidak lompat */}
                 <span className="block h-[1.35em] overflow-hidden">
                   <span key={index} className="hero-slogan-in block">
                     <span className="relative inline-block text-[#538CDB]">
                       {ROTATING_LINES[index]}
-                      {/* Highlight kuning — callback ke angka 0 di 404 */}
                       <span
                         aria-hidden="true"
                         className="
@@ -155,17 +141,15 @@ const HeroSection: React.FC<{
                 </span>
               </h1>
 
-              {/* Deskripsi */}
               <p
                 className="
                   mt-2 text-[12px] leading-relaxed text-[#737A87] sm:text-[13px]
                 "
               >
-                NeedBuy bantu kamu belanja sesuai kebutuhan — terarah, hemat,
+                NeedBuy bantu kamu belanja sesuai kebutuhan terarah, hemat,
                 dan tanpa penyesalan di akhir bulan.
               </p>
 
-              {/* CTA — pola tombol form Login */}
               <div className="mt-5 space-y-2.5">
                 <button
                   type="button"
@@ -198,7 +182,6 @@ const HeroSection: React.FC<{
                 </button>
               </div>
 
-              {/* Indicator slogan — bisa diklik */}
               <div className="mt-5 flex justify-center gap-1.5">
                 {ROTATING_LINES.map((line, i) => (
                   <button
@@ -223,7 +206,6 @@ const HeroSection: React.FC<{
         </div>
       </div>
 
-      {/* Keyframes animasi slogan (slide-up + fade) */}
       <style>{`
         @keyframes hero-slogan-in {
           0%   { opacity: 0; transform: translateY(70%); }

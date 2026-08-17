@@ -1,4 +1,3 @@
-// src/pages/admin/components/OrderTable.tsx
 import React from 'react';
 import { formatRupiah } from '../../../utils/currency';
 import type { AdminOrder, OrderStatus, PaymentStatus } from '../../../api/admin';
@@ -91,7 +90,7 @@ const OrderTable: React.FC<OrderTableProps> = ({
                 {paymentLabel[order.payment.status]}
               </span>
             ) : (
-              <span className="text-[11px] text-[#737686]">—</span>
+              <span className="text-[11px] text-[#737686]">: </span>
             )}
           </td>
           <td className="py-2.5 text-center">

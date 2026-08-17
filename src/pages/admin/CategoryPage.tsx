@@ -1,4 +1,3 @@
-// src/pages/admin/CategoriesPage.tsx
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import AdminLayout from './AdminLayout';
 import Icon from '../../components/ui/Icon';
@@ -57,7 +56,6 @@ const CategoriesPage: React.FC = () => {
     void load();
   }, [load]);
 
-  // Filter data berdasarkan status
   const filteredItems = useMemo(() => {
     let filtered = [...items];
     if (statusFilter === 'active') {
@@ -68,7 +66,6 @@ const CategoriesPage: React.FC = () => {
     return filtered;
   }, [items, statusFilter]);
 
-  // Pisahkan parent dan child
   const parentItems = useMemo(
     () => filteredItems.filter((cat) => cat.parentId === null),
     [filteredItems]
@@ -78,7 +75,6 @@ const CategoriesPage: React.FC = () => {
     [filteredItems]
   );
 
-  // Parent map untuk child table
   const parentMap = useMemo(() => {
     const map: Record<string, string> = {};
     items
@@ -89,13 +85,11 @@ const CategoriesPage: React.FC = () => {
     return map;
   }, [items]);
 
-  // Pagination untuk parent
   const totalParent = parentItems.length;
   const totalParentPages = Math.ceil(totalParent / PAGE_SIZE);
   const startParent = (pageParent - 1) * PAGE_SIZE;
   const paginatedParent = parentItems.slice(startParent, startParent + PAGE_SIZE);
 
-  // Pagination untuk child
   const totalChild = childItems.length;
   const totalChildPages = Math.ceil(totalChild / PAGE_SIZE);
   const startChild = (pageChild - 1) * PAGE_SIZE;
@@ -117,8 +111,6 @@ const CategoriesPage: React.FC = () => {
     setIsFormOpen(false);
   };
 
-  // Error dilempar balik ke CategoryForm: form yang menampilkannya dan menahan
-  // modal tetap terbuka, jadi isian user tidak hilang saat simpan gagal.
   const handleSave = async (data: CategoryFormData) => {
     const payload = {
       name: data.name,
@@ -143,8 +135,6 @@ const CategoriesPage: React.FC = () => {
       await deleteCategory(id);
       await load();
     } catch (err) {
-      // Backend menolak kalau kategori masih dipakai produk atau punya anak —
-      // pesannya sudah menjelaskan sebabnya, jadi ditampilkan apa adanya.
       setError((err as Error).message);
     }
   };
@@ -169,7 +159,7 @@ const CategoriesPage: React.FC = () => {
   return (
     <AdminLayout>
       <div className="space-y-6">
-        {/* Header */}
+
         <div>
           <h1 className="text-[28px] font-bold text-[#191c1e]">Kategori</h1>
           <p className="text-[15px] text-[#737686]">
@@ -177,7 +167,6 @@ const CategoriesPage: React.FC = () => {
           </p>
         </div>
 
-        {/* Tabs */}
         <div className="flex gap-2 border-b border-[#e0e3e5]">
           <button
             onClick={() => handleTabChange('parent')}
@@ -201,7 +190,6 @@ const CategoriesPage: React.FC = () => {
           </button>
         </div>
 
-        {/* Filter + Add Button */}
         <div className="flex flex-wrap items-center justify-between gap-3">
           <FilterBar
             filters={[
@@ -237,7 +225,6 @@ const CategoriesPage: React.FC = () => {
           </div>
         )}
 
-        {/* Tabel sesuai tab */}
         {activeTab === 'parent' ? (
           <TableCategoryParent
             isLoading={isLoading}
@@ -270,7 +257,6 @@ const CategoriesPage: React.FC = () => {
         )}
       </div>
 
-      {/* Category Form Modal */}
       {isFormOpen && (
         <CategoryForm
           editing={

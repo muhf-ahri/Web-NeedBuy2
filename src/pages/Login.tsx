@@ -39,7 +39,6 @@ const Login: React.FC = () => {
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#F5F5FF]">
 
-      {/* Ambient background, unchanged palette */}
       <div
         className="
           absolute
@@ -55,7 +54,6 @@ const Login: React.FC = () => {
       <div className="pointer-events-none absolute bottom-[18%] left-[12%] h-3 w-3 rounded-full bg-[#538CDB]" />
       <div className="pointer-events-none absolute bottom-[13%] right-[18%] h-2.5 w-2.5 rounded-full bg-[#FFD500]" />
 
-      {/* Background illustration — full screen, sits behind the card, never inside it */}
       <img
         src="/src/assets/login.jpg"
         alt=""

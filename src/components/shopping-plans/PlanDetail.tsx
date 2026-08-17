@@ -66,14 +66,13 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
 
       if (cartItemIds.length === 0) {
         setActionError(
-          'Nggak ada item yang bisa di-checkout dari kategori ini.'
+          'Nggak ada item yang bisa dicheckout dari kategori ini.'
         );
         return;
       }
       if (result.data.data.failed.length > 0) {
-        console.warn(
-          '[plan checkout] item gagal masuk keranjang:',
-          result.data.data.failed
+        setActionError(
+          `${result.data.data.failed.length} item gagal masuk keranjang, silakan cek stok.`
         );
       }
       navigate('/checkout', { state: { cartItemIds } });
@@ -87,7 +86,6 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
       onBack();
     });
 
-  /* ── Loading state ── */
   if (loading) {
     return (
       <Shell>
@@ -101,7 +99,6 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
     );
   }
 
-  /* ── Error state ── */
   if (error || !plan) {
     return (
       <Shell>
@@ -149,7 +146,6 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
       <Navbar />
 
       <main className="flex-1 mx-auto w-full max-w-4xl px-4 py-8 sm:px-8">
-        {/* Back button */}
         <button
           type="button"
           onClick={onBack}
@@ -164,9 +160,6 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
           Kembali
         </button>
 
-        {/* ── Header card — design sama dengan NeedPayPage ──
-            Panel kiri: gambar besar dengan gelombang putih pemisah
-            Panel kanan: info plan + tombol aksi */}
         <figure
           className="
             overflow-hidden rounded-[24px] border border-white/80
@@ -174,7 +167,6 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
             backdrop-blur-sm
           "
         >
-          {/* Mobile: gambar banner di atas */}
           <div className="relative h-40 md:hidden">
             <img
               src={needpayCard}
@@ -196,7 +188,6 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
           </div>
 
           <div className="grid md:grid-cols-[0.9fr_1.1fr]">
-            {/* Panel kiri: gambar besar (desktop only) */}
             <section className="relative hidden min-h-[360px] overflow-hidden md:block">
               <img
                 src={needpayCard}
@@ -209,7 +200,6 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#20242D]/55 via-transparent to-transparent" />
 
-              {/* Gelombang putih pemisah (signature NeedBuy) */}
               <svg
                 className="
                   pointer-events-none absolute inset-y-0 right-0 h-full
@@ -226,7 +216,6 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
                 />
               </svg>
 
-              {/* Label pill */}
               <div
                 className="
                   absolute left-6 top-6 z-10 inline-flex items-center
@@ -239,24 +228,20 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
                 Rencana Belanja
               </div>
 
-              {/* Dekorasi titik kuning */}
               <div/>
 
-              {/* Info ringkas di bawah gambar */}
               <div className="absolute bottom-5 left-6 z-10 text-white">
                 <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/70">
                   Belanja Terarah
                 </p>
                 <p className="mt-0.5 font-mono text-[11px] text-white/90">
-                  {plan.items.length} produk siap di-checkout
+                  {plan.items.length} produk siap dicheckout
                 </p>
               </div>
             </section>
 
-            {/* Panel kanan: konten plan */}
             <section className="flex items-center bg-white px-6 py-7 sm:px-8 lg:px-10">
               <div className="mx-auto w-full max-w-lg">
-                {/* Mobile label */}
                 <div className="mb-4 md:hidden">
                   <p
                     className="
@@ -289,7 +274,6 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
                   )}
                 </div>
 
-                {/* Budget progress */}
                 {budgetNum > 0 && (
                   <div className="mt-5">
                     <div className="h-2 overflow-hidden rounded-full bg-[#F5F7FB]">
@@ -321,7 +305,6 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
                   </div>
                 )}
 
-                {/* Tombol aksi */}
                 <div className="mt-5 flex flex-wrap gap-2">
                   <button
                     type="button"
@@ -358,7 +341,6 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
           </div>
         </figure>
 
-        {/* Error / Warning */}
         {actionError && (
           <div
             className="
@@ -391,7 +373,6 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
           </div>
         )}
 
-        {/* ── Items card ── */}
         <div
           className="
             mt-6 overflow-hidden rounded-[24px] border border-white/80
@@ -400,7 +381,6 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
           "
         >
           {plan.items.length === 0 ? (
-  /* ── Empty state: background Kosong.jpg + card putih floating di kiri ── */
   <div
     className="
       relative my-2 min-h-[340px] overflow-hidden rounded-2xl
@@ -414,7 +394,6 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
         sm:min-h-[400px] sm:px-8 sm:py-10
       "
     >
-      {/* ── Card putih — design sama dengan card lain di app ── */}
       <div
         className="
           relative w-full max-w-md overflow-hidden rounded-[24px]
@@ -423,7 +402,6 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
           sm:p-7
         "
       >
-        {/* Dekorasi khas card NeedBuy */}
         <span
           className="
             pointer-events-none absolute -right-8 -top-8 h-20 w-20
@@ -437,7 +415,6 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
           "
         />
 
-        {/* Eyebrow pill */}
         <span
           className="
             inline-flex items-center gap-1.5 rounded-full
@@ -455,7 +432,6 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
           </p>
         </span>
 
-        {/* Judul */}
         <h3
           className="
             mt-3 text-[20px] font-extrabold leading-tight tracking-tight
@@ -465,13 +441,11 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
           Kategori ini masih kosong
         </h3>
 
-        {/* Deskripsi */}
         <p className="mt-2 text-[13px] leading-relaxed text-[#737A87]">
           Yuk, mulai belanja terarah. Tambahkan produk-produk pilihanmu
           ke kategori ini dan checkout semuanya sekaligus tanpa ribet.
         </p>
 
-        {/* CTA */}
         <button
           type="button"
           onClick={() => setShowAdd(true)}
@@ -488,7 +462,6 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
           Tambah Produk Pertama
         </button>
 
-        {/* Stats mini — dipisah border halus */}
         <div
           className="
             mt-6 flex items-center gap-4 border-t border-[#F5F7FB]
@@ -509,7 +482,6 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
   </div>
 ) : (
             <>
-              {/* Header items list */}
               <div
                 className="
                   mb-2 flex items-center justify-between border-b
@@ -558,7 +530,6 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
         </div>
       </main>
 
-      {/* Sticky footer */}
       <div
         className="
           sticky bottom-0 z-30 border-t border-[#E8ECF4] bg-white/95
@@ -659,7 +630,6 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
   );
 };
 
-/* ── Shell wrapper untuk state loading/error ── */
 const Shell: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <div
     className="min-h-screen flex flex-col bg-[#F5F5FF]"

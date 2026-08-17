@@ -1,4 +1,4 @@
-﻿import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 
 import Icon from './Icon';
@@ -10,14 +10,11 @@ import {
   type Notification,
 } from '../../api/notifications';
 import { useNotificationSocket } from '../../hooks/useNotificationSocket';
-// ✅ typo fix: notfications → notifications
+import { useAuth } from '../../contexts/AuthContext';
 import { relativeTime, linkFor, metaFor } from '../notifications/notfications.helpers';
 
-// ❌ HAPUS dua fungsi lokal ini — sudah di-import dari helper:
-// function relativeTime(iso: string): string { ... }
-// function linkFor(notification: Notification): string | undefined { ... }
-
 const NotificationBell: React.FC = () => {
+  const { isAuthenticated } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [unreadCount, setUnreadCount] = useState(0);
@@ -26,23 +23,30 @@ const NotificationBell: React.FC = () => {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const loadList = useCallback(async () => {
+    if (!isAuthenticated) return;
     setLoading(true);
     setError(null);
     try {
       const response = await getNotifications({ limit: 20 });
-      setNotifications(response.data.data);
+      setNotifications(Array.isArray(response.data?.data) ? response.data.data : []);
     } catch (err: any) {
       setError(err?.message ?? 'Gagal muat notifikasi, coba lagi ya');
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [isAuthenticated]);
 
   useEffect(() => {
+    if (!isAuthenticated) {
+      setUnreadCount(0);
+      setNotifications([]);
+      return;
+    }
+
     getUnreadCount()
-      .then((response) => setUnreadCount(response.data.data.unreadCount))
+      .then((response) => setUnreadCount(response.data?.data?.unreadCount ?? 0))
       .catch(() => setUnreadCount(0));
-  }, []);
+  }, [isAuthenticated]);
 
   useNotificationSocket((payload) => {
     if (payload.event === 'unread-count') {
@@ -124,7 +128,7 @@ const NotificationBell: React.FC = () => {
             shadow-[0_18px_50px_rgba(32,36,45,0.15)] notif-dropdown-in
           "
         >
-          {/* Header */}
+
           <div className="flex items-center justify-between border-b border-[#E8ECF4] px-4 py-3">
             <div className="flex items-center gap-2">
               <span className="text-[13px] font-bold text-[#538CBD]">Notifikasi</span>
@@ -146,9 +150,27 @@ const NotificationBell: React.FC = () => {
             )}
           </div>
 
-          {/* List */}
           <div className="max-h-80 overflow-y-auto">
-            {loading ? (
+            {!isAuthenticated ? (
+              <div className="px-4 py-8 text-center">
+                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[#F5F7FB]">
+                  <Icon name="bell" size={20} className="text-[#A2A8B3]" />
+                </div>
+                <p className="mt-3 text-[13px] font-semibold text-[#20242D]">
+                  Masuk untuk melihat notifikasi
+                </p>
+                <p className="mt-1 text-[11px] text-[#737A87]">
+                  Pantau status pesanan dan penawaran spesial langsung di sini.
+                </p>
+                <Link
+                  to="/login"
+                  onClick={() => setIsOpen(false)}
+                  className="mt-3 inline-block rounded-xl bg-[#538CDB] px-4 py-2 text-[11px] font-semibold text-white transition-opacity hover:opacity-90"
+                >
+                  Masuk sekarang
+                </Link>
+              </div>
+            ) : loading ? (
               <div className="space-y-1 p-2">
                 {Array.from({ length: 3 }).map((_, i) => (
                   <div key={i} className="flex gap-3 rounded-xl p-3">
@@ -263,7 +285,6 @@ const NotificationBell: React.FC = () => {
             )}
           </div>
 
-          {/* Footer */}
           <Link
             to="/notifications"
             onClick={() => setIsOpen(false)}

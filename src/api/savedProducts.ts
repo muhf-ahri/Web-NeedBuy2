@@ -1,7 +1,6 @@
 import apiClient from './client';
 import type { ApiResponse, PaginatedResponse } from '../types';
 
-// ─── Types ─────────────────────────────────────────────────────────────────────
 export interface SavedProduct {
   id: string;
   createdAt: string;
@@ -17,9 +16,6 @@ export interface SavedProduct {
   };
 }
 
-// ─── Saved Products Endpoints ─────────────────────────────────────────────────
-
-/** GET /saved-products - List user's saved products */
 export const getSavedProducts = async (params?: {
   page?: number;
   limit?: number;
@@ -28,13 +24,11 @@ export const getSavedProducts = async (params?: {
   return { data: res.data.data as unknown as SavedProduct[], meta: (res.data as any).meta };
 };
 
-/** POST /saved-products - Save a product */
 export const saveProduct = (productId: string) =>
   apiClient.post<ApiResponse<{ id: string; productId: string; createdAt: string }>>(
     '/saved-products',
     { productId }
   );
 
-/** DELETE /saved-products/:productId - Remove a saved product */
 export const unsaveProduct = (productId: string) =>
   apiClient.delete<ApiResponse<{ deleted: boolean }>>(`/saved-products/${productId}`);

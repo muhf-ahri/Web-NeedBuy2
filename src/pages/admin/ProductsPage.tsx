@@ -1,4 +1,3 @@
-// src/pages/admin/ProductsPage.tsx
 import React, { useCallback, useEffect, useState } from 'react';
 import AdminLayout from './AdminLayout';
 import Icon from '../../components/ui/Icon';
@@ -8,14 +7,6 @@ import { formatRupiah } from '../../utils/currency';
 import { getProducts, setProductActive, type AdminProduct } from '../../api/admin';
 import { getAdminCategories, type AdminCategory } from '../../api/categories';
 
-/**
- * Tab "Belum Aktif" = produk dengan `isActive: false`. Skema backend tidak
- * punya alur persetujuan terpisah (tidak ada status Pending/Rejected), jadi
- * antrean moderasi memang listing yang belum diaktifkan.
- *
- * Tab "Dilaporkan" belum ada di sini: butuh tabel laporan yang belum dimiliki
- * backend. Ditambahkan setelah fitur laporan dibuat.
- */
 type Tab = 'all' | 'inactive';
 
 const PAGE_SIZE = 10;
@@ -58,7 +49,6 @@ const ProductsPage: React.FC = () => {
     return () => clearTimeout(timer);
   }, [load, search]);
 
-  // Daftar kategori buat filter — sekali ambil, tidak berubah per halaman.
   useEffect(() => {
     getAdminCategories().then(setCategories).catch(() => setCategories([]));
   }, []);
@@ -94,7 +84,6 @@ const ProductsPage: React.FC = () => {
           </p>
         </div>
 
-        {/* Tabs */}
         <div className="flex gap-2 border-b border-[#e0e3e5]">
           {([
             ['all', 'Semua Produk'],
@@ -114,7 +103,6 @@ const ProductsPage: React.FC = () => {
           ))}
         </div>
 
-        {/* Search + Filter */}
         <div className="flex flex-wrap items-center gap-3">
           <div className="relative">
             <input
@@ -150,7 +138,6 @@ const ProductsPage: React.FC = () => {
           </div>
         )}
 
-        {/* Table */}
         <div className="overflow-hidden rounded-2xl border border-[#e0e3e5] bg-white p-5">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">

@@ -6,11 +6,6 @@ import Navbar from '../layout/Navbar';
 import Footer from '../layout/Footer';
 import needpayImg from '../../assets/needpay.jpg';
 
-/**
- * Halaman "belum login" untuk /needpay — struktur card identik dengan
- * NeedPayNote & login prompt halaman lain: konten kiri, gambar kanan,
- * gelombang putih di tepi kiri panel gambar.
- */
 const NeedPayLoginPrompt: React.FC = () => {
   const navigate = useNavigate();
 
@@ -30,7 +25,7 @@ const NeedPayLoginPrompt: React.FC = () => {
               backdrop-blur-sm
             "
           >
-            {/* ── Mobile: gambar banner di atas ── */}
+            
             <div className="relative h-44 md:hidden">
               <img
                 src={needpayImg}
@@ -60,17 +55,14 @@ const NeedPayLoginPrompt: React.FC = () => {
               </div>
             </div>
 
-            {/* ── Desktop: konten KIRI, gambar KANAN ── */}
             <div className="grid md:grid-cols-[1.1fr_0.9fr]">
-              {/* Panel kiri: konten login */}
+              
               <section className="flex items-center bg-white px-6 py-8 sm:px-8 lg:px-10">
                 <div className="mx-auto w-full max-w-md">
-                  {/* Icon wallet gradient */}
                   <h1 className="text-[30px] font-bold leading-tight tracking-tight text-[#538CBD] hover:text-[#467BC7] sm:text-[34px]">
                     Halaman NeedPay
                   </h1>
 
-                  {/* Eyebrow */}
                   <p
                     className="
                       mt-4 mb-2 text-[10px] font-semibold uppercase
@@ -90,11 +82,10 @@ const NeedPayLoginPrompt: React.FC = () => {
                   </h2>
 
                   <p className="mt-2 text-[13px] leading-5 text-[#737A87]">
-                    Kelola saldo dan bayar lebih cepat dengan NeedPay —
+                    Kelola saldo dan bayar lebih cepat dengan NeedPay
                     satu saldo untuk semua transaksi di NeedBuy.
                   </p>
 
-                  {/* CTA full-width */}
                   <button
                     type="button"
                     onClick={() => navigate('/login')}
@@ -112,7 +103,6 @@ const NeedPayLoginPrompt: React.FC = () => {
                     <Icon name="arrowRight" size={15} className="text-white" />
                   </button>
 
-                  {/* Secondary: daftar */}
                   <p className="mt-3 text-center text-[12px] text-[#737A87]">
                     Belum punya akun?{' '}
                     <Link
@@ -125,7 +115,6 @@ const NeedPayLoginPrompt: React.FC = () => {
                 </div>
               </section>
 
-              {/* Panel kanan: gambar + gelombang di tepi KIRI */}
               <section className="relative hidden min-h-[420px] overflow-hidden md:block">
                 <img
                   src={needpayImg}
@@ -137,10 +126,8 @@ const NeedPayLoginPrompt: React.FC = () => {
                   "
                 />
 
-                {/* Overlay gradasi bawah */}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#20242D]/55 via-transparent to-transparent" />
 
-                {/* Gelombang putih di tepi kiri (di-mirror) */}
                 <svg
                   className="
                     pointer-events-none absolute inset-y-0 left-0 h-full
@@ -161,7 +148,6 @@ const NeedPayLoginPrompt: React.FC = () => {
                   />
                 </svg>
 
-                {/* Label pill kanan atas */}
                 <div
                   className="
                     absolute right-6 top-6 z-10 inline-flex items-center
@@ -174,7 +160,6 @@ const NeedPayLoginPrompt: React.FC = () => {
                   NeedPay
                 </div>
 
-                {/* Text kanan bawah */}
                 <div className="absolute bottom-5 right-6 z-10 text-right text-white">
                   <p
                     className="

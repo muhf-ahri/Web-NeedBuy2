@@ -1,4 +1,3 @@
-// src/components/ui/ReportButton.tsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Modal from './Modal';
@@ -7,17 +6,13 @@ import Icon from './Icon';
 import { getAccessToken } from '../../api/auth';
 import { createReport, type ReportTargetType } from '../../api/reports';
 
-/**
- * Tombol lapor untuk pembeli. Satu komponen dipakai produk, toko, dan ulasan —
- * bedanya cuma daftar alasan, jadi tidak perlu tiga tombol yang isinya sama.
- */
 interface ReportButtonProps {
   targetType: ReportTargetType;
   targetId: string;
-  /** Ditampilkan di modal supaya pelapor yakin nggak salah sasaran. */
+  
   targetLabel: string;
   className?: string;
-  /** Tombol teks kecil (default) atau ikon saja. */
+  
   compact?: boolean;
 }
 
@@ -102,8 +97,6 @@ const ReportButton: React.FC<ReportButtonProps> = ({
       });
       setDone(true);
     } catch (err: any) {
-      // Pesan 409 dari server ("Kamu udah pernah melaporkan ini.") sudah enak
-      // dibaca, jadi dipakai apa adanya.
       setError(err?.message ?? 'Gagal ngirim laporan, coba lagi ya');
     } finally {
       setBusy(false);

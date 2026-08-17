@@ -1,8 +1,6 @@
-// src/pages/admin/components/RevenueChart.tsx
 import React from 'react';
 
 export interface RevenuePoint {
-  /** Bulan format ISO pendek dari backend, contoh "2026-08". */
   month: string;
   revenue: number;
 }

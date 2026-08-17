@@ -54,7 +54,6 @@ const SettingsPage: React.FC = () => {
     setError(null);
   };
 
-  /* ── Load data ── */
   useEffect(() => {
     let cancelled = false;
     setLoading(true);
@@ -84,7 +83,6 @@ const SettingsPage: React.FC = () => {
     setSaved(false);
   };
 
-  /* ── Upload logo ── */
   const handlePickLogo = async (file: File) => {
     const ACCEPTED = ['image/png', 'image/jpeg', 'image/webp', 'image/gif'];
     if (!ACCEPTED.includes(file.type)) {
@@ -111,7 +109,6 @@ const SettingsPage: React.FC = () => {
     }
   };
 
-  /* ── Submit form ── */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form || saving) return;
@@ -143,13 +140,11 @@ const SettingsPage: React.FC = () => {
     }
   };
 
-  /* ── Deteksi gagal total (server down) ── */
   const showFatalError = !loading && !form && Boolean(error);
 
   return (
     <SellerLayout>
       <div className="space-y-5 sm:space-y-6">
-        {/* Header — selalu tampil */}
         <Reveal direction="up">
           <SettingsHeader />
         </Reveal>
@@ -159,7 +154,6 @@ const SettingsPage: React.FC = () => {
             <SettingsErrorState onRetry={retry} />
           </Reveal>
         ) : loading ? (
-          /* ── Skeleton loading ── */
           <div className="space-y-5">
             {Array.from({ length: 3 }).map((_, i) => (
               <Reveal key={i} direction="up" delay={i * 60}>
@@ -186,9 +180,7 @@ const SettingsPage: React.FC = () => {
             ))}
           </div>
         ) : form ? (
-          /* ── Form utama ── */
           <form onSubmit={handleSubmit} className="max-w-3xl space-y-5">
-            {/* Section: Info toko */}
             <Reveal direction="up" delay={60}>
               <SettingsSection
                 eyebrow="Bagian 1"
@@ -202,7 +194,6 @@ const SettingsPage: React.FC = () => {
               </SettingsSection>
             </Reveal>
 
-            {/* Section: Logo */}
             <Reveal direction="up" delay={120}>
               <SettingsSection
                 eyebrow="Bagian 2"
@@ -221,7 +212,6 @@ const SettingsPage: React.FC = () => {
               </SettingsSection>
             </Reveal>
 
-            {/* Section: Mode Libur */}
             <Reveal direction="up" delay={180}>
               <SettingsSection
                 eyebrow="Bagian 3"
@@ -239,7 +229,6 @@ const SettingsPage: React.FC = () => {
               </SettingsSection>
             </Reveal>
 
-            {/* Submit bar */}
             <Reveal direction="up" delay={240}>
               <SettingsSubmitBar
                 saving={saving}

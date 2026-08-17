@@ -10,10 +10,10 @@ interface StatCardProps {
   iconText: string;
   loading: boolean;
   error: string | null;
-  /** Angka besar dalam bentuk string, mis. "Rp 1.500.000" atau "4.5/5.0" */
+
   value: string;
   subtitle?: string;
-  /** Persen pertumbuhan (opsional) — render GrowthBadge */
+
   growth?: number;
   children?: React.ReactNode;
 }
@@ -38,7 +38,7 @@ const StatCard: React.FC<StatCardProps> = ({
       hover:shadow-[0_14px_36px_rgba(32,36,45,0.10)] sm:p-5
     "
   >
-    {/* Dekorasi lingkaran tipis + titik kuning */}
+
     <span
       className="
         pointer-events-none absolute -right-10 -top-10 h-24 w-24
@@ -52,7 +52,6 @@ const StatCard: React.FC<StatCardProps> = ({
       "
     />
 
-    {/* Header: icon + growth badge */}
     <div className="relative flex items-center justify-between">
       <span
         className={`
@@ -65,7 +64,6 @@ const StatCard: React.FC<StatCardProps> = ({
       {typeof growth === 'number' && <GrowthBadge value={growth} />}
     </div>
 
-    {/* Judul */}
     <p
       className="
         relative mt-4 text-[10px] font-bold uppercase tracking-[0.16em]
@@ -75,7 +73,6 @@ const StatCard: React.FC<StatCardProps> = ({
       {title}
     </p>
 
-    {/* Isi */}
     {loading ? (
       <div className="mt-2 space-y-2">
         <div className="h-7 w-28 animate-pulse rounded-full bg-[#F5F7FB]" />

@@ -1,17 +1,9 @@
-// src/pages/admin/PlaceholderPage.tsx
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import AdminLayout from './AdminLayout';
 import Icon from '../../components/ui/Icon';
 import { menuItems } from './components/adminMenu';
 
-/**
- * Satu halaman untuk semua menu admin yang belum dibuat.
- *
- * Judul & ikonnya diambil dari `menuItems`, jadi menambah menu baru tidak
- * perlu menambah file — dan tidak ada halaman yang menampilkan angka karangan
- * selagi endpoint-nya belum ada.
- */
 const PlaceholderPage: React.FC = () => {
   const { pathname } = useLocation();
   const item = menuItems.find((menu) => pathname.startsWith(menu.to));
@@ -32,7 +24,7 @@ const PlaceholderPage: React.FC = () => {
             {item?.label ?? 'Halaman'} belum tersedia
           </h2>
           <p className="mt-1 max-w-md text-[13px] text-[#737686]">
-            Tampilan dan endpoint-nya masih dikerjakan. Menu ini sengaja dibiarkan aktif supaya
+            Tampilan dan endpointnya masih dikerjakan. Menu ini sengaja dibiarkan aktif supaya
             struktur navigasi admin tidak berubah saat halamannya nanti masuk.
           </p>
         </div>

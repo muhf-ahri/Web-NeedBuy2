@@ -24,7 +24,7 @@ const PlanItemRow: React.FC<PlanItemRowProps> = ({
 
   return (
     <div className="flex items-center gap-3 border-b border-[#F5F7FB] py-3.5 last:border-0">
-      {/* Image */}
+      
       <div
         className="
           h-14 w-14 shrink-0 overflow-hidden rounded-xl bg-[#F5F7FB]
@@ -47,20 +47,18 @@ const PlanItemRow: React.FC<PlanItemRowProps> = ({
         )}
       </div>
 
-      {/* Info */}
       <div className="min-w-0 flex-1">
         <p className="truncate text-[13px] font-semibold leading-snug text-[#20242D]">
           {item.product.name}
         </p>
         <p className="mt-0.5 text-[11px] text-[#737A87]">
-          {item.product.category?.name ?? '—'}
+          {item.product.category?.name ?? 'Kategori umum'}
         </p>
         <p className="mt-0.5 text-[11px] font-semibold text-[#538CDB]">
           {formatRupiah(parseFloat(item.product.price))} / item
         </p>
       </div>
 
-      {/* Quantity */}
       <div className="flex shrink-0 items-center gap-1">
         <button
           type="button"
@@ -97,7 +95,6 @@ const PlanItemRow: React.FC<PlanItemRowProps> = ({
         </button>
       </div>
 
-      {/* Subtotal + Remove */}
       <div className="shrink-0 text-right">
         <p className="text-[14px] font-bold text-[#20242D]">
           {formatRupiah(parseFloat(item.subtotal))}

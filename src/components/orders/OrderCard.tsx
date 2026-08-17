@@ -30,7 +30,7 @@ const OrderCard: React.FC<OrderCardProps> = ({ order, onOpen }) => {
         hover:shadow-[0_14px_36px_rgba(32,36,45,0.10)] sm:p-5
       "
     >
-      {/* Header: status + order number + chevron */}
+
       <div className="mb-3 flex items-center justify-between gap-3">
         <div className="flex flex-wrap items-center gap-2">
           <span
@@ -56,10 +56,8 @@ const OrderCard: React.FC<OrderCardProps> = ({ order, onOpen }) => {
         />
       </div>
 
-      {/* Items preview + info */}
       <div className="flex items-center justify-between gap-3">
         <div className="flex min-w-0 items-center gap-2.5">
-          {/* Image thumbnails */}
           <div className="flex shrink-0 items-center -space-x-2">
             {order.items.slice(0, 3).map((item, i) => {
               const img =
@@ -88,7 +86,6 @@ const OrderCard: React.FC<OrderCardProps> = ({ order, onOpen }) => {
             })}
           </div>
 
-          {/* Info */}
           <div className="min-w-0">
             <p className="truncate text-[13px] font-semibold text-[#20242D]">
               {order.items[0]?.productName ?? 'Produk'}
@@ -102,7 +99,6 @@ const OrderCard: React.FC<OrderCardProps> = ({ order, onOpen }) => {
           </div>
         </div>
 
-        {/* Price + action */}
         <div className="shrink-0 text-right">
           <p className="text-[14px] font-bold text-[#20242D] sm:text-[15px]">
             {formatRupiah(order.total)}

@@ -40,7 +40,7 @@ const SettingsFormFields: React.FC<SettingsFormFieldsProps> = ({
   setField,
 }) => (
   <div className="space-y-5">
-    {/* Nama toko */}
+
     <Field label="Nama Toko" hint="Minimal 3 karakter, maks 120 karakter.">
       <input
         type="text"
@@ -53,10 +53,9 @@ const SettingsFormFields: React.FC<SettingsFormFieldsProps> = ({
       />
     </Field>
 
-    {/* Deskripsi */}
     <Field
       label="Deskripsi Toko"
-      hint="Ceritakan keunikan tokomu — maks 2000 karakter."
+      hint="Ceritakan keunikan tokomu, maksimal 2000 karakter."
     >
       <textarea
         rows={3}
@@ -68,7 +67,6 @@ const SettingsFormFields: React.FC<SettingsFormFieldsProps> = ({
       />
     </Field>
 
-    {/* Alamat & Telepon */}
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
       <Field label="Alamat Perusahaan">
         <textarea
@@ -93,10 +91,9 @@ const SettingsFormFields: React.FC<SettingsFormFieldsProps> = ({
       </Field>
     </div>
 
-    {/* Business Email */}
     <Field
       label="Email Bisnis"
-      hint="Kontak toko — tidak mengubah email akun login kamu."
+      hint="Kontak toko (tidak mengubah email akun login kamu)."
     >
       <input
         type="email"

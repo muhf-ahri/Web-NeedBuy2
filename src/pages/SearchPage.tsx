@@ -66,8 +66,8 @@ const SearchPage: React.FC = () => {
           getProducts(params),
           getSeller(sellerFromUrl),
         ]);
-        setProducts(productRes.data);
-        setOpenedStore(sellerRes.data.data);
+        setProducts(Array.isArray(productRes.data) ? productRes.data : []);
+        setOpenedStore(sellerRes.data?.data ?? null);
         setStores([]);
         setStoresError(null);
       } catch (err: any) {
@@ -107,7 +107,7 @@ const SearchPage: React.FC = () => {
       ]);
 
       if (productRes.status === 'fulfilled') {
-        setProducts(productRes.value.data);
+        setProducts(Array.isArray(productRes.value?.data) ? productRes.value.data : []);
       } else {
         setProducts([]);
         setError(
@@ -163,7 +163,6 @@ const SearchPage: React.FC = () => {
 
   const handleNavigate = (slug: string) => navigate(`/products/${slug}`);
 
-  // Build summary text
   const summary = openedStore
     ? loading
       ? 'Bentar, muat produk tokonya...'
@@ -187,7 +186,6 @@ const SearchPage: React.FC = () => {
 
       {error && <SearchErrorBanner message={error} variant="error" />}
 
-      {/* Header toko yang dibuka */}
       {openedStore && (
         <OpenedStoreHeader
           store={openedStore}
@@ -195,7 +193,6 @@ const SearchPage: React.FC = () => {
         />
       )}
 
-      {/* Error pencarian toko */}
       {!openedStore && !loading && storesError && (
         <SearchErrorBanner
           message={`Pencarian toko gagal: ${storesError}`}
@@ -203,7 +200,6 @@ const SearchPage: React.FC = () => {
         />
       )}
 
-      {/* Toko yang cocok */}
       {!openedStore && !loading && stores.length > 0 && (
         <section className="mb-7">
           <div className="mb-3 flex items-center gap-2">
@@ -236,7 +232,6 @@ const SearchPage: React.FC = () => {
         </section>
       )}
 
-      {/* Toolbar */}
       {(query.trim() || openedStore) && (
         <SearchToolbar
           sort={sort}
@@ -245,7 +240,6 @@ const SearchPage: React.FC = () => {
         />
       )}
 
-      {/* Hasil */}
       {loading ? (
         <div
           className="

@@ -1,9 +1,8 @@
-// src/pages/admin/components/OrderStatus.tsx
 import React from 'react';
 
 export interface OrderStatusData {
   label: string;
-  /** Persen dari total order di periode yang sama. */
+  
   value: number;
   color: string;
 }

@@ -1,11 +1,3 @@
-// src/pages/TrackingPage.tsx
-//
-// Lacak paket — timeline vertikal seperti di Shopee/Tokopedia.
-//
-// Update masuk lewat socket notifikasi yang SUDAH ada, jadi jejak baru muncul
-// tanpa refresh. Yang jujur perlu diketahui: jejaknya berasal dari sistem dan
-// penjual, BUKAN dari API kurir. Tanpa integrasi kurir, "realtime" di sini
-// berarti realtime terhadap update yang dimasukkan penjual.
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Navbar from '../components/layout/Navbar';
@@ -23,7 +15,6 @@ const timeOf = (iso: string) =>
     day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit',
   });
 
-/** Titik tahap di rel atas — menunjukkan sejauh mana paket berjalan. */
 const StageRail: React.FC<{ stages: TrackingStage[]; reached: TrackingStage | null }> = ({
   stages,
   reached,
@@ -39,8 +30,7 @@ const StageRail: React.FC<{ stages: TrackingStage[]; reached: TrackingStage | nu
         return (
           <li key={stage} className="flex flex-1 flex-col items-center text-center">
             <div className="flex w-full items-center">
-              {/* Ruas rel kiri disembunyikan di titik pertama supaya relnya
-                  mulai dari titik, bukan menggantung di tepi kartu. */}
+
               <span
                 className={`h-0.5 flex-1 ${index === 0 ? 'opacity-0' : done ? 'bg-[#004ac6]' : 'bg-[#e0e3e5]'}`}
               />
@@ -99,9 +89,6 @@ const TrackingPage: React.FC = () => {
     load();
   }, [load]);
 
-  // ponytail: koneksi socket kedua (bel notifikasi punya koneksinya sendiri).
-  // Kalau nanti ada halaman ketiga yang butuh socket, angkat jadi satu context
-  // bersama — untuk sekarang dua koneksi lebih murah daripada membongkar bel.
   useEffect(() => {
     const token = getAccessToken();
     if (!token || !id) return;
@@ -117,8 +104,6 @@ const TrackingPage: React.FC = () => {
           event: string;
           data?: { orderId?: string; event?: TrackingEvent };
         };
-        // Socket ini membawa semua event milik user — ambil yang jejak paket
-        // untuk pesanan yang sedang dibuka saja.
         if (payload.event !== 'tracking' || payload.data?.orderId !== id) return;
 
         const incoming = payload.data.event;
@@ -129,12 +114,8 @@ const TrackingPage: React.FC = () => {
             ? { ...prev, events: [...prev.events, incoming] }
             : prev
         );
-        // Tahap terjauh dan status "selesai" dihitung server, jadi dibaca ulang
-        // ketimbang ditebak di sini.
         load();
       } catch {
-        // Frame yang tidak bisa dibaca diabaikan — halaman tidak boleh mati
-        // karena satu pesan rusak.
       }
     };
 
@@ -192,7 +173,6 @@ const TrackingPage: React.FC = () => {
         <span className="text-[13px]">Balik ke pesanan</span>
       </button>
 
-      {/* ── Kepala: tujuan & keadaan koneksi ── */}
       <div className="overflow-hidden rounded-2xl border border-[#e0e3e5] bg-white">
         <div className="bg-gradient-to-br from-[#004ac6] to-[#002a7a] p-5 text-white">
           <div className="flex items-start justify-between gap-3">
@@ -206,8 +186,6 @@ const TrackingPage: React.FC = () => {
               </p>
             </div>
 
-            {/* Keadaan koneksi ditampilkan apa adanya: kalau socket putus, user
-                berhak tahu halamannya berhenti hidup. */}
             <span className="flex shrink-0 items-center gap-1.5 rounded-full bg-white/15 px-2.5 py-1 text-[11px] font-semibold">
               <span
                 className={`h-1.5 w-1.5 rounded-full ${live ? 'bg-[#7fe8b2]' : 'bg-white/50'}`}
@@ -223,7 +201,6 @@ const TrackingPage: React.FC = () => {
         </div>
       </div>
 
-      {/* ── Riwayat perjalanan ── */}
       <section className="mt-5 overflow-hidden rounded-2xl border border-[#e0e3e5] bg-white">
         <header className="border-b border-[#e0e3e5] bg-[#f7f9ff] px-4 py-3 sm:px-5">
           <h2 className="text-[14px] font-bold text-[#101319]">Riwayat perjalanan</h2>
@@ -236,8 +213,6 @@ const TrackingPage: React.FC = () => {
             </p>
           ) : (
             <ol className="relative">
-              {/* Urutan dibalik: yang terbaru di atas, seperti kebiasaan
-                  aplikasi belanja — orang datang untuk tahu kabar TERAKHIR. */}
               {[...data.events].reverse().map((event, index) => {
                 const newest = index === 0;
                 return (

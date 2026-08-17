@@ -37,7 +37,7 @@ const NeedsHero: React.FC<NeedsHeroProps> = ({ showCreate, onToggle }) => (
         Kebutuhan Saya
       </h1>
       <p className="mt-2 max-w-xl text-[13px] leading-relaxed text-[#737A87]">
-        Ceritain kebutuhanmu dalam kalimat bebas — AI akan menganalisis dan
+        Ceritain kebutuhanmu dalam kalimat bebas, AI akan menganalisis dan
         mencarikan produk yang paling pas untukmu.
       </p>
     </div>

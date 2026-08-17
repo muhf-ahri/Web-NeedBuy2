@@ -1,4 +1,3 @@
-// src/pages/ResetPasswordPage.tsx
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import Icon from '../components/ui/Icon';
@@ -12,8 +11,6 @@ const ResetPasswordPage: React.FC = () => {
   const { token = '' } = useParams();
   const navigate = useNavigate();
 
-  // Tautannya dicek dulu sebelum form muncul, biar user nggak ngetik password
-  // baru dua kali cuma buat dikasih tahu tautannya udah mati.
   const [valid, setValid] = useState<boolean | null>(null);
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -52,8 +49,7 @@ const ResetPasswordPage: React.FC = () => {
     setError(null);
     try {
       await resetPassword(token, password, confirmPassword);
-      // Semua sesi lama dicabut server. Sisa token di browser ini juga dibuang
-      // supaya nggak ada yang nyangkut dan bikin request gagal terus.
+      
       clearAuth();
       setDone(true);
     } catch (err: any) {

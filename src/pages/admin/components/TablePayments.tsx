@@ -1,4 +1,3 @@
-// src/pages/admin/components/TablePayments.tsx
 import React from 'react';
 import { formatRupiah } from '../../../utils/currency';
 import type { AdminPayment, PaymentStatus } from '../../../api/admin';
@@ -81,7 +80,7 @@ const TablePayments: React.FC<TablePaymentsProps> = ({
             {formatRupiah(Number(payment.order.total))}
           </td>
           <td className="py-2.5 pr-2 text-[#434655]">
-            {payment.method ? methodLabel[payment.method] ?? payment.method : '—'}
+            {payment.method ? methodLabel[payment.method] ?? payment.method : 'Belum ada'}
           </td>
           <td className="py-2.5 pr-2">
             <span className="flex items-center gap-1.5">
@@ -96,7 +95,6 @@ const TablePayments: React.FC<TablePaymentsProps> = ({
             </span>
           </td>
           <td className="py-2.5 text-[#737686]">
-            {/* Tanggal bayar kalau sudah lunas, kalau belum ya tanggal dibuat. */}
             {payment.paidAt ? formatDate(payment.paidAt) : formatDate(payment.createdAt)}
           </td>
         </tr>

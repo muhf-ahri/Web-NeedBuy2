@@ -29,7 +29,7 @@ const SettingsSection: React.FC<SettingsSectionProps> = ({
       backdrop-blur-sm sm:p-6
     "
   >
-    {/* Dekorasi */}
+    
     <span
       className="
         pointer-events-none absolute -right-10 -top-10 h-24 w-24
@@ -43,7 +43,6 @@ const SettingsSection: React.FC<SettingsSectionProps> = ({
       "
     />
 
-    {/* Header section */}
     <div className="relative mb-4 flex items-center gap-2.5">
       <span
         className={`

@@ -20,7 +20,6 @@ import {
 
 const POLL_MS = 4000;
 
-/** "list" = lihat daftar chat (mobile), "chat" = lihat pesan aktif (mobile) */
 type MobileView = 'list' | 'chat';
 
 const ChatsPage: React.FC = () => {
@@ -42,7 +41,6 @@ const ChatsPage: React.FC = () => {
 
   const active = conversations.find((c) => c.id === activeId) ?? null;
 
-  /* Debounce search */
   useEffect(() => {
     const timer = setTimeout(() => setDebouncedSearch(search.trim()), 300);
     return () => clearTimeout(timer);
@@ -69,7 +67,6 @@ const ChatsPage: React.FC = () => {
     return res.data.data;
   }, []);
 
-  /* Initial load */
   useEffect(() => {
     let cancelled = false;
     (async () => {
@@ -92,7 +89,6 @@ const ChatsPage: React.FC = () => {
     };
   }, [loadConversations]);
 
-  /* Load messages for active conversation */
   useEffect(() => {
     if (!activeId) return;
     let cancelled = false;
@@ -112,7 +108,6 @@ const ChatsPage: React.FC = () => {
     };
   }, [activeId, loadConversations]);
 
-  /* Polling for new messages */
   const messagesRef = useRef(messages);
   messagesRef.current = messages;
 
@@ -132,9 +127,7 @@ const ChatsPage: React.FC = () => {
           });
           loadConversations().catch(() => {});
         }
-      } catch {
-        /* polling failure is non-critical */
-      }
+      } catch {}
     }, POLL_MS);
     return () => clearInterval(timer);
   }, [activeId, loadConversations]);
@@ -169,7 +162,6 @@ const ChatsPage: React.FC = () => {
     }
   };
 
-  /* ── Global error (load failure) ── */
   if (error && conversations.length === 0 && !loading) {
     return (
       <SellerLayout>
@@ -212,7 +204,7 @@ const ChatsPage: React.FC = () => {
               backdrop-blur-sm
             "
           >
-            {/* ── Sidebar: conversation list ── */}
+
             <div
               className={`
                 w-full shrink-0 border-r border-[#F5F7FB] bg-white
@@ -230,7 +222,6 @@ const ChatsPage: React.FC = () => {
               />
             </div>
 
-            {/* ── Main: messages panel ── */}
             <div
               className={`
                 min-w-0 flex-1

@@ -1,4 +1,3 @@
-// src/components/HeroPanel.tsx
 import React from 'react';
 import { motion } from 'framer-motion';
 
@@ -22,20 +21,12 @@ const HeroPanel: React.FC = () => {
       "
     >
 
-      {/* =====================================================
-          BACKGROUND DECORATION
-      ====================================================== */}
-
-      {/* Yellow circle */}
       <div className="absolute -right-8 top-14 h-20 w-20 rounded-full bg-[#FFD500]" />
 
-      {/* Coral shape */}
       <div className="absolute -bottom-5 -left-5 h-20 w-20 rotate-12 rounded-xl bg-[#FF4646]" />
 
-      {/* Soft glow */}
       <div className="absolute -bottom-24 right-10 h-56 w-56 rounded-full bg-white/10 blur-3xl" />
 
-      {/* Decorative curve */}
       <svg
         className="absolute bottom-0 right-0 h-72 w-72 text-white/15"
         viewBox="0 0 300 300"
@@ -60,14 +51,9 @@ const HeroPanel: React.FC = () => {
         />
       </svg>
 
-      {/* Small decorations */}
       <div className="absolute left-10 top-36 h-2.5 w-2.5 rounded-full bg-[#FFD500]" />
 
       <div className="absolute bottom-20 right-12 h-2.5 w-2.5 rounded-full bg-white/50" />
-
-      {/* =====================================================
-          BRAND
-      ====================================================== */}
 
       <div className="relative z-10">
 
@@ -78,7 +64,6 @@ const HeroPanel: React.FC = () => {
           className="flex items-center gap-2"
         >
 
-          {/* Logo N */}
           <div className="
             flex
             h-8
@@ -95,7 +80,6 @@ const HeroPanel: React.FC = () => {
             N
           </div>
 
-          {/* Brand */}
           <div>
             <p className="text-sm font-bold leading-none text-white">
               NeedBuy
@@ -109,10 +93,6 @@ const HeroPanel: React.FC = () => {
         </motion.div>
 
       </div>
-
-      {/* =====================================================
-          MAIN CONTENT
-      ====================================================== */}
 
       <div className="relative z-10">
 
@@ -174,10 +154,6 @@ const HeroPanel: React.FC = () => {
         </motion.p>
 
       </div>
-
-      {/* =====================================================
-          BOTTOM
-      ====================================================== */}
 
       <motion.div
         initial={{ opacity: 0, y: 8 }}

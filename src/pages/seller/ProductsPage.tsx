@@ -53,7 +53,6 @@ const ProductsPage: React.FC = () => {
   const [editing, setEditing] = useState<InventProduct | null>(null);
   const [deleting, setDeleting] = useState<InventProduct | null>(null);
 
-  /* Debounce search */
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearch(search.trim());
@@ -62,7 +61,6 @@ const ProductsPage: React.FC = () => {
     return () => clearTimeout(timer);
   }, [search]);
 
-  /* Sort toggle */
   const handleSort = (field: SortableField) => {
     setSort((prev) => ({
       field,
@@ -71,7 +69,6 @@ const ProductsPage: React.FC = () => {
     setPage(1);
   };
 
-  /* Load data */
   const load = useCallback(async () => {
     setLoading(true);
     setError(null);
@@ -107,7 +104,6 @@ const ProductsPage: React.FC = () => {
       .catch(() => setCategories([]));
   }, []);
 
-  /* Actions */
   const openCreate = () => {
     setEditing(null);
     setFormOpen(true);
@@ -138,17 +134,15 @@ const ProductsPage: React.FC = () => {
   return (
     <SellerLayout>
       <div className="space-y-5 sm:space-y-6">
-        {/* Header */}
+        
         <Reveal direction="up">
           <ProductsHeader onAddNew={openCreate} />
         </Reveal>
 
-        {/* Stats cards */}
         <Reveal direction="up" delay={60}>
           <ProductsStatsCards stats={stats} loading={loading} />
         </Reveal>
 
-        {/* Toolbar (search + tombol tambah mobile) */}
         <Reveal direction="up" delay={120}>
           <ProductsToolbar
             search={search}
@@ -159,7 +153,6 @@ const ProductsPage: React.FC = () => {
           />
         </Reveal>
 
-        {/* Main content: table / list / empty / loading */}
         <Reveal direction="up">
           {loading ? (
             <div
@@ -203,7 +196,7 @@ const ProductsPage: React.FC = () => {
                 backdrop-blur-sm
               "
             >
-              {/* Tabel desktop (hidden di <lg) */}
+              
               <div className="hidden lg:block">
                 <ProductsTable
                   products={products}
@@ -215,7 +208,6 @@ const ProductsPage: React.FC = () => {
                 />
               </div>
 
-              {/* Card list mobile (hidden di lg+) */}
               <div className="p-3 lg:hidden sm:p-4">
                 <ProductsMobileList
                   products={products}
@@ -225,7 +217,6 @@ const ProductsPage: React.FC = () => {
                 />
               </div>
 
-              {/* Pagination */}
               {meta && (
                 <Pagination
                   currentPage={meta.page}
@@ -241,7 +232,6 @@ const ProductsPage: React.FC = () => {
         </Reveal>
       </div>
 
-      {/* Form produk */}
       {formOpen && (
         <ProductForm
           editing={editing}
@@ -254,7 +244,6 @@ const ProductsPage: React.FC = () => {
         />
       )}
 
-      {/* Dialog hapus */}
       {deleting && (
         <DeleteDialog
           product={deleting}

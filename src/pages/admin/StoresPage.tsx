@@ -1,4 +1,3 @@
-// src/pages/admin/StoresPage.tsx
 import React, { useCallback, useEffect, useState } from 'react';
 import AdminLayout from './AdminLayout';
 import Icon from '../../components/ui/Icon';
@@ -54,13 +53,11 @@ const StoresPage: React.FC = () => {
       .finally(() => setIsLoading(false));
   }, [status, minRating, searchTerm, page]);
 
-  // Pencarian di-debounce: tiap ketikan tidak perlu jadi satu request.
   useEffect(() => {
     const timer = setTimeout(() => void load(), searchTerm ? 300 : 0);
     return () => clearTimeout(timer);
   }, [load, searchTerm]);
 
-  // Reset page saat filter berubah
   useEffect(() => {
     setPage(1);
   }, [status, minRating, searchTerm]);
@@ -78,7 +75,6 @@ const StoresPage: React.FC = () => {
     }
   };
 
-  // Konfigurasi FilterBar
   const statusOptions = [
     { label: 'Semua Status', value: '' },
     { label: 'Aktif', value: 'ACTIVE' },
@@ -100,7 +96,6 @@ const StoresPage: React.FC = () => {
           <p className="text-[15px] text-[#737686]">Kelola dan pantau toko, rating, serta performanya.</p>
         </div>
 
-        {/* Search + Filter Bar */}
         <div className="flex flex-wrap items-center gap-3">
           <div className="relative">
             <input
@@ -117,7 +112,6 @@ const StoresPage: React.FC = () => {
             />
           </div>
 
-          {/* FilterBar */}
           <FilterBar
             filters={[
               {
@@ -133,8 +127,7 @@ const StoresPage: React.FC = () => {
                 onChange: setMinRating,
               },
             ]}
-            onMoreFilters={() => console.log('More filters clicked')}
-            moreFiltersLabel="More Filters"
+            moreFiltersLabel="Filter Lainnya"
             visibleFilters={2}
           />
         </div>
@@ -145,7 +138,6 @@ const StoresPage: React.FC = () => {
           </div>
         )}
 
-        {/* Table */}
         <div className="overflow-hidden rounded-2xl border border-[#e0e3e5] bg-white p-5">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
@@ -231,7 +223,6 @@ const StoresPage: React.FC = () => {
             </table>
           </div>
 
-          {/* Pagination */}
           {totalPages > 1 && (
             <div className="mt-4 border-t border-[#e0e3e5] pt-4">
               <Pagination

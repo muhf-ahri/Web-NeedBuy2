@@ -69,7 +69,6 @@ const ProductReviews: React.FC<{ productId: string }> = ({ productId }) => {
         </p>
       ) : (
         <>
-          {/* Ringkasan: rata-rata + sebaran, dihitung server dari semua ulasan */}
           <div className="mb-6 flex flex-col gap-5 rounded-2xl bg-[#f8f9fb] p-5 sm:flex-row sm:items-center">
             <div className="shrink-0 text-center sm:w-32">
               <p className="text-[40px] font-bold leading-none text-[#191c1e]">

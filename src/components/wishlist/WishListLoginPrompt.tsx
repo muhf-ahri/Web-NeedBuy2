@@ -25,7 +25,7 @@ const WishlistLoginPrompt: React.FC = () => {
               backdrop-blur-sm
             "
           >
-            {/* Mobile: banner gambar di atas */}
+            
             <div className="relative h-44 md:hidden">
               <img
                 src={wishlistImg}
@@ -51,7 +51,7 @@ const WishlistLoginPrompt: React.FC = () => {
             </div>
 
             <div className="grid md:grid-cols-[1.1fr_0.9fr]">
-              {/* Panel kiri: konten login */}
+              
               <section className="flex items-center bg-white px-6 py-8 sm:px-8 lg:px-10">
                 <div className="mx-auto w-full max-w-md">
                   <h1 className="text-[30px] font-bold leading-tight tracking-tight text-[#538CBD] hover:text-[#467BC7] sm:text-[34px]">
@@ -109,7 +109,6 @@ const WishlistLoginPrompt: React.FC = () => {
                 </div>
               </section>
 
-              {/* Panel kanan: gambar + gelombang kiri */}
               <section className="relative hidden min-h-[420px] overflow-hidden md:block">
                 <img
                   src={wishlistImg}

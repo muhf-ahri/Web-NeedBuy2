@@ -1,4 +1,3 @@
-// src/pages/admin/components/settings/Branding.tsx
 import React, { useRef, useState } from 'react';
 import Icon from '../../../../components/ui/Icon';
 import Button from '../../../../components/ui/Button';
@@ -6,11 +5,6 @@ import { CONFIG_KEYS, type ConfigKey } from '../../../../api/admin';
 import { ACCEPTED_IMAGE_TYPES, MAX_IMAGE_BYTES, uploadImage } from '../../../../api/uploads';
 import type { SettingsCardProps } from '../../SettingsPage';
 
-/**
- * Berkas diunggah ke `POST /uploads/image` lalu URL-nya langsung disimpan ke
- * AdminConfig — tidak ada tombol simpan terpisah, karena satu kartu ini cuma
- * punya dua nilai dan menahannya cuma bikin admin ragu apakah sudah kesimpen.
- */
 type Slot = {
   key: ConfigKey;
   title: string;
@@ -23,14 +17,14 @@ const SLOTS: Slot[] = [
   {
     key: CONFIG_KEYS.BRAND_LOGO_URL,
     title: 'Logo Utama',
-    hint: 'PNG, JPG, WebP, atau GIF — maksimal 3 MB. Rasio 1:1 paling aman.',
+    hint: 'PNG, JPG, WebP, atau GIF, maksimal 3 MB. Rasio 1:1 paling aman.',
     box: 'h-28 w-28 rounded-2xl',
     emptyIcon: 'upload',
   },
   {
     key: CONFIG_KEYS.BRAND_FAVICON_URL,
     title: 'Favicon',
-    hint: 'PNG, JPG, WebP, atau GIF — maksimal 3 MB. Ukuran 32×32 px direkomendasikan.',
+    hint: 'PNG, JPG, WebP, atau GIF, maksimal 3 MB. Ukuran 32×32 px direkomendasikan.',
     box: 'h-20 w-20 rounded-xl',
     emptyIcon: 'image',
   },
@@ -55,7 +49,7 @@ const Branding: React.FC<SettingsCardProps> = ({ values, onSave }) => {
 
   const handlePick = async (key: ConfigKey, e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    // Direset supaya memilih berkas yang sama dua kali tetap memicu event.
+    
     e.target.value = '';
     if (!file) return;
 

@@ -11,13 +11,9 @@ export interface SidebarItem {
 interface SidebarProps {
   items: SidebarItem[];
   className?: string;
-  /** Judul header drawer mobile */
+
   title?: string;
-  /**
-   * Controlled mode: buka/tutup drawer dikontrol parent
-   * (mis. tombol hamburger di header). Kalau tidak diisi,
-   * Sidebar render trigger sendiri (perilaku lama).
-   */
+
   mobileOpen?: boolean;
   onMobileClose?: () => void;
 }
@@ -41,18 +37,15 @@ const Sidebar: React.FC<SidebarProps> = ({
     else setInternalOpen(false);
   };
 
-  /* Posisi pill indicator */
   const [pill, setPill] = useState<{ top: number; height: number } | null>(null);
   const [mounted, setMounted] = useState(false);
 
-  /* Auto-close drawer saat route berubah */
   useEffect(() => {
     if (isControlled) onMobileClose?.();
     else setInternalOpen(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
 
-  /* Lock body scroll saat drawer terbuka */
   useEffect(() => {
     document.body.style.overflow = drawerOpen ? 'hidden' : '';
     return () => {
@@ -60,7 +53,6 @@ const Sidebar: React.FC<SidebarProps> = ({
     };
   }, [drawerOpen]);
 
-  /* Hitung posisi pill */
   useEffect(() => {
     const list = listRef.current;
     if (!list) return;
@@ -86,7 +78,6 @@ const Sidebar: React.FC<SidebarProps> = ({
     }
   }, [location.pathname, items, mounted, drawerOpen]);
 
-  /* ── Isi sidebar (dipakai di desktop & drawer) ── */
   const sidebarContent = (
     <nav
       className={`
@@ -97,7 +88,6 @@ const Sidebar: React.FC<SidebarProps> = ({
       `}
     >
       <ul ref={listRef} className="relative space-y-0.5">
-        {/* Sliding pill */}
         {pill && (
           <span
             aria-hidden="true"
@@ -181,10 +171,8 @@ const Sidebar: React.FC<SidebarProps> = ({
 
   return (
     <>
-      {/* ── Desktop: static sidebar ── */}
       <div className="hidden lg:block">{sidebarContent}</div>
 
-      {/* ── Trigger legacy — HANYA kalau tidak controlled ── */}
       {!isControlled && (
         <div className="lg:hidden">
           <button
@@ -203,16 +191,13 @@ const Sidebar: React.FC<SidebarProps> = ({
         </div>
       )}
 
-      {/* ── Drawer mobile ── */}
       {drawerOpen && (
         <div className="fixed inset-0 z-50 lg:hidden">
-          {/* Backdrop */}
           <div
             className="absolute inset-0 bg-[#20242D]/40 backdrop-blur-sm sidebar-backdrop-enter"
             onClick={closeDrawer}
           />
 
-          {/* Panel drawer — slide dari kiri */}
           <aside
             className="
               sidebar-drawer-enter absolute bottom-0 left-0 top-0 flex w-72
@@ -220,7 +205,6 @@ const Sidebar: React.FC<SidebarProps> = ({
               shadow-[12px_0_40px_rgba(32,36,45,0.15)]
             "
           >
-            {/* Header drawer */}
             <div className="flex items-center justify-between border-b border-[#E8ECF4] px-5 py-4">
               <span className="flex items-center gap-2 text-[15px] font-bold text-[#20242D]">
                 <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-[#538CDB]/10">
@@ -241,7 +225,6 @@ const Sidebar: React.FC<SidebarProps> = ({
               </button>
             </div>
 
-            {/* Body drawer */}
             <div className="flex-1 overflow-y-auto overscroll-contain p-4">
               {sidebarContent}
             </div>

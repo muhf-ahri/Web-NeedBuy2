@@ -30,7 +30,6 @@ import MessagesPage from './pages/MessagesPage';
 import LegalPage from './pages/LegalPage';
 import NotificationPage from './pages/NotificationsPage'
 
-// Seller pages
 import RequireSeller from './components/RequireSeller';
 import SellerDashboard from './pages/seller/DashboardPage';
 import SellerProducts from './pages/seller/ProductsPage';
@@ -40,7 +39,6 @@ import SellerAnalytics from './pages/seller/AnalyticsPage';
 import SellerWallet from './pages/seller/WalletPage';
 import SellerSettings from './pages/seller/SettingsPage';
 
-// Admin pages
 import RequireAdmin from './components/RequireAdmin';
 import AdminDashboard from './pages/admin/DashboardPage';
 import UsersPage from './pages/admin/UsersPage';
@@ -59,11 +57,6 @@ import NotificationsPage from './pages/admin/NotificationPage';
 import SettingsPage from './pages/admin/SettingsPage';
 import NotFoundPage from './pages/NotFoundPage';
 
-/**
- * Branding dari halaman Pengaturan admin dipasang ke judul tab dan favicon.
- * Tanpa ini setelan branding cuma jadi angka di database yang tidak pernah
- * kelihatan. Gagal ambil = diamkan, halaman tetap jalan dengan judul bawaan.
- */
 function useBranding() {
   useEffect(() => {
     getPublicSettings()
@@ -91,71 +84,53 @@ function App() {
           <BrowserRouter>
           <ScrollToTop/>
             <Routes>
-              {/* Home */}
+              
               <Route path="/" element={<HomePage />} />
 
-              {/* Auth */}
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              {/* Pendaratan redirect Google OAuth — lihat AuthCallbackPage */}
+              
               <Route path="/auth/callback" element={<AuthCallbackPage />} />
               <Route path="/verify-email/:token" element={<VerifyEmailPage />} />
               <Route path="/forgot-password" element={<ForgotPasswordPage />} />
               <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
 
-              {/* Categories — list semua produk */}
               <Route path="/categories" element={<CategoriesPage />} />
-              {/* Category detail — filtered by slug */}
+              
               <Route path="/categories/:slug" element={<CategoryDetailPage />} />
 
-              {/* Product detail */}
               <Route path="/products/:slug" element={<ProductDetailPage />} />
 
-              {/* Shopping Plans */}
               <Route path="/plans" element={<ShoppingPlansPage />} />
 
-              {/* Search */}
               <Route path="/search" element={<SearchPage />} />
 
-              {/* Needs / Need-Based Search */}
               <Route path="/needs" element={<NeedsPage />} />
 
-              {/* Cart & Checkout */}
               <Route path="/cart" element={<CartPage />} />
               <Route path="/checkout" element={<CheckoutPage />} />
 
-              {/* Orders — halaman pembeli. `OrdersPage` (jamak) itu panel admin,
-                  bukan ini: tertukar sejak OrdersPage.tsx di-rename ke OrderPage.tsx. */}
               <Route path="/orders" element={<OrderPage />} />
 
-              {/* Notifikasi */}
               <Route path="/notifications" element={< NotificationPage/>}/>
 
-              {/* Kupon */}
               <Route path="/coupons" element={<CouponsPage />} />
 
-              {/* NeedPay — saldo */}
               <Route path="/needpay" element={<NeedPayPage />} />
 
-              {/* Lacak paket */}
               <Route path="/order/:id/track" element={<TrackingPage />} />
 
-              {/* Pesan dengan penjual */}
               <Route path="/messages" element={<MessagesPage />} />
 
-              {/* Halaman footer (syarat, privasi, pengiriman, kontak) */}
               <Route path="/terms" element={<LegalPage />} />
               <Route path="/privacy" element={<LegalPage />} />
               <Route path="/shipping" element={<LegalPage />} />
               <Route path="/contact" element={<LegalPage />} />
 
-              {/* Wishlist */}
               <Route path="/wishlist" element={<WishlistPage />} />
 
-              {/* Profile */}
               <Route path="/profile" element={<ProfilePage />} />
 
-              {/* Seller routes — hanya untuk role SELLER */}
               <Route path="/seller" element={<Navigate to="/seller/dashboard" replace />} />
               <Route
                 path="/seller/dashboard"
@@ -214,7 +189,6 @@ function App() {
                 }
               />
 
-              {/* Admin routes — hanya untuk role ADMIN */}
               <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
               <Route
                 path="/admin/dashboard"
@@ -250,9 +224,6 @@ function App() {
                 }
               />
 
-              {/* Pending/approved dulunya route sendiri (salah satunya bahkan
-                  punya spasi di akhir path, jadi tak pernah cocok). Sekarang
-                  cuma tab di dalam halaman ini. */}
               <Route path="/admin/products" element={<RequireAdmin><ProductsPage /></RequireAdmin>} />
               <Route path="/admin/categories" element={<RequireAdmin><CategoryPage /></RequireAdmin>} />
               <Route path="/admin/orders" element={<RequireAdmin><OrdersPage /></RequireAdmin>} />
@@ -265,10 +236,8 @@ function App() {
               <Route path="/admin/notifications" element={<RequireAdmin><NotificationsPage /></RequireAdmin>} />
               <Route path="/admin/settings" element={<RequireAdmin><SettingsPage /></RequireAdmin>} />
 
-              {/* Compare — placeholder */}
-              <Route path="/compare" element={<div className="p-8 text-center text-gray-500 font-sans">Compare — coming soon</div>} />
+              <Route path="/compare" element={<div className="p-8 text-center text-gray-500 font-sans">Perbandingan produk segera hadir</div>} />
 
-              {/* 404 */}
               <Route path="*" element={<NotFoundPage />} />
 
               <Route path="*" element={<Navigate to="/" replace />} />

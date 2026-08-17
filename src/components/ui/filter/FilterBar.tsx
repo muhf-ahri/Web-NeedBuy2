@@ -1,4 +1,3 @@
-// src/components/ui/filter/FilterBar.tsx
 import React, { useState } from 'react';
 import Icon from '../Icon';
 
@@ -22,7 +21,7 @@ interface FilterBarProps {
   onMoreFilters?: () => void;
   moreFiltersLabel?: string;
   className?: string;
-  /** Jumlah filter yang ditampilkan, sisanya masuk dropdown "More" */
+
   visibleFilters?: number;
 }
 
@@ -38,7 +37,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
 
   const handleFilterChange = (filter: FilterConfig, value: string) => {
     filter.onChange(value);
-    // Animasi klik pada filter
+
     setClickedId(filter.key);
     setTimeout(() => setClickedId(null), 300);
   };
@@ -53,7 +52,6 @@ const FilterBar: React.FC<FilterBarProps> = ({
 
   return (
     <div className={`flex flex-wrap items-center gap-2.5 ${className}`}>
-      {/* Visible filters */}
       {visibleFiltersList.map((filter) => {
         const isActive = filter.value !== filter.options[0]?.value;
         const isClicked = clickedId === filter.key;
@@ -86,7 +84,6 @@ const FilterBar: React.FC<FilterBarProps> = ({
               ))}
             </select>
 
-            {/* Custom arrow icon */}
             <div
               className={`
                 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none
@@ -100,7 +97,6 @@ const FilterBar: React.FC<FilterBarProps> = ({
         );
       })}
 
-      {/* More filters dropdown - hanya jika ada filter tersembunyi */}
       {hiddenFilters.length > 0 && (
         <div className="relative">
           <button
@@ -124,7 +120,6 @@ const FilterBar: React.FC<FilterBarProps> = ({
             />
           </button>
 
-          {/* Dropdown untuk filter tersembunyi */}
           {isMoreOpen && (
             <div className="absolute right-0 mt-1.5 min-w-[200px] bg-white rounded-xl border border-[#e0e3e5] shadow-lg z-50 p-2 animate-slideDown">
               {hiddenFilters.map((filter) => {
@@ -168,7 +163,6 @@ const FilterBar: React.FC<FilterBarProps> = ({
         </div>
       )}
 
-      {/* More filters button - jika tidak ada hidden filters tapi onMoreFilters ada */}
       {hiddenFilters.length === 0 && onMoreFilters && (
         <button
           onClick={handleMoreClick}

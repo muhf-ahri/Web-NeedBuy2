@@ -1,12 +1,6 @@
-// src/hooks/useWishlist.ts
 import { useState, useCallback } from 'react';
 import { useWishlistContext } from '../contexts/WishlistContext';
 
-/**
- * Status wishlist (saved-products) untuk satu produk + handler toggle.
- * Data diambil sekali via WishlistContext, jadi aman dipakai banyak kartu
- * produk sekaligus tanpa membanjiri rate limiter.
- */
 export const useWishlist = (productId: string | undefined) => {
   const { savedIds, toggle } = useWishlistContext();
   const [busy, setBusy] = useState(false);

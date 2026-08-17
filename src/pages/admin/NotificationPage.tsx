@@ -1,4 +1,3 @@
-// src/pages/admin/NotificationPage.tsx
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import AdminLayout from './AdminLayout';
 import Icon from '../../components/ui/Icon';
@@ -16,14 +15,9 @@ import {
 } from '../../api/notifications';
 
 const PAGE_SIZE = 5;
-/** Batas atas `GET /notifications` di backend. */
+
 const FETCH_LIMIT = 50;
 
-/**
- * Backend mengirim seluruh daftar sekaligus (maksimal 50, tanpa query filter),
- * jadi filter dan paginasi dikerjakan di client. Yang datang dari server tetap
- * data asli — nggak ada yang dikarang di sini.
- */
 const NotificationsPage: React.FC = () => {
   const [page, setPage] = useState(1);
   const [typeFilter, setTypeFilter] = useState('');
@@ -47,7 +41,6 @@ const NotificationsPage: React.FC = () => {
     void load();
   }, [load]);
 
-  // Notifikasi baru langsung nyelip di atas tanpa perlu refresh halaman.
   useNotificationSocket((payload) => {
     if (payload.event !== 'notification') return;
     setNotifications((prev) => [payload.data, ...prev].slice(0, FETCH_LIMIT));

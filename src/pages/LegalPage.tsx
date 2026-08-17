@@ -1,8 +1,3 @@
-// src/pages/LegalPage.tsx
-//
-// Empat halaman footer (terms, privacy, shipping, contact) berbagi satu layout.
-// Isinya beda, strukturnya sama — jadi satu komponen dengan peta konten, bukan
-// empat file yang saling menyalin.
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import Navbar from '../components/layout/Navbar';
@@ -31,7 +26,7 @@ export const LEGAL_DOCS: Record<string, Doc> = {
         heading: '2. Pesanan dan harga',
         body: [
           'Harga yang berlaku adalah harga yang tercatat saat pesanan dibuat. Perubahan harga oleh penjual setelah itu tidak mengubah pesanan yang sudah berjalan.',
-          'Satu checkout yang berisi produk dari beberapa penjual akan dipecah menjadi beberapa pesanan — satu pesanan per penjual, masing-masing dengan nomor pesanan sendiri.',
+          'Satu checkout yang berisi produk dari beberapa penjual akan dipecah menjadi beberapa pesanan, yaitu satu pesanan per penjual dengan nomor pesanan masing masing.',
         ],
       },
       {
@@ -137,7 +132,7 @@ export const LEGAL_DOCS: Record<string, Doc> = {
       {
         heading: 'Soal akun, pembayaran, atau kupon',
         body: [
-          'Email: bantuan@needbuy.id — sertakan nomor pesanan bila ada. Kami balas pada hari kerja, maksimal 1x24 jam.',
+          'Email: bantuan@needbuy.id (sertakan nomor pesanan bila ada). Kami balas pada hari kerja, maksimal 1x24 jam.',
         ],
       },
       {

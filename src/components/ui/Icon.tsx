@@ -14,6 +14,13 @@ export type IconName =
   | 'home'
   | 'grid'
   | 'spark'
+  | 'zap'
+  | 'layers'
+  | 'activity'
+  | 'cpu'
+  | 'database'
+  | 'shieldCheck'
+  | 'workflow'
   | 'plan'
   | 'star'
   | 'clock'
@@ -88,8 +95,14 @@ const PATHS: Record<IconName, string> = {
   chevronLeft: 'M15 19.5 7.5 12 15 4.5a1.2 1.2 0 0 1 1.7 1.7L10.9 12l5.8 5.8a1.2 1.2 0 0 1-1.7 1.7Z',
   home: 'M11.3 2.7a1.1 1.1 0 0 1 1.4 0l8.3 6.9c.5.4.2 1.2-.5 1.2H19v8.5c0 .9-.7 1.7-1.7 1.7h-3v-5.5h-4.6V21h-3c-1 0-1.7-.8-1.7-1.7v-8.5H3.5c-.7 0-1-.8-.5-1.2l8.3-6.9Z',
   grid: 'M3.5 3.5h7v7h-7v-7Zm10 0h7v7h-7v-7Zm-10 10h7v7h-7v-7Zm10 0h7v7h-7v-7Z',
-  spark:
-    'M12 2.5 14 9l6.5 2-6.5 2-2 6.5-2-6.5L3.5 11 10 9l2-6.5Zm6.5 10.5.9 2.6 2.6.9-2.6.9-.9 2.6-.9-2.6-2.6-.9 2.6-.9.9-2.6Z',
+  spark: 'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5',
+  zap: 'M13 2L3 14h9l-1 8 10-12h-9l1-8z',
+  layers: 'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5',
+  activity: 'M22 12h-4l-3 9L9 3l-3 9H2',
+  cpu: 'M4 4h16v16H4V4zm5 5h6v6H9V9zm-7 4h2m16 0h2M9 2v2m6-2v2M9 20v2m6-2v2',
+  database: 'M12 3c4.97 0 9 1.79 9 4s-4.03 4-9 4-9-1.79-9-4 4.03-4 9-4zm0 6c4.97 0 9 1.79 9 4s-4.03 4-9 4-9-1.79-9-4 4.03-4 9-4zm0 6c4.97 0 9 1.79 9 4s-4.03 4-9 4-9-1.79-9-4 4.03-4 9-4z',
+  shieldCheck: 'M12 2.3 20 5v6.4c0 4.5-3.2 8.5-8 10.3-4.8-1.8-8-5.8-8-10.3V5l8-2.7zm4.1 6.6a1.1 1.1 0 0 0-1.6 0L11 12.5l-1.5-1.6a1.1 1.1 0 1 0-1.6 1.6l2.3 2.4a1.1 1.1 0 0 0 1.6 0l4.3-4.4a1.1 1.1 0 0 0 0-1.6z',
+  workflow: 'M3 3h6v6H3V3zm12 0h6v6h-6V3zm0 12h6v6h-6v-6zM6 9v6h9',
   plan: 'M6 2.5h12A1.5 1.5 0 0 1 19.5 4v16a1.5 1.5 0 0 1-2.3 1.27L12 18.1l-5.2 3.17A1.5 1.5 0 0 1 4.5 20V4A1.5 1.5 0 0 1 6 2.5Zm2 5.2a1 1 0 1 0 0 2h8a1 1 0 1 0 0-2H8Zm0 4a1 1 0 1 0 0 2h5a1 1 0 1 0 0-2H8Z',
   star: 'm12 2.8 2.9 5.9 6.5.95-4.7 4.6 1.1 6.45L12 17.65 6.2 20.7l1.1-6.45-4.7-4.6 6.5-.95L12 2.8Z',
   clock:
@@ -122,19 +135,15 @@ const PATHS: Record<IconName, string> = {
   arrowRight:
     'M13.3 4.3a1.1 1.1 0 0 1 1.55 0l6.5 6.5a1.1 1.1 0 0 1 0 1.55l-6.5 6.5a1.1 1.1 0 1 1-1.55-1.55l4.62-4.62H3.6a1.1 1.1 0 0 1 0-2.2h14.32L13.3 5.85a1.1 1.1 0 0 1 0-1.55Z',
 
-  // ✏️ BARU: arrowUp — panah naik (untuk GrowthBadge, changePoint)
   arrowUp:
     'M12 3.5a1 1 0 0 1 .7.3l6 6a1 1 0 0 1-1.4 1.4L13 6.9V20a1 1 0 1 1-2 0V6.9L6.7 11.2a1 1 0 0 1-1.4-1.4l6-6a1 1 0 0 1 .7-.3Z',
 
-  // ✏️ BARU: arrowDown — panah turun (untuk GrowthBadge negatif)
   arrowDown:
     'M12 20.5a1 1 0 0 1-.7-.3l-6-6a1 1 0 0 1 1.4-1.4L11 17.1V4a1 1 0 1 1 2 0v13.1l4.3-4.3a1 1 0 0 1 1.4 1.4l-6 6a1 1 0 0 1-.7.3Z',
 
-  // ✏️ BARU: moon — bulan (untuk VacationToggle saat mode libur nonaktif)
   moon:
     'M21.5 15a1 1 0 0 1-1.1.7 8.5 8.5 0 0 1-7.1-12.8 1 1 0 0 1 1.7-1 9.5 9.5 0 0 0 7.5 11.4 1 1 0 0 1-1 1.7ZM12 7.5a6.5 6.5 0 0 0 .5 13c2.5 0 4.7-1.5 5.7-3.7a7.5 7.5 0 0 1-6.2-9.3Z',
 
-  // ===== IKON UNTUK SELLER =====
   dashboard: 'M4 4h6v6H4V4zm10 0h6v6h-6V4zM4 14h6v6H4v-6zm10 0h6v6h-6v-6z',
   product: 'M12 2L2 7v10l10 5 10-5V7l-10-5zm0 2.18l7.6 3.8L12 11.82 4.4 7.98 12 4.18zM4 9.5v7.6l7 3.5v-7.6L4 9.5zm16 0l-7 3.5v7.6l7-3.5V9.5z',
   analytics: 'M21 19H3V5h2v12h16v2zm-4-8h2v6h-2v-6zm-4-4h2v10h-2V7zm-4 2h2v6H9V9zM5 13h2v2H5v-2z',

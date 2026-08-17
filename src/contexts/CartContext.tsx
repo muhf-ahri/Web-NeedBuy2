@@ -1,4 +1,3 @@
-// src/contexts/CartContext.tsx
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { getCartCount } from '../api/cart';
 import { getAccessToken } from '../api/auth';

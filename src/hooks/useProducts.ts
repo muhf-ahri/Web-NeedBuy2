@@ -1,4 +1,3 @@
-// src/hooks/useProducts.ts
 import { useEffect, useState, useCallback } from 'react';
 import { getProducts, type GetProductsParams } from '../api/products';
 import type { Product, PaginatedResponse } from '../types';
@@ -14,11 +13,9 @@ export const useProducts = (params?: GetProductsParams) => {
     setError(null);
     try {
       const { data, meta } = await getProducts(params);
-      console.log('[useProducts] Data fetched:', data);
       setProducts(Array.isArray(data) ? data : []);
       setPagination(meta);
     } catch (err: any) {
-      console.error('[useProducts] Error:', err);
       setError(err.message ?? 'Gagal muat produk, coba lagi ya');
     } finally {
       setLoading(false);
@@ -50,7 +47,6 @@ export const useProducts = (params?: GetProductsParams) => {
         setProducts(prev => [...prev, ...(Array.isArray(data) ? data : [])]);
         setPagination(meta);
       } catch (err: any) {
-        console.error('[useProducts.loadMore]', err);
         throw err;
       }
     }

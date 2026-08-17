@@ -28,7 +28,6 @@ const CONDITIONS = ['Baru', 'Seperti Baru', 'Refurbished'];
 
 const PAGE_SIZE = 24;
 
-/** Stagger delay — dibatasi biar 24 card tidak nunggu terlalu lama. */
 const stagger = (index: number, base = 50) => Math.min(index, 11) * base;
 
 const CategoriesPage: React.FC = () => {
@@ -43,7 +42,6 @@ const CategoriesPage: React.FC = () => {
   const [sortBy, setSortBy] = useState(SORT_OPTIONS[0]);
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
 
-  /* ── Kunci scroll body saat drawer filter mobile terbuka ── */
   useEffect(() => {
     document.body.style.overflow = mobileFilterOpen ? 'hidden' : '';
     return () => {
@@ -131,7 +129,6 @@ const CategoriesPage: React.FC = () => {
     >
       <Navbar />
 
-      {/* ── Carousel promo (reveal) ── */}
       <Reveal direction="up" duration={800}>
         <PromoCarousel
           saleProducts={saleProducts}
@@ -140,7 +137,6 @@ const CategoriesPage: React.FC = () => {
         />
       </Reveal>
 
-      {/* ── NeedPay strip (reveal) ── */}
       <Reveal direction="up" delay={100}>
         <div className="mx-auto w-full max-w-[1600px] px-4 pt-4 sm:px-6 sm:pt-5 lg:px-10">
           <NeedPayStrip />
@@ -149,7 +145,6 @@ const CategoriesPage: React.FC = () => {
 
       <main className="flex-1 mx-auto w-full max-w-[1600px] px-4 py-6 sm:px-6 sm:py-8 lg:px-10">
         <div className="flex items-start gap-6 lg:gap-8">
-          {/* ── Desktop Sidebar — sticky + scroll independen + reveal dari kiri ── */}
           <aside
             className="
               sticky top-24 hidden w-60 shrink-0 lg:block
@@ -182,9 +177,7 @@ const CategoriesPage: React.FC = () => {
             </Reveal>
           </aside>
 
-          {/* ── Main ── */}
           <div className="min-w-0 flex-1">
-            {/* Top bar */}
             <Reveal direction="up">
               <div className="mb-5 flex flex-wrap items-center justify-between gap-3 sm:mb-6 sm:gap-4">
                 <div className="flex min-w-0 items-center gap-3">
@@ -238,7 +231,6 @@ const CategoriesPage: React.FC = () => {
               </div>
             </Reveal>
 
-            {/* Active category chips */}
             {selectedCategories.length > 0 && (
               <Reveal direction="up">
                 <div className="mb-4 flex flex-wrap gap-2">
@@ -268,7 +260,6 @@ const CategoriesPage: React.FC = () => {
               </Reveal>
             )}
 
-            {/* Product grid */}
             {productsLoading ? (
               <div
                 className="
@@ -304,9 +295,9 @@ const CategoriesPage: React.FC = () => {
                   variant={
                     productsError ? 'error' : hasActiveFilters ? 'no-match' : 'empty'
                   }
-                  onRetry={() => navigate(0)}          // reload halaman
-                  onClearFilters={clearAll}            // hapus semua filter
-                  onExplore={() => navigate('/')}      // ke beranda
+                  onRetry={() => navigate(0)}
+                  onClearFilters={clearAll}
+                  onExplore={() => navigate('/')}
                 />
               </Reveal>
             ) : (
@@ -346,7 +337,6 @@ const CategoriesPage: React.FC = () => {
         </div>
       </main>
 
-      {/* ── Mobile Filter Drawer ── */}
       {mobileFilterOpen && (
         <div className="fixed inset-0 z-50 lg:hidden">
           <div
@@ -361,7 +351,6 @@ const CategoriesPage: React.FC = () => {
               shadow-[-12px_0_40px_rgba(32,36,45,0.15)]
             "
           >
-            {/* Header drawer */}
             <div
               className="
                 flex items-center justify-between border-b border-[#E8ECF4]
@@ -391,7 +380,6 @@ const CategoriesPage: React.FC = () => {
               </button>
             </div>
 
-            {/* Scroll area drawer */}
             <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-4">
               <FilterSidebar
                 categories={rootCategories}
@@ -410,7 +398,6 @@ const CategoriesPage: React.FC = () => {
               />
             </div>
 
-            {/* Footer drawer — sticky */}
             <div className="border-t border-[#E8ECF4] p-4">
               <button
                 onClick={() => setMobileFilterOpen(false)}

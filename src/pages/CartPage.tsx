@@ -138,7 +138,7 @@ const CartPage: React.FC = () => {
       <Navbar />
 
       <main className="flex-1 mx-auto w-full max-w-6xl px-4 py-8 sm:px-8">
-        {/* Header */}
+        
         <Reveal direction="up">
           <div className="mb-6">
             <div className="mb-2 flex items-center gap-2">
@@ -159,7 +159,6 @@ const CartPage: React.FC = () => {
           </div>
         </Reveal>
 
-        {/* Error */}
         {error && (
           <Reveal direction="up">
             <div
@@ -182,7 +181,7 @@ const CartPage: React.FC = () => {
           </Reveal>
         ) : (
           <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-3">
-            {/* ── Item list ── */}
+            
             <Reveal direction="up" className="lg:col-span-2">
               <div
                 className="
@@ -191,7 +190,7 @@ const CartPage: React.FC = () => {
                   backdrop-blur-sm
                 "
               >
-                {/* Header list: select all + kosongkan */}
+                
                 <div
                   className="
                     flex items-center justify-between gap-3 border-b
@@ -230,7 +229,6 @@ const CartPage: React.FC = () => {
                   </button>
                 </div>
 
-                {/* Items */}
                 <div className="px-4 sm:px-5">
                   {cart.items.map((item, index) => (
                     <Reveal key={item.id} direction="up" delay={stagger(index, 40)}>
@@ -258,7 +256,6 @@ const CartPage: React.FC = () => {
               </div>
             </Reveal>
 
-            {/* ── Summary ─ */}
             <Reveal direction="up" delay={120}>
               <CartSummary
                 subtotal={subtotal}

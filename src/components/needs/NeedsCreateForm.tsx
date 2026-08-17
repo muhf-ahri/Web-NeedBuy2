@@ -42,7 +42,7 @@ const NeedsCreateForm: React.FC<NeedsCreateFormProps> = ({
         backdrop-blur-sm sm:p-6
       "
     >
-      {/* Header */}
+      
       <div className="mb-4 flex items-center gap-2.5">
         <span
           className="
@@ -51,19 +51,18 @@ const NeedsCreateForm: React.FC<NeedsCreateFormProps> = ({
             shadow-[0_4px_12px_rgba(83,140,219,0.25)]
           "
         >
-          <Icon name="spark" size={16} className="text-white" />
+          <Icon name="layers" size={16} className="text-white" />
         </span>
         <div className="min-w-0">
           <h3 className="text-[15px] font-bold text-[#20242D]">
-            Ceritain Kebutuhanmu
+            Tulis Kebutuhan Belanja
           </h3>
           <p className="text-[11px] text-[#737A87]">
-            AI akan menganalisis dan mencarikan produk yang pas.
+            Sistem mencocokkan produk terbaik sesuai deskripsi kebutuhan kamu.
           </p>
         </div>
       </div>
 
-      {/* Contoh */}
       <div
         className="
           mb-4 flex items-start gap-2 rounded-xl bg-[#F5F7FB] px-3.5 py-2.5
@@ -81,7 +80,6 @@ const NeedsCreateForm: React.FC<NeedsCreateFormProps> = ({
         </p>
       </div>
 
-      {/* Form */}
       <form onSubmit={handleSubmit}>
         <textarea
           value={rawInput}
@@ -118,13 +116,12 @@ const NeedsCreateForm: React.FC<NeedsCreateFormProps> = ({
             "
           >
             {creating && <Icon name="clock" size={14} className="animate-spin" />}
-            <Icon name="spark" size={13} />
-            Analisis Kebutuhan
+            <Icon name="zap" size={13} />
+            Cari Produk Sesuai Kebutuhan
           </button>
         </div>
       </form>
 
-      {/* Hasil analisis */}
       {parsed && (
         <div
           className="
@@ -154,7 +151,7 @@ const NeedsCreateForm: React.FC<NeedsCreateFormProps> = ({
                 Kebutuhan:
               </span>
               <span className="text-[#20242D]">
-                {parsed.need.goal ?? '—'}
+                {parsed.need.goal ?? 'Belum kebaca'}
               </span>
             </div>
             <div className="flex gap-2">
@@ -164,7 +161,7 @@ const NeedsCreateForm: React.FC<NeedsCreateFormProps> = ({
               <span className="text-[#20242D]">
                 {parsed.need.budget
                   ? formatRupiah(parsed.need.budget)
-                  : '—'}
+                  : 'Belum kebaca'}
               </span>
             </div>
             <div className="flex gap-2">
@@ -172,7 +169,7 @@ const NeedsCreateForm: React.FC<NeedsCreateFormProps> = ({
                 Lokasi:
               </span>
               <span className="text-[#20242D]">
-                {parsed.need.location ?? '—'}
+                {parsed.need.location ?? 'Belum kebaca'}
               </span>
             </div>
           </div>
@@ -210,7 +207,6 @@ const NeedsCreateForm: React.FC<NeedsCreateFormProps> = ({
             </div>
           )}
 
-          {/* Actions */}
           <div
             className="
               flex flex-wrap gap-2 border-t border-[#E8ECF4] bg-white

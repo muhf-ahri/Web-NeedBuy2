@@ -11,7 +11,7 @@ import OrdersHistoryList from '../components/orders/OrderHistoryList';
 import OrderDetailModal from '../components/orders/OrderDetailModal';
 import ReviewModal from '../components/orders/ReviewModal';
 import OrdersEmptyState from '../components/orders/OrdersEmptyState';
-import OrdersErrorState from '../components/orders/OrdersErrorState'; 
+import OrdersErrorState from '../components/orders/OrdersErrorState';
 import OrdersLoginPrompt from '../components/orders/OrdersLoginPormpt';
 
 import {
@@ -43,7 +43,7 @@ const OrderPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabKey>('ALL');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [reloadKey, setReloadKey] = useState(0); // ✏️ EDIT: state retry
+  const [reloadKey, setReloadKey] = useState(0);
 
   const [selected, setSelected] = useState<Order | null>(null);
   const [busy, setBusy] = useState(false);
@@ -59,7 +59,6 @@ const OrderPage: React.FC = () => {
 
   const isAuthed = !!getAccessToken();
 
-  /* ✏️ EDIT: handler retry — dipanggil dari card Waduh.png */
   const retry = () => {
     setError(null);
     setReloadKey((k) => k + 1);
@@ -83,7 +82,6 @@ const OrderPage: React.FC = () => {
     }
   }, [isAuthed, activeTab]);
 
-  /* ✏️ EDIT: tambah reloadKey ke deps supaya retry memicu refetch */
   useEffect(() => {
     fetchOrders();
   }, [fetchOrders, reloadKey]);
@@ -99,9 +97,7 @@ const OrderPage: React.FC = () => {
         try {
           await syncPayment(id);
           res = await getOrder(id);
-        } catch {
-          // ignore
-        }
+        } catch {}
       }
       setSelected(res.data.data);
     } catch (err: any) {
@@ -130,9 +126,7 @@ const OrderPage: React.FC = () => {
       for (let i = 0; i < 4; i += 1) {
         try {
           await syncPayment(orderId);
-        } catch {
-          // ignore
-        }
+        } catch {}
         const res = await getOrder(orderId);
         if (
           res.data.data.status !== 'WAITING_PAYMENT' ||
@@ -143,9 +137,7 @@ const OrderPage: React.FC = () => {
         }
         await new Promise((r) => setTimeout(r, 2000));
       }
-    } catch {
-      // ignore
-    } finally {
+    } catch {} finally {
       setCheckingPayment(false);
     }
   };
@@ -274,8 +266,8 @@ const OrderPage: React.FC = () => {
         const limit = isVideo ? MAX_VIDEO_BYTES : MAX_IMAGE_BYTES;
         if (file.size > limit) {
           setError(
-            `"${file.name}" kegedean — maksimal ${
-              isVideo ? '20 MB buat video' : '3 MB buat foto'
+            `Ukuran "${file.name}" terlalu besar, maksimal ${
+              isVideo ? '20 MB untuk video' : '3 MB untuk foto'
             }.`
           );
           continue;
@@ -301,14 +293,12 @@ const OrderPage: React.FC = () => {
     return <OrdersLoginPrompt />;
   }
 
-  /* ✏️ EDIT: deteksi gagal total (fetch awal gagal & belum ada data) */
   const showFatalError = !loading && Boolean(error) && orders.length === 0;
 
   return (
     <OrdersShell>
       <OrdersHero totalCount={orders.length} loading={loading} />
 
-      {/* ✏️ EDIT: banner error INLINE untuk aksi (bukan fatal) + close button */}
       {error && !showFatalError && (
         <div
           className="
@@ -340,9 +330,7 @@ const OrderPage: React.FC = () => {
 
       <OrdersTabs activeTab={activeTab} onChange={setActiveTab} />
 
-      {/* ✏️ EDIT: 4 cabang conditional */}
       {loading ? (
-        /* 1. LOADING → skeleton */
         <div className="space-y-4">
           {Array.from({ length: 3 }).map((_, i) => (
             <div
@@ -355,16 +343,12 @@ const OrderPage: React.FC = () => {
           ))}
         </div>
       ) : showFatalError ? (
-        /* 2. GAGAL TOTAL → card Waduh.png dengan retry */
         <OrdersErrorState onRetry={retry} errorMessage={error ?? undefined} />
       ) : orders.length === 0 ? (
-        /* 3. TERHUBUNG + KOSONG → card bebek (empty state per tab) */
         <OrdersEmptyState tab={activeTab} />
       ) : activeTab === 'HISTORY' ? (
-        /* 4a. TERHUBUNG + ADA DATA + tab HISTORY */
         <OrdersHistoryList orders={orders} onOpen={openDetail} />
       ) : (
-        /* 4b. TERHUBUNG + ADA DATA + tab lainnya */
         <div className="space-y-3">
           {orders.map((order) => (
             <OrderCard key={order.id} order={order} onOpen={openDetail} />

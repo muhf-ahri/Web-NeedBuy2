@@ -1,11 +1,10 @@
-// src/pages/admin/components/TopStores.tsx
 import React from 'react';
 import { formatRupiah } from '../../../utils/currency';
 
 export interface TopStore {
   name: string;
   sales: number;
-  /** null = periode sebelumnya nol, jadi pertumbuhannya nggak bisa dihitung. */
+  
   growth: number | null;
 }
 
@@ -43,7 +42,7 @@ const TopStores: React.FC<TopStoresProps> = ({ stores }) => {
                   : 'text-[#ba1a1a]'
               }`}
             >
-              {store.growth === null ? '—' : `${store.growth >= 0 ? '+' : ''}${store.growth}%`}
+              {store.growth === null ? ', ' : `${store.growth >= 0 ? '+' : ''}${store.growth}%`}
             </span>
           </div>
         </div>

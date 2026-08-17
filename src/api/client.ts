@@ -2,7 +2,7 @@ import axios from 'axios';
 import type { AxiosError, AxiosRequestConfig } from 'axios';
 
 const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL,
+  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:4000/api/v1',
   headers: {
     'Content-Type': 'application/json',
     'ngrok-skip-browser-warning': 'true',
@@ -42,8 +42,6 @@ async function tryRefreshToken(): Promise<string | null | typeof RETRYABLE_REFRE
     if (tokens.user) localStorage.setItem('user', JSON.stringify(tokens.user));
     return tokens.accessToken;
   } catch (err: any) {
-    // Gagal sementara (rate limit, 5xx, jaringan) bukan alasan mencabut sesi —
-    // refresh akan dicoba lagi pada request berikutnya.
     const status = err?.response?.status;
     if (!status || status === 429 || status >= 500) return RETRYABLE_REFRESH;
     return null;
@@ -101,13 +99,9 @@ apiClient.interceptors.response.use(
     const data = error.response?.data as
       | { error?: { message?: string; fields?: { path: string; message: string }[] }; message?: string }
       | undefined;
-    // Tidak ada response sama sekali = permintaan tidak pernah sampai ke server
-    // (server mati, tunnel putus, atau preflight CORS gagal). Browser
-    // melaporkannya sebagai "Network Error"/CORS, yang tidak berarti apa pun
-    // bagi user — jadi diterjemahkan ke keadaan yang sebenarnya.
     const unreachable = !error.response && error.code !== 'ECONNABORTED';
     const message = unreachable
-      ? 'Nggak bisa nyambung ke server. Pastiin server-nya nyala, terus coba lagi ya.'
+      ? 'Nggak bisa nyambung ke server. Pastiin servernya nyala, terus coba lagi ya.'
       : data?.error?.message ||
         data?.message ||
         error.message ||

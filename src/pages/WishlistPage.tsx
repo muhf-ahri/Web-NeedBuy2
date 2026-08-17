@@ -67,7 +67,7 @@ const WishlistPage: React.FC = () => {
       <Navbar />
 
       <main className="flex-1 mx-auto w-full max-w-5xl px-4 py-8 sm:px-8">
-        {/* Header */}
+
         <Reveal direction="up">
           <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
             <div className="min-w-0">
@@ -86,7 +86,7 @@ const WishlistPage: React.FC = () => {
               <p className="mt-2 max-w-xl text-[13px] leading-relaxed text-[#737A87]">
                 {loading
                   ? 'Muat produk simpananmu...'
-                  : `${items.length} produk yang kamu simpan — checkout semuanya kapan aja.`}
+                  : `${items.length} produk tersimpan yang siap kamu checkout.`}
               </p>
             </div>
 
@@ -102,7 +102,6 @@ const WishlistPage: React.FC = () => {
           </div>
         </Reveal>
 
-        {/* Error */}
         {error && (
           <Reveal direction="up">
             <div
@@ -119,7 +118,6 @@ const WishlistPage: React.FC = () => {
           </Reveal>
         )}
 
-        {/* Konten */}
         {loading ? (
           <div className="space-y-3">
             {Array.from({ length: 3 }).map((_, i) => (

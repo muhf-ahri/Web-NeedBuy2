@@ -34,7 +34,7 @@ const NotificationsEmptyState: React.FC<NotificationsEmptyStateProps> = ({
         bg-white/95 shadow-[0_18px_50px_rgba(32,36,45,0.10)] backdrop-blur-sm
       "
     >
-      {/* Mobile banner */}
+      
       <div className="relative h-44 md:hidden">
         <img
           src={notifImg}
@@ -56,7 +56,7 @@ const NotificationsEmptyState: React.FC<NotificationsEmptyStateProps> = ({
       </div>
 
       <div className="grid md:grid-cols-[1.1fr_0.9fr]">
-        {/* Konten kiri */}
+        
         <section className="flex items-center bg-white px-6 py-8 sm:px-8 lg:px-10">
           <div className="mx-auto w-full max-w-md">
             <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#538CDB]">
@@ -93,7 +93,6 @@ const NotificationsEmptyState: React.FC<NotificationsEmptyStateProps> = ({
           </div>
         </section>
 
-        {/* Gambar kanan */}
         <section className="relative hidden min-h-[420px] overflow-hidden md:block">
           <img
             src={notifImg}

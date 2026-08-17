@@ -115,14 +115,12 @@ const LoginForm: React.FC<LoginFormProps> = ({
 
       </div>
 
-      {/* Error */}
       {error && (
         <div className="rounded-xl bg-[#FFF0F0] px-3 py-2.5 text-xs text-[#C73535]">
           {error}
         </div>
       )}
 
-      {/* Submit */}
       <Button
         type="submit"
         fullWidth

@@ -1,4 +1,3 @@
-// src/pages/admin/components/TableCategoryChild.tsx
 import React from 'react';
 import Icon from '../../../components/ui/Icon';
 import Pagination from '../../../components/ui/Pagination';
@@ -6,7 +5,7 @@ import type { AdminCategory as Category } from '../../../api/categories';
 
 interface TableCategoryChildProps {
   data: Category[];
-  parentMap: Record<string, string>; // id -> name
+  parentMap: Record<string, string>; 
   page: number;
   totalPages: number;
   totalItems: number;
@@ -71,10 +70,10 @@ const TableCategoryChild: React.FC<TableCategoryChildProps> = ({
                 <tr key={category.id} className="text-[13px] transition-colors hover:bg-[#f8f9fb]">
                   <td className="py-2.5 pr-2 font-medium text-[#191c1e]">{category.name}</td>
                   <td className="py-2.5 pr-2 text-[#004ac6]">
-                    {parentMap[category.parentId || ''] || '—'}
+                    {parentMap[category.parentId || ''] || ', '}
                   </td>
                   <td className="py-2.5 pr-2 text-[#737686]">
-                    {category.description || '—'}
+                    {category.description || ', '}
                   </td>
                   <td className="py-2.5 pr-2 text-[#434655]">
                     {category._count.products.toLocaleString('id-ID')}

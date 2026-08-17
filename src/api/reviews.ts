@@ -1,4 +1,3 @@
-// src/api/reviews.ts
 import apiClient from './client';
 import type { ApiResponse } from '../types';
 
@@ -15,15 +14,10 @@ export interface ProductReview {
   createdAt: string;
   user?: { name: string } | null;
   media?: ReviewMedia[];
-  /** Varian yang dibeli — bintang 3 pada model termurah beda arti. */
+  
   orderItem?: { variant: string | null } | null;
 }
 
-/**
- * `average` dan `breakdown` dihitung server dari SELURUH ulasan produk, bukan
- * dari halaman yang sedang tampil, jadi bar sebaran bintangnya tidak berubah
- * saat pindah halaman.
- */
 export interface ReviewMeta {
   page: number;
   limit: number;
@@ -33,7 +27,6 @@ export interface ReviewMeta {
   breakdown: Array<{ star: number; count: number }>;
 }
 
-/** GET /reviews/product/:id — ulasan sebuah produk (publik). */
 export const getProductReviews = async (
   productId: string,
   params?: { page?: number; limit?: number }

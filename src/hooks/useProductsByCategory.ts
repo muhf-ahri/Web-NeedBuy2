@@ -1,4 +1,3 @@
-// src/hooks/useProductsByCategory.ts
 import { useEffect, useState, useCallback } from 'react';
 import { getProductsByCategory, type GetProductsParams } from '../api/products';
 import type { Product, PaginatedResponse } from '../types';
@@ -24,12 +23,10 @@ export const useProductsByCategory = (categorySlug: string | undefined, params?:
       setProducts(Array.isArray(data) ? data : []);
       setPagination(meta);
 
-      // Extract category name from first product if available
       if (data && data.length > 0) {
         setCategoryName(data[0].category.name);
       }
     } catch (err: any) {
-      console.error('[useProductsByCategory]', err);
       setError(err.message ?? 'Gagal memuat produk kategori');
     } finally {
       setLoading(false);
@@ -62,7 +59,6 @@ export const useProductsByCategory = (categorySlug: string | undefined, params?:
         setProducts(prev => [...prev, ...(Array.isArray(data) ? data : [])]);
         setPagination(meta);
       } catch (err: any) {
-        console.error('[useProductsByCategory.loadMore]', err);
         throw err;
       }
     }

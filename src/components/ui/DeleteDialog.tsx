@@ -19,7 +19,6 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  /* Lock body scroll + ESC to close */
   useEffect(() => {
     const prev = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
@@ -52,13 +51,12 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center sm:p-4">
-      {/* Backdrop */}
+      
       <div
         className="absolute inset-0 bg-[#20242D]/50 backdrop-blur-sm delete-dialog-backdrop"
         onClick={() => !busy && onClose()}
       />
 
-      {/* Modal card */}
       <div
         className="
           delete-dialog-enter relative w-full max-w-md overflow-hidden
@@ -67,9 +65,9 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({
           sm:rounded-[24px]
         "
       >
-        {/* ── Header ── */}
+        
         <div className="relative border-b border-[#E8ECF4] bg-white/95 px-5 py-4 backdrop-blur-sm">
-          {/* Dekorasi */}
+          
           <span
             className="
               pointer-events-none absolute -right-8 -top-8 h-20 w-20
@@ -84,7 +82,6 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({
           />
 
           <div className="relative flex items-start gap-3">
-            {/* Icon warning gradient merah */}
             <span
               className="
                 flex h-11 w-11 shrink-0 items-center justify-center
@@ -120,21 +117,19 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({
           </div>
         </div>
 
-        {/* ── Body ── */}
         <div className="space-y-4 px-5 py-5 sm:px-6">
-          {/* Warning message */}
+          
           <p className="text-[13px] leading-relaxed text-[#434655]">
             Produk ini akan dihapus <span className="font-bold text-[#20242D]">permanen</span> dari toko kamu. Tindakan ini tidak bisa dibatalkan.
           </p>
 
-          {/* Preview produk */}
           <div
             className="
               flex items-center gap-3 rounded-2xl border border-[#E8ECF4]
               bg-[#F5F7FB] p-3
             "
           >
-            {/* Thumbnail */}
+            
             <div
               className="
                 h-14 w-14 shrink-0 overflow-hidden rounded-xl bg-white
@@ -154,7 +149,6 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({
               )}
             </div>
 
-            {/* Info */}
             <div className="min-w-0 flex-1">
               <p className="truncate text-[13px] font-semibold text-[#20242D]">
                 {product.name}
@@ -168,7 +162,6 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({
               </div>
             </div>
 
-            {/* Trash indicator */}
             <span
               className="
                 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg
@@ -179,7 +172,6 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({
             </span>
           </div>
 
-          {/* Error banner */}
           {error && (
             <div
               className="
@@ -201,7 +193,6 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({
             </div>
           )}
 
-          {/* Info box tambahan */}
           <div
             className="
               flex items-start gap-2.5 rounded-xl bg-[#FFF7E0]/60 px-3 py-2.5
@@ -219,7 +210,6 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({
           </div>
         </div>
 
-        {/* ── Footer ── */}
         <div
           className="
             flex flex-col-reverse gap-2 border-t border-[#E8ECF4] bg-white/95

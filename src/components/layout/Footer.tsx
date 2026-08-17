@@ -40,25 +40,15 @@ const Footer: React.FC = () => {
   return (
     <footer className="relative overflow-hidden border-t border-[#E8ECF4] bg-white">
       
-      {/* Decorative background */}
       <div className="pointer-events-none absolute -right-24 -top-24 h-56 w-56 rounded-full bg-[#538CDB]/5" />
       <div className="pointer-events-none absolute -bottom-20 left-1/4 h-48 w-48 rounded-full bg-[#FFD500]/5" />
 
       <div className="relative mx-auto max-w-6xl px-5 py-10 sm:px-8 lg:px-10">
 
-        {/* =====================================================
-            MAIN FOOTER
-        ====================================================== */}
-
         <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
-
-          {/* =================================================
-              BRAND
-          ================================================== */}
 
           <div className="max-w-sm">
 
-            {/* Logo */}
             <Link
               to="/"
               className="group inline-flex items-center gap-2"
@@ -78,14 +68,12 @@ const Footer: React.FC = () => {
               </span>
             </Link>
 
-            {/* Description */}
             <p className="mt-4 max-w-[30ch] text-[13px] leading-5 text-[#737A87]">
               Beli yang kamu butuh, bukan yang cuma kamu lihat.
               Temukan produk yang tepat dengan pengalaman
               belanja yang lebih sederhana.
             </p>
 
-            {/* Small brand accent */}
             <div className="mt-5 flex items-center gap-2">
               <span className="h-1.5 w-1.5 rounded-full bg-[#538CDB]" />
               <span className="h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
@@ -93,10 +81,6 @@ const Footer: React.FC = () => {
             </div>
 
           </div>
-
-          {/* =================================================
-              BELANJA
-          ================================================== */}
 
           <div>
 
@@ -149,10 +133,6 @@ const Footer: React.FC = () => {
             </ul>
 
           </div>
-
-          {/* =================================================
-              BANTUAN
-          ================================================== */}
 
           <div>
 
@@ -222,10 +202,6 @@ const Footer: React.FC = () => {
           </div>
 
         </div>
-
-        {/* =====================================================
-            BOTTOM
-        ====================================================== */}
 
         <div className="
           mt-9

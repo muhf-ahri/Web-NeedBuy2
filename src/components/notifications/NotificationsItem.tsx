@@ -9,7 +9,7 @@ interface NotificationItemProps {
   notification: Notification;
   onRead: (id: string) => void;
   onOpen?: () => void;
-  /** Mode ringkas (dropdown) vs normal (halaman) */
+
   compact?: boolean;
 }
 
@@ -30,7 +30,6 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
 
   const body = (
     <div className={`flex items-start gap-3 ${compact ? '' : 'sm:gap-4'}`}>
-      {/* Icon indicator */}
       <span
         className={`
           mt-0.5 flex shrink-0 items-center justify-center rounded-lg
@@ -42,7 +41,6 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
         <Icon name={meta.icon} size={compact ? 15 : 18} />
       </span>
 
-      {/* Body */}
       <div className="min-w-0 flex-1">
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0">

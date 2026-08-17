@@ -1,4 +1,3 @@
-// src/pages/admin/WithdrawalsPage.tsx
 import React, { useCallback, useEffect, useState } from 'react';
 import AdminLayout from './AdminLayout';
 import FilterBar from '../../components/ui/filter/FilterBar';
@@ -13,11 +12,6 @@ import {
 
 const PAGE_SIZE = 10;
 
-/**
- * Filter pencarian belum ada di sini: backend memfilter penarikan berdasarkan
- * status saja, dan menyaring hasil satu halaman di client akan menyembunyikan
- * penarikan yang cocok di halaman lain.
- */
 const WithdrawalsPage: React.FC = () => {
   const [page, setPage] = useState(1);
   const [statusFilter, setStatusFilter] = useState('');
@@ -51,7 +45,6 @@ const WithdrawalsPage: React.FC = () => {
   }, [load]);
 
   const handleAction = async (id: string, action: 'APPROVE' | 'REJECT') => {
-    // Menolak berarti mengembalikan uang ke penjual — jangan sampai kepencet.
     if (
       action === 'REJECT' &&
       !window.confirm('Tolak penarikan ini? Saldo penjual bakal dikembalikan.')

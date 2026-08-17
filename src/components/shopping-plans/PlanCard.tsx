@@ -38,7 +38,7 @@ const PlanCard: React.FC<PlanCardProps> = ({ plan, onClick }) => {
         focus-visible:outline-[#538CDB]
       "
     >
-      {/* Hover glow */}
+
       <span
         className="
           pointer-events-none absolute -right-10 -top-10 h-24 w-24
@@ -47,7 +47,6 @@ const PlanCard: React.FC<PlanCardProps> = ({ plan, onClick }) => {
         "
       />
 
-      {/* Dekorasi titik kuning */}
       <span
         className="
           pointer-events-none absolute right-5 top-5 h-1.5 w-1.5
@@ -55,7 +54,6 @@ const PlanCard: React.FC<PlanCardProps> = ({ plan, onClick }) => {
         "
       />
 
-      {/* Header: icon + judul */}
       <div className="relative flex items-start gap-3">
         <span
           className="
@@ -89,12 +87,10 @@ const PlanCard: React.FC<PlanCardProps> = ({ plan, onClick }) => {
         </div>
       </div>
 
-      {/* Total */}
       <p className="mt-4 text-[20px] font-extrabold tracking-tight text-[#538CDB]">
         {formatRupiah(totalNum)}
       </p>
 
-      {/* Budget bar */}
       {budgetNum > 0 ? (
         <div className="mt-3">
           <div className="h-1.5 overflow-hidden rounded-full bg-[#F5F7FB]">
@@ -126,7 +122,6 @@ const PlanCard: React.FC<PlanCardProps> = ({ plan, onClick }) => {
         </p>
       )}
 
-      {/* Footer hint */}
       <div className="mt-4 flex items-center justify-between border-t border-[#F5F7FB] pt-3">
         <span className="text-[10px] font-semibold uppercase tracking-wider text-[#737A87]">
           Buka detail

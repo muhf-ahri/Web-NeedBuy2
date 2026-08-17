@@ -1,4 +1,3 @@
-// src/pages/Register.tsx
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -36,7 +35,7 @@ const Register: React.FC = () => {
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#F5F5FF]">
-      {/* Ambient background, unchanged palette */}
+      
       <div
         className="
           absolute inset-0
@@ -51,7 +50,6 @@ const Register: React.FC = () => {
       <div className="pointer-events-none absolute bottom-[18%] left-[12%] h-3 w-3 rounded-full bg-[#538CDB]" />
       <div className="pointer-events-none absolute bottom-[13%] right-[18%] h-2.5 w-2.5 rounded-full bg-[#FFD500]" />
 
-      {/* Background illustration */}
       <img
         src={loginImg}
         alt=""
@@ -63,12 +61,11 @@ const Register: React.FC = () => {
         "
       />
 
-      {/* Card di KIRI, lebar sama dengan Login (max-w-2xl) */}
       <div className="relative z-10 flex min-h-screen items-center justify-start px-4 py-5 sm:px-8 lg:pl-16 lg:pr-8">
         <div className="w-full max-w-2xl">
           <div className="overflow-hidden rounded-[24px] border border-white/80 bg-white/95 shadow-[0_18px_50px_rgba(32,36,45,0.10)] backdrop-blur-sm">
             <div className="grid md:grid-cols-[0.9fr_1.1fr]">
-              {/* ── Panel kiri: branding (identik dengan Login) ── */}
+              
               <section className="relative hidden overflow-hidden bg-gradient-to-br from-[#538CDB] via-[#4A7ECB] to-[#3A66AC] px-8 py-10 md:flex md:flex-col md:justify-between">
                 <svg
                   className="pointer-events-none absolute inset-y-0 right-0 h-full w-16 text-[#F5F5FF] md:w-20"
@@ -111,15 +108,13 @@ const Register: React.FC = () => {
                 </div>
               </section>
 
-              {/* ── Panel kanan: header + form ── */}
               <section className="flex items-center bg-white px-6 py-7 sm:px-8 lg:px-10">
                 <div className="mx-auto w-full max-w-sm">
-                  {/* Mobile branding */}
+                  
                   <div className="mb-6 md:hidden">
                     <p className="text-xs font-semibold text-[#538CDB]">NeedBuy</p>
                   </div>
 
-                  {/* Header (satu-satunya, tidak duplikat) */}
                   <div className="mb-6">
                     <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#538CDB]">
                       Create account
@@ -132,14 +127,12 @@ const Register: React.FC = () => {
                     </p>
                   </div>
 
-                  {/* Error */}
                   {error && (
                     <div className="mb-4 rounded-xl border border-[#FF4646]/15 bg-[#FFF0F0] px-3.5 py-3">
                       <p className="text-xs leading-5 text-[#C73535]">{error}</p>
                     </div>
                   )}
 
-                  {/* Form murni (tanpa card sendiri) */}
                   <RegisterForm
                     onSubmit={handleRegister}
                     isLoading={loading}
@@ -163,7 +156,6 @@ const Register: React.FC = () => {
             </div>
           </div>
 
-          {/* Footer */}
           <p className="mt-3 text-center text-[10px] text-[#737A87]">
             Bergabung dengan NeedBuy untuk pengalaman belanja yang lebih sederhana dan terarah.
           </p>

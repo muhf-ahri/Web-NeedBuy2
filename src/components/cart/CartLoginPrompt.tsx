@@ -25,7 +25,7 @@ const CartLoginPrompt: React.FC = () => {
               backdrop-blur-sm
             "
           >
-            {/* Mobile banner */}
+            
             <div className="relative h-44 md:hidden">
               <img
                 src={cartImg}
@@ -51,7 +51,7 @@ const CartLoginPrompt: React.FC = () => {
             </div>
 
             <div className="grid md:grid-cols-[1.1fr_0.9fr]">
-              {/* Konten kiri */}
+              
               <section className="flex items-center bg-white px-6 py-8 sm:px-8 lg:px-10">
                 <div className="mx-auto w-full max-w-md">
 
@@ -97,7 +97,6 @@ const CartLoginPrompt: React.FC = () => {
                 </div>
               </section>
 
-              {/* Gambar kanan */}
               <section className="relative hidden min-h-[420px] overflow-hidden md:block">
                 <img
                   src={cartImg}

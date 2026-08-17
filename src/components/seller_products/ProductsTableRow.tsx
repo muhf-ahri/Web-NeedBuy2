@@ -29,7 +29,7 @@ const ProductsTableRow: React.FC<ProductsTableRowProps> = ({
 
   return (
     <tr className="group border-b border-[#F5F7FB] transition-colors last:border-0 hover:bg-[#F5F5FF]/60">
-      {/* Gambar */}
+
       <td className="px-4 py-3 text-center">
         <div className="flex justify-center">
           <div
@@ -51,24 +51,20 @@ const ProductsTableRow: React.FC<ProductsTableRowProps> = ({
         </div>
       </td>
 
-      {/* Nama */}
       <td className="px-4 py-3 text-center">
         <p className="truncate text-[13px] font-semibold text-[#20242D]">
           {product.name}
         </p>
       </td>
 
-      {/* Kategori */}
       <td className="px-4 py-3 text-center text-[12px] text-[#737A87]">
-        {product.category?.name ?? '—'}
+        {product.category?.name ?? 'Tanpa kategori'}
       </td>
 
-      {/* Harga */}
       <td className="px-4 py-3 text-center text-[13px] font-bold text-[#538CDB] tabular-nums">
         {formatRupiah(Number(product.price))}
       </td>
 
-      {/* Stok */}
       <td className="px-4 py-3 text-center">
         <span
           className={`
@@ -99,7 +95,6 @@ const ProductsTableRow: React.FC<ProductsTableRowProps> = ({
         </span>
       </td>
 
-      {/* Status */}
       <td className="px-4 py-3 text-center">
         <span
           className={`
@@ -111,7 +106,6 @@ const ProductsTableRow: React.FC<ProductsTableRowProps> = ({
         </span>
       </td>
 
-      {/* Aksi */}
       <td className="px-4 py-3">
         <div className="flex items-center justify-center gap-1">
           <button

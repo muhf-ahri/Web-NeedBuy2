@@ -1,4 +1,3 @@
-// src/pages/admin/SettingsPage.tsx
 import React, { useCallback, useEffect, useState } from 'react';
 import AdminLayout from './AdminLayout';
 import Icon from '../../components/ui/Icon';
@@ -7,11 +6,6 @@ import Branding from './components/settings/Branding';
 import RegionalSettings from './components/settings/RegionalSettings';
 import { getConfigs, setConfigs, type ConfigKey } from '../../api/admin';
 
-/**
- * Semua kartu di halaman ini menulis ke tabel AdminConfig lewat
- * `POST /admin/configs`. Data dimuat sekali di sini, bukan per kartu, supaya
- * tiga kartu tidak memanggil endpoint yang sama tiga kali.
- */
 export type SaveConfigs = (entries: Partial<Record<ConfigKey, string>>) => Promise<void>;
 
 export interface SettingsCardProps {
@@ -39,15 +33,14 @@ const SettingsPage: React.FC = () => {
 
   const handleSave = useCallback<SaveConfigs>(async (entries) => {
     await setConfigs(entries);
-    // State lokal disamakan dengan yang barusan dikirim — tidak perlu GET ulang
-    // karena backend menyimpan nilainya apa adanya.
+    
     setValues((prev) => ({ ...(prev ?? {}), ...(entries as Record<string, string>) }));
   }, []);
 
   return (
     <AdminLayout>
       <div className="space-y-6">
-        {/* Header */}
+        
         <div>
           <h1 className="text-[28px] font-bold text-[#191c1e]">Pengaturan</h1>
           <p className="text-[15px] text-[#737686]">
@@ -69,7 +62,7 @@ const SettingsPage: React.FC = () => {
           </div>
         ) : (
           <>
-            {/* Marketplace Information */}
+            
             <div className="rounded-2xl border border-[#e0e3e5] bg-white p-5">
               <h2 className="mb-4 flex items-center gap-2 text-[15px] font-bold text-[#191c1e]">
                 <Icon name="settings" size={18} className="text-[#004ac6]" />
@@ -78,7 +71,6 @@ const SettingsPage: React.FC = () => {
               <MarketplaceInfo values={values} onSave={handleSave} />
             </div>
 
-            {/* Branding */}
             <div className="rounded-2xl border border-[#e0e3e5] bg-white p-5">
               <h2 className="mb-4 flex items-center gap-2 text-[15px] font-bold text-[#191c1e]">
                 <Icon name="upload" size={18} className="text-[#004ac6]" />
@@ -87,7 +79,6 @@ const SettingsPage: React.FC = () => {
               <Branding values={values} onSave={handleSave} />
             </div>
 
-            {/* Regional Settings */}
             <div className="rounded-2xl border border-[#e0e3e5] bg-white p-5">
               <h2 className="mb-4 flex items-center gap-2 text-[15px] font-bold text-[#191c1e]">
                 <Icon name="globe" size={18} className="text-[#004ac6]" />

@@ -6,9 +6,11 @@ export interface User {
   name: string;
   email: string;
   phone?: string | null;
+
+  avatarUrl?: string | null;
   role: 'BUYER' | 'SELLER' | 'ADMIN';
   authProvider: 'LOCAL' | 'GOOGLE';
-  /** Null = email belum diverifikasi. */
+
   emailVerifiedAt?: string | null;
   createdAt: string;
 }
@@ -20,11 +22,6 @@ export interface TokenPair {
   expiresIn: string;
 }
 
-/**
- * Register selalu membuat akun BUYER — tidak ada pilihan role di sini lagi.
- * Untuk jadi penjual, user mendaftarkan tokonya dari halaman profil
- * (`createSellerStore` di api/sellers.ts), yang memang meminta data toko.
- */
 export interface RegisterPayload {
   username: string;
   email: string;
@@ -42,11 +39,6 @@ export interface SocialLoginPayload {
   idToken: string;
 }
 
-/**
- * Awal flow Google OAuth: browser diarahkan ke backend, backend yang
- * generate CSRF state lalu redirect ke consent screen Google. Tidak dipanggil
- * lewat apiClient karena ini navigasi penuh, bukan XHR — response-nya 302.
- */
 export const googleAuthUrl = () => `${import.meta.env.VITE_API_BASE_URL}/auth/google`;
 
 export const register = (data: RegisterPayload) =>
@@ -58,16 +50,13 @@ export const login = (data: LoginPayload) =>
 export const socialLogin = (data: SocialLoginPayload) =>
   apiClient.post<{ success: boolean; data: TokenPair }>('/auth/social', data);
 
-// ─── Verifikasi email & reset password ────────────────────────────────────────
 
-/** Berhasil = langsung dapat sesi baru, jadi user nggak perlu login ulang. */
 export const verifyEmail = (token: string) =>
   apiClient.post<{ success: boolean; data: TokenPair }>(`/auth/verify-email/${token}`);
 
 export const resendVerification = () =>
   apiClient.post<{ success: boolean; data: { sent: boolean } }>('/auth/resend-verification');
 
-/** Selalu sukses, termasuk buat email yang nggak terdaftar — biar nggak bisa dipakai ngecek akun. */
 export const forgotPassword = (email: string) =>
   apiClient.post<{ success: boolean; data: { sent: boolean } }>('/auth/forgot-password', { email });
 
@@ -109,13 +98,24 @@ export const getUserProfile = () =>
     };
   }>('/users/me');
 
-export const updateProfile = (data: { name?: string; phone?: string | null }) =>
+export const updateProfile = (data: {
+  name?: string;
+  phone?: string | null;
+  avatarUrl?: string | null;
+}) =>
   apiClient.patch<{ success: boolean; data: User }>('/users/me', data);
 
 export const changePassword = (data: { currentPassword: string; newPassword: string }) =>
   apiClient.post<{
     success: boolean;
-    data: { changed: boolean; revokedSessions: number; message: string };
+    data: {
+      changed: boolean;
+      revokedSessions: number;
+      accessToken: string;
+      refreshToken: string;
+      expiresIn: string;
+      message: string;
+    };
   }>('/users/me/change-password', data);
 
 const ACCESS_TOKEN_KEY = 'token';
@@ -128,10 +128,6 @@ export const setAuthTokens = (tokens: TokenPair) => {
   localStorage.setItem(USER_KEY, JSON.stringify(tokens.user));
 };
 
-/**
- * Redirect OAuth cuma membawa token — data user belum ikut. Token disimpan
- * duluan supaya `/auth/me` berikutnya sudah terkirim dengan Authorization.
- */
 export const setSessionTokens = (accessToken: string, refreshToken: string) => {
   localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
   localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken);

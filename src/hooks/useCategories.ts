@@ -1,4 +1,3 @@
-// src/hooks/useCategories.ts
 import { useEffect, useState, useCallback } from 'react';
 import { getCategories } from '../api/categories';
 import type { Category } from '../types';
@@ -13,10 +12,8 @@ export const useCategories = () => {
     setError(null);
     try {
       const data = await getCategories();
-      console.log('[useCategories] Data fetched:', data);
       setCategories(Array.isArray(data) ? data : []);
     } catch (err: any) {
-      console.error('[useCategories] Error:', err);
       setError(err.message ?? 'Gagal memuat kategori');
     } finally {
       setLoading(false);

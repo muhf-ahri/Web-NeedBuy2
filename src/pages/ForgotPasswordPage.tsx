@@ -1,4 +1,3 @@
-// src/pages/ForgotPasswordPage.tsx
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Icon from '../components/ui/Icon';
@@ -35,7 +34,6 @@ const ForgotPasswordPage: React.FC = () => {
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#F5F5FF]">
 
-      {/* Ambient background, unchanged palette */}
       <div
         className="
           absolute
@@ -51,7 +49,6 @@ const ForgotPasswordPage: React.FC = () => {
       <div className="pointer-events-none absolute bottom-[18%] left-[12%] h-3 w-3 rounded-full bg-[#538CDB]" />
       <div className="pointer-events-none absolute bottom-[13%] right-[18%] h-2.5 w-2.5 rounded-full bg-[#FFD500]" />
 
-      {/* Background illustration — full screen, sits behind the card, never inside it */}
       <img
         src={loginImg}
         alt=""
@@ -84,9 +81,7 @@ const ForgotPasswordPage: React.FC = () => {
                   <div className="text-center">
                     <Icon name="check" size={36} className="mx-auto text-[#156b32]" />
                     <h1 className="mt-4 text-[20px] font-bold text-[#191c1e]">Cek email kamu</h1>
-                    {/* Sengaja tidak bilang "akun ditemukan" — pesan yang sama muncul
-                        buat email yang nggak terdaftar, biar halaman ini nggak bisa
-                        dipakai ngecek siapa aja yang punya akun NeedBuy. */}
+                    
                     <p className="mt-2 text-[13px] leading-relaxed text-[#737686]">
                       Kalau <span className="font-semibold text-[#434655]">{email}</span> terdaftar di
                       NeedBuy, tautan buat atur ulang password udah kami kirim ke sana. Tautannya
@@ -106,7 +101,7 @@ const ForgotPasswordPage: React.FC = () => {
                   </div>
                 ) : (
                   <>
-                    {/* Header */}
+                    
                     <div className="mb-6">
 
                       <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#538CDB]">
@@ -124,7 +119,6 @@ const ForgotPasswordPage: React.FC = () => {
 
                     </div>
 
-                    {/* Error */}
                     {error && (
                       <div className="mb-4 rounded-xl border border-[#FF4646]/15 bg-[#FFF0F0] px-3.5 py-3">
 
@@ -135,7 +129,6 @@ const ForgotPasswordPage: React.FC = () => {
                       </div>
                     )}
 
-                    {/* Form */}
                     <form className="space-y-4" onSubmit={handleSubmit}>
 
                       <div>
@@ -168,7 +161,6 @@ const ForgotPasswordPage: React.FC = () => {
                       </Button>
                     </form>
 
-                    {/* Back to login */}
                     <p className="mt-5 text-center text-xs text-[#737A87]">
                       Inget passwordnya?{' '}
 

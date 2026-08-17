@@ -21,7 +21,6 @@ export const EMPTY_ADDRESS_FORM: AddressFormData = {
 const PHONE_RE = /^[0-9+\-\s()]{8,20}$/;
 const POSTAL_CODE_RE = /^\d{5}$/;
 
-// Mirrors the backend Zod schema (BACKEND/src/modules/addresses/schema.ts).
 export function validateAddressForm(form: AddressFormData): Record<string, string> {
   const errors: Record<string, string> = {};
   const recipientName = form.recipientName.trim();

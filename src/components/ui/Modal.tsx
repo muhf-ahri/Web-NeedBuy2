@@ -1,4 +1,3 @@
-// src/components/ui/Modal.tsx
 import React, { type ReactNode } from 'react';
 import Icon from './Icon';
 

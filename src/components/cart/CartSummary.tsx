@@ -31,7 +31,7 @@ const CartSummary: React.FC<CartSummaryProps> = ({
   busy,
 }) => (
   <div className="space-y-4">
-    {/* ── Card subtotal — gradient biru brand ── */}
+
     <div
       className="
         relative overflow-hidden rounded-[24px] bg-gradient-to-br
@@ -39,7 +39,7 @@ const CartSummary: React.FC<CartSummaryProps> = ({
         shadow-[0_18px_50px_rgba(83,140,219,0.30)] sm:p-6
       "
     >
-      {/* Dekorasi */}
+
       <div className="pointer-events-none absolute -left-10 -top-10 h-32 w-32 rounded-full border border-white/15" />
       <div className="pointer-events-none absolute bottom-6 right-8 h-16 w-16 rounded-full border border-white/10" />
       <div className="pointer-events-none absolute right-[20%] top-[14%] h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
@@ -52,7 +52,6 @@ const CartSummary: React.FC<CartSummaryProps> = ({
           {formatRupiah(subtotal)}
         </p>
 
-        {/* Budget progress */}
         {budget !== null && (
           <div className="mt-4">
             <div className="h-1.5 overflow-hidden rounded-full bg-white/20">
@@ -70,7 +69,6 @@ const CartSummary: React.FC<CartSummaryProps> = ({
           </div>
         )}
 
-        {/* Input budget */}
         <div className="mt-4 flex items-center gap-2">
           <input
             type="number"
@@ -117,7 +115,6 @@ const CartSummary: React.FC<CartSummaryProps> = ({
       </div>
     </div>
 
-    {/* ── CTA checkout ── */}
     <button
       type="button"
       onClick={onCheckout}
@@ -133,11 +130,10 @@ const CartSummary: React.FC<CartSummaryProps> = ({
     >
       <Icon name="lock" size={16} />
       {selectedCount === 0
-        ? 'Pilih item-nya dulu ya'
+        ? 'Pilih itemnya dulu ya'
         : `Checkout ${selectedCount} item`}
     </button>
 
-    {/* ── Lanjut belanja ── */}
     <button
       type="button"
       onClick={onContinue}

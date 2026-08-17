@@ -1,4 +1,3 @@
-// src/api/reports.ts
 import apiClient from './client';
 import type { ApiResponse } from '../types';
 
@@ -22,12 +21,6 @@ export interface Report {
   createdAt: string;
 }
 
-/**
- * POST /reports — laporkan produk, toko, atau ulasan ke admin.
- *
- * Prioritas tidak dikirim dari sini: kalau pelapor yang menentukan, semua
- * laporan jadi HIGH. Admin yang menaikkannya.
- */
 export const createReport = async (payload: CreateReportPayload): Promise<Report> => {
   const res = await apiClient.post<ApiResponse<Report>>('/reports', payload);
   return res.data.data;

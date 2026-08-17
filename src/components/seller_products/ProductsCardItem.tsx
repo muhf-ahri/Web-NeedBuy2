@@ -37,7 +37,7 @@ const ProductsCardItem: React.FC<ProductsCardItemProps> = ({
       "
     >
       <div className="flex gap-3">
-        {/* Thumbnail */}
+
         <Link
           to={`/products/${product.slug}`}
           className="
@@ -57,7 +57,6 @@ const ProductsCardItem: React.FC<ProductsCardItemProps> = ({
           )}
         </Link>
 
-        {/* Info */}
         <div className="min-w-0 flex-1">
           <Link to={`/products/${product.slug}`}>
             <p className="line-clamp-2 text-[13px] font-bold leading-snug text-[#20242D] transition-colors hover:text-[#538CDB] sm:text-[14px]">
@@ -82,7 +81,6 @@ const ProductsCardItem: React.FC<ProductsCardItemProps> = ({
             )}
           </div>
 
-          {/* Harga + Stok */}
           <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1">
             <span className="text-[13px] font-bold text-[#538CDB] tabular-nums sm:text-[14px]">
               {formatRupiah(Number(product.price))}
@@ -119,7 +117,6 @@ const ProductsCardItem: React.FC<ProductsCardItemProps> = ({
         </div>
       </div>
 
-      {/* Actions */}
       <div className="mt-3 flex gap-2 border-t border-[#F5F7FB] pt-3">
         <button
           type="button"

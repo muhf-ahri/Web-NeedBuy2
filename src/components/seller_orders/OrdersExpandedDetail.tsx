@@ -10,7 +10,7 @@ interface OrdersExpandedDetailProps {
 
 const OrdersExpandedDetail: React.FC<OrdersExpandedDetailProps> = ({ order }) => (
   <div className="grid gap-4 sm:gap-5 md:grid-cols-2">
-    {/* Barang dipesan */}
+    
     <div>
       <div className="mb-2.5 flex items-center gap-2">
         <span className="flex h-6 w-6 items-center justify-center rounded-md bg-[#538CDB]/10">
@@ -51,7 +51,6 @@ const OrdersExpandedDetail: React.FC<OrdersExpandedDetailProps> = ({ order }) =>
         ))}
       </ul>
 
-      {/* Rincian biaya */}
       <div className="mt-2 space-y-1 border-t border-[#E8ECF4] pt-2">
         <div className="flex justify-between text-[11px]">
           <span className="text-[#737A87]">Subtotal</span>
@@ -74,7 +73,6 @@ const OrdersExpandedDetail: React.FC<OrdersExpandedDetailProps> = ({ order }) =>
       </div>
     </div>
 
-    {/* Alamat pengiriman */}
     <div>
       <div className="mb-2.5 flex items-center gap-2">
         <span className="flex h-6 w-6 items-center justify-center rounded-md bg-[#FFF7E0]">

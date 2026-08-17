@@ -1,4 +1,3 @@
-// src/components/ui/NotFoundCard.tsx
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Icon from './Icon';
@@ -15,9 +14,9 @@ const NotFoundCard: React.FC = () => {
         shadow-[0_18px_50px_rgba(32,36,45,0.10)] backdrop-blur-sm
       "
     >
-      {/* Proporsi grid sama persis dengan card Login */}
+      
       <div className="grid md:grid-cols-[0.9fr_1.1fr]">
-        {/* ── Panel kiri: branding (identik dengan Login) ── */}
+        
         <section
           className="
             relative hidden overflow-hidden bg-gradient-to-br from-[#538CDB]
@@ -25,7 +24,7 @@ const NotFoundCard: React.FC = () => {
             md:justify-between
           "
         >
-          {/* Tepi bergelombang */}
+          
           <svg
             className="pointer-events-none absolute inset-y-0 right-0 h-full w-16 text-[#F5F5FF] md:w-20"
             viewBox="0 0 100 400"
@@ -68,20 +67,17 @@ const NotFoundCard: React.FC = () => {
           </div>
         </section>
 
-        {/* ── Panel kanan: konten 404 (struktur & skala sama seperti form Login) ── */}
         <section className="flex items-center bg-white px-6 py-7 sm:px-8 lg:px-10">
           <div className="mx-auto w-full max-w-sm">
-            {/* Brand kecil untuk mobile */}
+            
             <div className="mb-6 md:hidden">
               <p className="text-xs font-semibold text-[#538CDB]">NeedBuy</p>
             </div>
 
-            {/* Eyebrow */}
             <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#FF4646]">
               Halaman Hilang
             </p>
 
-            {/* Judul */}
             <h1
               className="
                 text-[24px] font-bold leading-tight tracking-tight
@@ -91,12 +87,10 @@ const NotFoundCard: React.FC = () => {
               WADUH, HALAMANNYA NGGAK KETEMU!
             </h1>
 
-            {/* Sub-judul */}
             <p className="mt-2 text-[13px] leading-5 text-[#737A87]">
               Mungkin alamatnya berubah, atau halamannya udah dipindah ke tempat lain.
             </p>
 
-            {/* Visual 404 — blok lembut mirip field input */}
             <div className="mt-5 rounded-xl px-4 py-5 text-center">
               <div
                 className="
@@ -117,7 +111,6 @@ const NotFoundCard: React.FC = () => {
               </p>
             </div>
 
-            {/* Tombol utama */}
             <div className="mt-5">
               <Button
                 fullWidth
@@ -137,7 +130,6 @@ const NotFoundCard: React.FC = () => {
 
             <Divider text="atau" />
 
-            {/* Tombol sekunder */}
             <button
             type="button"
             onClick={() => navigate(-1)}
@@ -153,7 +145,6 @@ const NotFoundCard: React.FC = () => {
             Balik ke Halaman Sebelumnya
             </button>
 
-            {/* Footer kecil */}
             <p className="mt-5 text-center text-xs text-[#737A87]">
               Cek lagi alamat URL-nya biar nggak nyasar lagi.
             </p>

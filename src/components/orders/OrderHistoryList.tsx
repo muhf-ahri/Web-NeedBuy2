@@ -21,7 +21,7 @@ const OrdersHistoryList: React.FC<OrdersHistoryListProps> = ({
 }) => {
   return (
     <>
-      {/* Desktop: table */}
+
       <div
         className="
           hidden overflow-x-auto rounded-[24px] border border-white/80
@@ -128,7 +128,6 @@ const OrdersHistoryList: React.FC<OrdersHistoryListProps> = ({
         </table>
       </div>
 
-      {/* Mobile: card list */}
       <div className="space-y-3 md:hidden">
         {orders.map((order) => (
           <button

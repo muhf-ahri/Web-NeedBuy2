@@ -1,4 +1,3 @@
-// src/pages/admin/components/NotificationItem.tsx
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Icon from '../../../components/ui/Icon';
@@ -10,11 +9,6 @@ interface NotificationItemProps {
   pending?: boolean;
 }
 
-/**
- * Warna dan label per tipe notifikasi backend (`NotificationType`). Dulu ini
- * pakai kategori karangan sendiri (System/Orders/…) yang nggak ada di API —
- * sekarang satu kunci per enum, jadi nggak ada tipe yang jatuh ke `undefined`.
- */
 const typeColor: Record<NotificationType, string> = {
   ORDER_NEW: 'border-[#d7f5dc] bg-[#f0faf2]',
   ORDER_STATUS: 'border-[#cfe8ff] bg-[#f0f7ff]',

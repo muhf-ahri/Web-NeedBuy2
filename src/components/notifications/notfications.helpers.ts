@@ -1,7 +1,6 @@
 import type { IconName } from '../ui/Icon';
 import type { Notification } from '../../api/notifications';
 
-/** "5 menit lalu" tanpa library tanggal. */
 export function relativeTime(iso: string): string {
   const seconds = Math.round((Date.now() - new Date(iso).getTime()) / 1000);
   if (seconds < 60) return 'baru saja';
@@ -13,7 +12,6 @@ export function relativeTime(iso: string): string {
   return days === 1 ? 'kemarin' : `${days} hari lalu`;
 }
 
-/** Target link untuk setiap tipe notifikasi. */
 export function linkFor(notification: Notification): string | undefined {
   switch (notification.type) {
     case 'ORDER_NEW':
@@ -27,7 +25,6 @@ export function linkFor(notification: Notification): string | undefined {
   }
 }
 
-/** Icon & warna sesuai tipe notifikasi. */
 export function metaFor(notification: Notification): {
   icon: IconName;
   bg: string;

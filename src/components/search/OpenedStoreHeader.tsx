@@ -19,7 +19,7 @@ const OpenedStoreHeader: React.FC<OpenedStoreHeaderProps> = ({
       backdrop-blur-sm
     "
   >
-    {/* Logo besar */}
+    
     <div
       className="
         shrink-0 overflow-hidden rounded-2xl bg-[#F5F7FB] ring-1
@@ -41,7 +41,6 @@ const OpenedStoreHeader: React.FC<OpenedStoreHeaderProps> = ({
       )}
     </div>
 
-    {/* Info */}
     <div className="min-w-0 flex-1">
       <div className="flex flex-wrap items-center gap-2">
         <h2 className="text-[18px] font-bold text-[#20242D]">

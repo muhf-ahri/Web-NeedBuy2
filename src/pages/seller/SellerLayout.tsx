@@ -31,7 +31,7 @@ const SellerLayout: React.FC<SellerLayoutProps> = ({ children }) => {
       className="min-h-screen bg-[#F5F5FF]"
       style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
     >
-      {/* ── Header Seller — glassmorphism + sticky ── */}
+      
       <header
         className="
           sticky top-0 z-40 border-b border-white/80 bg-white/95
@@ -44,7 +44,7 @@ const SellerLayout: React.FC<SellerLayoutProps> = ({ children }) => {
             sm:px-6 lg:px-10
           "
         >
-          {/* Kiri: hamburger (mobile) + logo */}
+          
           <div className="flex items-center gap-2">
             <button
               type="button"
@@ -77,7 +77,6 @@ const SellerLayout: React.FC<SellerLayoutProps> = ({ children }) => {
             </Link>
           </div>
 
-          {/* Kanan: Lihat Toko + Notification + Profile */}
           <div className="flex items-center gap-2 sm:gap-3">
             <Link
               to="/"
@@ -100,14 +99,13 @@ const SellerLayout: React.FC<SellerLayoutProps> = ({ children }) => {
         </div>
       </header>
 
-      {/* ── Body: sidebar + konten ── */}
       <div
         className="
           mx-auto flex max-w-7xl flex-col gap-4 px-4 py-6 sm:gap-5 sm:px-6
           lg:flex-row lg:gap-8 lg:px-10
         "
       >
-        {/* Sidebar container — drawer dikontrol dari header */}
+        
         <div className="lg:w-60 lg:shrink-0">
           <div className="lg:sticky lg:top-24">
             <Sidebar
@@ -119,7 +117,6 @@ const SellerLayout: React.FC<SellerLayoutProps> = ({ children }) => {
           </div>
         </div>
 
-        {/* Main content */}
         <main className="min-w-0 flex-1">{children}</main>
       </div>
     </div>

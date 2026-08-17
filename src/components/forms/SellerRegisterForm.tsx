@@ -1,4 +1,3 @@
-// src/components/forms/SellerRegisterForm.tsx
 import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Icon from '../ui/Icon';
@@ -8,7 +7,6 @@ import { refreshToken as apiRefreshToken, getRefreshToken, setAuthTokens } from 
 import { useAuth } from '../../contexts/AuthContext';
 
 interface Props {
-  /** Dipanggil setelah toko berhasil dibuat, supaya halaman profil memuat ulang datanya. */
   onRegistered: () => void;
 }
 
@@ -24,11 +22,6 @@ const EMPTY = {
 const inputCls =
   'w-full px-3 py-2 rounded-lg border border-[#c3c6d7] outline-none focus:border-[#004ac6] focus:ring-2 focus:ring-[#004ac6]/20 text-sm transition';
 
-/**
- * Pendaftaran toko dari halaman profil — satu-satunya jalur jadi penjual sejak
- * pilihan role dihapus dari form register. Field wajibnya (nama perusahaan,
- * alamat, telepon) memang tidak muat diminta saat register.
- */
 const SellerRegisterForm: React.FC<Props> = ({ onRegistered }) => {
   const navigate = useNavigate();
   const { refreshUser } = useAuth();
@@ -43,10 +36,9 @@ const SellerRegisterForm: React.FC<Props> = ({ onRegistered }) => {
     setError(null);
   };
 
-  /** Logo diunggah begitu dipilih; URL hasilnya baru ikut terkirim saat submit. */
   const handlePickLogo = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    e.target.value = ''; // reset supaya berkas yang sama bisa dipilih ulang
+    e.target.value = '';
     if (!file) return;
 
     if (!ACCEPTED_IMAGE_TYPES.includes(file.type)) {
@@ -74,8 +66,6 @@ const SellerRegisterForm: React.FC<Props> = ({ onRegistered }) => {
     e.preventDefault();
     if (saving) return;
 
-    // Cermin dari validasi server (createSellerSchema) — server tetap yang
-    // menentukan, ini hanya supaya user tidak menunggu satu round-trip.
     if (form.storeName.trim().length < 3) {
       setError('Nama perusahaannya minimal 3 karakter ya.');
       return;
@@ -96,16 +86,11 @@ const SellerRegisterForm: React.FC<Props> = ({ onRegistered }) => {
         storeName: form.storeName.trim(),
         address: form.address.trim(),
         phone: form.phone.trim(),
-        // Field opsional yang kosong tidak dikirim sama sekali — server
-        // menolak key asing, tapi menerima key yang tidak ada.
         ...(form.description.trim() ? { description: form.description.trim() } : {}),
         ...(form.logoUrl ? { logoUrl: form.logoUrl } : {}),
         ...(form.businessEmail.trim() ? { businessEmail: form.businessEmail.trim() } : {}),
       });
 
-      // Access token yang dipegang sekarang masih menyimpan role BUYER, dan
-      // endpoint dashboard/produk memeriksa role DARI TOKEN. Tanpa rotasi ini,
-      // penjual baru kena 403 di tokonya sendiri sampai login ulang.
       const stored = getRefreshToken();
       if (stored) {
         const res = await apiRefreshToken(stored);
@@ -239,7 +224,7 @@ const SellerRegisterForm: React.FC<Props> = ({ onRegistered }) => {
               )}
             </div>
             <p className="text-[11px] text-[#737686] mt-1.5">
-              Opsional. PNG, JPG, WebP, atau GIF — maksimal 3 MB ya.
+              Opsional. PNG, JPG, WebP, atau GIF, maksimal 3 MB ya.
             </p>
           </div>
         </div>

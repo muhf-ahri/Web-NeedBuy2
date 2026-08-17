@@ -1,4 +1,3 @@
-// src/components/home/HomeBackground.tsx
 import React from 'react';
 
 const HomeBackground: React.FC<{ children: React.ReactNode }> = ({
@@ -6,12 +5,11 @@ const HomeBackground: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   return (
     <main className="relative flex-1 overflow-hidden bg-[#F5F5FF]">
-      {/* ── Dekorasi blur biru halus (tanpa gradasi warna-warni) ── */}
+      
       <div className="pointer-events-none absolute -left-32 top-1/3 h-72 w-72 rounded-full bg-[#538CDB]/10 blur-3xl" />
       <div className="pointer-events-none absolute right-0 top-10 h-64 w-64 rounded-full bg-[#538CDB]/8 blur-3xl" />
       <div className="pointer-events-none absolute bottom-0 right-1/4 h-72 w-72 rounded-full bg-[#538CDB]/5 blur-3xl" />
 
-      {/* ── Ambient luas untuk kedalaman di section bawah ── */}
       <div
         className="
           pointer-events-none
@@ -41,7 +39,6 @@ const HomeBackground: React.FC<{ children: React.ReactNode }> = ({
         "
       />
 
-      {/* ── Grid sangat halus — warna brand biru ── */}
       <div
         className="
           pointer-events-none
@@ -52,7 +49,6 @@ const HomeBackground: React.FC<{ children: React.ReactNode }> = ({
         "
       />
 
-      {/* Content */}
       <div className="relative z-10">{children}</div>
     </main>
   );

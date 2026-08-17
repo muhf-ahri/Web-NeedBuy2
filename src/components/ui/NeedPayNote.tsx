@@ -7,8 +7,6 @@ import { getAccessToken } from '../../api/auth';
 import { getWallet } from '../../api/wallet';
 import needpayCard from '../../assets/needpay.jpg';
 
-// untuk logo 
-
 import logoBca from '../../assets/Logo BCA.jpg';
 import logoMandiri from '../../assets/Logo Mandiri.png';
 import logoBni from '../../assets/Logo BNI.png';
@@ -23,7 +21,6 @@ const serialFrom = (walletId: string | undefined): string =>
     ? `NP ${walletId.replace(/-/g, '').slice(0, 10).toUpperCase()}`
     : 'NP ··········';
 
-/* ── Metode pembayaran: bank Indonesia + e-wallet + QRIS + card ── */
  export type PaymentMethod = {
   label: string;
   type: string;
@@ -42,16 +39,11 @@ export const PAYMENT_METHODS: PaymentMethod[] = [
   { label: 'Kartu Kredit', type: 'Card', logo: logoCc },
 ];
 
-/* =========================================================
-   Panel kiri — gambar BESAR memenuhi panel (object-cover),
-   gelombang putih tetap sebagai pembatas ke panel kanan
-========================================================= */
 const BrandPanel: React.FC<{ footer?: string; image?: string }> = ({
   footer,
   image,
 }) => (
   <section className="relative hidden min-h-[420px] overflow-hidden md:block">
-    {/* Gambar besar memenuhi panel */}
     {image ? (
       <img
         src={image}
@@ -66,10 +58,8 @@ const BrandPanel: React.FC<{ footer?: string; image?: string }> = ({
       <div className="absolute inset-0 bg-gradient-to-br from-[#538CDB] via-[#4A7ECB] to-[#3A66AC]" />
     )}
 
-    {/* Overlay gradasi bawah — biar footer serial terbaca */}
     <div className="absolute inset-0 bg-gradient-to-t from-[#20242D]/55 via-transparent to-transparent" />
 
-    {/* Tepi gelombang (pembatas ke panel kanan) */}
     <svg
       className="pointer-events-none absolute inset-y-0 right-0 h-full w-16 md:w-20"
       viewBox="0 0 100 400"
@@ -87,7 +77,6 @@ const BrandPanel: React.FC<{ footer?: string; image?: string }> = ({
       />
     </svg>
 
-    {/* Label pill di atas gambar */}
     <div
       className="
         absolute left-6 top-6 z-10 inline-flex items-center gap-1.5
@@ -99,7 +88,6 @@ const BrandPanel: React.FC<{ footer?: string; image?: string }> = ({
       NeedPay
     </div>
 
-    {/* Footer serial di atas gambar */}
     <div className="absolute bottom-5 left-6 z-10 flex items-center gap-2 text-[10px] text-white/90">
       <span className="h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
       <span className="truncate font-mono">
@@ -109,9 +97,6 @@ const BrandPanel: React.FC<{ footer?: string; image?: string }> = ({
   </section>
 );
 
-/* =========================================================
-   Tile metode pembayaran
-========================================================= */
 export const PaymentTile: React.FC<{ method: PaymentMethod }> = ({ method }) => (
   <div
     className="
@@ -121,7 +106,6 @@ export const PaymentTile: React.FC<{ method: PaymentMethod }> = ({ method }) => 
       hover:shadow-[0_6px_16px_rgba(83,140,219,0.12)]
     "
   >
-    {/* Frame logo — putih bersih biar logo brand apa pun tetap terbaca */}
     <span
       className="
         flex h-8 w-10 items-center justify-center overflow-hidden
@@ -146,9 +130,6 @@ export const PaymentTile: React.FC<{ method: PaymentMethod }> = ({ method }) => 
   </div>
 );
 
-/* =========================================================
-   NeedPay Note — gambar besar kiri + metode pembayaran kanan
-========================================================= */
 export const NeedPayNote: React.FC<{
   balance: string | number;
   walletId?: string;
@@ -167,7 +148,6 @@ export const NeedPayNote: React.FC<{
         backdrop-blur-sm
       "
     >
-      {/* ── Mobile: gambar besar di atas ── */}
       <div className="relative h-44 md:hidden">
         <img
           src={needpayCard}
@@ -195,18 +175,14 @@ export const NeedPayNote: React.FC<{
       </div>
 
       <div className="grid md:grid-cols-[0.9fr_1.1fr]">
-        {/* Panel kiri: gambar BESAR */}
         <BrandPanel footer={serialFrom(walletId)} image={needpayCard} />
 
-        {/* Panel kanan: saldo + metode pembayaran */}
         <section className="flex items-center bg-white px-6 py-7 sm:px-8 lg:px-10">
           <div className="mx-auto w-full max-w-lg">
-            {/* Brand mobile */}
             <div className="mb-4 md:hidden">
               <p className="text-xs font-semibold text-[#538CDB]">NeedPay</p>
             </div>
 
-            {/* Eyebrow */}
             <p
               className="
                 mb-2 text-[10px] font-semibold uppercase tracking-[0.18em]
@@ -225,7 +201,6 @@ export const NeedPayNote: React.FC<{
               Saldo kamu, siap dipakai.
             </h3>
 
-            {/* Kotak saldo — compact, satu baris */}
             <div
               className="
                 mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 rounded-2xl
@@ -262,7 +237,6 @@ export const NeedPayNote: React.FC<{
               </p>
             </div>
 
-            {/* ── Grid metode pembayaran ── */}
             <div className="mt-5">
               <div className="mb-2 flex items-center justify-between">
                 <p
@@ -285,7 +259,6 @@ export const NeedPayNote: React.FC<{
               </div>
             </div>
 
-            {/* CTA */}
             <button
               type="button"
               onClick={handleTopUp}
@@ -308,9 +281,6 @@ export const NeedPayNote: React.FC<{
   );
 };
 
-/* =========================================================
-   NeedPay Banner — tidak berubah
-========================================================= */
 export const NeedPayBanner: React.FC<{
   balance?: string | number | null;
   onAction: () => void;
@@ -332,7 +302,6 @@ export const NeedPayBanner: React.FC<{
         focus-visible:outline-[#538CDB] ${className}
       `}
     >
-      {/* ── Panel gambar BESAR di kiri (bukan thumbnail kecil lagi) ── */}
       <span className="relative w-32 shrink-0 overflow-hidden sm:w-40">
         <img
           src={needpayCard}
@@ -344,7 +313,6 @@ export const NeedPayBanner: React.FC<{
           "
         />
 
-        {/* Gelombang putih pemisah ke konten (signature NeedBuy) */}
         <svg
           className="pointer-events-none absolute inset-y-0 right-0 h-full w-5 sm:w-6"
           viewBox="0 0 100 400"
@@ -363,7 +331,6 @@ export const NeedPayBanner: React.FC<{
         </svg>
       </span>
 
-      {/* ── Konten tengah ── */}
       <span className="flex min-w-0 flex-1 flex-col justify-center gap-1 px-5 py-5 sm:px-6">
         <span
           className="
@@ -401,7 +368,6 @@ export const NeedPayBanner: React.FC<{
         )}
       </span>
 
-      {/* ── CTA pill kanan ── */}
       <span
         className="
           mr-4 shrink-0 self-center rounded-full bg-[#538CDB] px-4 py-2.5
@@ -417,9 +383,6 @@ export const NeedPayBanner: React.FC<{
   );
 };
 
-/* =========================================================
-   NeedPay Strip — tidak berubah
-========================================================= */
 export const NeedPayStrip: React.FC<{
   className?: string;
 }> = ({ className = '' }) => {

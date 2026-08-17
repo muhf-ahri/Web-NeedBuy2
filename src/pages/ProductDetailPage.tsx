@@ -1,8 +1,3 @@
-// src/pages/ProductDetailPage.tsx
-//
-// Dua kolom: kiri seputar produknya (galeri, judul, rating/terjual, harga,
-// pilihan model, profil toko, ulasan pembeli), kanan kartu pembelian yang
-// menempel (penawaran grosir, jumlah, harga, tombol beli).
 import React, { useEffect, useMemo, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Icon from '../components/ui/Icon';
@@ -19,15 +14,9 @@ import { useAuth } from '../contexts/AuthContext';
 import { useWishlist } from '../hooks/useWishlist';
 import type { ProductDetail } from '../types';
 
-/** Harga sebelum diskon promo, dihitung balik dari harga jual. */
 const strikePrice = (price: string, discountPercent: number): number =>
   Math.round(Number(price) / (1 - discountPercent / 100));
 
-/**
- * Spesifikasi dikelompokkan per nama. Nama yang punya lebih dari satu nilai
- * jadi pilihan model — itulah satu-satunya definisi "varian" di proyek ini,
- * karena varian berasal dari product_attributes, bukan tabel varian bersstok.
- */
 function groupSpecs(attributes: ProductDetail['attributes']) {
   const groups = new Map<string, string[]>();
   for (const attribute of attributes ?? []) {
@@ -68,8 +57,7 @@ const ProductDetailPage: React.FC = () => {
     getProductBySlug(slug)
       .then((data) => {
         setProduct(data);
-        // Model pertama dipilih otomatis: tombol beli tidak boleh mengirim
-        // pilihan kosong untuk produk yang jelas punya beberapa model.
+
         const { options } = groupSpecs(data.attributes);
         setPicked(Object.fromEntries(options.map(([key, values]) => [key, values[0]])));
       })
@@ -77,9 +65,6 @@ const ProductDetailPage: React.FC = () => {
       .finally(() => setLoading(false));
   }, [slug]);
 
-  // Catat kunjungan — ini yang mengisi card "Produk Dilihat" di dashboard
-  // penjual. Kegagalannya sengaja diabaikan: statistik tidak boleh membuat
-  // halaman produk gagal tampil.
   useEffect(() => {
     if (!product?.id) return;
     recordProductView(product.id).catch(() => {});
@@ -87,7 +72,6 @@ const ProductDetailPage: React.FC = () => {
 
   const { options, facts } = useMemo(() => groupSpecs(product?.attributes ?? []), [product]);
 
-  /** Teks varian yang dikirim ke server, mis. "warna: Hitam · ukuran: L". */
   const variantLabel = useMemo(
     () =>
       Object.entries(picked)
@@ -103,13 +87,6 @@ const ProductDetailPage: React.FC = () => {
     quantity >= product.bulkMinQty;
   const bulkPercent = bulkReady ? (product?.bulkDiscountPercent ?? 0) : 0;
   const gross = unitPrice * quantity;
-  // Rumus yang sama dengan lib/bulkPrice.ts di server: potong di TOTAL, lalu
-  // bulatkan. Kalau dihitung dari harga satuan yang dibulatkan dulu, angka di
-  // halaman ini bisa beda beberapa rupiah dari yang ditagih checkout.
-  // ponytail: rumusnya ditulis dua kali (di sini dan di server) supaya halaman
-  // produk tidak perlu satu request lagi cuma buat menghitung harga. Kalau
-  // aturan grosirnya jadi lebih rumit (tier bertingkat), pindahkan ke endpoint
-  // penghitung harga dan hapus salinan ini.
   const payable = bulkPercent > 0 ? Math.round((gross * (100 - bulkPercent)) / 100) : gross;
 
   const requireLogin = () => {
@@ -150,8 +127,6 @@ const ProductDetailPage: React.FC = () => {
       setShareNote('Link produk udah dikopi.');
       setTimeout(() => setShareNote(null), 2000);
     } catch {
-      // Batal share atau clipboard ditolak browser — bukan kegagalan yang
-      // perlu ditampilkan, user memang bisa membatalkan sendiri.
     }
   };
 
@@ -218,9 +193,7 @@ const ProductDetailPage: React.FC = () => {
         </button>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* ── Kolom kiri: seputar produk ─────────────────────────────────── */}
           <div className="lg:col-span-2 space-y-8">
-            {/* Galeri */}
             <div className="space-y-3">
               <div className="relative aspect-[4/3] bg-[#f2f4f6] rounded-3xl overflow-hidden">
                 {heroImage ? (
@@ -258,7 +231,6 @@ const ProductDetailPage: React.FC = () => {
               )}
             </div>
 
-            {/* Judul + rating + terjual */}
             <div>
               <p className="text-[12px] uppercase tracking-wider text-[#737686]">
                 {product.category?.name}
@@ -295,12 +267,6 @@ const ProductDetailPage: React.FC = () => {
               </div>
             </div>
 
-            {/*
-              Harga. Kalau ada diskon, angkanya dinaikkan di atas panel gelap
-              dengan bayangan berlapis — satu-satunya elemen "3D" di halaman ini,
-              supaya potongannya jadi hal pertama yang terlihat dan tidak
-              bersaing dengan hiasan lain.
-            */}
             {onSale ? (
               <div className="relative overflow-hidden rounded-3xl bg-[#191c1e] p-6 text-white">
                 <div
@@ -336,7 +302,6 @@ const ProductDetailPage: React.FC = () => {
               </div>
             )}
 
-            {/* Pilih model — hanya muncul kalau produknya memang punya pilihan */}
             {options.length > 0 && (
               <div className="space-y-4">
                 <h2 className="text-[15px] font-bold text-[#191c1e]">Pilih model</h2>
@@ -369,7 +334,6 @@ const ProductDetailPage: React.FC = () => {
               </div>
             )}
 
-            {/* Profil penjual */}
             <SellerCard seller={product.seller} />
             <div className="-mt-2 flex justify-end">
               <ReportButton
@@ -379,7 +343,6 @@ const ProductDetailPage: React.FC = () => {
               />
             </div>
 
-            {/* Deskripsi */}
             {product.description && (
               <div className="border-t border-[#e0e3e5] pt-6">
                 <h2 className="mb-2 text-[15px] font-bold text-[#191c1e]">Deskripsi</h2>
@@ -389,7 +352,6 @@ const ProductDetailPage: React.FC = () => {
               </div>
             )}
 
-            {/* Spesifikasi tetap (nilai tunggal) */}
             {facts.length > 0 && (
               <div className="border-t border-[#e0e3e5] pt-6">
                 <h2 className="mb-3 text-[15px] font-bold text-[#191c1e]">Spesifikasi</h2>
@@ -404,16 +366,13 @@ const ProductDetailPage: React.FC = () => {
               </div>
             )}
 
-            {/* Ulasan pembeli: bintang, sebaran, foto/video */}
             <div className="border-t border-[#e0e3e5] pt-6">
               <ProductReviews productId={product.id} />
             </div>
           </div>
 
-          {/* ── Kolom kanan: kartu pembelian ───────────────────────────────── */}
           <aside className="lg:sticky lg:top-24 h-fit space-y-3">
             <div className="rounded-3xl border border-[#e0e3e5] p-5 shadow-sm">
-              {/* Penawaran grosir */}
               {product.bulkMinQty != null && product.bulkDiscountPercent != null && (
                 <div
                   className={`mb-4 rounded-2xl p-4 transition-colors ${
@@ -432,7 +391,7 @@ const ProductDetailPage: React.FC = () => {
                   <p className="mt-1 text-[12px] text-[#434655]">
                     {bulkReady ? (
                       <>
-                        Kepake — kamu hemat{' '}
+                        Aktif: kamu hemat{' '}
                         <span className="font-bold text-[#156b32]">
                           {formatRupiah(gross - payable)}
                         </span>
@@ -447,7 +406,6 @@ const ProductDetailPage: React.FC = () => {
                 </div>
               )}
 
-              {/* Jumlah */}
               <div className="flex items-center justify-between gap-3">
                 <span className="text-[13px] text-[#737686]">Jumlah</span>
                 <div className="flex items-center rounded-full border border-[#c3c6d7]">
@@ -474,7 +432,6 @@ const ProductDetailPage: React.FC = () => {
                 Sisa stok {product.stock}
               </p>
 
-              {/* Total */}
               <div className="mt-4 border-t border-[#e0e3e5] pt-4">
                 <div className="flex items-baseline justify-between">
                   <span className="text-[13px] text-[#737686]">Total</span>
@@ -493,7 +450,6 @@ const ProductDetailPage: React.FC = () => {
                 )}
               </div>
 
-              {/* Aksi utama */}
               <div className="mt-4 space-y-2">
                 <button
                   onClick={() => handleAddToCart(false)}
@@ -512,7 +468,6 @@ const ProductDetailPage: React.FC = () => {
                 </button>
               </div>
 
-              {/* Chat | Wishlist | Share */}
               <div className="mt-4 grid grid-cols-3 divide-x divide-[#e0e3e5] border-t border-[#e0e3e5] pt-3 text-[12px]">
                 <button
                   onClick={() => navigate(`/messages?seller=${product.seller.id}`)}

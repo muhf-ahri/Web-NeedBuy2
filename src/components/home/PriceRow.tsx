@@ -1,4 +1,3 @@
-// src/components/home/PriceRow.tsx
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Icon from '../ui/Icon';
@@ -36,7 +35,6 @@ const PriceRow: React.FC<{ product: Product }> = ({
           focus-visible:outline-[#004ac6]
         "
       >
-        {/* Product */}
         <span className="min-w-0 shrink">
           <span className="flex items-center gap-1.5">
             <span
@@ -62,7 +60,6 @@ const PriceRow: React.FC<{ product: Product }> = ({
           </span>
         </span>
 
-        {/* Separator */}
         <span
           className="
             hidden flex-1
@@ -73,7 +70,6 @@ const PriceRow: React.FC<{ product: Product }> = ({
           aria-hidden="true"
         />
 
-        {/* Price */}
         <span className="shrink-0 text-right">
           <span className="block text-[13px] font-bold text-[#191c1e]">
             {formatRupiah(product.price)}
