@@ -37,6 +37,7 @@ import SellerProducts from './pages/seller/ProductsPage';
 import SellerOrders from './pages/seller/OrdersPage';
 import SellerChats from './pages/seller/ChatsPage';
 import SellerAnalytics from './pages/seller/AnalyticsPage';
+import SellerWallet from './pages/seller/WalletPage';
 import SellerSettings from './pages/seller/SettingsPage';
 
 // Admin pages
@@ -193,6 +194,14 @@ function App() {
                 element={
                   <RequireSeller>
                     <SellerAnalytics />
+                  </RequireSeller>
+                }
+              />
+              <Route
+                path="/seller/wallet"
+                element={
+                  <RequireSeller>
+                    <SellerWallet />
                   </RequireSeller>
                 }
               />

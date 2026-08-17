@@ -1,0 +1,215 @@
+import React, { useEffect, useState } from 'react';
+
+import Icon from '../ui/Icon';
+import type { InsightSeverity } from '../../api/shopAnalytics';
+
+interface Insight {
+  code: string;
+  severity: InsightSeverity;
+  message: string;
+}
+
+interface ShopInsightsCardProps {
+  loading: boolean;
+  error: string | null;
+  insights: Insight[];
+}
+
+const SEVERITY_STYLE: Record<
+  InsightSeverity,
+  {
+    box: string;
+    iconBg: string;
+    iconText: string;
+    dotColor: string;
+    label: string;
+  }
+> = {
+  critical: {
+    box: 'border-[#FF4646]/20 bg-[#FFF0F0]',
+    iconBg: 'bg-[#FF4646]/15',
+    iconText: 'text-[#FF4646]',
+    dotColor: 'bg-[#FF4646]',
+    label: 'Kritis',
+  },
+  warning: {
+    box: 'border-[#FFD500]/30 bg-[#FFF7E0]/70',
+    iconBg: 'bg-[#FFD500]/20',
+    iconText: 'text-[#B45309]',
+    dotColor: 'bg-[#FFD500]',
+    label: 'Perhatian',
+  },
+  positive: {
+    box: 'border-[#22C55E]/20 bg-[#F0FDF4]',
+    iconBg: 'bg-[#22C55E]/15',
+    iconText: 'text-[#166534]',
+    dotColor: 'bg-[#22C55E]',
+    label: 'Positif',
+  },
+  info: {
+    box: 'border-[#538CDB]/20 bg-[#EEF5FF]',
+    iconBg: 'bg-[#538CDB]/15',
+    iconText: 'text-[#538CDB]',
+    dotColor: 'bg-[#538CDB]',
+    label: 'Info',
+  },
+};
+
+const ShopInsightsCard: React.FC<ShopInsightsCardProps> = ({
+  loading,
+  error,
+  insights,
+}) => {
+  /* Stagger animasi insights muncul */
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    if (loading || error) return;
+    const t = setTimeout(() => setMounted(true), 200);
+    return () => clearTimeout(t);
+  }, [loading, error]);
+
+  return (
+    <div
+      className="
+        relative overflow-hidden rounded-[24px] border border-[#538CDB]/20
+        bg-gradient-to-br from-[#EEF5FF] via-white to-[#F5F5FF] p-5
+        shadow-[0_8px_24px_rgba(32,36,45,0.06)] backdrop-blur-sm sm:p-6
+      "
+    >
+      {/* Dekorasi */}
+      <span
+        className="
+          pointer-events-none absolute -right-16 -top-16 h-40 w-40
+          rounded-full border border-[#538CDB]/15
+        "
+      />
+      <span
+        className="
+          pointer-events-none absolute right-12 top-8 h-1.5 w-1.5
+          rounded-full bg-[#FFD500]
+        "
+      />
+      <span
+        className="
+          pointer-events-none absolute right-24 top-20 h-1 w-1 rounded-full
+          bg-[#538CDB]/50
+        "
+      />
+
+      {/* Header */}
+      <div className="relative mb-4 flex items-center gap-2.5">
+        <span
+          className="
+            flex h-9 w-9 items-center justify-center rounded-xl
+            bg-gradient-to-br from-[#5B93E0] to-[#3A66AC]
+            shadow-[0_6px_16px_rgba(83,140,219,0.30)]
+          "
+        >
+          <Icon name="spark" size={16} className="text-white" />
+        </span>
+        <div>
+          <h3 className="text-[14px] font-bold text-[#20242D] sm:text-[15px]">
+            Shop Insights
+          </h3>
+          <p className="text-[10px] text-[#737A87]">
+            Dihitung otomatis dari data toko kamu pada periode terpilih
+          </p>
+        </div>
+      </div>
+
+      {loading ? (
+        <div className="space-y-2">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <div
+              key={i}
+              className="h-12 animate-pulse rounded-xl bg-white/70"
+            />
+          ))}
+        </div>
+      ) : error ? (
+        <div className="rounded-xl border border-[#FF4646]/20 bg-[#FFF0F0] px-3 py-2 text-[12px] font-medium text-[#C73535]">
+          {error}
+        </div>
+      ) : insights.length === 0 ? (
+        <div className="flex items-center gap-3 rounded-xl bg-white/70 px-4 py-6">
+          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white">
+            <Icon name="spark" size={16} className="text-[#A2A8B3]" />
+          </span>
+          <div>
+            <p className="text-[13px] font-semibold text-[#20242D]">
+              Belum ada insight
+            </p>
+            <p className="text-[11px] text-[#737A87]">
+              Coba pilih periode yang lebih panjang biar datanya cukup.
+            </p>
+          </div>
+        </div>
+      ) : (
+        <ul className="space-y-2">
+          {insights.map((insight, index) => {
+            const style = SEVERITY_STYLE[insight.severity];
+            const isVisible = mounted;
+
+            return (
+              <li
+                key={insight.code}
+                className={`
+                  flex items-start gap-3 rounded-xl border px-3 py-2.5
+                  transition-all duration-500 ease-out
+                  ${style.box}
+                  ${
+                    isVisible
+                      ? 'translate-y-0 opacity-100'
+                      : 'translate-y-2 opacity-0'
+                  }
+                `}
+                style={{
+                  transitionDelay: isVisible ? `${index * 80}ms` : '0ms',
+                }}
+              >
+                <span
+                  className={`
+                    mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center
+                    rounded-full ${style.iconBg}
+                  `}
+                >
+                  <Icon
+                    name={
+                      insight.severity === 'critical'
+                        ? 'alert'
+                        : insight.severity === 'warning'
+                          ? 'alert'
+                          : insight.severity === 'positive'
+                            ? 'check'
+                            : 'spark'
+                    }
+                    size={12}
+                    className={style.iconText}
+                  />
+                </span>
+
+                <div className="min-w-0 flex-1">
+                  <p className="text-[11px] text-[#20242D] sm:text-[12px]">
+                    {insight.message}
+                  </p>
+                </div>
+
+                <span
+                  className={`
+                    shrink-0 rounded-full px-2 py-0.5 text-[8px] font-bold
+                    uppercase tracking-wider ${style.iconBg} ${style.iconText}
+                  `}
+                >
+                  {style.label}
+                </span>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+    </div>
+  );
+};
+
+export default ShopInsightsCard;

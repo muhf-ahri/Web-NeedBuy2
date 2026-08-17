@@ -1,239 +1,157 @@
-// src/pages/seller/AnalyticsPage.tsx
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+
 import SellerLayout from './SellerLayout';
-import Icon from '../../components/ui/Icon';
-import { formatRupiah } from '../../utils/currency';
+import Reveal from '../../components/ui/Reveal';
+
+import AnalyticsHeader from '../../components/seller_analytics/AnalyticsHeader';
+import RevenueChart from '../../components/seller_analytics/RevenueChart';
+import ConversionCard from '../../components/seller_analytics/ConversionCard';
+import TopProductsCard from '../../components/seller_analytics/TopProductsCard';
+import ShopInsightsCard from '../../components/seller_analytics/ShopInsightsCard';
+import AnalyticsErrorState from '../../components/seller_analytics/AnalyticsErrorState';
+
 import { useDashboardCard } from '../../hooks/useDashboardCard';
-import { getSalesPerformance, type DashboardPeriod, type SalesPoint } from '../../api/dashboard';
+import {
+  getSalesPerformance,
+  type DashboardPeriod,
+} from '../../api/dashboard';
 import {
   getShopConversion,
   getShopInsights,
   getShopTopProducts,
-  type InsightSeverity,
 } from '../../api/shopAnalytics';
-
-const PERIODS: { value: DashboardPeriod; label: string }[] = [
-  { value: 'day', label: 'Hari' },
-  { value: 'week', label: 'Minggu' },
-  { value: 'month', label: 'Bulan' },
-  { value: 'year', label: 'Tahun' },
-];
-
-const SEVERITY_STYLE: Record<InsightSeverity, { box: string; icon: string; dot: string }> = {
-  critical: { box: 'bg-[#ffe0e0] border-[#ffbcbc]', icon: 'text-[#a33131]', dot: 'bg-[#ba1a1a]' },
-  warning: { box: 'bg-[#fff4e0] border-[#ffe0b0]', icon: 'text-[#b45309]', dot: 'bg-[#b45309]' },
-  positive: { box: 'bg-[#d7f5dc] border-[#b3e6c0]', icon: 'text-[#156b32]', dot: 'bg-[#156b32]' },
-  info: { box: 'bg-white border-[#dbe1ff]', icon: 'text-[#004ac6]', dot: 'bg-[#004ac6]' },
-};
-
-/**
- * Grafik batang pendapatan per bucket waktu.
- *
- * Tinggi batang dinormalisasi ke nilai tertinggi pada rentang ini — sumbu Y
- * tetap 0, jadi batang yang dua kali lebih tinggi memang dua kali pendapatan.
- */
-const RevenueChart: React.FC<{ points: SalesPoint[]; granularity: string }> = ({
-  points,
-  granularity,
-}) => {
-  if (points.length === 0) {
-    return (
-      <div className="h-48 flex items-center justify-center text-[13px] text-[#737686]">
-        Belum ada pendapatan pada rentang ini.
-      </div>
-    );
-  }
-
-  const max = Math.max(...points.map((p) => p.revenue), 1);
-  const labelFor = (iso: string) => {
-    const date = new Date(iso);
-    if (granularity === 'hour') return `${String(date.getHours()).padStart(2, '0')}.00`;
-    if (granularity === 'month') return date.toLocaleDateString('id-ID', { month: 'short' });
-    return date.toLocaleDateString('id-ID', { day: 'numeric', month: 'short' });
-  };
-
-  return (
-    <div className="h-48 flex items-end gap-2">
-      {points.map((point) => (
-        <div key={point.bucket} className="flex-1 flex flex-col items-center justify-end h-full">
-          <span className="text-[9px] text-[#737686] mb-1">
-            {point.revenue > 0 ? Math.round(point.revenue / 1000) + 'rb' : ''}
-          </span>
-          <div
-            className="w-full bg-[#004ac6] rounded-t min-h-[2px]"
-            style={{ height: `${(point.revenue / max) * 100}%` }}
-            title={`${labelFor(point.bucket)} · ${formatRupiah(point.revenue)}`}
-          />
-          <span className="text-[10px] text-[#737686] mt-1 truncate w-full text-center">
-            {labelFor(point.bucket)}
-          </span>
-        </div>
-      ))}
-    </div>
-  );
-};
 
 const AnalyticsPage: React.FC = () => {
   const [period, setPeriod] = useState<DashboardPeriod>('month');
+  const [reloadKey, setReloadKey] = useState(0);
+  const retry = () => setReloadKey((k) => k + 1);
 
-  const revenue = useDashboardCard(() => getSalesPerformance(period), [period]);
-  const conversion = useDashboardCard(() => getShopConversion(period), [period]);
-  const topProducts = useDashboardCard(() => getShopTopProducts(period, 5), [period]);
-  const insights = useDashboardCard(() => getShopInsights(period), [period]);
+  const revenue = useDashboardCard(() => getSalesPerformance(period), [period, reloadKey]);
+  const conversion = useDashboardCard(() => getShopConversion(period), [period, reloadKey]);
+  const topProducts = useDashboardCard(() => getShopTopProducts(period, 5), [period, reloadKey]);
+  const insights = useDashboardCard(() => getShopInsights(period), [period, reloadKey]);
+
+  /* ✏️ EDIT 1 — deteksi gagal total (server down) vs gagal parsial */
+  const cards = [revenue, conversion, topProducts, insights];
+  const anyLoading = cards.some((c) => c.loading);
+  const allFailed = cards.every((c) => Boolean(c.error));
+  const showFatalError = !anyLoading && allFailed;
 
   return (
     <SellerLayout>
-      <div className="space-y-6">
-        <div className="flex flex-wrap items-end justify-between gap-3">
-          <h1 className="text-[28px] font-bold text-[#191c1e]">Analitik Toko</h1>
-          <div className="flex gap-1 bg-white border border-[#e0e3e5] rounded-full p-1">
-            {PERIODS.map((option) => (
-              <button
-                key={option.value}
-                onClick={() => setPeriod(option.value)}
-                className={`px-3 py-1 rounded-full text-[12px] font-semibold transition-colors ${
-                  period === option.value
-                    ? 'bg-[#004ac6] text-white'
-                    : 'text-[#434655] hover:bg-[#f2f4f6]'
-                }`}
+      <div className="space-y-5 sm:space-y-6">
+        {/* Header + period filter — SELALU tampil */}
+        <Reveal direction="up">
+          <AnalyticsHeader period={period} onPeriodChange={setPeriod} />
+        </Reveal>
+
+        {showFatalError ? (
+          <Reveal direction="up">
+            <AnalyticsErrorState onRetry={retry} />
+          </Reveal>
+        ) : (
+          <>
+            {/* Revenue chart */}
+            <Reveal direction="up" delay={80}>
+              <div
+                className="
+                  relative overflow-hidden rounded-[24px] border border-white/80
+                  bg-white/95 p-5 shadow-[0_8px_24px_rgba(32,36,45,0.06)]
+                  backdrop-blur-sm sm:p-6
+                "
               >
-                {option.label}
-              </button>
-            ))}
-          </div>
-        </div>
+                {/* Dekorasi */}
+                <span
+                  className="
+                    pointer-events-none absolute -right-16 -top-16 h-40 w-40
+                    rounded-full border border-[#538CDB]/10
+                  "
+                />
+                <span
+                  className="
+                    pointer-events-none absolute right-8 top-8 h-1.5 w-1.5
+                    rounded-full bg-[#FFD500]
+                  "
+                />
 
-        {/* Revenue Growth */}
-        <div className="bg-white rounded-2xl border border-[#e0e3e5] p-5">
-          <div className="flex items-baseline justify-between mb-4">
-            <h3 className="text-[15px] font-bold text-[#191c1e]">Pertumbuhan Omzet</h3>
-            {revenue.data && (
-              <span className="text-[12px] text-[#737686]">
-                Total {formatRupiah(revenue.data.totals.revenue)} · {revenue.data.totals.orders} order
-              </span>
-            )}
-          </div>
-          {revenue.loading ? (
-            <div className="h-48 bg-[#f2f4f6] rounded animate-pulse" />
-          ) : revenue.error ? (
-            <p className="text-[13px] text-[#ba1a1a]">{revenue.error}</p>
-          ) : (
-            <RevenueChart
-              points={revenue.data?.points ?? []}
-              granularity={revenue.data?.granularity ?? 'day'}
-            />
-          )}
-        </div>
+                <div className="relative mb-4 flex items-center gap-2.5">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#538CDB]/10">
+                    <svg
+                      width={15}
+                      height={15}
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={2.5}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="text-[#538CDB]"
+                    >
+                      <line x1="18" y1="20" x2="18" y2="10" />
+                      <line x1="12" y1="20" x2="12" y2="4" />
+                      <line x1="6" y1="20" x2="6" y2="14" />
+                    </svg>
+                  </span>
+                  <div>
+                    <h3 className="text-[14px] font-bold text-[#20242D] sm:text-[15px]">
+                      Pertumbuhan Omzet
+                    </h3>
+                    <p className="text-[10px] text-[#737A87]">
+                      Pendapatan per periode waktu
+                    </p>
+                  </div>
+                </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Conversion Rate */}
-          <div className="bg-white rounded-2xl border border-[#e0e3e5] p-5">
-            <h3 className="text-[15px] font-bold text-[#191c1e] mb-2">Rasio Konversi</h3>
-            {conversion.loading ? (
-              <div className="h-12 w-32 bg-[#f2f4f6] rounded animate-pulse" />
-            ) : conversion.error ? (
-              <p className="text-[13px] text-[#ba1a1a]">{conversion.error}</p>
-            ) : (
-              <>
-                <p className="text-[36px] font-bold text-[#004ac6] leading-tight">
-                  {conversion.data?.conversionRate ?? 0}%
-                </p>
-                <p className="text-[13px] text-[#737686]">
-                  {conversion.data?.orders ?? 0} order dari {conversion.data?.views ?? 0} kunjungan
-                </p>
-                {conversion.data && conversion.data.previous.views > 0 && (
-                  <p
-                    className={`text-[12px] mt-2 ${
-                      conversion.data.changePoint >= 0 ? 'text-green-600' : 'text-[#ba1a1a]'
-                    }`}
-                  >
-                    {conversion.data.changePoint >= 0 ? '▲' : '▼'}{' '}
-                    {Math.abs(conversion.data.changePoint)} poin dibanding periode sebelumnya (
-                    {conversion.data.previous.conversionRate}%)
-                  </p>
+                {revenue.loading ? (
+                  <div className="h-60 animate-pulse rounded-2xl bg-[#F5F7FB] sm:h-64" />
+                ) : revenue.error ? (
+                  <div className="rounded-xl border border-[#FF4646]/20 bg-[#FFF0F0] px-3 py-2 text-[12px] font-medium text-[#C73535]">
+                    {revenue.error}
+                  </div>
+                ) : (
+                  <RevenueChart
+                    points={revenue.data?.points ?? []}
+                    granularity={revenue.data?.granularity ?? 'day'}
+                    total={revenue.data?.totals}
+                  />
                 )}
-              </>
-            )}
-          </div>
+              </div>
+            </Reveal>
 
-          {/* Top Selling Products */}
-          <div className="bg-white rounded-2xl border border-[#e0e3e5] p-5">
-            <h3 className="text-[15px] font-bold text-[#191c1e] mb-4">Produk Paling Laris</h3>
-            {topProducts.loading ? (
-              <div className="h-24 bg-[#f2f4f6] rounded animate-pulse" />
-            ) : topProducts.error ? (
-              <p className="text-[13px] text-[#ba1a1a]">{topProducts.error}</p>
-            ) : topProducts.data && topProducts.data.length > 0 ? (
-              <ul className="space-y-2">
-                {topProducts.data.map((product) => (
-                  <li
-                    key={product.productId}
-                    className="flex items-center justify-between gap-3 text-[13px] text-[#434655]"
-                  >
-                    <span className="flex items-center gap-2 min-w-0">
-                      <span className="font-semibold text-[#004ac6] shrink-0">{product.rank}.</span>
-                      {product.slug ? (
-                        <Link
-                          to={`/products/${product.slug}`}
-                          className="truncate hover:text-[#004ac6] hover:underline"
-                        >
-                          {product.productName}
-                        </Link>
-                      ) : (
-                        <span className="truncate italic text-[#737686]">{product.productName}</span>
-                      )}
-                    </span>
-                    <span className="text-right shrink-0">
-                      <span className="font-semibold text-[#191c1e]">
-                        {product.quantitySold} terjual
-                      </span>
-                      <span className="block text-[11px] text-[#737686]">
-                        {formatRupiah(product.revenue)}
-                      </span>
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className="text-[13px] text-[#737686]">
-                Belum ada penjualan pada rentang waktu ini.
-              </p>
-            )}
-          </div>
-        </div>
+            {/* Conversion + Top products */}
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 sm:gap-5">
+              <Reveal direction="up" delay={160}>
+                <ConversionCard
+                  loading={conversion.loading}
+                  error={conversion.error}
+                  conversionRate={conversion.data?.conversionRate ?? 0}
+                  orders={conversion.data?.orders ?? 0}
+                  views={conversion.data?.views ?? 0}
+                  changePoint={conversion.data?.changePoint ?? 0}
+                  previousRate={conversion.data?.previous.conversionRate ?? 0}
+                  previousViews={conversion.data?.previous.views ?? 0}
+                />
+              </Reveal>
 
-        {/* Insight toko — berbasis aturan, bukan LLM */}
-        <div className="bg-[#f2f6ff] border border-[#dbe1ff] rounded-2xl p-5">
-          <h3 className="flex items-center gap-2 text-[15px] font-bold text-[#191c1e] mb-1">
-            <Icon name="spark" size={20} className="text-[#004ac6]" />
-            Shop Insights
-          </h3>
-          <p className="text-[11px] text-[#737686] mb-3">
-            Dihitung otomatis dari data toko kamu pada periode terpilih.
-          </p>
+              <Reveal direction="up" delay={240}>
+                <TopProductsCard
+                  loading={topProducts.loading}
+                  error={topProducts.error}
+                  products={topProducts.data ?? []}
+                />
+              </Reveal>
+            </div>
 
-          {insights.loading ? (
-            <div className="h-20 bg-white/60 rounded animate-pulse" />
-          ) : insights.error ? (
-            <p className="text-[13px] text-[#ba1a1a]">{insights.error}</p>
-          ) : (
-            <ul className="space-y-2">
-              {(insights.data?.insights ?? []).map((insight) => {
-                const style = SEVERITY_STYLE[insight.severity];
-                return (
-                  <li
-                    key={insight.code}
-                    className={`flex items-start gap-2.5 text-[13px] text-[#434655] border rounded-xl px-3 py-2.5 ${style.box}`}
-                  >
-                    <span className={`mt-1.5 w-2 h-2 rounded-full shrink-0 ${style.dot}`} />
-                    <span>{insight.message}</span>
-                  </li>
-                );
-              })}
-            </ul>
-          )}
-        </div>
+            {/* Insights */}
+            <Reveal direction="up" delay={320}>
+              <ShopInsightsCard
+                loading={insights.loading}
+                error={insights.error}
+                insights={insights.data?.insights ?? []}
+              />
+            </Reveal>
+          </>
+        )}
       </div>
     </SellerLayout>
   );

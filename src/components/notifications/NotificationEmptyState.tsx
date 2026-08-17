@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Icon from '../ui/Icon';
-import notifImg from '../../assets/Crousel2.png';
+import notifImg from '../../assets/Kosong.png';
 
 interface NotificationsEmptyStateProps {
   variant: 'all-empty' | 'unread-empty';

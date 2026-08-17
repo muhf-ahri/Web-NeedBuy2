@@ -1,10 +1,23 @@
-// src/pages/seller/SettingsPage.tsx
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+
 import SellerLayout from './SellerLayout';
+import Reveal from '../../components/ui/Reveal';
 import Icon from '../../components/ui/Icon';
-import Button from '../../components/ui/Button';
-import { getOwnSeller, updateSellerStore, type OwnSeller } from '../../api/sellers';
-import { ACCEPTED_IMAGE_TYPES, MAX_IMAGE_BYTES, uploadImage } from '../../api/uploads';
+
+import SettingsHeader from '../../components/seller_settings/SettingsHeader';
+import SettingsErrorState from '../../components/seller_settings/SettingsErrorState';
+import SettingsSection from '../../components/seller_settings/SettingsSection';
+import SettingsFormFields from '../../components/seller_settings/SettingsFormFields';
+import LogoUploader from '../../components/seller_settings/LogoUpLoader';
+import VacationToggle from '../../components/seller_settings/VocationToggle';
+import SettingsSubmitBar from '../../components/seller_settings/SettingsSubmitBar';
+
+import {
+  getOwnSeller,
+  updateSellerStore,
+  type OwnSeller,
+} from '../../api/sellers';
+import { MAX_IMAGE_BYTES, uploadImage } from '../../api/uploads';
 
 interface FormState {
   storeName: string;
@@ -26,9 +39,6 @@ const toForm = (seller: OwnSeller): FormState => ({
   vacationMode: seller.vacationMode,
 });
 
-const FIELD_CLASS =
-  'w-full px-3 py-2 rounded-lg border border-[#c3c6d7] outline-none focus:border-[#004ac6] focus:ring-2 focus:ring-[#004ac6]/20 text-sm transition';
-
 const SettingsPage: React.FC = () => {
   const [form, setForm] = useState<FormState | null>(null);
   const [loading, setLoading] = useState(true);
@@ -37,10 +47,19 @@ const SettingsPage: React.FC = () => {
   const [saved, setSaved] = useState(false);
   const [productCount, setProductCount] = useState(0);
   const [uploading, setUploading] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [reloadKey, setReloadKey] = useState(0);
 
+  const retry = () => {
+    setReloadKey((k) => k + 1);
+    setError(null);
+  };
+
+  /* ── Load data ── */
   useEffect(() => {
     let cancelled = false;
+    setLoading(true);
+    setError(null);
+
     getOwnSeller()
       .then((res) => {
         if (cancelled) return;
@@ -48,38 +67,34 @@ const SettingsPage: React.FC = () => {
         setProductCount(res.data.data._count?.products ?? 0);
       })
       .catch((err: any) => {
-        if (!cancelled) setError(err?.message ?? 'Gagal muat setelan toko, coba lagi ya');
+        if (!cancelled)
+          setError(err?.message ?? 'Gagal muat setelan toko, coba lagi ya');
       })
       .finally(() => {
         if (!cancelled) setLoading(false);
       });
+
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [reloadKey]);
 
   const set = <K extends keyof FormState>(key: K, value: FormState[K]) => {
     setForm((prev) => (prev ? { ...prev, [key]: value } : prev));
     setSaved(false);
   };
 
-  /**
-   * Berkas diunggah begitu dipilih, lalu URL hasilnya masuk ke form. Setelan
-   * baru benar-benar tersimpan saat tombol Update ditekan — jadi logo yang
-   * sudah terunggah tapi belum disimpan tidak akan mengubah apa pun.
-   */
-  const handlePickLogo = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    // Input direset supaya memilih berkas yang sama dua kali tetap memicu event.
-    e.target.value = '';
-    if (!file) return;
-
-    if (!ACCEPTED_IMAGE_TYPES.includes(file.type)) {
-      setError('Formatnya harus PNG, JPG, WebP, atau GIF ya. SVG belum didukung.');
+  /* ── Upload logo ── */
+  const handlePickLogo = async (file: File) => {
+    const ACCEPTED = ['image/png', 'image/jpeg', 'image/webp', 'image/gif'];
+    if (!ACCEPTED.includes(file.type)) {
+      setError('Formatnya harus PNG, JPG, WebP, atau GIF ya.');
       return;
     }
     if (file.size > MAX_IMAGE_BYTES) {
-      setError(`Ukuran berkasnya ${(file.size / 1024 / 1024).toFixed(1)} MB, maksimalnya 3 MB.`);
+      setError(
+        `Ukuran berkasnya ${(file.size / 1024 / 1024).toFixed(1)} MB, maksimalnya 3 MB.`
+      );
       return;
     }
 
@@ -96,6 +111,7 @@ const SettingsPage: React.FC = () => {
     }
   };
 
+  /* ── Submit form ── */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form || saving) return;
@@ -109,8 +125,6 @@ const SettingsPage: React.FC = () => {
     setError(null);
     setSaved(false);
     try {
-      // String kosong dikirim apa adanya — server yang mengubahnya jadi null,
-      // itulah cara mengosongkan deskripsi/logo/email.
       const res = await updateSellerStore({
         storeName: form.storeName.trim(),
         description: form.description.trim(),
@@ -129,191 +143,113 @@ const SettingsPage: React.FC = () => {
     }
   };
 
+  /* ── Deteksi gagal total (server down) ── */
+  const showFatalError = !loading && !form && Boolean(error);
+
   return (
     <SellerLayout>
-      <div className="space-y-6">
-        <h1 className="text-[28px] font-bold text-[#191c1e]">Setelan Toko</h1>
+      <div className="space-y-5 sm:space-y-6">
+        {/* Header — selalu tampil */}
+        <Reveal direction="up">
+          <SettingsHeader />
+        </Reveal>
 
-        <div className="bg-white rounded-2xl border border-[#e0e3e5] p-6 max-w-2xl">
-          {loading ? (
-            <div className="space-y-4">
-              <div className="h-10 bg-[#f2f4f6] rounded animate-pulse" />
-              <div className="h-20 bg-[#f2f4f6] rounded animate-pulse" />
-              <div className="h-10 bg-[#f2f4f6] rounded animate-pulse" />
-            </div>
-          ) : !form ? (
-            <p className="text-[13px] text-[#ba1a1a]">{error ?? 'Setelan toko belum bisa dibuka.'}</p>
-          ) : (
-            <form className="space-y-5" onSubmit={handleSubmit}>
-              {error && (
-                <div className="p-2.5 bg-[#ffe0e0] border border-[#ffbcbc] text-[#a33131] text-xs rounded-lg">
-                  {error}
-                </div>
-              )}
-              {saved && (
-                <div className="p-2.5 bg-[#d7f5dc] border border-[#b3e6c0] text-[#156b32] text-xs rounded-lg">
-                  Setelan toko udah tersimpan.
-                </div>
-              )}
-
-              {/* Shop Name */}
-              <div>
-                <label className="block text-[13px] font-medium text-[#737686] mb-1">
-                  Shop Name
-                </label>
-                <input
-                  type="text"
-                  value={form.storeName}
-                  onChange={(e) => set('storeName', e.target.value)}
-                  minLength={3}
-                  maxLength={120}
-                  className={FIELD_CLASS}
-                />
-              </div>
-
-              {/* Description */}
-              <div>
-                <label className="block text-[13px] font-medium text-[#737686] mb-1">
-                  Description
-                </label>
-                <textarea
-                  rows={3}
-                  value={form.description}
-                  onChange={(e) => set('description', e.target.value)}
-                  maxLength={2000}
-                  className={`${FIELD_CLASS} resize-none`}
-                />
-              </div>
-
-              {/* Alamat & telepon toko — diisi saat pendaftaran di halaman profil,
-                  bisa diperbarui di sini */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-[13px] font-medium text-[#737686] mb-1">
-                    Alamat Perusahaan
-                  </label>
-                  <textarea
-                    rows={2}
-                    value={form.address}
-                    onChange={(e) => set('address', e.target.value)}
-                    maxLength={500}
-                    className={`${FIELD_CLASS} resize-none`}
-                  />
-                </div>
-                <div>
-                  <label className="block text-[13px] font-medium text-[#737686] mb-1">
-                    No. Telepon Toko
-                  </label>
-                  <input
-                    type="tel"
-                    value={form.phone}
-                    onChange={(e) => set('phone', e.target.value)}
-                    maxLength={20}
-                    className={FIELD_CLASS}
-                  />
-                </div>
-              </div>
-
-              {/* Logo — URL hasil unggah lewat POST /uploads/image */}
-              <div>
-                <label className="block text-[13px] font-medium text-[#737686] mb-1">
-                  Logo Toko
-                </label>
-                <div className="flex items-center gap-4">
-                  <div className="w-20 h-20 shrink-0 bg-[#f2f4f6] rounded-xl overflow-hidden flex items-center justify-center text-[#737686] border border-dashed border-[#c3c6d7]">
-                    {uploading ? (
-                      <span className="text-[10px] text-[#737686]">Ngunggah…</span>
-                    ) : form.logoUrl ? (
-                      <img src={form.logoUrl} alt="Logo toko" className="w-full h-full object-cover" />
-                    ) : (
-                      <Icon name="upload" size={24} />
-                    )}
-                  </div>
-
-                  <div className="flex-1 min-w-0">
-                    <input
-                      ref={fileInputRef}
-                      type="file"
-                      accept={ACCEPTED_IMAGE_TYPES.join(',')}
-                      onChange={handlePickLogo}
-                      className="hidden"
-                    />
-                    <div className="flex flex-wrap gap-2">
-                      <Button
-                        type="button"
-                        variant="outline"
-                        disabled={uploading}
-                        onClick={() => fileInputRef.current?.click()}
-                        className="text-sm"
-                      >
-                        {uploading ? 'Ngunggah…' : 'Pilih Berkas'}
-                      </Button>
-                      {form.logoUrl && !uploading && (
-                        <button
-                          type="button"
-                          onClick={() => set('logoUrl', '')}
-                          className="text-[12px] text-[#ba1a1a] hover:underline px-2"
-                        >
-                          Hapus logo
-                        </button>
-                      )}
+        {showFatalError ? (
+          <Reveal direction="up">
+            <SettingsErrorState onRetry={retry} />
+          </Reveal>
+        ) : loading ? (
+          /* ── Skeleton loading ── */
+          <div className="space-y-5">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <Reveal key={i} direction="up" delay={i * 60}>
+                <div
+                  className="
+                    rounded-[20px] border border-white/80 bg-white/95 p-5
+                    shadow-[0_6px_18px_rgba(32,36,45,0.05)] backdrop-blur-sm
+                    sm:p-6
+                  "
+                >
+                  <div className="mb-4 flex items-center gap-2.5">
+                    <div className="h-8 w-8 animate-pulse rounded-lg bg-[#F5F7FB]" />
+                    <div className="space-y-1.5">
+                      <div className="h-2.5 w-20 animate-pulse rounded-full bg-[#F5F7FB]" />
+                      <div className="h-3.5 w-32 animate-pulse rounded-full bg-[#F5F7FB]" />
                     </div>
-                    <p className="text-[11px] text-[#737686] mt-1.5">
-                      PNG, JPG, WebP, atau GIF — maksimal 3 MB. Logonya kesimpen setelah kamu
-                      pencet Simpan Setelan.
-                    </p>
+                  </div>
+                  <div className="space-y-3">
+                    <div className="h-10 animate-pulse rounded-xl bg-[#F5F7FB]" />
+                    <div className="h-20 animate-pulse rounded-xl bg-[#F5F7FB]" />
                   </div>
                 </div>
-              </div>
-
-              {/* Business Email */}
-              <div>
-                <label className="block text-[13px] font-medium text-[#737686] mb-1">
-                  Business Email
-                </label>
-                <input
-                  type="email"
-                  value={form.businessEmail}
-                  onChange={(e) => set('businessEmail', e.target.value)}
-                  maxLength={255}
-                  className={FIELD_CLASS}
-                />
-                <p className="text-[11px] text-[#737686] mt-1">
-                  Ini cuma kontak toko. Email buat login akunmu nggak ikut berubah.
-                </p>
-              </div>
-
-              {/* Vacation Mode */}
-              <div className="border border-[#e0e3e5] rounded-xl p-3">
-                <label className="flex items-start gap-3 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={form.vacationMode}
-                    onChange={(e) => set('vacationMode', e.target.checked)}
-                    className="w-4 h-4 mt-0.5 accent-[#004ac6]"
-                  />
-                  <span>
-                    <span className="text-[13px] font-medium text-[#191c1e]">Mode Libur</span>
-                    <span className="block text-[11px] text-[#737686] mt-0.5">
-                      Saat aktif, {productCount} produk kamu tetap bisa dilihat tapi pembeli
-                      tidak bisa menambahkannya ke keranjang atau checkout. Order yang sudah
-                      masuk tetap harus diproses seperti biasa.
-                    </span>
-                  </span>
-                </label>
-              </div>
-
-              <Button
-                type="submit"
-                variant="primary"
-                disabled={saving}
-                className="w-full sm:w-auto px-8 py-2.5 text-sm"
+              </Reveal>
+            ))}
+          </div>
+        ) : form ? (
+          /* ── Form utama ── */
+          <form onSubmit={handleSubmit} className="max-w-3xl space-y-5">
+            {/* Section: Info toko */}
+            <Reveal direction="up" delay={60}>
+              <SettingsSection
+                eyebrow="Bagian 1"
+                title="Informasi Toko"
+                description="Identitas yang ditampilkan ke pembeli"
+                icon="shop"
+                iconBg="bg-[#EEF5FF]"
+                iconText="text-[#538CDB]"
               >
-                {saving ? 'Nyimpen…' : 'Simpan Setelan'}
-              </Button>
-            </form>
-          )}
-        </div>
+                <SettingsFormFields form={form} setField={set} />
+              </SettingsSection>
+            </Reveal>
+
+            {/* Section: Logo */}
+            <Reveal direction="up" delay={120}>
+              <SettingsSection
+                eyebrow="Bagian 2"
+                title="Logo Toko"
+                description="Tampilan visual tokomu di halaman produk"
+                icon="upload"
+                iconBg="bg-[#FFF7E0]"
+                iconText="text-[#B45309]"
+              >
+                <LogoUploader
+                  logoUrl={form.logoUrl}
+                  uploading={uploading}
+                  onPick={handlePickLogo}
+                  onRemove={() => set('logoUrl', '')}
+                />
+              </SettingsSection>
+            </Reveal>
+
+            {/* Section: Mode Libur */}
+            <Reveal direction="up" delay={180}>
+              <SettingsSection
+                eyebrow="Bagian 3"
+                title="Mode Operasional"
+                description="Kontrol ketersediaan toko untuk pembeli"
+                icon="moon"
+                iconBg="bg-[#F0FDF4]"
+                iconText="text-[#166534]"
+              >
+                <VacationToggle
+                  checked={form.vacationMode}
+                  onChange={(v) => set('vacationMode', v)}
+                  productCount={productCount}
+                />
+              </SettingsSection>
+            </Reveal>
+
+            {/* Submit bar */}
+            <Reveal direction="up" delay={240}>
+              <SettingsSubmitBar
+                saving={saving}
+                saved={saved}
+                error={error}
+                onDismissError={() => setError(null)}
+              />
+            </Reveal>
+          </form>
+        ) : null}
       </div>
     </SellerLayout>
   );

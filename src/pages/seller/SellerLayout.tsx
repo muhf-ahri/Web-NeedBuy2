@@ -1,15 +1,12 @@
-// src/pages/seller/SellerLayout.tsx
 import React from 'react';
 import { Link } from 'react-router-dom';
+
 import Sidebar from '../../components/ui/Sidebar';
 import NotificationBell from '../../components/ui/NotificationBell';
 import ProfileDropdown from '../../components/ui/ProfileDropdown';
+import Icon from '../../components/ui/Icon';
 import type { SidebarItem } from '../../components/ui/Sidebar';
 import { useAuth } from '../../contexts/AuthContext';
-
-interface SellerLayoutProps {
-  children: React.ReactNode;
-}
 
 const navItems: SidebarItem[] = [
   { to: '/seller/dashboard', label: 'Dashboard', icon: 'dashboard' },
@@ -19,47 +16,101 @@ const navItems: SidebarItem[] = [
   { to: '/seller/analytics', label: 'Analitik Toko', icon: 'analytics' },
   // Dompet penjual sama dengan dompet akun — halaman NeedPay yang sudah ada
   // dipakai ulang, bukan bikin halaman saldo kedua yang isinya sama.
-  { to: '/needpay', label: 'Saldo & Penarikan', icon: 'wallet' },
+  { to: '/seller/wallet', label: 'Saldo & Penarikan', icon: 'wallet' },
   { to: '/seller/settings', label: 'Setelan', icon: 'settings' },
 ];
+
+interface SellerLayoutProps {
+  children: React.ReactNode;
+}
 
 const SellerLayout: React.FC<SellerLayoutProps> = ({ children }) => {
   const { user } = useAuth();
 
   return (
-    <div className="min-h-screen bg-[#f8f9fb]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-      {/* Header Seller */}
-      <header className="bg-white border-b border-[#e0e3e5] sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-5 sm:px-10 h-16 flex items-center justify-between">
-          {/* Logo */}
-          <Link to="/seller/dashboard" className="text-xl font-bold text-[#004ac6] tracking-tight">
-            NeedBuy
+    <div
+      className="min-h-screen bg-[#F5F5FF]"
+      style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+    >
+      {/* ── Header Seller — glassmorphism + sticky ── */}
+      <header
+        className="
+          sticky top-0 z-40 border-b border-white/80 bg-white/95
+          backdrop-blur-md
+        "
+      >
+        <div
+          className="
+            mx-auto flex h-16 max-w-7xl items-center justify-between px-4
+            sm:px-6 lg:px-10
+          "
+        >
+          {/* Logo + branding */}
+          <Link
+            to="/seller/dashboard"
+            className="group flex items-center gap-2.5"
+          >
+              {/* Dekorasi titik kuning signature */}
+            <div className="flex flex-col leading-none">
+              <span className="text-[15px] font-extrabold tracking-tight text-[#538CBD]">
+                NeedBuy
+              </span>
+              <span
+                className="
+                  mt-0.5 text-[9px] font-bold uppercase tracking-[0.18em]
+                  text-[#538CDB]
+                "
+              >
+                Seller Center
+              </span>
+            </div>
           </Link>
 
-          {/* Right side: Notification + Profile */}
-          <div className="flex items-center gap-3">
-            <NotificationBell />
-            <ProfileDropdown sellerName={user?.name ?? 'Seller'} />
+          {/* Right side: Lihat Toko + Notification + Profile */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            {/* Tombol "Lihat Toko" — pill button, hidden di mobile kecil */}
             <Link
               to="/"
-              className="hidden sm:inline-flex text-sm text-[#004ac6] hover:underline transition-colors"
+              className="
+                hidden h-9 items-center gap-1.5 rounded-full border
+                border-[#E8ECF4] bg-white px-3.5 text-[12px] font-semibold
+                text-[#538CDB] shadow-sm transition-all duration-200
+                hover:border-[#538CDB] hover:bg-[#EEF5FF]
+                hover:shadow-[0_4px_12px_rgba(83,140,219,0.12)]
+                active:scale-[0.98] md:inline-flex
+              "
             >
-              View Store
+              <Icon name="eye" size={13} />
+              Lihat Toko
             </Link>
+
+            <NotificationBell />
+            <ProfileDropdown
+              sellerName={user?.name ?? user?.username ?? 'Seller'}
+            />
           </div>
         </div>
       </header>
 
-      <div className="flex max-w-7xl mx-auto px-5 sm:px-10 py-6 gap-8">
-        {/* Sidebar */}
-        <aside className="w-56 shrink-0 hidden md:block">
-          <Sidebar items={navItems} />
-        </aside>
+      {/* ── Body: sidebar + konten ──
+          - Mobile (<lg): flex-col → sidebar (hamburger trigger) di atas konten
+          - Desktop (lg+): flex-row → sidebar kiri (static), konten kanan
+      */}
+      <div
+        className="
+          mx-auto flex max-w-7xl flex-col gap-4 px-4 py-6 sm:gap-5 sm:px-6
+          lg:flex-row lg:gap-8 lg:px-10
+        "
+      >
+        {/* Sidebar container */}
+        <div className="lg:w-60 lg:shrink-0">
+          <div className="lg:sticky lg:top-24">
+            <Sidebar items={navItems} title="Menu Seller" />
+          </div>
+        </div>
 
         {/* Main content */}
-        <main className="flex-1 min-w-0">
-          {children}
-        </main>
+        <main className="min-w-0 flex-1">{children}</main>
       </div>
     </div>
   );
