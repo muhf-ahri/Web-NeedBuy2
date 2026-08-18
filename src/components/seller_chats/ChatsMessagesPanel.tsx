@@ -12,6 +12,8 @@ interface ChatsMessagesPanelProps {
   currentUserId?: string;
   draft: string;
   onDraftChange: (v: string) => void;
+  photoUrl: string | null;
+  onPhotoChange: (url: string | null) => void;
   onSend: (e: React.FormEvent) => void;
   sending: boolean;
   error: string | null;
@@ -26,6 +28,8 @@ const ChatsMessagesPanel: React.FC<ChatsMessagesPanelProps> = ({
   currentUserId,
   draft,
   onDraftChange,
+  photoUrl,
+  onPhotoChange,
   onSend,
   sending,
   error,
@@ -119,6 +123,8 @@ const ChatsMessagesPanel: React.FC<ChatsMessagesPanelProps> = ({
       <ChatsComposer
         draft={draft}
         onDraftChange={onDraftChange}
+        photoUrl={photoUrl}
+        onPhotoChange={onPhotoChange}
         onSend={onSend}
         sending={sending}
         error={error}

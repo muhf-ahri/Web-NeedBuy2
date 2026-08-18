@@ -2,10 +2,23 @@ import React from 'react';
 
 import Icon from '../ui/Icon';
 import { formatRupiah } from '../../utils/currency';
-import type { Product } from '../../types';
+/**
+ * Sengaja BUKAN `Product` utuh. Endpoint `/saved-products` hanya mengirim
+ * sebagian field, dan menuntut `Product` penuh di sini membuat tipe berbohong
+ * soal apa yang benar-benar ada saat runtime.
+ */
+export interface WishlistCardProduct {
+  id: string;
+  name: string;
+  slug: string;
+  price: string;
+  stock: number;
+  images?: Array<{ url: string; isPrimary?: boolean }>;
+  category?: { name: string } | null;
+}
 
 interface WishlistItemCardProps {
-  product: Product;
+  product: WishlistCardProduct;
   busy: boolean;
   onOpen: () => void;
   onAddToCart: () => void;

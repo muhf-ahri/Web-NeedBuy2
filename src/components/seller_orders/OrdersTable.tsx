@@ -1,7 +1,7 @@
 import React from 'react';
 
 import OrdersTableRow from './OrdersTableRow';
-import type { OrderStatus, SellerOrder } from '../../api/orders';
+import type { SellerOrder } from '../../api/orders';
 
 interface SellerAction {
   to: 'SHIPPED' | 'DELIVERED';

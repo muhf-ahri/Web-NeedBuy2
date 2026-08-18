@@ -21,11 +21,10 @@ const serialFrom = (walletId: string | undefined): string =>
     ? `NP ${walletId.replace(/-/g, '').slice(0, 10).toUpperCase()}`
     : 'NP ··········';
 
- export type PaymentMethod = {
+export type PaymentMethod = {
   label: string;
   type: string;
-  short: string;
-  color: string;
+  logo: string;
 };
 
 export const PAYMENT_METHODS: PaymentMethod[] = [

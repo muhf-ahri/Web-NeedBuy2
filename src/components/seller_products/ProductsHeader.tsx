@@ -1,13 +1,13 @@
 import React from 'react';
 
-import Icon from '../ui/Icon';
-import Button from '../ui/Button';
 
 interface ProductsHeaderProps {
   onAddNew: () => void;
 }
 
-const ProductsHeader: React.FC<ProductsHeaderProps> = ({ onAddNew }) => (
+// onAddNew tetap di interface: tombol tambah sekarang ada di ProductsToolbar,
+// tapi caller masih mengirim prop ini.
+const ProductsHeader: React.FC<ProductsHeaderProps> = () => (
   <div className="flex flex-wrap items-start justify-between gap-4">
     <div className="min-w-0">
       <div className="mb-2 flex items-center gap-2">

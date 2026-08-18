@@ -3,15 +3,7 @@ import { Link } from 'react-router-dom';
 
 import Icon from '../ui/Icon';
 import { formatRupiah } from '../../utils/currency';
-
-interface TopProduct {
-  productId: string;
-  productName: string;
-  slug?: string;
-  quantitySold: number;
-  revenue: string | number;
-  rank: number;
-}
+import type { TopProduct } from '../../api/shopAnalytics';
 
 interface TopProductsCardProps {
   loading: boolean;

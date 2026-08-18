@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 
-import Icon from '../ui/Icon';
 import Navbar from '../layout/Navbar';
 import Footer from '../layout/Footer';
 

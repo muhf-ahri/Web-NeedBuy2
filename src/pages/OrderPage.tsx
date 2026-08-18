@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+
 
 import Icon from '../components/ui/Icon';
 
@@ -21,7 +21,6 @@ import {
   createReview,
   updateOrderStatus,
   type Order,
-  type OrderStatus,
 } from '../api/orders';
 import {
   ACCEPTED_IMAGE_TYPES,
@@ -37,7 +36,6 @@ import { getAccessToken } from '../api/auth';
 import type { TabKey } from '../components/orders/orders.helpers';
 
 const OrderPage: React.FC = () => {
-  const navigate = useNavigate();
 
   const [orders, setOrders] = useState<Order[]>([]);
   const [activeTab, setActiveTab] = useState<TabKey>('ALL');

@@ -59,9 +59,9 @@ const OrderCard: React.FC<OrderCardProps> = ({ order, onOpen }) => {
       <div className="flex items-center justify-between gap-3">
         <div className="flex min-w-0 items-center gap-2.5">
           <div className="flex shrink-0 items-center -space-x-2">
-            {order.items.slice(0, 3).map((item, i) => {
+            {order.items.slice(0, 3).map((item) => {
               const img =
-                item.product?.images?.find((img) => img.isPrimary)?.url ||
+                item.product?.images?.find((image) => image.isPrimary)?.url ||
                 item.product?.images?.[0]?.url ||
                 '';
               return (

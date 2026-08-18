@@ -14,6 +14,13 @@ export interface OrderItem {
     id: string;
     rating: number;
   } | null;
+
+  // Foto produk untuk thumbnail kartu pesanan. Nullable karena produknya bisa
+  // sudah dihapus penjual setelah pesanan dibuat — nama dan harga di-snapshot,
+  // gambarnya tidak.
+  product: {
+    images: { url: string; isPrimary: boolean }[];
+  } | null;
 }
 
 export interface OrderPayment {

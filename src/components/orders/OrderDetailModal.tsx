@@ -34,7 +34,6 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
   onCancel,
   onConfirmReceived,
   onOpenReview,
-  onRefresh,
 }) => {
   const navigate = useNavigate();
 

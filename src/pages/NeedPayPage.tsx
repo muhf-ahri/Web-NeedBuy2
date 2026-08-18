@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+
 
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
@@ -31,9 +31,8 @@ import {
 const QUICK_AMOUNTS = [50_000, 100_000, 250_000, 500_000, 1_000_000];
 
 const NeedPayPage: React.FC = () => {
-  const navigate = useNavigate();
   const isAuthed = !!getAccessToken();
-  const topupRef = useRef<HTMLElement>(null);
+  const topupRef = useRef<HTMLDivElement>(null);
 
   const [wallet, setWallet] = useState<Wallet | null>(null);
   const [transactions, setTransactions] = useState<WalletTransaction[]>([]);

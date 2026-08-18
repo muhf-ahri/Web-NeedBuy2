@@ -235,6 +235,8 @@ const ChatsPage: React.FC = () => {
                   currentUserId={user?.id}
                   draft={draft}
                   onDraftChange={setDraft}
+                  photoUrl={photoUrl}
+                  onPhotoChange={setPhotoUrl}
                   onSend={handleSend}
                   sending={sending}
                   error={error}

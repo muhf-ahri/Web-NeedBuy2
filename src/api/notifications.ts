@@ -29,9 +29,17 @@ export interface Notification {
   order: NotificationOrder | null;
 }
 
-export const getNotifications = (params?: { limit?: number; unreadOnly?: boolean }) =>
+export const getNotifications = (params?: {
+  page?: number;
+  limit?: number;
+  unreadOnly?: boolean;
+}) =>
   apiClient.get<ApiResponse<Notification[]>>('/notifications', {
-    params: { limit: params?.limit, unreadOnly: params?.unreadOnly ? 'true' : undefined },
+    params: {
+      page: params?.page,
+      limit: params?.limit,
+      unreadOnly: params?.unreadOnly ? 'true' : undefined,
+    },
   });
 
 export const getUnreadCount = () =>

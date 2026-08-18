@@ -5,7 +5,7 @@ import Reveal from '../../components/ui/Reveal';
 
 import ProductsHeader from '../../components/seller_products/ProductsHeader';
 import ProductsStatsCards from '../../components/seller_products/ProductsStatsCards';
-import ProductsToolbar from '../../components/seller_products/ProductsToolBar';
+import ProductsToolbar from '../../components/seller_products/ProductsToolbar';
 import ProductsTable from '../../components/seller_products/ProductsTable';
 import ProductsMobileList from '../../components/seller_products/ProducstMobileList';
 import ProductsEmptyState from '../../components/seller_products/ProductsEmptyState';

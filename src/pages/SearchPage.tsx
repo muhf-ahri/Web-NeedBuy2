@@ -14,17 +14,11 @@ import Icon from '../components/ui/Icon';
 
 import { getProducts, type GetProductsParams } from '../api/products';
 import { getSeller, searchSellers, type Seller } from '../api/sellers';
-import { getAccessToken } from '../api/auth';
-import { useCart as useCartContext } from '../contexts/CartContext';
-import { useWishlistContext } from '../contexts/WishlistContext';
-import { addToCart } from '../api/cart';
 import type { Product } from '../types';
 
 const SearchPage: React.FC = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const { refreshCartCount } = useCartContext();
-  const { toggle: toggleWishlistContext } = useWishlistContext();
 
   const initialQuery = searchParams.get('q') ?? '';
   const [query, setQuery] = useState(initialQuery);
@@ -46,7 +40,6 @@ const SearchPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const isAuthed = !!getAccessToken();
 
   const fetchResults = useCallback(async () => {
     if (sellerFromUrl) {
@@ -145,20 +138,6 @@ const SearchPage: React.FC = () => {
     setInput('');
     setQuery('');
     navigate('/search');
-  };
-
-  const handleAddToCart = async (e: React.MouseEvent, productId: string) => {
-    e.stopPropagation();
-    if (!isAuthed) {
-      navigate('/login');
-      return;
-    }
-    try {
-      await addToCart(productId, 1);
-      await refreshCartCount();
-    } catch (err: any) {
-      setError(err.message ?? 'Gagal masukin ke keranjang, coba lagi ya');
-    }
   };
 
   const handleNavigate = (slug: string) => navigate(`/products/${slug}`);

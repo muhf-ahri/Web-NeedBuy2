@@ -2,13 +2,12 @@ import React, { useEffect, useState } from 'react';
 
 import SellerLayout from './SellerLayout';
 import Reveal from '../../components/ui/Reveal';
-import Icon from '../../components/ui/Icon';
 
 import SettingsHeader from '../../components/seller_settings/SettingsHeader';
 import SettingsErrorState from '../../components/seller_settings/SettingsErrorState';
 import SettingsSection from '../../components/seller_settings/SettingsSection';
 import SettingsFormFields from '../../components/seller_settings/SettingsFormFields';
-import LogoUploader from '../../components/seller_settings/LogoUpLoader';
+import LogoUploader from '../../components/seller_settings/LogoUploader';
 import VacationToggle from '../../components/seller_settings/VocationToggle';
 import SettingsSubmitBar from '../../components/seller_settings/SettingsSubmitBar';
 

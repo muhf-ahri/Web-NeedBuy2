@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 
-import Icon from '../ui/Icon';
 import { formatRupiah } from '../../utils/currency';
 
 interface NeedPayWithdrawProps {

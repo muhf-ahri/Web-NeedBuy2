@@ -1,6 +1,5 @@
 import React from 'react';
 
-import Icon from '../ui/Icon';
 
 interface ChatsHeaderProps {
   totalConversations: number;
