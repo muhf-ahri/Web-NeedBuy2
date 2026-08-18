@@ -1,0 +1,249 @@
+/* src/index.css - Tailwind CSS 4 compatible */
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-primary: #004ac6;
+    --color-secondary: #565e74;
+    --color-on-primary: #ffffff;
+    --color-on-surface-variant: #434655;
+    --color-surface-container-lowest: #ffffff;
+    --color-surface-container-low: #f2f4f6;
+    --color-outline-variant: #c3c6d7;
+    --color-surface-container: #eceef0;
+    --color-error: #ba1a1a;
+
+    /* ── Palet NeedBuy (dikunci) ────────────────────────────────────────────
+       Kobalt tetap jadi satu-satunya warna aksi. Warna promo dipisah supaya
+       "diskon" tidak pernah tertukar dengan "tombol". */
+    --nb-ink: #101319;          /* teks utama */
+    --nb-slate: #434655;        /* teks sekunder */
+    --nb-muted: #737686;        /* teks tersier */
+    --nb-cobalt: #004ac6;       /* brand & seluruh aksi utama */
+    --nb-cobalt-deep: #003ea8;  /* hover aksi utama */
+    --nb-cobalt-wash: #dbe1ff;  /* latar state aktif */
+    --nb-mist: #f2f4f6;         /* permukaan */
+    --nb-line: #e0e3e5;         /* garis pemisah */
+    --nb-signal: #ff5a1f;       /* HANYA promo/diskon */
+    --nb-signal-wash: #fff0e9;
+    --nb-success: #12805c;      /* pesanan selesai */
+    --nb-warn: #b45309;         /* menunggu pembayaran */
+
+    /* ── NeedPay (dompet) ───────────────────────────────────────────────────
+       Subsistem terpisah, dan itu disengaja: NeedPay adalah alat pembayaran,
+       bukan permukaan belanja. Bahasanya diambil dari benda aslinya — uang
+       kertas: kertas krem, tinta cetak hijau, garis guilloche, bayangan cetak
+       offset. Tujuannya supaya saldo terbaca sebagai UANG dan tidak pernah
+       tertukar dengan tombol aksi kobalt.
+
+       Warna-warna ini TIDAK dipakai di luar permukaan NeedPay. */
+    --np-ink: #12100e;          /* tinta cetak: garis, border, bayangan */
+    --np-paper: #f4efe4;        /* kertas uang */
+    --np-paper-deep: #e6ddc9;   /* kertas di bagian terlipat */
+    --np-rupiah: #0e7a5f;       /* hijau cetak — nominal & nilai positif */
+    --np-mint: #7fe8b2;         /* sorotan di atas tinta gelap */
+    --np-stamp: #e8452c;        /* cap: peringatan & status gagal */
+  }
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: var(--color-surface-container-lowest);
+    color: #191c1e;
+  }
+}
+
+@layer utilities {
+  .text-primary { color: var(--color-primary); }
+  .bg-primary { background-color: var(--color-primary); }
+  .border-primary { border-color: var(--color-primary); }
+  .text-secondary { color: var(--color-secondary); }
+  .bg-secondary { background-color: var(--color-secondary); }
+  .border-secondary { border-color: var(--color-secondary); }
+  .text-on-primary { color: var(--color-on-primary); }
+  .text-on-surface-variant { color: var(--color-on-surface-variant); }
+  .bg-surface-container-lowest { background-color: var(--color-surface-container-lowest); }
+  .bg-surface-container-low { background-color: var(--color-surface-container-low); }
+  .border-outline-variant { border-color: var(--color-outline-variant); }
+  .bg-surface-container { background-color: var(--color-surface-container); }
+  .text-error { color: var(--color-error); }
+
+  .px-container-padding-mobile { padding-left: 20px; padding-right: 20px; }
+  .px-container-padding-desktop { padding-left: 40px; padding-right: 40px; }
+  .gap-gutter { gap: 24px; }
+  .p-gutter { padding: 24px; }
+  .mb-stack-gap-sm { margin-bottom: 8px; }
+
+  .hover-lift {
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+  }
+  .hover-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  }
+
+  /* ── Permukaan NeedPay ──────────────────────────────────────────────────
+     Dipakai ulang di kartu saldo, tombol nominal, dan banner. Ditulis sekali
+     di sini karena rangkaian kelasnya panjang dan harus persis sama di semua
+     tempat — kalau tidak, "kertas"-nya kelihatan dicetak di pabrik berbeda. */
+  .np-note {
+    border: 3px solid var(--np-ink);
+    box-shadow: 8px 8px 0 var(--np-ink);
+    background-color: var(--np-paper);
+  }
+  .np-chip {
+    border: 2px solid var(--np-ink);
+    box-shadow: 3px 3px 0 var(--np-ink);
+    background-color: var(--np-paper);
+  }
+
+  /* Tekan = kertas menempel ke bayangannya. Satu-satunya gerak di NeedPay. */
+  .np-press {
+    transition: transform 0.12s ease-out, box-shadow 0.12s ease-out;
+  }
+  .np-press:not(:disabled):active {
+    transform: translate(3px, 3px);
+    box-shadow: 0 0 0 var(--np-ink);
+  }
+  .np-chip.np-press:not(:disabled):active {
+    transform: translate(3px, 3px);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .np-press { transition: none; }
+    .np-press:not(:disabled):active { transform: none; }
+  }
+
+  /* Angka nominal: lebar digit seragam supaya saldo tidak "bergoyang" saat
+     berubah, seperti angka tercetak di uang kertas. */
+  .np-figure {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.03em;
+  }
+  .np-serial {
+    font-family: ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', 'Roboto Mono', monospace;
+    letter-spacing: 0.14em;
+  }
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-12px) rotate(3deg); }
+}
+@keyframes pulse-soft {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.05); }
+}
+@keyframes drift {
+  0% { transform: translateX(0) translateY(0); }
+  50% { transform: translateX(20px) translateY(-10px); }
+  100% { transform: translateX(0) translateY(0); }
+}
+.animate-float { animation: float 6s ease-in-out infinite; }
+.animate-pulse-soft { animation: pulse-soft 4s ease-in-out infinite; }
+.animate-drift { animation: drift 8s ease-in-out infinite; }
+
+@keyframes floatSlow {
+  0% { transform: translateX(0px) translateY(0px); }
+  50% { transform: translateX(20px) translateY(-10px); }
+  100% { transform: translateX(0px) translateY(0px); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: floatSlow 8s ease-in-out infinite;
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+.animate-slideDown {
+  animation: slideDown 0.5s ease-out forwards;
+}
+.animate-slideUp {
+  animation: slideUp 0.5s ease-out forwards;
+}
+.delay-100 {
+  animation-delay: 100ms;
+}
+.delay-200 {
+  animation-delay: 200ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fadeIn,
+  .animate-slideDown,
+  .animate-slideUp { animation: none; opacity: 1; transform: none; }
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+input[type="number"] {
+  appearance: textfield;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SCROLL REVEAL ANIMATION (global — dipakai di semua halaman)
+   ═══════════════════════════════════════════════════════════ */
+
+.reveal {
+  will-change: transform, opacity;
+  transition-timing-function: cubic-bezier(0.22, 0.9, 0.35, 1);
+  transition-property: transform, opacity;
+}
+
+/* Arah animasi */
+.reveal-up { opacity: 0; transform: translateY(24px); }
+.reveal-up.is-visible { opacity: 1; transform: translateY(0); }
+
+.reveal-down { opacity: 0; transform: translateY(-24px); }
+.reveal-down.is-visible { opacity: 1; transform: translateY(0); }
+
+.reveal-left { opacity: 0; transform: translateX(-24px); }
+.reveal-left.is-visible { opacity: 1; transform: translateX(0); }
+
+.reveal-right { opacity: 0; transform: translateX(24px); }
+.reveal-right.is-visible { opacity: 1; transform: translateX(0); }
+
+.reveal-scale { opacity: 0; transform: scale(0.96); }
+.reveal-scale.is-visible { opacity: 1; transform: scale(1); }
+
+.reveal-fade { opacity: 0; }
+.reveal-fade.is-visible { opacity: 1; }
+
+/* Accessibility: matikan animasi buat user yang prefer reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
