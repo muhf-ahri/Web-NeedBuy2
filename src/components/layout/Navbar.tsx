@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Icon, { type IconName } from '../ui/Icon';
 import SearchSuggestions from '../ui/SearchSuggestions';
 import NotificationBell from '../ui/NotificationBell';
+import CategoryMegaMenu from './CategoryMegaMenu';
 
 import { useCart } from '../../contexts/CartContext';
 import { useAuth } from '../../contexts/AuthContext';
@@ -55,8 +56,26 @@ const Navbar: React.FC<NavbarProps> = ({
   const [searchQuery, setSearchQuery] = useState('');
   const [scrolled, setScrolled] = useState(false);
 
+  const [megaOpen, setMegaOpen] = useState(false);
+
   const searchInputRef = useRef<HTMLInputElement>(null);
   const navRef = useRef<HTMLElement>(null);
+  // Jeda kecil supaya panel nggak berkedip saat kursor menyeberangi celah
+  // antara tautan dan panelnya.
+  const megaTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const openMega = () => {
+    if (megaTimer.current) clearTimeout(megaTimer.current);
+    megaTimer.current = setTimeout(() => setMegaOpen(true), 120);
+  };
+  const closeMega = (immediate = false) => {
+    if (megaTimer.current) clearTimeout(megaTimer.current);
+    megaTimer.current = setTimeout(() => setMegaOpen(false), immediate ? 0 : 180);
+  };
+
+  useEffect(() => () => {
+    if (megaTimer.current) clearTimeout(megaTimer.current);
+  }, []);
   const blueMode = scrolled;
 
   const isActive = (path: string) =>
@@ -77,6 +96,10 @@ const Navbar: React.FC<NavbarProps> = ({
       window.removeEventListener('scroll', onScroll);
     };
   }, []);
+
+  useEffect(() => {
+    setMegaOpen(false);
+  }, [location.pathname]);
 
   useEffect(() => {
     if (searchOpen) {
@@ -376,10 +399,15 @@ const Navbar: React.FC<NavbarProps> = ({
               {NAV_LINKS.map(({ to, label }) => {
                 const active = isActive(to);
 
-                return (
+                const isCategories = to === '/categories';
+
+                const link = (
                   <Link
                     key={to}
                     to={to}
+                    {...(isCategories
+                      ? { 'aria-expanded': megaOpen, 'aria-haspopup': true as const }
+                      : {})}
                     className={`
                       group/link
                       relative
@@ -495,6 +523,26 @@ const Navbar: React.FC<NavbarProps> = ({
                       `}
                     />
                   </Link>
+                );
+
+                if (!isCategories) return link;
+
+                return (
+                  <div
+                    key={to}
+                    className="relative flex h-full items-center"
+                    onMouseEnter={openMega}
+                    onMouseLeave={() => closeMega()}
+                    onFocus={openMega}
+                    onBlur={(event) => {
+                      if (!event.currentTarget.contains(event.relatedTarget as Node)) {
+                        closeMega(true);
+                      }
+                    }}
+                  >
+                    {link}
+                    <CategoryMegaMenu open={megaOpen} onClose={() => closeMega(true)} />
+                  </div>
                 );
               })}
             </div>

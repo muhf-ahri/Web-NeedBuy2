@@ -173,6 +173,9 @@ const ProductDetailPage: React.FC = () => {
   }
 
   const onSale = product.discountPercent > 0;
+  const savedAmount = onSale
+    ? strikePrice(product.price, product.discountPercent) - Number(product.price)
+    : 0;
   const images = product.images ?? [];
   const heroImage = images[selectedImage]?.url ?? images[0]?.url ?? null;
 
@@ -206,7 +209,7 @@ const ProductDetailPage: React.FC = () => {
                 )}
 
                 {onSale && (
-                  <span className="absolute top-4 left-4 rounded-full bg-[#ff5a1f] px-3 py-1 text-[12px] font-bold text-white shadow-lg">
+                  <span className="absolute left-4 top-4 rounded-full bg-[#FF4646] px-2.5 py-1 text-[11px] font-bold text-white">
                     -{product.discountPercent}%
                   </span>
                 )}
@@ -246,61 +249,82 @@ const ProductDetailPage: React.FC = () => {
                   className="mt-2 shrink-0"
                 />
               </div>
-
-              <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2 text-[13px]">
-                <span className="inline-flex items-center gap-1.5">
-                  <Icon name="star" size={16} className="text-[#f59e0b]" />
-                  <span className="font-bold text-[#191c1e]">{Number(product.rating).toFixed(1)}</span>
-                  <span className="text-[#737686]">({product.reviewCount ?? 0} ulasan)</span>
-                </span>
-                <span className="text-[#c3c6d7]">|</span>
-                <span className="text-[#434655]">
-                  <span className="font-bold text-[#191c1e]">
-                    {product.soldCount.toLocaleString('id-ID')}
-                  </span>{' '}
-                  terjual
-                </span>
-                <span className="text-[#c3c6d7]">|</span>
-                <span className={product.stock > 0 ? 'text-[#156b32]' : 'text-[#ba1a1a]'}>
-                  {product.stock > 0 ? `Stok ${product.stock}` : 'Stok habis'}
-                </span>
-              </div>
             </div>
 
-            {onSale ? (
-              <div className="relative overflow-hidden rounded-3xl bg-[#191c1e] p-6 text-white">
-                <div
-                  className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-[#ff5a1f]/30 blur-2xl"
-                  aria-hidden="true"
-                />
-                <p className="text-[11px] font-bold uppercase tracking-widest text-[#ff9b6a]">
-                  Harga promo
+            {/* Bento harga: satu blok untuk harga, potongan, dan angka penting.
+                Sebelumnya harga, diskon, rating, dan stok tersebar di tiga
+                tempat dengan tiga bahasa warna yang berbeda. */}
+            <section className="grid grid-cols-2 gap-2.5 sm:grid-cols-6">
+              <div
+                className={`
+                  rounded-2xl border border-[#E8ECF4] bg-white p-5
+                  ${onSale ? 'col-span-2 sm:col-span-4' : 'col-span-2 sm:col-span-6'}
+                `}
+              >
+                <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#737A87]">
+                  {onSale ? 'Harga promo' : 'Harga'}
                 </p>
-                <div className="mt-2 flex flex-wrap items-end gap-4">
-                  <span
-                    className="text-[40px] sm:text-[52px] font-bold leading-none tracking-tight"
-                    style={{ textShadow: '0 1px 0 #b23c14, 0 3px 0 #8d2f10, 0 8px 24px rgba(0,0,0,.45)' }}
-                  >
-                    {formatRupiah(product.price)}
-                  </span>
-                  <span className="pb-2 text-[16px] text-white/50 line-through">
-                    {formatRupiah(strikePrice(product.price, product.discountPercent))}
-                  </span>
-                  <span className="mb-2 rounded-full bg-[#ff5a1f] px-3 py-1 text-[12px] font-bold shadow-[0_4px_0_#b23c14]">
-                    Hemat {product.discountPercent}%
-                  </span>
-                </div>
-              </div>
-            ) : (
-              <div className="rounded-3xl border border-[#e0e3e5] p-6">
-                <p className="text-[11px] font-bold uppercase tracking-widest text-[#737686]">
-                  Harga
-                </p>
-                <p className="mt-1 text-[36px] font-bold leading-none text-[#191c1e]">
+                <p className="mt-2 text-[30px] font-extrabold leading-none tracking-tight text-[#20242D] sm:text-[34px]">
                   {formatRupiah(product.price)}
                 </p>
+                {onSale && (
+                  <p className="mt-2.5 flex flex-wrap items-baseline gap-x-2.5 gap-y-1 text-[13px]">
+                    <span className="text-[#737A87] line-through">
+                      {formatRupiah(strikePrice(product.price, product.discountPercent))}
+                    </span>
+                    <span className="font-semibold text-[#C73535]">
+                      hemat {formatRupiah(savedAmount)}
+                    </span>
+                  </p>
+                )}
               </div>
-            )}
+
+              {onSale && (
+                <div className="col-span-2 flex flex-col items-center justify-center rounded-2xl bg-[#FFF0F0] p-5 text-center">
+                  <p className="text-[28px] font-extrabold leading-none text-[#C73535]">
+                    -{product.discountPercent}%
+                  </p>
+                  <p className="mt-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-[#C73535]/70">
+                    Potongan
+                  </p>
+                </div>
+              )}
+
+              <div className="col-span-1 rounded-2xl bg-[#F5F5FF] px-4 py-3.5 sm:col-span-2">
+                <p className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-[#737A87]">
+                  <Icon name="star" size={12} className="text-[#FFD500]" />
+                  Rating
+                </p>
+                <p className="mt-1.5 text-[17px] font-extrabold leading-none text-[#20242D]">
+                  {Number(product.rating).toFixed(1)}
+                  <span className="ml-1.5 text-[11px] font-semibold text-[#737A87]">
+                    · {product.reviewCount ?? 0} ulasan
+                  </span>
+                </p>
+              </div>
+
+              <div className="col-span-1 rounded-2xl bg-[#F5F5FF] px-4 py-3.5 sm:col-span-2">
+                <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#737A87]">
+                  Terjual
+                </p>
+                <p className="mt-1.5 text-[17px] font-extrabold leading-none text-[#20242D]">
+                  {product.soldCount.toLocaleString('id-ID')}
+                </p>
+              </div>
+
+              <div className="col-span-2 rounded-2xl bg-[#F5F5FF] px-4 py-3.5">
+                <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#737A87]">
+                  Stok
+                </p>
+                <p
+                  className={`mt-1.5 text-[17px] font-extrabold leading-none ${
+                    product.stock > 0 ? 'text-[#20242D]' : 'text-[#FF4646]'
+                  }`}
+                >
+                  {product.stock > 0 ? product.stock.toLocaleString('id-ID') : 'Habis'}
+                </p>
+              </div>
+            </section>
 
             {options.length > 0 && (
               <div className="space-y-4">
