@@ -190,16 +190,6 @@ const WalletPage: React.FC = () => {
                 Kelola saldo hasil penjualan toko, isi saldo belanja, atau tarik ke rekening bank.
               </p>
             </div>
-
-            <div
-              className="
-                hidden h-12 w-12 items-center justify-center rounded-2xl
-                bg-gradient-to-br from-[#5B93E0] to-[#3A66AC]
-                shadow-[0_6px_16px_rgba(83,140,219,0.30)] sm:flex
-              "
-            >
-              <Icon name="wallet" size={22} className="text-white" />
-            </div>
           </div>
         </Reveal>
 

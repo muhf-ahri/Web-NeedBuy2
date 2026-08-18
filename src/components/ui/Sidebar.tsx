@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Icon, { type IconName } from './Icon';
 
@@ -11,9 +11,7 @@ export interface SidebarItem {
 interface SidebarProps {
   items: SidebarItem[];
   className?: string;
-
   title?: string;
-
   mobileOpen?: boolean;
   onMobileClose?: () => void;
 }
@@ -26,130 +24,194 @@ const Sidebar: React.FC<SidebarProps> = ({
   onMobileClose,
 }) => {
   const location = useLocation();
-  const listRef = useRef<HTMLUListElement>(null);
 
   const isControlled = typeof mobileOpen === 'boolean';
+
   const [internalOpen, setInternalOpen] = useState(false);
   const drawerOpen = isControlled ? mobileOpen : internalOpen;
 
-  const closeDrawer = () => {
-    if (isControlled) onMobileClose?.();
-    else setInternalOpen(false);
-  };
+  const [scrolled, setScrolled] = useState(false);
 
-  const [pill, setPill] = useState<{ top: number; height: number } | null>(null);
-  const [mounted, setMounted] = useState(false);
+  /* =========================================================
+     SCROLL DETECTION
+  ========================================================= */
 
   useEffect(() => {
-    if (isControlled) onMobileClose?.();
-    else setInternalOpen(false);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+
+    handleScroll();
+
+    window.addEventListener('scroll', handleScroll, {
+      passive: true,
+    });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  /* =========================================================
+     CLOSE MOBILE DRAWER WHEN ROUTE CHANGES
+  ========================================================= */
+
+  useEffect(() => {
+    if (isControlled) {
+      onMobileClose?.();
+    } else {
+      setInternalOpen(false);
+    }
+
+    // Jangan reset scrolled / hover di sini.
+    // Hover sepenuhnya ditangani oleh CSS.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
 
+  /* =========================================================
+     BODY SCROLL LOCK
+  ========================================================= */
+
   useEffect(() => {
-    document.body.style.overflow = drawerOpen ? 'hidden' : '';
+    document.body.style.overflow = drawerOpen
+      ? 'hidden'
+      : '';
+
     return () => {
       document.body.style.overflow = '';
     };
   }, [drawerOpen]);
 
-  useEffect(() => {
-    const list = listRef.current;
-    if (!list) return;
+  /* =========================================================
+     CLOSE DRAWER
+  ========================================================= */
 
-    const activeLink = list.querySelector<HTMLAnchorElement>(
-      `[data-item="${location.pathname}"]`
-    );
-
-    if (activeLink) {
-      const listRect = list.getBoundingClientRect();
-      const itemRect = activeLink.getBoundingClientRect();
-      setPill({
-        top: itemRect.top - listRect.top + list.scrollTop,
-        height: itemRect.height,
-      });
+  const closeDrawer = () => {
+    if (isControlled) {
+      onMobileClose?.();
     } else {
-      setPill(null);
+      setInternalOpen(false);
     }
+  };
 
-    if (!mounted) {
-      const t = setTimeout(() => setMounted(true), 50);
-      return () => clearTimeout(t);
-    }
-  }, [location.pathname, items, mounted, drawerOpen]);
+  /* =========================================================
+     RENDER SIDEBAR CONTENT
+  ========================================================= */
 
-  const sidebarContent = (
+  const buildContent = () => (
     <nav
       className={`
-        relative overflow-hidden rounded-[20px] border border-white/80
-        bg-white/95 p-2 shadow-[0_8px_24px_rgba(32,36,45,0.06)]
-        backdrop-blur-sm animate-sidebar-enter
+        sidebar-shell
+        ${scrolled ? 'sidebar-scrolled' : ''}
+        relative
+        overflow-hidden
+        rounded-[20px]
+        border
+        p-2
+        backdrop-blur-sm
+
+        transition-all
+        duration-500
+        ease-out
+
         ${className}
       `}
     >
-      <ul ref={listRef} className="relative space-y-0.5">
-        {pill && (
-          <span
-            aria-hidden="true"
-            className="
-              pointer-events-none absolute left-2 right-2 rounded-xl
-              bg-gradient-to-r from-[#538CDB]/15 to-[#538CDB]/10
-              ring-1 ring-[#538CDB]/20
-            "
-            style={{
-              top: pill.top,
-              height: pill.height,
-              transition: mounted
-                ? 'top 0.45s cubic-bezier(0.22, 0.9, 0.35, 1), height 0.35s ease'
-                : 'none',
-            }}
-          >
-            <span className="absolute left-0 top-1/2 h-5 w-0.5 -translate-y-1/2 rounded-r-full bg-[#538CDB]" />
-            <span className="absolute -left-1 top-1/2 h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-[#FFD500]" />
-          </span>
-        )}
-
+      <ul className="relative space-y-0.5">
         {items.map((item) => {
-          const active = location.pathname === item.to;
+          const active =
+            location.pathname === item.to;
+
           return (
             <li key={item.to}>
               <Link
                 to={item.to}
-                data-item={item.to}
                 className={`
-                  group relative flex items-center gap-3 rounded-xl px-3
-                  py-2.5 text-[13px] font-semibold transition-all
-                  duration-300 ease-out
-                  ${active ? 'text-[#538CDB]' : 'text-[#434655] hover:text-[#538CDB]'}
+                  sidebar-item
+                  ${active ? 'sidebar-item-active' : ''}
+
+                  group
+                  relative
+                  flex
+                  items-center
+                  gap-3
+                  rounded-xl
+                  px-3
+                  py-2.5
+
+                  text-[13px]
+                  font-semibold
+
+                  transition-all
+                  duration-300
+                  ease-out
                 `}
               >
+                {/* =================================================
+                    ICON
+                ================================================= */}
+
                 <span
-                  className={`
-                    flex h-8 w-8 shrink-0 items-center justify-center
-                    rounded-lg transition-all duration-300
-                    ${
-                      active
-                        ? 'bg-[#538CDB] text-white scale-105 shadow-[0_4px_12px_rgba(83,140,219,0.30)]'
-                        : 'bg-[#F5F7FB] text-[#737A87] group-hover:bg-[#538CDB]/10 group-hover:text-[#538CDB] group-hover:scale-105'
-                    }
-                  `}
+                  className="
+                    sidebar-item-icon
+
+                    flex
+                    h-8
+                    w-8
+                    shrink-0
+                    items-center
+                    justify-center
+                    rounded-lg
+
+                    transition-all
+                    duration-300
+                  "
                 >
-                  <Icon name={item.icon} size={16} />
+                  <Icon
+                    name={item.icon}
+                    size={16}
+                  />
                 </span>
 
-                <span className="min-w-0 flex-1 truncate">{item.label}</span>
+                {/* =================================================
+                    LABEL
+                ================================================= */}
+
+                <span
+                  className="
+                    sidebar-item-label
+                    min-w-0
+                    flex-1
+                    truncate
+
+                    transition-colors
+                    duration-300
+                  "
+                >
+                  {item.label}
+                </span>
+
+                {/* =================================================
+                    CHEVRON
+                ================================================= */}
 
                 <Icon
                   name="chevronRight"
                   size={14}
-                  className={`
-                    shrink-0 transition-all duration-300
-                    ${
-                      active
-                        ? 'translate-x-0 opacity-100 text-[#538CDB]'
-                        : '-translate-x-1 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 group-hover:text-[#538CDB]'
-                    }
-                  `}
+                  className="
+                    sidebar-item-chevron
+
+                    shrink-0
+
+                    -translate-x-1
+                    opacity-0
+
+                    transition-all
+                    duration-300
+
+                    group-hover:translate-x-0
+                    group-hover:opacity-100
+                  "
                 />
               </Link>
             </li>
@@ -157,21 +219,370 @@ const Sidebar: React.FC<SidebarProps> = ({
         })}
       </ul>
 
+      {/* =========================================================
+          SIDEBAR COLOR STYLES
+
+          Semua hover color sengaja dibuat menggunakan CSS biasa.
+          Jadi tidak tergantung variant Tailwind custom.
+      ========================================================= */}
+
       <style>{`
+
+        /* =======================================================
+           DEFAULT WHITE
+        ======================================================= */
+
+        .sidebar-shell {
+          background: rgba(255, 255, 255, 0.95);
+          border-color: rgba(255, 255, 255, 0.8);
+          box-shadow:
+            0 8px 24px rgba(32, 36, 45, 0.06);
+        }
+
+
+        /* =======================================================
+           HOVER → BLUE
+           
+           Ini inti perbaikannya.
+        ======================================================= */
+
+        .sidebar-shell:hover {
+          background: rgba(83, 140, 219, 0.95);
+          border-color: rgba(255, 255, 255, 0.25);
+          box-shadow:
+            0 12px 32px rgba(83, 140, 219, 0.30);
+        }
+
+
+        /* =======================================================
+           SCROLLED → BLUE
+        ======================================================= */
+
+        .sidebar-shell.sidebar-scrolled {
+          background: rgba(83, 140, 219, 0.95);
+          border-color: rgba(255, 255, 255, 0.25);
+          box-shadow:
+            0 12px 32px rgba(83, 140, 219, 0.30);
+        }
+
+
+        /* =======================================================
+           ITEM DEFAULT
+        ======================================================= */
+
+        .sidebar-item {
+          color: #434655;
+        }
+
+
+        /* =======================================================
+           ITEM HOVER → WHITE
+        ======================================================= */
+
+        .sidebar-shell:hover .sidebar-item {
+          color: rgba(255, 255, 255, 0.85);
+        }
+
+
+        .sidebar-shell:hover
+        .sidebar-item:hover {
+          color: #ffffff;
+        }
+
+
+        /* =======================================================
+           SCROLLED → WHITE
+        ======================================================= */
+
+        .sidebar-shell.sidebar-scrolled
+        .sidebar-item {
+          color: rgba(255, 255, 255, 0.85);
+        }
+
+
+        .sidebar-shell.sidebar-scrolled
+        .sidebar-item:hover {
+          color: #ffffff;
+        }
+
+
+        /* =======================================================
+           ACTIVE ITEM - DEFAULT WHITE SIDEBAR
+        ======================================================= */
+
+        .sidebar-item-active {
+          color: #538CDB;
+        }
+
+
+        /* =======================================================
+           ACTIVE ITEM - HOVER
+        ======================================================= */
+
+        .sidebar-shell:hover
+        .sidebar-item-active {
+          color: #ffffff;
+        }
+
+
+        /* =======================================================
+           ACTIVE ITEM - SCROLLED
+        ======================================================= */
+
+        .sidebar-shell.sidebar-scrolled
+        .sidebar-item-active {
+          color: #ffffff;
+        }
+
+
+        /* =======================================================
+           ICON DEFAULT
+        ======================================================= */
+
+        .sidebar-item-icon {
+          background: #F5F7FB;
+          color: #737A87;
+        }
+
+
+        /* =======================================================
+           ICON HOVER
+        ======================================================= */
+
+        .sidebar-shell:hover
+        .sidebar-item-icon {
+          background: rgba(255, 255, 255, 0.15);
+          color: rgba(255, 255, 255, 0.9);
+        }
+
+
+        .sidebar-shell:hover
+        .sidebar-item:hover
+        .sidebar-item-icon {
+          background: rgba(255, 255, 255, 0.25);
+          color: #ffffff;
+          transform: scale(1.05);
+        }
+
+
+        /* =======================================================
+           ICON ACTIVE - WHITE SIDEBAR
+        ======================================================= */
+
+        .sidebar-item-active
+        .sidebar-item-icon {
+          background: #538CDB;
+          color: #ffffff;
+
+          transform: scale(1.05);
+
+          box-shadow:
+            0 4px 12px
+            rgba(83, 140, 219, 0.30);
+        }
+
+
+        /* =======================================================
+           ICON ACTIVE - HOVER
+        ======================================================= */
+
+        .sidebar-shell:hover
+        .sidebar-item-active
+        .sidebar-item-icon {
+          background: #ffffff;
+          color: #538CDB;
+
+          box-shadow:
+            0 4px 12px
+            rgba(255, 255, 255, 0.30);
+        }
+
+
+        /* =======================================================
+           ICON ACTIVE - SCROLLED
+        ======================================================= */
+
+        .sidebar-shell.sidebar-scrolled
+        .sidebar-item-active
+        .sidebar-item-icon {
+          background: #ffffff;
+          color: #538CDB;
+
+          box-shadow:
+            0 4px 12px
+            rgba(255, 255, 255, 0.30);
+        }
+
+
+        /* =======================================================
+           CHEVRON
+        ======================================================= */
+
+        .sidebar-item-chevron {
+          color: #538CDB;
+        }
+
+
+        .sidebar-shell:hover
+        .sidebar-item-chevron {
+          color: #ffffff;
+        }
+
+
+        .sidebar-shell.sidebar-scrolled
+        .sidebar-item-chevron {
+          color: #ffffff;
+        }
+
+
+        /* =======================================================
+           ACTIVE CHEVRON
+        ======================================================= */
+
+        .sidebar-item-active
+        .sidebar-item-chevron {
+          transform: translateX(0);
+          opacity: 1;
+        }
+
+
+        /* =======================================================
+           ACTIVE PILL
+        ======================================================= */
+
+        .sidebar-item-active::before {
+          content: '';
+
+          position: absolute;
+
+          left: 8px;
+          right: 8px;
+          top: 0;
+          bottom: 0;
+
+          z-index: -1;
+
+          border-radius: 12px;
+
+          background:
+            linear-gradient(
+              to right,
+              rgba(83, 140, 219, 0.15),
+              rgba(83, 140, 219, 0.10)
+            );
+
+          box-shadow:
+            inset 0 0 0 1px
+            rgba(83, 140, 219, 0.20);
+        }
+
+
+        /* =======================================================
+           ACTIVE PILL - HOVER
+        ======================================================= */
+
+        .sidebar-shell:hover
+        .sidebar-item-active::before {
+          background: rgba(255, 255, 255, 0.20);
+
+          box-shadow:
+            inset 0 0 0 1px
+            rgba(255, 255, 255, 0.30);
+        }
+
+
+        /* =======================================================
+           ACTIVE PILL - SCROLLED
+        ======================================================= */
+
+        .sidebar-shell.sidebar-scrolled
+        .sidebar-item-active::before {
+          background: rgba(255, 255, 255, 0.20);
+
+          box-shadow:
+            inset 0 0 0 1px
+            rgba(255, 255, 255, 0.30);
+        }
+
+
+        /* =======================================================
+           ACTIVE INDICATOR
+        ======================================================= */
+
+        .sidebar-item-active::after {
+          content: '';
+
+          position: absolute;
+
+          left: 8px;
+          top: 50%;
+
+          width: 2px;
+          height: 20px;
+
+          transform:
+            translateY(-50%);
+
+          border-radius: 0 999px 999px 0;
+
+          background: #538CDB;
+
+          transition:
+            background-color 0.5s ease;
+        }
+
+
+        .sidebar-shell:hover
+        .sidebar-item-active::after,
+
+        .sidebar-shell.sidebar-scrolled
+        .sidebar-item-active::after {
+          background: #ffffff;
+        }
+
+
+        /* =======================================================
+           ANIMATION
+        ======================================================= */
+
         @keyframes sidebar-enter {
-          0% { opacity: 0; transform: translateX(-8px); }
-          100% { opacity: 1; transform: translateX(0); }
+          0% {
+            opacity: 0;
+            transform: translateX(-8px);
+          }
+
+          100% {
+            opacity: 1;
+            transform: translateX(0);
+          }
         }
+
         .animate-sidebar-enter {
-          animation: sidebar-enter 0.4s cubic-bezier(0.22, 0.9, 0.35, 1) both;
+          animation:
+            sidebar-enter
+            0.4s
+            cubic-bezier(0.22, 0.9, 0.35, 1)
+            both;
         }
+
       `}</style>
     </nav>
   );
 
   return (
     <>
-      <div className="hidden lg:block">{sidebarContent}</div>
+      {/* =======================================================
+          DESKTOP
+      ======================================================= */}
+
+      <div className="hidden lg:block">
+        {buildContent()}
+      </div>
+
+
+      {/* =======================================================
+          MOBILE TRIGGER
+      ======================================================= */}
 
       {!isControlled && (
         <div className="lg:hidden">
@@ -179,74 +590,225 @@ const Sidebar: React.FC<SidebarProps> = ({
             type="button"
             onClick={() => setInternalOpen(true)}
             className="
-              flex h-9 w-9 items-center justify-center rounded-full border
-              border-[#E8ECF4] bg-white/95 text-[#20242D] shadow-sm
-              backdrop-blur-sm transition-all duration-200
-              hover:border-[#538CDB] hover:text-[#538CDB] active:scale-[0.95]
+              flex
+              h-9
+              w-9
+              items-center
+              justify-center
+              rounded-full
+
+              border
+              border-[#E8ECF4]
+
+              bg-white/95
+
+              text-[#20242D]
+
+              shadow-sm
+              backdrop-blur-sm
+
+              transition-all
+              duration-200
+
+              hover:border-[#538CDB]
+              hover:text-[#538CDB]
+
+              active:scale-[0.95]
             "
             aria-label="Buka menu"
           >
-            <Icon name="menu" size={16} />
+            <Icon
+              name="menu"
+              size={16}
+            />
           </button>
         </div>
       )}
 
+
+      {/* =======================================================
+          MOBILE DRAWER
+      ======================================================= */}
+
       {drawerOpen && (
         <div className="fixed inset-0 z-50 lg:hidden">
+
+          {/* Backdrop */}
+
           <div
-            className="absolute inset-0 bg-[#20242D]/40 backdrop-blur-sm sidebar-backdrop-enter"
+            className="
+              absolute
+              inset-0
+
+              bg-[#20242D]/40
+              backdrop-blur-sm
+
+              sidebar-backdrop-enter
+            "
             onClick={closeDrawer}
           />
 
+
+          {/* Drawer */}
+
           <aside
             className="
-              sidebar-drawer-enter absolute bottom-0 left-0 top-0 flex w-72
-              max-w-[85vw] flex-col bg-[#F5F5FF]
+              sidebar-drawer
+
+              absolute
+              bottom-0
+              left-0
+              top-0
+
+              flex
+              w-72
+              max-w-[85vw]
+              flex-col
+
+              bg-[#F5F5FF]
+
               shadow-[12px_0_40px_rgba(32,36,45,0.15)]
+
+              transition-colors
+              duration-500
             "
           >
-            <div className="flex items-center justify-between border-b border-[#E8ECF4] px-5 py-4">
-              <span className="flex items-center gap-2 text-[15px] font-bold text-[#20242D]">
-                <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-[#538CDB]/10">
-                  <Icon name="grid" size={13} className="text-[#538CDB]" />
+
+            {/* Header */}
+
+            <div
+              className="
+                flex
+                items-center
+                justify-between
+
+                border-b
+                border-[#E8ECF4]
+
+                bg-white
+
+                px-5
+                py-4
+              "
+            >
+              <span
+                className="
+                  flex
+                  items-center
+                  gap-2
+
+                  text-[15px]
+                  font-bold
+                  text-[#20242D]
+                "
+              >
+                <span
+                  className="
+                    flex
+                    h-6
+                    w-6
+                    items-center
+                    justify-center
+                    rounded-lg
+
+                    bg-[#538CDB]/10
+                    text-[#538CDB]
+                  "
+                >
+                  <Icon
+                    name="grid"
+                    size={13}
+                  />
                 </span>
+
                 {title}
               </span>
+
               <button
                 type="button"
                 onClick={closeDrawer}
                 className="
-                  rounded-full p-1.5 text-[#737A87] transition-colors
-                  hover:bg-white hover:text-[#20242D]
+                  rounded-full
+                  p-1.5
+
+                  text-[#737A87]
+
+                  transition-colors
+                  duration-300
+
+                  hover:bg-[#F5F7FB]
+                  hover:text-[#20242D]
                 "
                 aria-label="Tutup menu"
               >
-                <Icon name="close" size={16} />
+                <Icon
+                  name="close"
+                  size={16}
+                />
               </button>
             </div>
 
-            <div className="flex-1 overflow-y-auto overscroll-contain p-4">
-              {sidebarContent}
+
+            {/* Content */}
+
+            <div
+              className="
+                flex-1
+                overflow-y-auto
+                overscroll-contain
+                p-4
+              "
+            >
+              {buildContent()}
             </div>
           </aside>
         </div>
       )}
 
+
+      {/* =======================================================
+          MOBILE ANIMATION
+      ======================================================= */}
+
       <style>{`
+
         @keyframes sidebar-drawer-enter {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(0); }
+          0% {
+            transform: translateX(-100%);
+          }
+
+          100% {
+            transform: translateX(0);
+          }
         }
-        .sidebar-drawer-enter {
-          animation: sidebar-drawer-enter 0.3s cubic-bezier(0.22, 0.9, 0.35, 1) both;
+
+        .sidebar-drawer {
+          animation:
+            sidebar-drawer-enter
+            0.3s
+            cubic-bezier(0.22, 0.9, 0.35, 1)
+            both;
         }
+
+
         @keyframes sidebar-backdrop-enter {
-          0% { opacity: 0; }
-          100% { opacity: 1; }
+          0% {
+            opacity: 0;
+          }
+
+          100% {
+            opacity: 1;
+          }
         }
+
         .sidebar-backdrop-enter {
-          animation: sidebar-backdrop-enter 0.25s ease both;
+          animation:
+            sidebar-backdrop-enter
+            0.25s
+            ease
+            both;
         }
+
       `}</style>
     </>
   );
