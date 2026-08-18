@@ -118,7 +118,7 @@ function App() {
 
               <Route path="/needpay" element={<NeedPayPage />} />
 
-              <Route path="/order/:id/track" element={<TrackingPage />} />
+              <Route path="/orders/:id/track" element={<TrackingPage />} />
 
               <Route path="/messages" element={<MessagesPage />} />
 
