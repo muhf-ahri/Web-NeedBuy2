@@ -4,6 +4,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import LoginForm from '../components/forms/LoginForm';
 import Divider from '../components/ui/Divider';
 import SocialLogin from '../components/forms/SocialLogin';
+// Di-import, bukan ditulis sebagai path string: Vite hanya mem-bundle aset
+// yang di-import. Path "/src/assets/..." cuma hidup di dev server.
+import loginBg from '../assets/login.jpg';
 
 import { useAuth } from '../contexts/AuthContext';
 import { dashboardPathFor } from '../utils/roleHome';
@@ -55,7 +58,7 @@ const Login: React.FC = () => {
       <div className="pointer-events-none absolute bottom-[13%] right-[18%] h-2.5 w-2.5 rounded-full bg-[#FFD500]" />
 
       <img
-        src="/src/assets/login.jpg"
+        src={loginBg}
         alt=""
         aria-hidden="true"
         draggable={false}

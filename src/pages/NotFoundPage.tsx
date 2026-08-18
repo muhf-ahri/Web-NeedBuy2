@@ -1,5 +1,6 @@
 import React from 'react';
 import NotFoundCard from '../components/ui/NotFoundCard';
+import notFoundBg from '../assets/404 Not Found.jpg';
 
 const NotFoundPage: React.FC = () => {
   return (
@@ -21,7 +22,7 @@ const NotFoundPage: React.FC = () => {
       <div className="pointer-events-none absolute bottom-[13%] right-[18%] h-2.5 w-2.5 rounded-full bg-[#FFD500]" />
 
       <img
-        src="/src/assets/404 Not Found.jpg"
+        src={notFoundBg}
         alt=""
         aria-hidden="true"
         draggable={false}
