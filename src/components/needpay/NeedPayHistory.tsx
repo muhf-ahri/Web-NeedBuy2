@@ -9,6 +9,9 @@ const TX_LABEL: Record<WalletTransaction['type'], string> = {
   PAYMENT: 'Pembayaran',
   REFUND: 'Pengembalian',
   WITHDRAWAL: 'Penarikan',
+  EARNING: 'Hasil Penjualan',
+  TRANSFER_OUT: 'Transfer Keluar',
+  TRANSFER_IN: 'Transfer Masuk',
 };
 
 const TX_ICON: Record<WalletTransaction['type'], any> = {
@@ -16,6 +19,9 @@ const TX_ICON: Record<WalletTransaction['type'], any> = {
   PAYMENT: 'cart',
   REFUND: 'card',
   WITHDRAWAL: 'wallet',
+  EARNING: 'store',
+  TRANSFER_OUT: 'arrowUp',
+  TRANSFER_IN: 'arrowDown',
 };
 
 const STATUS_LABEL: Record<WalletTransaction['status'], string> = {

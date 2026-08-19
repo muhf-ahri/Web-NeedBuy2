@@ -4,6 +4,7 @@ import { getPublicSettings } from './api/admin';
 import ScrollToTop from './components/layout/ScrollToTop';
 import { AuthProvider } from './contexts/AuthContext';
 import NotificationToaster from './components/notifications/NotificationToaster';
+import NeedPayTransferPage from './pages/NeedPayTransferPage';
 import { CartProvider } from './contexts/CartContext';
 import { WishlistProvider } from './contexts/WishlistContext';
 import Login from './pages/Login';
@@ -118,6 +119,7 @@ function App() {
 
               <Route path="/coupons" element={<CouponsPage />} />
 
+              <Route path="/needpay/transfer" element={<NeedPayTransferPage />} />
               <Route path="/needpay" element={<NeedPayPage />} />
 
               <Route path="/orders/:id/track" element={<TrackingPage />} />

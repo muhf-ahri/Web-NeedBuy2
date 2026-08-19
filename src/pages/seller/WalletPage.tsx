@@ -264,7 +264,7 @@ const WalletPage: React.FC = () => {
             <Reveal direction="up" delay={80}>
               <NeedPayBalanceCard
                 balance={wallet?.balance ?? 0}
-                walletId={wallet?.id}
+                accountNumber={wallet?.accountNumber}
                 loading={loading}
                 onTopUp={() => {
                   document

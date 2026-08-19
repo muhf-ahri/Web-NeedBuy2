@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
 import Navbar from '../components/layout/Navbar';
@@ -31,6 +32,7 @@ import {
 const QUICK_AMOUNTS = [50_000, 100_000, 250_000, 500_000, 1_000_000];
 
 const NeedPayPage: React.FC = () => {
+  const navigate = useNavigate();
   const isAuthed = !!getAccessToken();
   const topupRef = useRef<HTMLDivElement>(null);
 
@@ -238,10 +240,25 @@ const NeedPayPage: React.FC = () => {
 
         <NeedPayBalanceCard
           balance={wallet?.balance ?? 0}
-          walletId={wallet?.id}
+          accountNumber={wallet?.accountNumber}
           loading={loading}
           onTopUp={handleScrollToTopup}
         />
+
+        <button
+          type="button"
+          onClick={() => navigate('/needpay/transfer')}
+          className="
+            mt-3 flex w-full items-center justify-center gap-2 rounded-full
+            border border-[#e6ddc9] bg-[#f4efe4] py-3 text-[13px] font-bold
+            text-[#12100e] transition-colors hover:bg-[#e6ddc9]
+            focus-visible:outline-2 focus-visible:outline-offset-2
+            focus-visible:outline-[#0e7a5f]
+          "
+        >
+          <Icon name="send" size={15} />
+          Kirim saldo ke pengguna lain
+        </button>
 
         <div ref={topupRef}>
           <NeedPayTopup

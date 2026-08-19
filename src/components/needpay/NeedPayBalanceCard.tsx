@@ -5,21 +5,22 @@ import { formatRupiah } from '../../utils/currency';
 import { PAYMENT_METHODS } from '../ui/NeedPayNote';
 import needpayCard from '../../../public/CardBalance.jpg';
 
-const serialFrom = (walletId: string | undefined): string =>
-  walletId
-    ? `NP ${walletId.replace(/-/g, '').slice(0, 10).toUpperCase()}`
-    : 'NP ··········';
+// Nomor rekening NeedPay yang sesungguhnya. Sebelumnya angka ini diturunkan
+// dari UUID dompet — terlihat seperti nomor seri tapi tidak berarti apa-apa
+// dan tidak bisa dipakai orang lain untuk mengirim uang ke sini.
+const serialFrom = (accountNumber: string | undefined): string =>
+  accountNumber ?? 'NP ··········';
 
 interface NeedPayBalanceCardProps {
   balance: string | number;
-  walletId?: string;
+  accountNumber?: string;
   loading?: boolean;
   onTopUp?: () => void;
 }
 
 const NeedPayBalanceCard: React.FC<NeedPayBalanceCardProps> = ({
   balance,
-  walletId,
+  accountNumber,
   loading = false,
   onTopUp,
 }) => {
@@ -53,7 +54,7 @@ const NeedPayBalanceCard: React.FC<NeedPayBalanceCardProps> = ({
         </div>
         <div className="absolute bottom-3 left-4 flex items-center gap-2 text-[10px] text-white/90">
           <span className="h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
-          <span className="truncate font-mono">{serialFrom(walletId)}</span>
+          <span className="truncate font-mono">{serialFrom(accountNumber)}</span>
         </div>
       </div>
 
@@ -96,7 +97,7 @@ const NeedPayBalanceCard: React.FC<NeedPayBalanceCardProps> = ({
 
           <div className="absolute bottom-5 left-6 z-10 flex items-center gap-2 text-[10px] text-white/90">
             <span className="h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
-            <span className="truncate font-mono">{serialFrom(walletId)}</span>
+            <span className="truncate font-mono">{serialFrom(accountNumber)}</span>
           </div>
         </section>
 
@@ -156,7 +157,7 @@ const NeedPayBalanceCard: React.FC<NeedPayBalanceCardProps> = ({
               </span>
 
               <p className="truncate font-mono text-[10px] text-[#A2A8B3]">
-                {serialFrom(walletId)}
+                {serialFrom(accountNumber)}
               </p>
             </div>
 
