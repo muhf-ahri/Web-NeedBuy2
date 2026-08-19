@@ -49,7 +49,7 @@ const StatCard: React.FC<StatCardProps> = ({
               : `${change >= 0 ? '+' : ''}${change}% ${changeLabel}`}
           </p>
         </div>
-        <div className="shrink-0 rounded-full bg-[#dbe1ff] p-2 text-[#004ac6] sm:p-2.5">
+        <div className="shrink-0 rounded-full bg-[#e4ebf1] p-2 text-[#4077a6] sm:p-2.5">
           <Icon name={icon} size={20} />
         </div>
       </div>

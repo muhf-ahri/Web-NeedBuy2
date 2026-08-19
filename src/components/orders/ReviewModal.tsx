@@ -72,10 +72,10 @@ const ReviewModal: React.FC<ReviewModalProps> = ({
             <span
               className="
                 flex h-8 w-8 items-center justify-center rounded-lg
-                bg-[#004ac6]/10
+                bg-[#538cbd]/10
               "
             >
-              <Icon name="star" size={14} className="text-[#004ac6]" />
+              <Icon name="star" size={14} className="text-[#4077a6]" />
             </span>
             <h3 className="text-[15px] font-bold text-[#101319]">
               Kasih Ulasan
@@ -108,7 +108,7 @@ const ReviewModal: React.FC<ReviewModalProps> = ({
                   rounded-xl bg-white ring-1 ring-[#e0e3e5]
                 "
               >
-                <Icon name="orders" size={18} className="text-[#004ac6]" />
+                <Icon name="orders" size={18} className="text-[#4077a6]" />
               </div>
               <p className="min-w-0 truncate text-[12px] font-semibold text-[#101319]">
                 {targetItem.productName}
@@ -176,7 +176,7 @@ const ReviewModal: React.FC<ReviewModalProps> = ({
                 w-full resize-none rounded-xl border border-[#e0e3e5]
                 bg-[#F5F7FB] px-4 py-3 text-[13px] text-[#101319]
                 outline-none placeholder:text-[#A2A8B3] transition-all
-                duration-200 focus:border-[#004ac6] focus:bg-white
+                duration-200 focus:border-[#538cbd] focus:bg-white
                 focus:shadow-[0_4px_16px_rgba(83,140,219,0.10)]
               "
             />
@@ -256,7 +256,7 @@ const ReviewModal: React.FC<ReviewModalProps> = ({
                 inline-flex cursor-pointer items-center gap-2 rounded-full
                 border border-[#e0e3e5] bg-white px-4 py-2 text-[12px]
                 font-semibold text-[#101319] transition-all duration-200
-                hover:border-[#004ac6] hover:text-[#004ac6]
+                hover:border-[#538cbd] hover:text-[#4077a6]
               "
             >
               <Icon name="upload" size={14} />
@@ -275,9 +275,9 @@ const ReviewModal: React.FC<ReviewModalProps> = ({
             disabled={busy || uploadingMedia || !targetItem}
             className="
               flex h-11 w-full items-center justify-center gap-2
-              rounded-full bg-[#004ac6] px-6 text-[14px] font-semibold
+              rounded-full bg-[#4077a6] px-6 text-[14px] font-semibold
               text-white shadow-[0_7px_18px_rgba(83,140,219,0.25)]
-              transition-all duration-200 hover:bg-[#004ac6]
+              transition-all duration-200 hover:bg-[#4077a6]
               hover:shadow-[0_9px_22px_rgba(83,140,219,0.30)]
               active:scale-[0.99] disabled:cursor-not-allowed
               disabled:bg-[#A2A8B3] disabled:shadow-none

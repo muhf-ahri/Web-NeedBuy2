@@ -63,7 +63,7 @@ const FilterBody: React.FC<{
   hasActive,
 }) => {
   const inputCls =
-    'w-full rounded-lg border border-[#e0e3e5] bg-[#F5F7FB] pl-7 pr-2 py-2 text-[12px] text-[#101319] outline-none placeholder:text-[#A2A8B3] transition-all focus:border-[#004ac6] focus:bg-white focus:shadow-[0_3px_10px_rgba(83,140,219,0.10)]';
+    'w-full rounded-lg border border-[#e0e3e5] bg-[#F5F7FB] pl-7 pr-2 py-2 text-[12px] text-[#101319] outline-none placeholder:text-[#A2A8B3] transition-all focus:border-[#538cbd] focus:bg-white focus:shadow-[0_3px_10px_rgba(83,140,219,0.10)]';
 
   return (
     <div>
@@ -73,7 +73,7 @@ const FilterBody: React.FC<{
           <button
             type="button"
             onClick={onClearAll}
-            className="text-[11px] font-semibold text-[#004ac6] hover:underline"
+            className="text-[11px] font-semibold text-[#4077a6] hover:underline"
           >
             Reset
           </button>
@@ -101,8 +101,8 @@ const FilterBody: React.FC<{
                         rounded-full border transition-colors
                         ${
                           active
-                            ? 'border-[#004ac6] bg-[#004ac6]'
-                            : 'border-[#e0e3e5] group-hover:border-[#004ac6]'
+                            ? 'border-[#538cbd] bg-[#4077a6]'
+                            : 'border-[#e0e3e5] group-hover:border-[#538cbd]'
                         }
                       `}
                     >
@@ -115,7 +115,7 @@ const FilterBody: React.FC<{
                         truncate text-[13px] transition-colors
                         ${
                           active
-                            ? 'font-semibold text-[#004ac6]'
+                            ? 'font-semibold text-[#4077a6]'
                             : 'text-[#434655] group-hover:text-[#101319]'
                         }
                       `}
@@ -174,8 +174,8 @@ const FilterBody: React.FC<{
                   transition-all duration-200 active:scale-[0.97]
                   ${
                     active
-                      ? 'border-[#004ac6] bg-[#004ac6] text-white shadow-[0_4px_12px_rgba(83,140,219,0.25)]'
-                      : 'border-[#e0e3e5] bg-white text-[#434655] hover:border-[#004ac6] hover:text-[#004ac6]'
+                      ? 'border-[#538cbd] bg-[#4077a6] text-white shadow-[0_4px_12px_rgba(83,140,219,0.25)]'
+                      : 'border-[#e0e3e5] bg-white text-[#434655] hover:border-[#538cbd] hover:text-[#4077a6]'
                   }
                 `}
               >
@@ -325,7 +325,7 @@ const CategoryDetailPage: React.FC = () => {
                     mb-2 inline-flex items-center gap-1.5 rounded-full
                     bg-white px-3 py-1.5 text-[12px] font-semibold
                     text-[#737686] shadow-sm transition-all duration-200
-                    hover:text-[#004ac6]
+                    hover:text-[#4077a6]
                     hover:shadow-[0_4px_12px_rgba(83,140,219,0.12)]
                   "
                 >
@@ -348,14 +348,14 @@ const CategoryDetailPage: React.FC = () => {
                       <span
                         className="
                           inline-flex items-center gap-1.5 rounded-full
-                          bg-[#004ac6]/10 px-2.5 py-1
+                          bg-[#538cbd]/10 px-2.5 py-1
                         "
                       >
                         <span className="h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
                         <p
                           className="
                             text-[9px] font-bold uppercase tracking-[0.20em]
-                            text-[#004ac6]
+                            text-[#4077a6]
                           "
                         >
                           Kategori
@@ -390,7 +390,7 @@ const CategoryDetailPage: React.FC = () => {
                       flex items-center gap-1.5 rounded-full border
                       border-[#e0e3e5] bg-white px-3.5 py-1.5 text-[13px]
                       font-semibold text-[#101319] transition-colors
-                      hover:border-[#004ac6] hover:text-[#004ac6] lg:hidden
+                      hover:border-[#538cbd] hover:text-[#4077a6] lg:hidden
                     "
                   >
                     <Icon name="filter" size={14} />
@@ -399,7 +399,7 @@ const CategoryDetailPage: React.FC = () => {
                       <span
                         className="
                           flex h-4 min-w-4 items-center justify-center
-                          rounded-full bg-[#004ac6] px-1 text-[9px]
+                          rounded-full bg-[#4077a6] px-1 text-[9px]
                           font-bold text-white
                         "
                       >
@@ -421,7 +421,7 @@ const CategoryDetailPage: React.FC = () => {
                       w-full cursor-pointer appearance-none rounded-full
                       border border-[#e0e3e5] bg-white py-1.5 pl-4 pr-9
                       text-[13px] font-medium text-[#101319] outline-none
-                      transition-colors focus:border-[#004ac6] sm:w-auto
+                      transition-colors focus:border-[#538cbd] sm:w-auto
                     "
                   >
                     {SORT_OPTIONS.map((opt) => (
@@ -526,10 +526,10 @@ const CategoryDetailPage: React.FC = () => {
                 <span
                   className="
                     flex h-6 w-6 items-center justify-center rounded-lg
-                    bg-[#004ac6]/10
+                    bg-[#538cbd]/10
                   "
                 >
-                  <Icon name="filter" size={13} className="text-[#004ac6]" />
+                  <Icon name="filter" size={13} className="text-[#4077a6]" />
                 </span>
                 Filter
               </span>
@@ -571,10 +571,10 @@ const CategoryDetailPage: React.FC = () => {
                 type="button"
                 onClick={() => setMobileFilterOpen(false)}
                 className="
-                  w-full rounded-full bg-[#004ac6] py-2.5 text-[14px]
+                  w-full rounded-full bg-[#4077a6] py-2.5 text-[14px]
                   font-semibold text-white
                   shadow-[0_7px_18px_rgba(83,140,219,0.25)] transition-all
-                  hover:bg-[#004ac6] active:scale-[0.99]
+                  hover:bg-[#4077a6] active:scale-[0.99]
                 "
               >
                 Terapkan Filter

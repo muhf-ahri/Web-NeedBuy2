@@ -36,7 +36,7 @@ const TableCategoryChild: React.FC<TableCategoryChildProps> = ({
     return (
       <div className="overflow-hidden rounded-2xl border border-[#e0e3e5] bg-white p-5">
         <div className="py-10 text-center text-[#737686]">
-          <span className="inline-block h-5 w-5 animate-spin rounded-full border-2 border-[#004ac6] border-t-transparent" />
+          <span className="inline-block h-5 w-5 animate-spin rounded-full border-2 border-[#538cbd] border-t-transparent" />
           <span className="ml-2">Memuat…</span>
         </div>
       </div>
@@ -69,7 +69,7 @@ const TableCategoryChild: React.FC<TableCategoryChildProps> = ({
               data.map((category) => (
                 <tr key={category.id} className="text-[13px] transition-colors hover:bg-[#f5f7fb]">
                   <td className="py-2.5 pr-2 font-medium text-[#101319]">{category.name}</td>
-                  <td className="py-2.5 pr-2 text-[#004ac6]">
+                  <td className="py-2.5 pr-2 text-[#4077a6]">
                     {parentMap[category.parentId || ''] || ', '}
                   </td>
                   <td className="py-2.5 pr-2 text-[#737686]">
@@ -94,7 +94,7 @@ const TableCategoryChild: React.FC<TableCategoryChildProps> = ({
                     <div className="flex items-center gap-1">
                       <button
                         onClick={() => onEdit(category)}
-                        className="rounded-lg p-1.5 text-[#737686] transition-colors hover:bg-[#f2f4f6] hover:text-[#004ac6]"
+                        className="rounded-lg p-1.5 text-[#737686] transition-colors hover:bg-[#f2f4f6] hover:text-[#4077a6]"
                         aria-label="Edit subkategori"
                       >
                         <Icon name="edit" size={16} />

@@ -103,7 +103,7 @@ const StoresPage: React.FC = () => {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Cari nama toko atau pemilik…"
-              className="w-64 rounded-xl border border-[#c3c6d7] px-4 py-2.5 pl-9 text-sm outline-none transition focus:border-[#004ac6] focus:ring-2 focus:ring-[#004ac6]/20"
+              className="w-64 rounded-xl border border-[#c3c6d7] px-4 py-2.5 pl-9 text-sm outline-none transition focus:border-[#538cbd] focus:ring-2 focus:ring-[#538cbd]/20"
             />
             <Icon
               name="search"
@@ -160,7 +160,7 @@ const StoresPage: React.FC = () => {
                 {isLoading ? (
                   <tr>
                     <td colSpan={11} className="py-10 text-center text-[#737686]">
-                      <span className="inline-block h-5 w-5 animate-spin rounded-full border-2 border-[#004ac6] border-t-transparent" />
+                      <span className="inline-block h-5 w-5 animate-spin rounded-full border-2 border-[#538cbd] border-t-transparent" />
                       <span className="ml-2">Memuat…</span>
                     </td>
                   </tr>
@@ -185,7 +185,7 @@ const StoresPage: React.FC = () => {
                       <td className="py-2.5 pr-2 text-left">{store.products.toLocaleString('id-ID')}</td>
                       <td className="py-2.5 pr-2 text-left">{store.orders.toLocaleString('id-ID')}</td>
                       <td className="py-2.5 pr-2 text-left">{formatRupiah(store.revenue)}</td>
-                      <td className="py-2.5 pr-2 text-left font-semibold text-[#004ac6]">
+                      <td className="py-2.5 pr-2 text-left font-semibold text-[#4077a6]">
                         {formatRupiah(store.commission)}
                       </td>
                       <td className="py-2.5 pr-2 text-left font-semibold">
@@ -210,7 +210,7 @@ const StoresPage: React.FC = () => {
                           className={`rounded-full px-3 py-1 text-[12px] font-semibold text-white transition-colors disabled:opacity-50 ${
                             store.status === 'ACTIVE'
                               ? 'bg-[#ba1a1a] hover:bg-[#93000a]'
-                              : 'bg-[#004ac6] hover:bg-[#003ea8]'
+                              : 'bg-[#4077a6] hover:bg-[#284a67]'
                           }`}
                         >
                           {store.status === 'ACTIVE' ? 'Bekukan' : 'Aktifkan'}

@@ -37,7 +37,7 @@ const ChatsConversationItem: React.FC<ChatsConversationItemProps> = ({
         `}
       >
         {active && (
-          <span className="absolute left-0 top-1/2 h-8 w-0.5 -translate-y-1/2 rounded-r-full bg-[#004ac6]" />
+          <span className="absolute left-0 top-1/2 h-8 w-0.5 -translate-y-1/2 rounded-r-full bg-[#4077a6]" />
         )}
 
         <div className="relative shrink-0">
@@ -64,7 +64,7 @@ const ChatsConversationItem: React.FC<ChatsConversationItemProps> = ({
             <span
               className="
                 truncate text-[13px] font-semibold text-[#101319]
-                group-hover:text-[#004ac6]
+                group-hover:text-[#4077a6]
               "
             >
               {conversation.buyer.name}

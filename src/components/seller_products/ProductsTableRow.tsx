@@ -61,7 +61,7 @@ const ProductsTableRow: React.FC<ProductsTableRowProps> = ({
         {product.category?.name ?? 'Tanpa kategori'}
       </td>
 
-      <td className="px-4 py-3 text-center text-[13px] font-bold text-[#004ac6] tabular-nums">
+      <td className="px-4 py-3 text-center text-[13px] font-bold text-[#4077a6] tabular-nums">
         {formatRupiah(Number(product.price))}
       </td>
 
@@ -114,7 +114,7 @@ const ProductsTableRow: React.FC<ProductsTableRowProps> = ({
             className="
               flex h-8 w-8 items-center justify-center rounded-lg
               text-[#737686] transition-all duration-200
-              hover:bg-[#f5f7fb] hover:text-[#004ac6]
+              hover:bg-[#f5f7fb] hover:text-[#4077a6]
             "
             aria-label={`Edit ${product.name}`}
             title="Edit"
@@ -127,7 +127,7 @@ const ProductsTableRow: React.FC<ProductsTableRowProps> = ({
             className="
               flex h-8 w-8 items-center justify-center rounded-lg
               text-[#737686] transition-all duration-200
-              hover:bg-[#f5f7fb] hover:text-[#004ac6]
+              hover:bg-[#f5f7fb] hover:text-[#4077a6]
             "
             aria-label={`Lihat ${product.name} di toko`}
             title="Lihat di toko"

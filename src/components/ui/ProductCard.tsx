@@ -115,7 +115,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onNavigate }) => {
         <span
           className="
             block truncate text-[11px] font-semibold uppercase
-            tracking-wide text-[#004ac6]
+            tracking-wide text-[#4077a6]
           "
         >
           {product.seller?.storeName ?? 'Toko'}
@@ -125,7 +125,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onNavigate }) => {
           className="
             mt-1 line-clamp-2 flex-1 text-[13px] font-semibold
             leading-snug text-[#101319] transition-colors duration-200
-            group-hover:text-[#004ac6]
+            group-hover:text-[#4077a6]
           "
         >
           {product.name}
@@ -150,8 +150,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onNavigate }) => {
             onClick={handleAddToCart}
             className="
               flex h-9 w-9 shrink-0 items-center justify-center
-              rounded-full bg-[#004ac6] text-white shadow-[0_4px_12px_rgba(83,140,219,0.25)]
-              transition-all duration-200 hover:bg-[#004ac6]
+              rounded-full bg-[#4077a6] text-white shadow-[0_4px_12px_rgba(83,140,219,0.25)]
+              transition-all duration-200 hover:bg-[#4077a6]
               hover:shadow-[0_6px_16px_rgba(83,140,219,0.30)]
               active:scale-[0.95]
             "

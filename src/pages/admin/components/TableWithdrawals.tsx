@@ -41,7 +41,7 @@ const TableWithdrawals: React.FC<TableWithdrawalsProps> = ({
     return (
       <tr>
         <td colSpan={7} className="py-10 text-center text-[#737686]">
-          <span className="inline-block h-5 w-5 animate-spin rounded-full border-2 border-[#004ac6] border-t-transparent" />
+          <span className="inline-block h-5 w-5 animate-spin rounded-full border-2 border-[#538cbd] border-t-transparent" />
           <span className="ml-2">Memuat…</span>
         </td>
       </tr>
@@ -66,7 +66,7 @@ const TableWithdrawals: React.FC<TableWithdrawalsProps> = ({
         return (
           <tr key={withdrawal.id} className="text-[13px] transition-colors hover:bg-[#f5f7fb]">
             
-            <td className="py-2.5 pr-2 font-medium text-[#004ac6]">
+            <td className="py-2.5 pr-2 font-medium text-[#4077a6]">
               #{withdrawal.id.slice(0, 8).toUpperCase()}
             </td>
             <td className="py-2.5 pr-2">
@@ -75,7 +75,7 @@ const TableWithdrawals: React.FC<TableWithdrawalsProps> = ({
               </div>
               <div className="text-[11px] text-[#737686]">{user.email}</div>
             </td>
-            <td className="py-2.5 pr-2 font-semibold text-[#004ac6]">
+            <td className="py-2.5 pr-2 font-semibold text-[#4077a6]">
               {formatRupiah(withdrawal.amount)}
             </td>
             <td className="py-2.5 pr-2">

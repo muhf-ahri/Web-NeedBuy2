@@ -187,7 +187,7 @@ const NeedPayPage: React.FC = () => {
             <p
               className="
                 text-[10px] font-semibold uppercase tracking-[0.18em]
-                text-[#004ac6]
+                text-[#4077a6]
               "
             >
               Dompet digital

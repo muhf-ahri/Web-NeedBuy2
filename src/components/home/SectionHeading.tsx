@@ -29,7 +29,7 @@ const SectionHeading: React.FC<SectionHeadingProps> = ({
         <div className="flex items-center gap-2">
           <span
             className="
-              inline-flex items-center gap-1.5 rounded-full bg-[#004ac6]/10
+              inline-flex items-center gap-1.5 rounded-full bg-[#538cbd]/10
               px-2.5 py-1
             "
           >
@@ -37,7 +37,7 @@ const SectionHeading: React.FC<SectionHeadingProps> = ({
             <p
               className="
                 text-[9px] font-bold uppercase tracking-[0.20em]
-                text-[#004ac6]
+                text-[#4077a6]
               "
             >
               {eyebrow}
@@ -81,9 +81,9 @@ const SectionHeading: React.FC<SectionHeadingProps> = ({
           to={link}
           className="
             group inline-flex shrink-0 items-center gap-1.5 rounded-full
-            bg-[#004ac6]/10 px-3.5 py-1.5 text-[11px] font-semibold
-            text-[#004ac6] transition-all duration-200
-            hover:bg-[#004ac6] hover:text-white hover:shadow-[0_6px_16px_rgba(83,140,219,0.25)]
+            bg-[#538cbd]/10 px-3.5 py-1.5 text-[11px] font-semibold
+            text-[#4077a6] transition-all duration-200
+            hover:bg-[#4077a6] hover:text-white hover:shadow-[0_6px_16px_rgba(83,140,219,0.25)]
             active:scale-[0.98]
           "
         >

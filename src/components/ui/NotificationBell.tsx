@@ -131,7 +131,7 @@ const NotificationBell: React.FC = () => {
 
           <div className="flex items-center justify-between border-b border-[#e0e3e5] px-4 py-3">
             <div className="flex items-center gap-2">
-              <span className="text-[13px] font-bold text-[#004ac6]">Notifikasi</span>
+              <span className="text-[13px] font-bold text-[#4077a6]">Notifikasi</span>
               {unreadCount > 0 && (
                 <span className="rounded-full bg-[#ba1a1a] px-1.5 py-0.5 text-[9px] font-bold text-white">
                   {unreadCount}
@@ -143,7 +143,7 @@ const NotificationBell: React.FC = () => {
               <button
                 type="button"
                 onClick={markAllAsRead}
-                className="text-[11px] font-semibold text-[#004ac6] transition-colors hover:text-[#004ac6]"
+                className="text-[11px] font-semibold text-[#4077a6] transition-colors hover:text-[#4077a6]"
               >
                 Tandai semua dibaca
               </button>
@@ -165,7 +165,7 @@ const NotificationBell: React.FC = () => {
                 <Link
                   to="/login"
                   onClick={() => setIsOpen(false)}
-                  className="mt-3 inline-block rounded-xl bg-[#004ac6] px-4 py-2 text-[11px] font-semibold text-white transition-opacity hover:opacity-90"
+                  className="mt-3 inline-block rounded-xl bg-[#4077a6] px-4 py-2 text-[11px] font-semibold text-white transition-opacity hover:opacity-90"
                 >
                   Masuk sekarang
                 </Link>
@@ -226,7 +226,7 @@ const NotificationBell: React.FC = () => {
                           {notification.title}
                         </p>
                         {isUnread && (
-                          <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-[#004ac6]" />
+                          <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-[#4077a6]" />
                         )}
                       </div>
 
@@ -290,7 +290,7 @@ const NotificationBell: React.FC = () => {
             onClick={() => setIsOpen(false)}
             className="
               flex items-center justify-between border-t border-[#e0e3e5]
-              px-4 py-2.5 text-[12px] font-semibold text-[#004ac6]
+              px-4 py-2.5 text-[12px] font-semibold text-[#4077a6]
               transition-colors hover:bg-[#F5F7FB]
             "
           >

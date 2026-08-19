@@ -57,11 +57,11 @@ const SocialLogin: React.FC = () => {
         text-[#101319]
         transition-all
         duration-200
-        hover:border-[#004ac6]/40
+        hover:border-[#538cbd]/40
         hover:bg-[#f5f7fb]
-        hover:text-[#004ac6]
+        hover:text-[#4077a6]
         focus:ring-4
-        focus:ring-[#004ac6]/10
+        focus:ring-[#538cbd]/10
         active:scale-[0.99]
       "
     >

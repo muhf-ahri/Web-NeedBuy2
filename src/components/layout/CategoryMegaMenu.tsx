@@ -34,10 +34,10 @@ const PreviewCard: React.FC<{
         onClick={onNavigate}
         className="
           block rounded-2xl border border-[#e0e3e5] bg-white p-2.5 transition-all
-          duration-200 hover:-translate-y-0.5 hover:border-[#004ac6]/40
+          duration-200 hover:-translate-y-0.5 hover:border-[#538cbd]/40
           hover:shadow-[0_10px_24px_rgba(32,36,45,0.08)]
           focus-visible:outline-2 focus-visible:outline-offset-2
-          focus-visible:outline-[#004ac6]
+          focus-visible:outline-[#4077a6]
         "
       >
         <div className="relative aspect-square overflow-hidden rounded-xl bg-[#F5F7FB]">
@@ -69,7 +69,7 @@ const PreviewCard: React.FC<{
         <p className="mt-2 line-clamp-2 text-[11.5px] font-semibold leading-snug text-[#101319]">
           {product.name}
         </p>
-        <p className="mt-1 text-[12px] font-extrabold text-[#004ac6]">
+        <p className="mt-1 text-[12px] font-extrabold text-[#4077a6]">
           {formatRupiah(product.price)}
         </p>
       </Link>
@@ -81,8 +81,8 @@ const PreviewCard: React.FC<{
         aria-label={`Masukkan ${product.name} ke keranjang`}
         className="
           absolute bottom-2 right-2 flex h-8 w-8 items-center justify-center
-          rounded-full bg-[#004ac6] text-white opacity-0 shadow-[0_4px_12px_rgba(83,140,219,0.45)]
-          transition-all duration-200 hover:bg-[#004ac6]
+          rounded-full bg-[#4077a6] text-white opacity-0 shadow-[0_4px_12px_rgba(83,140,219,0.45)]
+          transition-all duration-200 hover:bg-[#4077a6]
           group-hover/card:opacity-100 focus-visible:opacity-100
           focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#101319]
           disabled:cursor-not-allowed disabled:bg-[#e0e3e5] disabled:shadow-none
@@ -247,7 +247,7 @@ const CategoryMegaMenu: React.FC<CategoryMegaMenuProps> = ({ open, onClose }) =>
                               relative flex items-center justify-between gap-2 rounded-xl px-3 py-2
                               text-[12.5px] transition-colors
                               focus-visible:outline-2 focus-visible:outline-offset-1
-                              focus-visible:outline-[#004ac6]
+                              focus-visible:outline-[#4077a6]
                               ${isActive
                                 ? 'bg-white font-bold text-[#101319] shadow-[0_2px_8px_rgba(32,36,45,0.06)]'
                                 : 'font-semibold text-[#737686] hover:text-[#101319]'}
@@ -264,7 +264,7 @@ const CategoryMegaMenu: React.FC<CategoryMegaMenuProps> = ({ open, onClose }) =>
                             <Icon
                               name="chevronRight"
                               size={13}
-                              className={isActive ? 'text-[#004ac6]' : 'text-[#e0e3e5]'}
+                              className={isActive ? 'text-[#4077a6]' : 'text-[#e0e3e5]'}
                             />
                           </Link>
                         </li>
@@ -291,9 +291,9 @@ const CategoryMegaMenu: React.FC<CategoryMegaMenuProps> = ({ open, onClose }) =>
                       onClick={onClose}
                       className="
                         shrink-0 rounded-full bg-[#f5f7fb] px-3 py-1.5 text-[11px] font-bold
-                        text-[#004ac6] transition-colors hover:bg-[#004ac6] hover:text-white
+                        text-[#4077a6] transition-colors hover:bg-[#4077a6] hover:text-white
                         focus-visible:outline-2 focus-visible:outline-offset-2
-                        focus-visible:outline-[#004ac6]
+                        focus-visible:outline-[#4077a6]
                       "
                     >
                       Lihat semua
@@ -311,9 +311,9 @@ const CategoryMegaMenu: React.FC<CategoryMegaMenuProps> = ({ open, onClose }) =>
                         className="
                           rounded-full border border-[#e0e3e5] px-2.5 py-1 text-[11px]
                           font-semibold text-[#737686] transition-colors
-                          hover:border-[#004ac6] hover:text-[#004ac6]
+                          hover:border-[#538cbd] hover:text-[#4077a6]
                           focus-visible:outline-2 focus-visible:outline-offset-2
-                          focus-visible:outline-[#004ac6]
+                          focus-visible:outline-[#4077a6]
                         "
                       >
                         {child.name}
@@ -369,7 +369,7 @@ const CategoryMegaMenu: React.FC<CategoryMegaMenuProps> = ({ open, onClose }) =>
                   role="status"
                   className={`
                     overflow-hidden px-4 py-2.5 text-[12px] font-semibold
-                    ${toast.ok ? 'bg-[#f5f7fb] text-[#004ac6]' : 'bg-[#FFF0F0] text-[#ba1a1a]'}
+                    ${toast.ok ? 'bg-[#f5f7fb] text-[#4077a6]' : 'bg-[#FFF0F0] text-[#ba1a1a]'}
                   `}
                 >
                   {toast.text}

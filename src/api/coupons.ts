@@ -10,7 +10,7 @@ export const COUPON_SKIN: Record<
   { stub: string; ink: string; edge: string; label: string }
 > = {
   SHIPPING: { stub: '#e6f4ee', ink: '#12805c', edge: '#e0e3e5', label: 'Gratis ongkir' },
-  CASHBACK: { stub: '#dbe1ff', ink: '#004ac6', edge: '#e0e3e5', label: 'Cashback' },
+  CASHBACK: { stub: '#e4ebf1', ink: '#4077a6', edge: '#e0e3e5', label: 'Cashback' },
   DISCOUNT: { stub: '#fff0e9', ink: '#ff5a1f', edge: '#e0e3e5', label: 'Potongan' },
 };
 

@@ -66,7 +66,7 @@ const OrdersFilters: React.FC<OrdersFiltersProps> = ({
             w-full rounded-full border border-[#e0e3e5] bg-[#F5F7FB] py-2.5
             pl-10 pr-10 text-[13px] text-[#101319] outline-none
             placeholder:text-[#A2A8B3] transition-all duration-200
-            focus:border-[#004ac6] focus:bg-white
+            focus:border-[#538cbd] focus:bg-white
             focus:shadow-[0_4px_14px_rgba(83,140,219,0.10)]
           "
         />
@@ -106,8 +106,8 @@ const OrdersFilters: React.FC<OrdersFiltersProps> = ({
                 transition-all duration-200 active:scale-[0.97] sm:text-[12px]
                 ${
                   active
-                    ? 'bg-[#004ac6] text-white shadow-[0_4px_12px_rgba(83,140,219,0.30)]'
-                    : 'border border-[#e0e3e5] bg-white text-[#737686] hover:border-[#004ac6]/50 hover:text-[#004ac6]'
+                    ? 'bg-[#4077a6] text-white shadow-[0_4px_12px_rgba(83,140,219,0.30)]'
+                    : 'border border-[#e0e3e5] bg-white text-[#737686] hover:border-[#538cbd]/50 hover:text-[#4077a6]'
                 }
               `}
             >

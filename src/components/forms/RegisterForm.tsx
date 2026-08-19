@@ -76,7 +76,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
         error={errors.username}
         className="
           rounded-xl border-[#e0e3e5] bg-white py-2.5 text-sm
-          transition focus:border-[#004ac6] focus:ring-2 focus:ring-[#004ac6]/15
+          transition focus:border-[#538cbd] focus:ring-2 focus:ring-[#538cbd]/15
         "
       />
 
@@ -90,7 +90,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
         error={errors.email}
         className="
           rounded-xl border-[#e0e3e5] bg-white py-2.5 text-sm
-          transition focus:border-[#004ac6] focus:ring-2 focus:ring-[#004ac6]/15
+          transition focus:border-[#538cbd] focus:ring-2 focus:ring-[#538cbd]/15
         "
       />
 
@@ -106,7 +106,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
             error={errors.password}
             className="
               rounded-xl border-[#e0e3e5] bg-white py-2.5 text-sm
-              transition focus:border-[#004ac6] focus:ring-2 focus:ring-[#004ac6]/15
+              transition focus:border-[#538cbd] focus:ring-2 focus:ring-[#538cbd]/15
             "
           />
           <p className="mt-1.5 text-[10px] text-[#737686]">Minimal 8 karakter</p>
@@ -122,7 +122,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
           error={errors.confirmPassword}
           className="
             rounded-xl border-[#e0e3e5] bg-white py-2.5 text-sm
-            transition focus:border-[#004ac6] focus:ring-2 focus:ring-[#004ac6]/15
+            transition focus:border-[#538cbd] focus:ring-2 focus:ring-[#538cbd]/15
           "
         />
       </div>
@@ -139,10 +139,10 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
         variant="primary"
         disabled={isLoading}
         className="
-          rounded-full bg-[#004ac6] py-2.5 text-sm font-semibold text-white
+          rounded-full bg-[#4077a6] py-2.5 text-sm font-semibold text-white
           shadow-[0_6px_16px_rgba(83,140,219,0.20)] transition
-          hover:bg-[#004ac6] hover:shadow-[0_8px_20px_rgba(83,140,219,0.25)]
-          focus:ring-4 focus:ring-[#004ac6]/15 active:scale-[0.98]
+          hover:bg-[#4077a6] hover:shadow-[0_8px_20px_rgba(83,140,219,0.25)]
+          focus:ring-4 focus:ring-[#538cbd]/15 active:scale-[0.98]
         "
       >
         {isLoading ? 'Membuat akun...' : 'Buat akun'}

@@ -56,7 +56,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
         className="
           group flex items-center gap-2 rounded-full p-1 transition-all
           duration-200 hover:bg-[#F5F7FB] focus:outline-none
-          focus-visible:ring-2 focus-visible:ring-[#004ac6]/30
+          focus-visible:ring-2 focus-visible:ring-[#538cbd]/30
         "
         aria-label="Menu profil"
         aria-expanded={isOpen}
@@ -65,9 +65,9 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
         <span
           className={`
             relative flex h-9 w-9 items-center justify-center overflow-hidden
-            rounded-full bg-gradient-to-br from-[#004ac6] to-[#003ea8]
+            rounded-full bg-gradient-to-br from-[#538cbd] to-[#284a67]
             ring-2 transition-all duration-200
-            ${isOpen ? 'ring-[#004ac6]' : 'ring-white group-hover:ring-[#004ac6]/50'}
+            ${isOpen ? 'ring-[#538cbd]' : 'ring-white group-hover:ring-[#538cbd]/50'}
           `}
         >
           {avatarUrl ? (
@@ -110,7 +110,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
             <span
               className="
                 pointer-events-none absolute -right-6 -top-6 h-16 w-16
-                rounded-full bg-[#004ac6]/5
+                rounded-full bg-[#538cbd]/5
               "
             />
             <span
@@ -125,7 +125,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
                 className="
                   flex h-10 w-10 shrink-0 items-center justify-center
                   overflow-hidden rounded-full bg-gradient-to-br
-                  from-[#004ac6] to-[#003ea8] ring-2 ring-white
+                  from-[#538cbd] to-[#284a67] ring-2 ring-white
                 "
               >
                 {avatarUrl ? (
@@ -151,14 +151,14 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
                     ${
                       isAdmin
                         ? 'bg-[#FFF0F0] text-[#ba1a1a]'
-                        : 'bg-[#f5f7fb] text-[#004ac6]'
+                        : 'bg-[#f5f7fb] text-[#4077a6]'
                     }
                   `}
                 >
                   <span
                     className={`
                       h-1 w-1 rounded-full
-                      ${isAdmin ? 'bg-[#ba1a1a]' : 'bg-[#004ac6]'}
+                      ${isAdmin ? 'bg-[#ba1a1a]' : 'bg-[#4077a6]'}
                     `}
                   />
                   {isAdmin ? 'Admin' : 'Penjual'}
@@ -176,15 +176,15 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
                   className="
                     group flex items-center gap-3 rounded-xl px-2.5 py-2
                     text-[13px] font-medium text-[#434655] transition-all
-                    duration-200 hover:bg-[#F5F7FB] hover:text-[#004ac6]
+                    duration-200 hover:bg-[#F5F7FB] hover:text-[#4077a6]
                   "
                 >
                   <span
                     className="
                       flex h-7 w-7 shrink-0 items-center justify-center
                       rounded-lg bg-[#F5F7FB] text-[#737686] transition-all
-                      duration-200 group-hover:bg-[#004ac6]/10
-                      group-hover:text-[#004ac6]
+                      duration-200 group-hover:bg-[#538cbd]/10
+                      group-hover:text-[#4077a6]
                     "
                   >
                     <Icon name={item.icon as any} size={14} />
@@ -196,7 +196,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
                     className="
                       -translate-x-1 text-[#A2A8B3] opacity-0
                       transition-all duration-200 group-hover:translate-x-0
-                      group-hover:opacity-100 group-hover:text-[#004ac6]
+                      group-hover:opacity-100 group-hover:text-[#4077a6]
                     "
                   />
                 </Link>

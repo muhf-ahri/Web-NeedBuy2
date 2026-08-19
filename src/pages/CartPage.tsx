@@ -142,9 +142,9 @@ const CartPage: React.FC = () => {
         <Reveal direction="up">
           <div className="mb-6">
             <div className="mb-2 flex items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-[#004ac6]/10 px-2.5 py-1">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-[#538cbd]/10 px-2.5 py-1">
                 <span className="h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
-                <p className="text-[9px] font-bold uppercase tracking-[0.20em] text-[#004ac6]">
+                <p className="text-[9px] font-bold uppercase tracking-[0.20em] text-[#4077a6]">
                   Keranjang belanja
                 </p>
               </span>
@@ -209,7 +209,7 @@ const CartPage: React.FC = () => {
                       onChange={(e) =>
                         setSelectedIds(e.target.checked ? new Set(allSelectable) : new Set())
                       }
-                      className="h-4 w-4 cursor-pointer accent-[#004ac6]"
+                      className="h-4 w-4 cursor-pointer accent-[#4077a6]"
                     />
                     <span className="text-[13px] font-bold text-[#101319]">
                       {selectedIds.size} dari {cart.items.length} item dipilih

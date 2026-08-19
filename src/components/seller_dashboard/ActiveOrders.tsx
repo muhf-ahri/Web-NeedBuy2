@@ -39,10 +39,10 @@ const ActiveOrders: React.FC<ActiveOrdersProps> = ({
         <span
           className="
             flex h-8 w-8 items-center justify-center rounded-lg
-            bg-[#004ac6]/10
+            bg-[#538cbd]/10
           "
         >
-          <Icon name="orders" size={15} className="text-[#004ac6]" />
+          <Icon name="orders" size={15} className="text-[#4077a6]" />
         </span>
         <div>
           <h3 className="text-[14px] font-bold text-[#101319] sm:text-[15px]">
@@ -58,10 +58,10 @@ const ActiveOrders: React.FC<ActiveOrdersProps> = ({
         <span
           className="
             inline-flex items-center gap-1 rounded-full bg-[#f5f7fb]
-            px-2 py-0.5 text-[10px] font-semibold text-[#004ac6]
+            px-2 py-0.5 text-[10px] font-semibold text-[#4077a6]
           "
         >
-          <span className="h-1 w-1 animate-pulse rounded-full bg-[#004ac6]" />
+          <span className="h-1 w-1 animate-pulse rounded-full bg-[#4077a6]" />
           {totalActive} aktif
         </span>
       )}
@@ -117,11 +117,11 @@ const ActiveOrders: React.FC<ActiveOrdersProps> = ({
               className="
                 flex items-center justify-between gap-3 rounded-xl border
                 border-[#F5F7FB] px-3 py-2.5 transition-colors
-                hover:border-[#004ac6]/30 hover:bg-[#f5f7fb]/50
+                hover:border-[#538cbd]/30 hover:bg-[#f5f7fb]/50
               "
             >
               <div className="min-w-0 flex-1">
-                <p className="truncate font-mono text-[11px] font-bold text-[#004ac6]">
+                <p className="truncate font-mono text-[11px] font-bold text-[#4077a6]">
                   #{order.orderNumber}
                 </p>
                 <p className="mt-0.5 truncate text-[11px] text-[#737686]">
@@ -153,7 +153,7 @@ const ActiveOrders: React.FC<ActiveOrdersProps> = ({
             mt-4 flex h-10 w-full items-center justify-center gap-2
             rounded-full border border-[#e0e3e5] bg-white text-[12px]
             font-semibold text-[#101319] transition-all duration-200
-            hover:border-[#004ac6] hover:text-[#004ac6] active:scale-[0.99]
+            hover:border-[#538cbd] hover:text-[#4077a6] active:scale-[0.99]
           "
         >
           Lihat semua order

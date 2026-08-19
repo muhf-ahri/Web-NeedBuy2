@@ -29,7 +29,7 @@ const SortIndicator: React.FC<{ active: boolean; asc: boolean }> = ({
       size={9}
       className={`
         -mb-0.5 transition-colors
-        ${active && asc ? 'text-[#004ac6]' : 'text-[#e0e3e5]'}
+        ${active && asc ? 'text-[#4077a6]' : 'text-[#e0e3e5]'}
       `}
     />
     <Icon
@@ -37,7 +37,7 @@ const SortIndicator: React.FC<{ active: boolean; asc: boolean }> = ({
       size={9}
       className={`
         -mt-0.5 transition-colors
-        ${active && !asc ? 'text-[#004ac6]' : 'text-[#e0e3e5]'}
+        ${active && !asc ? 'text-[#4077a6]' : 'text-[#e0e3e5]'}
       `}
     />
   </div>
@@ -55,7 +55,7 @@ const Th: React.FC<{
     className={`
       px-4 py-3 text-center text-[10px] font-bold uppercase tracking-wider
       text-[#737686] transition-colors
-      ${sortable ? 'cursor-pointer select-none hover:text-[#004ac6]' : ''}
+      ${sortable ? 'cursor-pointer select-none hover:text-[#4077a6]' : ''}
     `}
     onClick={sortable ? onClick : undefined}
   >

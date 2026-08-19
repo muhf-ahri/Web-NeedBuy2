@@ -57,7 +57,7 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
               py-2 text-left transition-all duration-200
               ${
                 active
-                  ? 'bg-[#004ac6]/10'
+                  ? 'bg-[#538cbd]/10'
                   : 'hover:bg-[#F5F7FB]'
               }
             `}
@@ -68,8 +68,8 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
                 rounded-md border transition-all duration-200
                 ${
                   active
-                    ? 'border-[#004ac6] bg-[#004ac6]'
-                    : 'border-[#e0e3e5] bg-white group-hover:border-[#004ac6]/60'
+                    ? 'border-[#538cbd] bg-[#4077a6]'
+                    : 'border-[#e0e3e5] bg-white group-hover:border-[#538cbd]/60'
                 }
               `}
             >
@@ -82,8 +82,8 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
                 duration-200
                 ${
                   active
-                    ? 'font-semibold text-[#004ac6]'
-                    : 'font-medium text-[#101319] group-hover:text-[#004ac6]'
+                    ? 'font-semibold text-[#4077a6]'
+                    : 'font-medium text-[#101319] group-hover:text-[#4077a6]'
                 }
               `}
             >

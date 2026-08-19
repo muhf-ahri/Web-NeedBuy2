@@ -33,7 +33,7 @@ const NeedPayTopup: React.FC<NeedPayTopupProps> = ({
           <p
             className="
               mb-1 text-[10px] font-semibold uppercase tracking-[0.18em]
-              text-[#004ac6]
+              text-[#4077a6]
             "
           >
             Tambah saldo
@@ -74,8 +74,8 @@ const NeedPayTopup: React.FC<NeedPayTopupProps> = ({
                   transition-all duration-200
                   ${
                     picked
-                      ? 'bg-[#004ac6] text-white shadow-[0_6px_16px_rgba(83,140,219,0.25)]'
-                      : 'bg-[#F5F7FB] text-[#101319] hover:bg-[#f5f7fb] hover:text-[#004ac6]'
+                      ? 'bg-[#4077a6] text-white shadow-[0_6px_16px_rgba(83,140,219,0.25)]'
+                      : 'bg-[#F5F7FB] text-[#101319] hover:bg-[#f5f7fb] hover:text-[#4077a6]'
                   }
                 `}
               >
@@ -106,7 +106,7 @@ const NeedPayTopup: React.FC<NeedPayTopupProps> = ({
             className="
               w-full rounded-full border border-[#e0e3e5] bg-[#F5F7FB]
               py-3 pl-10 pr-4 text-[13px] text-[#101319] outline-none
-              transition-all duration-200 focus:border-[#004ac6]
+              transition-all duration-200 focus:border-[#538cbd]
               focus:bg-white focus:shadow-[0_6px_20px_rgba(83,140,219,0.12)]
             "
           />
@@ -118,9 +118,9 @@ const NeedPayTopup: React.FC<NeedPayTopupProps> = ({
           disabled={busy || !amount}
           className="
             flex h-11 items-center justify-center gap-2 rounded-full
-            bg-[#004ac6] px-6 text-[13px] font-semibold text-white
+            bg-[#4077a6] px-6 text-[13px] font-semibold text-white
             shadow-[0_7px_18px_rgba(83,140,219,0.25)] transition-all
-            duration-200 hover:bg-[#004ac6]
+            duration-200 hover:bg-[#4077a6]
             hover:shadow-[0_9px_22px_rgba(83,140,219,0.30)]
             active:scale-[0.99] disabled:cursor-not-allowed
             disabled:bg-[#A2A8B3] disabled:shadow-none sm:w-auto

@@ -87,8 +87,8 @@ const HeroSection: React.FC<{
                   y2="400"
                   gradientUnits="userSpaceOnUse"
                 >
-                  <stop stopColor="#004ac6" />
-                  <stop offset="1" stopColor="#003ea8" />
+                  <stop stopColor="#4077a6" />
+                  <stop offset="1" stopColor="#284a67" />
                 </linearGradient>
               </defs>
               <path
@@ -97,13 +97,13 @@ const HeroSection: React.FC<{
               />
             </svg>
 
-            <div className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full border border-[#004ac6]/10" />
+            <div className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full border border-[#538cbd]/10" />
             <div className="pointer-events-none absolute right-6 top-6 h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
 
             <div className="relative z-10 px-6 py-7 pl-9 sm:px-8 sm:pl-10">
               <div className="flex items-center gap-2">
                 <span
-                  className="text-[15px] font-bold tracking-tight text-[#004ac6]"
+                  className="text-[15px] font-bold tracking-tight text-[#4077a6]"
                   style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
                 >
                   NeedBuy
@@ -113,7 +113,7 @@ const HeroSection: React.FC<{
               <p
                 className="
                   mt-4 text-[10px] font-semibold uppercase tracking-[0.18em]
-                  text-[#004ac6]
+                  text-[#4077a6]
                 "
               >
                 Selamat datang di NeedBuy
@@ -128,7 +128,7 @@ const HeroSection: React.FC<{
                 Belanja cerdas,
                 <span className="block h-[1.35em] overflow-hidden">
                   <span key={index} className="hero-slogan-in block">
-                    <span className="relative inline-block text-[#004ac6]">
+                    <span className="relative inline-block text-[#4077a6]">
                       {ROTATING_LINES[index]}
                       <span
                         aria-hidden="true"
@@ -156,9 +156,9 @@ const HeroSection: React.FC<{
                   onClick={() => navigate('/categories')}
                   className="
                     flex h-11 w-full items-center justify-center gap-2
-                    rounded-full bg-[#004ac6] px-6 text-sm font-semibold
+                    rounded-full bg-[#4077a6] px-6 text-sm font-semibold
                     text-white shadow-[0_7px_18px_rgba(83,140,219,0.20)]
-                    transition-all duration-200 hover:bg-[#004ac6]
+                    transition-all duration-200 hover:bg-[#4077a6]
                     hover:shadow-[0_9px_22px_rgba(83,140,219,0.25)]
                     active:scale-[0.99]
                   "
@@ -173,9 +173,9 @@ const HeroSection: React.FC<{
                   className="
                     flex h-11 w-full items-center justify-center rounded-full
                     border border-[#e0e3e5] bg-white px-6 text-sm
-                    font-semibold text-[#003ea8] shadow-sm transition-all
-                    duration-200 hover:border-[#004ac6] hover:bg-[#F5F7FB]
-                    hover:text-[#003ea8] active:scale-[0.99]
+                    font-semibold text-[#284a67] shadow-sm transition-all
+                    duration-200 hover:border-[#538cbd] hover:bg-[#F5F7FB]
+                    hover:text-[#284a67] active:scale-[0.99]
                   "
                 >
                   Lihat Promo
@@ -194,8 +194,8 @@ const HeroSection: React.FC<{
                       h-1.5 rounded-full transition-all duration-300
                       ${
                         i === index
-                          ? 'w-7 bg-[#004ac6]'
-                          : 'w-1.5 bg-[#004ac6]/25 hover:bg-[#004ac6]/50'
+                          ? 'w-7 bg-[#4077a6]'
+                          : 'w-1.5 bg-[#538cbd]/25 hover:bg-[#538cbd]/50'
                       }
                     `}
                   />

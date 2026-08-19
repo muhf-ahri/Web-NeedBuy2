@@ -158,7 +158,7 @@ const ReportButton: React.FC<ReportButtonProps> = ({
                       value={item}
                       checked={reason === item}
                       onChange={() => setReason(item)}
-                      className="h-4 w-4 accent-[#004ac6]"
+                      className="h-4 w-4 accent-[#4077a6]"
                     />
                     {item}
                   </label>
@@ -174,7 +174,7 @@ const ReportButton: React.FC<ReportButtonProps> = ({
                 maxLength={120}
                 placeholder="Tulis alasanmu"
                 aria-label="Alasan lain"
-                className="w-full rounded-xl border border-[#c3c6d7] px-3 py-2.5 text-sm outline-none transition focus:border-[#004ac6] focus:ring-2 focus:ring-[#004ac6]/20"
+                className="w-full rounded-xl border border-[#c3c6d7] px-3 py-2.5 text-sm outline-none transition focus:border-[#538cbd] focus:ring-2 focus:ring-[#538cbd]/20"
                 autoFocus
               />
             )}
@@ -193,7 +193,7 @@ const ReportButton: React.FC<ReportButtonProps> = ({
                 onChange={(e) => setDescription(e.target.value)}
                 maxLength={1000}
                 placeholder="Makin jelas ceritanya, makin cepat kami tindak."
-                className="w-full resize-none rounded-xl border border-[#c3c6d7] px-3 py-2.5 text-sm outline-none transition focus:border-[#004ac6] focus:ring-2 focus:ring-[#004ac6]/20"
+                className="w-full resize-none rounded-xl border border-[#c3c6d7] px-3 py-2.5 text-sm outline-none transition focus:border-[#538cbd] focus:ring-2 focus:ring-[#538cbd]/20"
               />
             </div>
 

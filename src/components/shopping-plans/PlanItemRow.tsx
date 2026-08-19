@@ -54,7 +54,7 @@ const PlanItemRow: React.FC<PlanItemRowProps> = ({
         <p className="mt-0.5 text-[11px] text-[#737686]">
           {item.product.category?.name ?? 'Kategori umum'}
         </p>
-        <p className="mt-0.5 text-[11px] font-semibold text-[#004ac6]">
+        <p className="mt-0.5 text-[11px] font-semibold text-[#4077a6]">
           {formatRupiah(parseFloat(item.product.price))} / item
         </p>
       </div>
@@ -67,7 +67,7 @@ const PlanItemRow: React.FC<PlanItemRowProps> = ({
           className="
             flex h-7 w-7 items-center justify-center rounded-full
             border border-[#e0e3e5] bg-white text-[#737686]
-            transition-colors hover:border-[#004ac6] hover:text-[#004ac6]
+            transition-colors hover:border-[#538cbd] hover:text-[#4077a6]
             disabled:cursor-not-allowed disabled:border-[#e0e3e5]
             disabled:bg-[#F5F7FB] disabled:text-[#e0e3e5]
           "
@@ -85,7 +85,7 @@ const PlanItemRow: React.FC<PlanItemRowProps> = ({
           className="
             flex h-7 w-7 items-center justify-center rounded-full
             border border-[#e0e3e5] bg-white text-[#737686]
-            transition-colors hover:border-[#004ac6] hover:text-[#004ac6]
+            transition-colors hover:border-[#538cbd] hover:text-[#4077a6]
             disabled:cursor-not-allowed disabled:border-[#e0e3e5]
             disabled:bg-[#F5F7FB] disabled:text-[#e0e3e5]
           "

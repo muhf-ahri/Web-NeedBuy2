@@ -18,8 +18,8 @@ const STATUS_LABEL: Record<OrderStatusCode, string> = {
 
 const STATUS_COLOR: Record<OrderStatusCode, string> = {
   WAITING_PAYMENT: '#b45309',
-  PROCESSING: '#004ac6',
-  SHIPPED: '#004ac6',
+  PROCESSING: '#4077a6',
+  SHIPPED: '#4077a6',
   DELIVERED: '#12805c',
   COMPLETED: '#12805c',
   CANCELLED: '#93000a',
@@ -97,7 +97,7 @@ const AnalyticsPage: React.FC = () => {
 
         {isLoading || !data ? (
           <div className="rounded-2xl border border-[#e0e3e5] bg-white py-20 text-center text-[#737686]">
-            <span className="inline-block h-5 w-5 animate-spin rounded-full border-2 border-[#004ac6] border-t-transparent" />
+            <span className="inline-block h-5 w-5 animate-spin rounded-full border-2 border-[#538cbd] border-t-transparent" />
             <span className="ml-2">Memuat…</span>
           </div>
         ) : (

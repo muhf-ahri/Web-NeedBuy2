@@ -5,7 +5,7 @@ import Button from '../components/ui/Button';
 import { clearAuth, resetPassword, validateResetToken } from '../api/auth';
 
 const FIELD_CLASS =
-  'w-full rounded-xl border border-[#c3c6d7] px-4 py-2.5 text-sm outline-none transition focus:border-[#004ac6] focus:ring-2 focus:ring-[#004ac6]/20';
+  'w-full rounded-xl border border-[#c3c6d7] px-4 py-2.5 text-sm outline-none transition focus:border-[#538cbd] focus:ring-2 focus:ring-[#538cbd]/20';
 
 const ResetPasswordPage: React.FC = () => {
   const { token = '' } = useParams();

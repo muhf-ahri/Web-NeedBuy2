@@ -20,7 +20,7 @@ const EMPTY = {
 };
 
 const inputCls =
-  'w-full px-3 py-2 rounded-lg border border-[#c3c6d7] outline-none focus:border-[#004ac6] focus:ring-2 focus:ring-[#004ac6]/20 text-sm transition';
+  'w-full px-3 py-2 rounded-lg border border-[#c3c6d7] outline-none focus:border-[#538cbd] focus:ring-2 focus:ring-[#538cbd]/20 text-sm transition';
 
 const SellerRegisterForm: React.FC<Props> = ({ onRegistered }) => {
   const navigate = useNavigate();
@@ -233,7 +233,7 @@ const SellerRegisterForm: React.FC<Props> = ({ onRegistered }) => {
       <button
         type="submit"
         disabled={saving || uploading}
-        className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#004ac6] hover:bg-[#003ea8] text-white text-[13px] font-semibold transition-colors disabled:opacity-50"
+        className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#4077a6] hover:bg-[#284a67] text-white text-[13px] font-semibold transition-colors disabled:opacity-50"
       >
         {saving && <Icon name="clock" size={16} className="animate-spin" />}
         Daftarkan Toko

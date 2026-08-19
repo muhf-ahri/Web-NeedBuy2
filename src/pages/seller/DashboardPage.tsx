@@ -64,9 +64,9 @@ const DashboardPage: React.FC = () => {
           <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between">
             <div className="min-w-0">
               <div className="mb-2 flex items-center gap-2">
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-[#004ac6]/10 px-2.5 py-1">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-[#538cbd]/10 px-2.5 py-1">
                   <span className="h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
-                  <p className="text-[9px] font-bold uppercase tracking-[0.20em] text-[#004ac6]">
+                  <p className="text-[9px] font-bold uppercase tracking-[0.20em] text-[#4077a6]">
                     Seller Dashboard
                   </p>
                 </span>
@@ -78,7 +78,7 @@ const DashboardPage: React.FC = () => {
                 "
               >
                 Selamat datang kembali,{' '}
-                <span className="text-[#004ac6]">{user?.name ?? 'Seller'}</span>
+                <span className="text-[#4077a6]">{user?.name ?? 'Seller'}</span>
               </h1>
               <p className="mt-1 max-w-xl text-[12px] leading-relaxed text-[#737686] sm:text-[13px]">
                 Pantau performa tokomu {periodLabel} di satu tempat.
@@ -102,7 +102,7 @@ const DashboardPage: React.FC = () => {
                   title="Total Sales"
                   icon="card"
                   iconBg="bg-[#f5f7fb]"
-                  iconText="text-[#004ac6]"
+                  iconText="text-[#4077a6]"
                   loading={sales.loading}
                   error={sales.error}
                   value={formatRupiah(sales.data?.value ?? 0)}
@@ -162,7 +162,7 @@ const DashboardPage: React.FC = () => {
                 <span
                   className="
                     pointer-events-none absolute -right-16 -top-16 h-40 w-40
-                    rounded-full border border-[#004ac6]/10
+                    rounded-full border border-[#538cbd]/10
                   "
                 />
                 <span
@@ -174,7 +174,7 @@ const DashboardPage: React.FC = () => {
 
                 <div className="relative mb-5 flex flex-wrap items-baseline justify-between gap-3">
                   <div className="flex items-center gap-2.5">
-                    <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#004ac6]/10">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#538cbd]/10">
                       <svg
                         width={15}
                         height={15}
@@ -184,7 +184,7 @@ const DashboardPage: React.FC = () => {
                         strokeWidth={2.5}
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        className="text-[#004ac6]"
+                        className="text-[#4077a6]"
                       >
                         <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
                       </svg>
@@ -209,7 +209,7 @@ const DashboardPage: React.FC = () => {
                       </span>
                       <span className="h-1 w-1 rounded-full bg-[#e0e3e5]" />
                       <span>
-                        <span className="font-bold text-[#004ac6]">
+                        <span className="font-bold text-[#4077a6]">
                           {formatRupiah(performance.data.totals.revenue)}
                         </span>{' '}
                         total

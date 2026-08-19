@@ -25,7 +25,7 @@ const StoreAvatar: React.FC<{ store: Seller }> = ({ store }) => (
     {store.logoUrl ? (
       <img src={store.logoUrl} alt="" loading="lazy" className="h-full w-full object-cover" />
     ) : (
-      <span className="text-[16px] font-bold text-[#004ac6]">
+      <span className="text-[16px] font-bold text-[#4077a6]">
         {store.storeName.charAt(0).toUpperCase()}
       </span>
     )}
@@ -162,7 +162,7 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({
                       {product.name}
                     </span>
                     <span className="mt-0.5 flex items-center gap-2">
-                      <span className="text-[13px] font-bold text-[#004ac6]">
+                      <span className="text-[13px] font-bold text-[#4077a6]">
                         {formatRupiah(product.price)}
                       </span>
                       <span className="inline-flex items-center gap-0.5 text-[11px] text-[#737686]">
@@ -195,7 +195,7 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({
         className="
           flex w-full items-center justify-between gap-2 border-t
           border-[#e0e3e5] px-4 py-2.5 text-[12px] font-semibold
-          text-[#004ac6] transition-colors hover:bg-[#F5F7FB]
+          text-[#4077a6] transition-colors hover:bg-[#F5F7FB]
         "
       >
         Lihat semua hasil untuk "{query}"

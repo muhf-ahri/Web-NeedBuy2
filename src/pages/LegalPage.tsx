@@ -160,7 +160,7 @@ const LegalPage: React.FC = () => {
 
       <main className="flex-1 max-w-3xl mx-auto w-full px-5 sm:px-10 py-10">
         <div className="flex items-center gap-3">
-          <span className="w-11 h-11 rounded-full bg-[#dbe1ff] text-[#004ac6] flex items-center justify-center shrink-0">
+          <span className="w-11 h-11 rounded-full bg-[#e4ebf1] text-[#4077a6] flex items-center justify-center shrink-0">
             <Icon name={doc.icon} size={20} />
           </span>
           <div>

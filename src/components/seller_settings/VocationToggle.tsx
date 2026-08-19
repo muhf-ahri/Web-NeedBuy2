@@ -20,7 +20,7 @@ const VacationToggle: React.FC<VacationToggleProps> = ({
       ${
         checked
           ? 'border-[#FFD500]/40 bg-[#FFF7E0]/50'
-          : 'border-[#e0e3e5] bg-[#F5F7FB]/30 hover:border-[#004ac6]/40 hover:bg-[#f5f7fb]/50'
+          : 'border-[#e0e3e5] bg-[#F5F7FB]/30 hover:border-[#538cbd]/40 hover:bg-[#f5f7fb]/50'
       }
     `}
   >
@@ -70,7 +70,7 @@ const VacationToggle: React.FC<VacationToggleProps> = ({
       className={`
         relative mt-0.5 flex h-5 w-9 shrink-0 items-center rounded-full
         p-0.5 transition-colors
-        ${checked ? 'bg-[#004ac6]' : 'bg-[#e0e3e5]'}
+        ${checked ? 'bg-[#4077a6]' : 'bg-[#e0e3e5]'}
       `}
     >
       <span

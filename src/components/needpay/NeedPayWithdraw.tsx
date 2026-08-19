@@ -58,7 +58,7 @@ const NeedPayWithdraw: React.FC<NeedPayWithdrawProps> = ({
           <p
             className="
               mb-1 text-[10px] font-semibold uppercase tracking-[0.18em]
-              text-[#004ac6]
+              text-[#4077a6]
             "
           >
             Cairkan ke rekening
@@ -75,9 +75,9 @@ const NeedPayWithdraw: React.FC<NeedPayWithdrawProps> = ({
             type="button"
             onClick={() => setOpen(true)}
             className="
-              shrink-0 rounded-full border border-[#004ac6] bg-white px-4
-              py-2 text-[12px] font-semibold text-[#004ac6] transition-all
-              duration-200 hover:bg-[#004ac6] hover:text-white
+              shrink-0 rounded-full border border-[#538cbd] bg-white px-4
+              py-2 text-[12px] font-semibold text-[#4077a6] transition-all
+              duration-200 hover:bg-[#4077a6] hover:text-white
             "
           >
             Ajukan
@@ -122,7 +122,7 @@ const NeedPayWithdraw: React.FC<NeedPayWithdrawProps> = ({
                 className="
                   w-full rounded-xl border border-[#e0e3e5] bg-[#F5F7FB]
                   py-3 pl-10 pr-4 text-[13px] text-[#101319] outline-none
-                  transition-all duration-200 focus:border-[#004ac6]
+                  transition-all duration-200 focus:border-[#538cbd]
                   focus:bg-white focus:shadow-[0_4px_16px_rgba(83,140,219,0.10)]
                 "
               />
@@ -158,7 +158,7 @@ const NeedPayWithdraw: React.FC<NeedPayWithdrawProps> = ({
                 className="
                   w-full rounded-xl border border-[#e0e3e5] bg-[#F5F7FB]
                   px-4 py-3 text-[13px] text-[#101319] outline-none
-                  transition-all duration-200 focus:border-[#004ac6]
+                  transition-all duration-200 focus:border-[#538cbd]
                   focus:bg-white focus:shadow-[0_4px_16px_rgba(83,140,219,0.10)]
                 "
               />
@@ -186,7 +186,7 @@ const NeedPayWithdraw: React.FC<NeedPayWithdrawProps> = ({
                 className="
                   w-full rounded-xl border border-[#e0e3e5] bg-[#F5F7FB]
                   px-4 py-3 text-[13px] text-[#101319] outline-none
-                  transition-all duration-200 focus:border-[#004ac6]
+                  transition-all duration-200 focus:border-[#538cbd]
                   focus:bg-white focus:shadow-[0_4px_16px_rgba(83,140,219,0.10)]
                 "
               />
@@ -217,7 +217,7 @@ const NeedPayWithdraw: React.FC<NeedPayWithdrawProps> = ({
               className="
                 w-full rounded-xl border border-[#e0e3e5] bg-[#F5F7FB]
                 px-4 py-3 text-[13px] text-[#101319] outline-none
-                transition-all duration-200 focus:border-[#004ac6]
+                transition-all duration-200 focus:border-[#538cbd]
                 focus:bg-white focus:shadow-[0_4px_16px_rgba(83,140,219,0.10)]
               "
             />
@@ -233,9 +233,9 @@ const NeedPayWithdraw: React.FC<NeedPayWithdrawProps> = ({
               disabled={busy}
               className="
                 flex h-11 items-center justify-center rounded-full
-                bg-[#004ac6] px-6 text-[13px] font-semibold text-white
+                bg-[#4077a6] px-6 text-[13px] font-semibold text-white
                 shadow-[0_7px_18px_rgba(83,140,219,0.25)] transition-all
-                duration-200 hover:bg-[#004ac6]
+                duration-200 hover:bg-[#4077a6]
                 hover:shadow-[0_9px_22px_rgba(83,140,219,0.30)]
                 active:scale-[0.99] disabled:cursor-not-allowed
                 disabled:bg-[#A2A8B3] disabled:shadow-none
@@ -251,7 +251,7 @@ const NeedPayWithdraw: React.FC<NeedPayWithdrawProps> = ({
                 flex h-11 items-center justify-center rounded-full
                 border border-[#e0e3e5] bg-white px-6 text-[13px]
                 font-semibold text-[#101319] transition-all duration-200
-                hover:border-[#004ac6] hover:text-[#004ac6]
+                hover:border-[#538cbd] hover:text-[#4077a6]
                 active:scale-[0.99] disabled:cursor-not-allowed
               "
             >

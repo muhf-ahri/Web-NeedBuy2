@@ -40,7 +40,7 @@ const Footer: React.FC = () => {
   return (
     <footer className="relative overflow-hidden border-t border-[#e0e3e5] bg-white">
       
-      <div className="pointer-events-none absolute -right-24 -top-24 h-56 w-56 rounded-full bg-[#004ac6]/5" />
+      <div className="pointer-events-none absolute -right-24 -top-24 h-56 w-56 rounded-full bg-[#538cbd]/5" />
       <div className="pointer-events-none absolute -bottom-20 left-1/4 h-48 w-48 rounded-full bg-[#FFD500]/5" />
 
       <div className="relative mx-auto max-w-6xl px-5 py-10 sm:px-8 lg:px-10">
@@ -75,7 +75,7 @@ const Footer: React.FC = () => {
             </p>
 
             <div className="mt-5 flex items-center gap-2">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#004ac6]" />
+              <span className="h-1.5 w-1.5 rounded-full bg-[#4077a6]" />
               <span className="h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
               <span className="h-1.5 w-1.5 rounded-full bg-[#ba1a1a]" />
             </div>
@@ -109,7 +109,7 @@ const Footer: React.FC = () => {
                       text-[13px]
                       text-[#737686]
                       transition-colors
-                      hover:text-[#004ac6]
+                      hover:text-[#4077a6]
                     "
                   >
                     <span
@@ -120,7 +120,7 @@ const Footer: React.FC = () => {
                         rounded-full
                         bg-[#e0e3e5]
                         transition-colors
-                        group-hover:bg-[#004ac6]
+                        group-hover:bg-[#4077a6]
                       "
                     />
 
@@ -162,7 +162,7 @@ const Footer: React.FC = () => {
                       text-[13px]
                       text-[#737686]
                       transition-colors
-                      hover:text-[#004ac6]
+                      hover:text-[#4077a6]
                     "
                   >
 
@@ -176,7 +176,7 @@ const Footer: React.FC = () => {
                         rounded-lg
                         bg-[#f5f7fb]
                         transition-colors
-                        group-hover:bg-[#004ac6]/10
+                        group-hover:bg-[#538cbd]/10
                       "
                     >
                       <Icon
@@ -185,7 +185,7 @@ const Footer: React.FC = () => {
                         className="
                           text-[#737686]
                           transition-colors
-                          group-hover:text-[#004ac6]
+                          group-hover:text-[#4077a6]
                         "
                       />
                     </span>
@@ -234,7 +234,7 @@ const Footer: React.FC = () => {
               py-1
               text-[10px]
               font-semibold
-              text-[#004ac6]
+              text-[#4077a6]
             ">
               #NeedBuy
             </span>

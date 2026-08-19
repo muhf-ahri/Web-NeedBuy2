@@ -33,7 +33,7 @@ const SettingsSection: React.FC<SettingsSectionProps> = ({
     <span
       className="
         pointer-events-none absolute -right-10 -top-10 h-24 w-24
-        rounded-full border border-[#004ac6]/10
+        rounded-full border border-[#538cbd]/10
       "
     />
     <span
@@ -53,7 +53,7 @@ const SettingsSection: React.FC<SettingsSectionProps> = ({
         <Icon name={icon} size={15} />
       </span>
       <div>
-        <p className="text-[9px] font-bold uppercase tracking-[0.16em] text-[#004ac6]">
+        <p className="text-[9px] font-bold uppercase tracking-[0.16em] text-[#4077a6]">
           {eyebrow}
         </p>
         <h3 className="text-[13px] font-bold text-[#101319] sm:text-[14px]">

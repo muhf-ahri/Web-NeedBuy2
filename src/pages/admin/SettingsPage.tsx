@@ -65,7 +65,7 @@ const SettingsPage: React.FC = () => {
             
             <div className="rounded-2xl border border-[#e0e3e5] bg-white p-5">
               <h2 className="mb-4 flex items-center gap-2 text-[15px] font-bold text-[#101319]">
-                <Icon name="settings" size={18} className="text-[#004ac6]" />
+                <Icon name="settings" size={18} className="text-[#4077a6]" />
                 Informasi Marketplace
               </h2>
               <MarketplaceInfo values={values} onSave={handleSave} />
@@ -73,7 +73,7 @@ const SettingsPage: React.FC = () => {
 
             <div className="rounded-2xl border border-[#e0e3e5] bg-white p-5">
               <h2 className="mb-4 flex items-center gap-2 text-[15px] font-bold text-[#101319]">
-                <Icon name="upload" size={18} className="text-[#004ac6]" />
+                <Icon name="upload" size={18} className="text-[#4077a6]" />
                 Branding
               </h2>
               <Branding values={values} onSave={handleSave} />
@@ -81,7 +81,7 @@ const SettingsPage: React.FC = () => {
 
             <div className="rounded-2xl border border-[#e0e3e5] bg-white p-5">
               <h2 className="mb-4 flex items-center gap-2 text-[15px] font-bold text-[#101319]">
-                <Icon name="globe" size={18} className="text-[#004ac6]" />
+                <Icon name="globe" size={18} className="text-[#4077a6]" />
                 Regional Settings
               </h2>
               <RegionalSettings values={values} onSave={handleSave} />

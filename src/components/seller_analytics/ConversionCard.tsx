@@ -50,7 +50,7 @@ const ConversionCard: React.FC<ConversionCardProps> = ({
       <span
         className="
           pointer-events-none absolute -right-10 -top-10 h-24 w-24
-          rounded-full border border-[#004ac6]/10
+          rounded-full border border-[#538cbd]/10
         "
       />
       <span
@@ -112,8 +112,8 @@ const ConversionCard: React.FC<ConversionCardProps> = ({
               />
               <defs>
                 <linearGradient id="conversion-gradient" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stopColor="#004ac6" />
-                  <stop offset="100%" stopColor="#003ea8" />
+                  <stop offset="0%" stopColor="#4077a6" />
+                  <stop offset="100%" stopColor="#284a67" />
                 </linearGradient>
               </defs>
             </svg>

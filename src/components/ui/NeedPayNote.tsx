@@ -54,7 +54,7 @@ const BrandPanel: React.FC<{ footer?: string; image?: string }> = ({
         "
       />
     ) : (
-      <div className="absolute inset-0 bg-gradient-to-br from-[#004ac6] via-[#004ac6] to-[#003ea8]" />
+      <div className="absolute inset-0 bg-gradient-to-br from-[#538cbd] via-[#538cbd] to-[#284a67]" />
     )}
 
     <div className="absolute inset-0 bg-gradient-to-t from-[#101319]/55 via-transparent to-transparent" />
@@ -80,7 +80,7 @@ const BrandPanel: React.FC<{ footer?: string; image?: string }> = ({
       className="
         absolute left-6 top-6 z-10 inline-flex items-center gap-1.5
         rounded-full bg-white/90 px-3 py-1 text-[10px] font-semibold
-        uppercase tracking-[0.18em] text-[#004ac6] backdrop-blur-sm
+        uppercase tracking-[0.18em] text-[#4077a6] backdrop-blur-sm
       "
     >
       <span className="h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
@@ -101,7 +101,7 @@ export const PaymentTile: React.FC<{ method: PaymentMethod }> = ({ method }) => 
     className="
       flex flex-col items-center gap-1.5 rounded-xl border border-[#e0e3e5]
       bg-white px-1.5 py-2.5 shadow-sm transition-all duration-200
-      hover:-translate-y-0.5 hover:border-[#004ac6]/40
+      hover:-translate-y-0.5 hover:border-[#538cbd]/40
       hover:shadow-[0_6px_16px_rgba(83,140,219,0.12)]
     "
   >
@@ -160,7 +160,7 @@ export const NeedPayNote: React.FC<{
           className="
             absolute left-4 top-4 inline-flex items-center gap-1.5
             rounded-full bg-white/90 px-3 py-1 text-[10px] font-semibold
-            uppercase tracking-[0.18em] text-[#004ac6] backdrop-blur-sm
+            uppercase tracking-[0.18em] text-[#4077a6] backdrop-blur-sm
           "
         >
           <span className="h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
@@ -179,13 +179,13 @@ export const NeedPayNote: React.FC<{
         <section className="flex items-center bg-white px-6 py-7 sm:px-8 lg:px-10">
           <div className="mx-auto w-full max-w-lg">
             <div className="mb-4 md:hidden">
-              <p className="text-xs font-semibold text-[#004ac6]">NeedPay</p>
+              <p className="text-xs font-semibold text-[#4077a6]">NeedPay</p>
             </div>
 
             <p
               className="
                 mb-2 text-[10px] font-semibold uppercase tracking-[0.18em]
-                text-[#004ac6]
+                text-[#4077a6]
               "
             >
               Saldo NeedPay
@@ -207,7 +207,7 @@ export const NeedPayNote: React.FC<{
               "
             >
               {loading ? (
-                <div className="h-8 w-32 animate-pulse rounded-lg bg-[#004ac6]/15" />
+                <div className="h-8 w-32 animate-pulse rounded-lg bg-[#538cbd]/15" />
               ) : (
                 <p
                   className="
@@ -263,9 +263,9 @@ export const NeedPayNote: React.FC<{
               onClick={handleTopUp}
               className="
                 mt-5 inline-flex h-11 w-full items-center justify-center
-                gap-2 rounded-full bg-[#004ac6] px-6 text-sm font-semibold
+                gap-2 rounded-full bg-[#4077a6] px-6 text-sm font-semibold
                 text-white shadow-[0_7px_18px_rgba(83,140,219,0.20)]
-                transition-all duration-200 hover:bg-[#004ac6]
+                transition-all duration-200 hover:bg-[#4077a6]
                 hover:shadow-[0_9px_22px_rgba(83,140,219,0.25)]
                 active:scale-[0.99]
               "
@@ -298,7 +298,7 @@ export const NeedPayBanner: React.FC<{
         transition-all duration-300 hover:-translate-y-0.5
         hover:shadow-[0_16px_40px_rgba(32,36,45,0.12)] active:scale-[0.99]
         focus-visible:outline-2 focus-visible:outline-offset-4
-        focus-visible:outline-[#004ac6] ${className}
+        focus-visible:outline-[#4077a6] ${className}
       `}
     >
       <span className="relative w-32 shrink-0 overflow-hidden sm:w-40">
@@ -334,7 +334,7 @@ export const NeedPayBanner: React.FC<{
         <span
           className="
             text-[10px] font-semibold uppercase tracking-[0.18em]
-            text-[#004ac6]
+            text-[#4077a6]
           "
         >
           NeedPay
@@ -369,10 +369,10 @@ export const NeedPayBanner: React.FC<{
 
       <span
         className="
-          mr-4 shrink-0 self-center rounded-full bg-[#004ac6] px-4 py-2.5
+          mr-4 shrink-0 self-center rounded-full bg-[#4077a6] px-4 py-2.5
           text-[11px] font-semibold text-white
           shadow-[0_6px_16px_rgba(83,140,219,0.20)] transition-all
-          duration-200 group-hover:bg-[#004ac6]
+          duration-200 group-hover:bg-[#4077a6]
           group-hover:shadow-[0_8px_20px_rgba(83,140,219,0.25)] sm:mr-5
         "
       >

@@ -225,7 +225,7 @@ const CheckoutPage: React.FC = () => {
             <p className="text-[#737686] mb-4">Login dulu ya buat lanjut checkout.</p>
             <button
               onClick={() => navigate('/login')}
-              className="px-6 py-2.5 rounded-full bg-[#004ac6] hover:bg-[#003ea8] text-white text-[14px] font-semibold transition-colors"
+              className="px-6 py-2.5 rounded-full bg-[#4077a6] hover:bg-[#284a67] text-white text-[14px] font-semibold transition-colors"
             >
               Login
             </button>
@@ -297,7 +297,7 @@ const CheckoutPage: React.FC = () => {
                     </p>
                   </div>
                   <div className="text-right">
-                    <p className="text-[14px] font-bold text-[#004ac6]">
+                    <p className="text-[14px] font-bold text-[#4077a6]">
                       {order.paymentMethod === 'COD'
                         ? 'COD'
                         : order.paymentMethod === 'NEEDPAY'
@@ -313,7 +313,7 @@ const CheckoutPage: React.FC = () => {
           <div className="mt-6 flex gap-3">
             <button
               onClick={() => navigate('/orders')}
-              className="flex-1 px-6 py-3 rounded-full border border-[#c3c6d7] text-[14px] font-semibold text-[#101319] hover:border-[#004ac6] hover:text-[#004ac6] transition-colors"
+              className="flex-1 px-6 py-3 rounded-full border border-[#c3c6d7] text-[14px] font-semibold text-[#101319] hover:border-[#538cbd] hover:text-[#4077a6] transition-colors"
             >
               {allCod ? 'Lihat Pesanan' : 'Bayar Nanti Aja'}
             </button>
@@ -321,7 +321,7 @@ const CheckoutPage: React.FC = () => {
               <button
                 onClick={payOrders}
                 disabled={paying}
-                className="flex-1 flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#004ac6] hover:bg-[#003ea8] text-white text-[14px] font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex-1 flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#4077a6] hover:bg-[#284a67] text-white text-[14px] font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {paying && <Icon name="clock" size={16} className="animate-spin" />}
                 {paying ? 'Bentar ya...' : 'Bayar Sekarang'}
@@ -385,7 +385,7 @@ const CheckoutPage: React.FC = () => {
             <p className="mt-1 text-[13px] text-[#737686]">Pilih barangnya dulu, checkoutnya nanti.</p>
             <button
               onClick={() => navigate('/categories')}
-              className="mt-5 rounded-full bg-[#004ac6] px-6 py-2.5 text-[14px] font-semibold text-white transition-colors hover:bg-[#003ea8]"
+              className="mt-5 rounded-full bg-[#4077a6] px-6 py-2.5 text-[14px] font-semibold text-white transition-colors hover:bg-[#284a67]"
             >
               Mulai belanja
             </button>
@@ -457,7 +457,7 @@ const CheckoutPage: React.FC = () => {
                               <span className="block truncate text-[13px] font-semibold text-[#101319]">
                                 {addr.recipientName}
                                 {addr.label && <span className="font-normal text-[#737686]"> · {addr.label}</span>}
-                                {addr.isDefault && <span className="text-[#004ac6]"> · Utama</span>}
+                                {addr.isDefault && <span className="text-[#4077a6]"> · Utama</span>}
                               </span>
                               <span className="mt-0.5 block text-[12px] text-[#737686]">
                                 {addr.fullAddress}, {addr.city}, {addr.province} {addr.postalCode}
@@ -505,7 +505,7 @@ const CheckoutPage: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => navigate('/needpay')}
-                    className="mt-2.5 text-[12px] font-semibold text-[#004ac6] hover:underline"
+                    className="mt-2.5 text-[12px] font-semibold text-[#4077a6] hover:underline"
                   >
                     Isi saldo NeedPay →
                   </button>
@@ -525,7 +525,7 @@ const CheckoutPage: React.FC = () => {
                 <div className="divide-y divide-[#e0e3e5]">
                   {preview.orders.map((order) => (
                     <div key={order.sellerId} className="p-4 sm:p-5">
-                      <p className="mb-3 text-[12px] font-bold uppercase tracking-wide text-[#004ac6]">
+                      <p className="mb-3 text-[12px] font-bold uppercase tracking-wide text-[#4077a6]">
                         {order.storeName ?? 'Toko'}
                       </p>
                       <div className="space-y-2">
@@ -545,7 +545,7 @@ const CheckoutPage: React.FC = () => {
                                 className="h-11 w-11 shrink-0 rounded-lg bg-[#f2f4f6] object-cover"
                               />
                               <span className="min-w-0">
-                                <span className="block truncate text-[13px] text-[#101319] transition-colors group-hover:text-[#004ac6]">
+                                <span className="block truncate text-[13px] text-[#101319] transition-colors group-hover:text-[#4077a6]">
                                   {line.productName}
                                 </span>
                                 <span className="block text-[12px] text-[#737686]">
@@ -586,7 +586,7 @@ const CheckoutPage: React.FC = () => {
 
             <aside className="lg:sticky lg:top-24">
               <div className="overflow-hidden rounded-2xl border border-[#e0e3e5] bg-white">
-                <div className="bg-gradient-to-br from-[#004ac6] to-[#003ea8] p-5 text-white">
+                <div className="bg-gradient-to-br from-[#538cbd] to-[#284a67] p-5 text-white">
                   <p className="text-[11px] font-semibold uppercase tracking-widest text-white/70">
                     Total bayar
                   </p>
@@ -679,7 +679,7 @@ const CheckoutPage: React.FC = () => {
                   <button
                     onClick={handleCheckout}
                     disabled={!canCheckout}
-                    className="flex w-full items-center justify-center gap-2 rounded-full bg-[#004ac6] px-6 py-3.5 text-[15px] font-bold text-white transition-colors hover:bg-[#003ea8] disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#004ac6]"
+                    className="flex w-full items-center justify-center gap-2 rounded-full bg-[#4077a6] px-6 py-3.5 text-[15px] font-bold text-white transition-colors hover:bg-[#284a67] disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4077a6]"
                   >
                     <Icon name="lock" size={16} />
                     Checkout · {formatRupiah(payable)}
@@ -772,7 +772,7 @@ const CheckoutPage: React.FC = () => {
               <button
                 type="submit"
                 disabled={savingAddress}
-                className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#004ac6] hover:bg-[#003ea8] text-white text-[14px] font-semibold transition-colors disabled:opacity-50"
+                className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#4077a6] hover:bg-[#284a67] text-white text-[14px] font-semibold transition-colors disabled:opacity-50"
               >
                 {savingAddress && <Icon name="clock" size={16} className="animate-spin" />}
                 Simpan alamat
@@ -806,7 +806,7 @@ const Field: React.FC<{
       className={`w-full px-3 py-2 rounded-lg border outline-none focus:ring-2 text-sm transition ${
         error
           ? 'border-[#ba1a1a] focus:border-[#ba1a1a] focus:ring-[#ba1a1a]/20'
-          : 'border-[#c3c6d7] focus:border-[#004ac6] focus:ring-[#004ac6]/20'
+          : 'border-[#c3c6d7] focus:border-[#538cbd] focus:ring-[#538cbd]/20'
       }`}
     />
     {error && <p className="mt-1 text-[11px] text-[#ba1a1a]">{error}</p>}

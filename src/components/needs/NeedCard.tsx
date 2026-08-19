@@ -20,9 +20,9 @@ const STATUS_STYLE: Record<
     dot: 'bg-[#FFD500]',
   },
   PROCESSED: {
-    bg: 'bg-[#004ac6]/15',
-    text: 'text-[#004ac6]',
-    dot: 'bg-[#004ac6]',
+    bg: 'bg-[#538cbd]/15',
+    text: 'text-[#4077a6]',
+    dot: 'bg-[#4077a6]',
   },
   COMPLETED: {
     bg: 'bg-[#e6f4ee]',
@@ -113,10 +113,10 @@ const NeedCard: React.FC<NeedCardProps> = ({
             onClick={() => onOpenRecommendations(need.id)}
             disabled={isDraft}
             className="
-              flex h-9 items-center gap-1.5 rounded-full bg-[#004ac6] px-4
+              flex h-9 items-center gap-1.5 rounded-full bg-[#4077a6] px-4
               text-[12px] font-semibold text-white
               shadow-[0_4px_12px_rgba(83,140,219,0.25)] transition-all
-              duration-200 hover:bg-[#004ac6] active:scale-[0.98]
+              duration-200 hover:bg-[#4077a6] active:scale-[0.98]
               disabled:cursor-not-allowed disabled:bg-[#A2A8B3]
               disabled:shadow-none
             "
@@ -130,8 +130,8 @@ const NeedCard: React.FC<NeedCardProps> = ({
             disabled={isDraft || busyId === `plan-${need.id}`}
             className="
               flex h-9 items-center gap-1.5 rounded-full border
-              border-[#004ac6] bg-white px-4 text-[12px] font-semibold
-              text-[#004ac6] transition-all duration-200 hover:bg-[#004ac6]
+              border-[#538cbd] bg-white px-4 text-[12px] font-semibold
+              text-[#4077a6] transition-all duration-200 hover:bg-[#4077a6]
               hover:text-white active:scale-[0.98]
               disabled:cursor-not-allowed disabled:opacity-50
             "
@@ -152,10 +152,10 @@ const NeedCard: React.FC<NeedCardProps> = ({
             <span
               className="
                 flex h-6 w-6 items-center justify-center rounded-lg
-                bg-[#004ac6]/10
+                bg-[#538cbd]/10
               "
             >
-              <Icon name="layers" size={12} className="text-[#004ac6]" />
+              <Icon name="layers" size={12} className="text-[#4077a6]" />
             </span>
             <p className="text-[12px] font-bold text-[#101319]">
               Rekomendasi Produk

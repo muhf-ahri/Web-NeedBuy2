@@ -15,8 +15,8 @@ export const STATUS_TABS: Array<{ key: TabKey; label: string }> = [
 
 export const STATUS_STYLE: Record<OrderStatus, string> = {
   WAITING_PAYMENT: 'bg-[#fff7e0] text-[#b45309]',
-  PROCESSING: 'bg-[#dbe1ff] text-[#003ea8]',
-  SHIPPED: 'bg-[#f5f7fb] text-[#004ac6]',
+  PROCESSING: 'bg-[#e4ebf1] text-[#284a67]',
+  SHIPPED: 'bg-[#f5f7fb] text-[#4077a6]',
   DELIVERED: 'bg-[#e6f4ee] text-[#12805c]',
   COMPLETED: 'bg-[#f2f4f6] text-[#434655]',
   CANCELLED: 'bg-[#fff0f0] text-[#ba1a1a]',

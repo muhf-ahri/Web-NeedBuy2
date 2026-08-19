@@ -13,7 +13,7 @@ const statusColor: Record<PaymentStatus, string> = {
   PENDING: 'bg-[#fff7e0] text-[#b45309]',
   FAILED: 'bg-[#fff0f0] text-[#93000a]',
   EXPIRED: 'bg-[#f2f4f6] text-[#737686]',
-  REFUNDED: 'bg-[#dbe1ff] text-[#004ac6]',
+  REFUNDED: 'bg-[#e4ebf1] text-[#4077a6]',
 };
 
 const statusDotColor: Record<PaymentStatus, string> = {
@@ -21,7 +21,7 @@ const statusDotColor: Record<PaymentStatus, string> = {
   PENDING: 'bg-[#b45309]',
   FAILED: 'bg-[#93000a]',
   EXPIRED: 'bg-[#737686]',
-  REFUNDED: 'bg-[#004ac6]',
+  REFUNDED: 'bg-[#4077a6]',
 };
 
 const statusLabel: Record<PaymentStatus, string> = {
@@ -49,7 +49,7 @@ const TablePayments: React.FC<TablePaymentsProps> = ({
     return (
       <tr>
         <td colSpan={7} className="py-10 text-center text-[#737686]">
-          <span className="inline-block h-5 w-5 animate-spin rounded-full border-2 border-[#004ac6] border-t-transparent" />
+          <span className="inline-block h-5 w-5 animate-spin rounded-full border-2 border-[#538cbd] border-t-transparent" />
           <span className="ml-2">Memuat…</span>
         </td>
       </tr>
@@ -70,13 +70,13 @@ const TablePayments: React.FC<TablePaymentsProps> = ({
     <>
       {payments.map((payment) => (
         <tr key={payment.id} className="text-[13px] transition-colors hover:bg-[#f5f7fb]">
-          <td className="py-2.5 pr-2 font-medium text-[#004ac6]">{payment.midtransOrderId}</td>
+          <td className="py-2.5 pr-2 font-medium text-[#4077a6]">{payment.midtransOrderId}</td>
           <td className="py-2.5 pr-2 font-medium text-[#101319]">{payment.order.orderNumber}</td>
           <td className="py-2.5 pr-2">
             <div className="text-[#434655]">{payment.order.user.name}</div>
             <div className="text-[11px] text-[#737686]">{payment.order.user.email}</div>
           </td>
-          <td className="py-2.5 pr-2 font-semibold text-[#004ac6]">
+          <td className="py-2.5 pr-2 font-semibold text-[#4077a6]">
             {formatRupiah(Number(payment.order.total))}
           </td>
           <td className="py-2.5 pr-2 text-[#434655]">

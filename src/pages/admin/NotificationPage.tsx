@@ -170,7 +170,7 @@ const NotificationsPage: React.FC = () => {
         <div className="space-y-3">
           {isLoading ? (
             <div className="rounded-2xl border border-[#e0e3e5] bg-white p-10 text-center text-[#737686]">
-              <span className="inline-block h-5 w-5 animate-spin rounded-full border-2 border-[#004ac6] border-t-transparent" />
+              <span className="inline-block h-5 w-5 animate-spin rounded-full border-2 border-[#538cbd] border-t-transparent" />
               <span className="ml-2">Memuat…</span>
             </div>
           ) : paginatedData.length === 0 ? (

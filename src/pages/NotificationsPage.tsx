@@ -127,9 +127,9 @@ const NotificationsPage: React.FC = () => {
         <Reveal direction="up">
           <div className="mb-6">
             <div className="mb-2 flex items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-[#004ac6]/10 px-2.5 py-1">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-[#538cbd]/10 px-2.5 py-1">
                 <span className="h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
-                <p className="text-[9px] font-bold uppercase tracking-[0.20em] text-[#004ac6]">
+                <p className="text-[9px] font-bold uppercase tracking-[0.20em] text-[#4077a6]">
                   Pusat kabar
                 </p>
               </span>
@@ -209,7 +209,7 @@ const NotificationsPage: React.FC = () => {
                       text-[12px] font-semibold transition-all duration-200
                       ${
                         active
-                          ? 'bg-[#004ac6] text-white shadow-[0_4px_12px_rgba(83,140,219,0.25)]'
+                          ? 'bg-[#4077a6] text-white shadow-[0_4px_12px_rgba(83,140,219,0.25)]'
                           : 'text-[#737686] hover:bg-[#F5F7FB] hover:text-[#101319]'
                       }
                     `}
@@ -240,7 +240,7 @@ const NotificationsPage: React.FC = () => {
                 onClick={handleMarkAllRead}
                 className="
                   flex items-center gap-1.5 rounded-xl px-3 py-2 text-[12px]
-                  font-semibold text-[#004ac6] transition-colors
+                  font-semibold text-[#4077a6] transition-colors
                   hover:bg-[#f5f7fb]
                 "
               >
@@ -308,7 +308,7 @@ const NotificationsPage: React.FC = () => {
                       flex items-center gap-2 rounded-full border
                       border-[#e0e3e5] bg-white px-6 py-2.5 text-[13px]
                       font-semibold text-[#101319] transition-all duration-200
-                      hover:border-[#004ac6] hover:text-[#004ac6]
+                      hover:border-[#538cbd] hover:text-[#4077a6]
                       active:scale-[0.99] disabled:cursor-not-allowed
                       disabled:opacity-50
                     "

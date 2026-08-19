@@ -154,7 +154,7 @@ const MessagesPage: React.FC = () => {
             <p className="text-[#737686] mb-4">Login dulu ya buat chat sama penjual.</p>
             <button
               onClick={() => navigate('/login')}
-              className="px-6 py-2.5 rounded-full bg-[#004ac6] hover:bg-[#003ea8] text-white text-[14px] font-semibold transition-colors"
+              className="px-6 py-2.5 rounded-full bg-[#4077a6] hover:bg-[#284a67] text-white text-[14px] font-semibold transition-colors"
             >
               Login
             </button>
@@ -198,7 +198,7 @@ const MessagesPage: React.FC = () => {
                     <button
                       onClick={() => setActiveId(conversation.id)}
                       className={`w-full text-left px-4 py-3 transition-colors ${
-                        conversation.id === activeId ? 'bg-[#dbe1ff]' : 'hover:bg-[#f2f4f6]'
+                        conversation.id === activeId ? 'bg-[#e4ebf1]' : 'hover:bg-[#f2f4f6]'
                       }`}
                     >
                       <div className="flex items-center gap-2.5">
@@ -213,7 +213,7 @@ const MessagesPage: React.FC = () => {
                               {conversation.seller.storeName}
                             </span>
                             {conversation.unreadCount > 0 && (
-                              <span className="bg-[#004ac6] text-white text-[10px] font-bold rounded-full min-w-5 h-5 px-1.5 flex items-center justify-center">
+                              <span className="bg-[#4077a6] text-white text-[10px] font-bold rounded-full min-w-5 h-5 px-1.5 flex items-center justify-center">
                                 {conversation.unreadCount > 9 ? '9+' : conversation.unreadCount}
                               </span>
                             )}
@@ -266,7 +266,7 @@ const MessagesPage: React.FC = () => {
                         <div
                           className={`max-w-[75%] rounded-2xl px-3.5 py-2 ${
                             mine
-                              ? 'bg-[#004ac6] text-white rounded-br-sm'
+                              ? 'bg-[#4077a6] text-white rounded-br-sm'
                               : 'bg-white border border-[#e0e3e5] text-[#101319] rounded-bl-sm'
                           }`}
                         >
@@ -303,13 +303,13 @@ const MessagesPage: React.FC = () => {
                   placeholder="Tulis pesan..."
                   maxLength={2000}
                   disabled={!activeId}
-                  className="flex-1 px-4 py-2.5 rounded-full border border-[#c3c6d7] outline-none focus:border-[#004ac6] focus:ring-2 focus:ring-[#004ac6]/20 text-[13px] transition disabled:bg-[#f2f4f6]"
+                  className="flex-1 px-4 py-2.5 rounded-full border border-[#c3c6d7] outline-none focus:border-[#538cbd] focus:ring-2 focus:ring-[#538cbd]/20 text-[13px] transition disabled:bg-[#f2f4f6]"
                   aria-label="Tulis pesan"
                 />
                 <button
                   type="submit"
                   disabled={sending || (!draft.trim() && !photoUrl) || !activeId}
-                  className="w-11 h-11 shrink-0 rounded-full bg-[#004ac6] hover:bg-[#003ea8] text-white flex items-center justify-center transition-colors disabled:opacity-50"
+                  className="w-11 h-11 shrink-0 rounded-full bg-[#4077a6] hover:bg-[#284a67] text-white flex items-center justify-center transition-colors disabled:opacity-50"
                   aria-label="Kirim pesan"
                 >
                   <Icon name="send" size={18} />

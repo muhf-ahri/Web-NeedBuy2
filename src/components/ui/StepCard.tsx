@@ -15,7 +15,7 @@ export const StepCard: React.FC<{
     <header className="flex items-center gap-3 border-b border-[#e0e3e5] bg-[#f5f7fb] px-4 py-3 sm:px-5">
       <span
         className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[12px] font-bold transition-colors ${
-          done ? 'bg-[#004ac6] text-white' : 'bg-[#dbe1ff] text-[#004ac6]'
+          done ? 'bg-[#4077a6] text-white' : 'bg-[#e4ebf1] text-[#4077a6]'
         }`}
         aria-hidden="true"
       >
@@ -51,10 +51,10 @@ export const StepEmpty: React.FC<{ text: string; cta: string; onClick: () => voi
   <button
     type="button"
     onClick={onClick}
-    className="w-full rounded-xl border border-dashed border-[#c3c6d7] px-4 py-5 text-center transition-colors hover:border-[#004ac6] hover:bg-[#f5f7fb] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#004ac6]"
+    className="w-full rounded-xl border border-dashed border-[#c3c6d7] px-4 py-5 text-center transition-colors hover:border-[#538cbd] hover:bg-[#f5f7fb] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4077a6]"
   >
     <span className="block text-[13px] font-semibold text-[#101319]">{text}</span>
-    <span className="mt-0.5 block text-[12px] font-semibold text-[#004ac6]">{cta} →</span>
+    <span className="mt-0.5 block text-[12px] font-semibold text-[#4077a6]">{cta} →</span>
   </button>
 );
 
@@ -65,7 +65,7 @@ export const StepAction: React.FC<{ onClick: () => void; children: React.ReactNo
   <button
     type="button"
     onClick={onClick}
-    className="shrink-0 rounded-full px-2.5 py-1 text-[12px] font-semibold text-[#004ac6] transition-colors hover:bg-[#dbe1ff] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#004ac6]"
+    className="shrink-0 rounded-full px-2.5 py-1 text-[12px] font-semibold text-[#4077a6] transition-colors hover:bg-[#e4ebf1] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4077a6]"
   >
     {children}
   </button>
@@ -82,18 +82,18 @@ export const ChoiceRow: React.FC<{
     onClick={onClick}
     disabled={disabled}
     aria-pressed={selected}
-    className={`flex w-full items-start gap-3 rounded-xl border p-3 text-left transition-colors disabled:cursor-not-allowed disabled:opacity-55 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#004ac6] ${
+    className={`flex w-full items-start gap-3 rounded-xl border p-3 text-left transition-colors disabled:cursor-not-allowed disabled:opacity-55 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4077a6] ${
       selected
-        ? 'border-[#004ac6] bg-[#dbe1ff]/50'
-        : 'border-[#e0e3e5] enabled:hover:border-[#004ac6] enabled:hover:bg-[#f5f7fb]'
+        ? 'border-[#538cbd] bg-[#e4ebf1]/50'
+        : 'border-[#e0e3e5] enabled:hover:border-[#538cbd] enabled:hover:bg-[#f5f7fb]'
     }`}
   >
     <span
       className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full border-2"
-      style={{ borderColor: selected ? '#004ac6' : '#c3c6d7' }}
+      style={{ borderColor: selected ? '#4077a6' : '#c3c6d7' }}
       aria-hidden="true"
     >
-      {selected && <span className="h-2 w-2 rounded-full bg-[#004ac6]" />}
+      {selected && <span className="h-2 w-2 rounded-full bg-[#4077a6]" />}
     </span>
     <span className="min-w-0 flex-1">{children}</span>
   </button>

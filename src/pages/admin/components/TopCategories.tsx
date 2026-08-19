@@ -35,7 +35,7 @@ const TopCategories: React.FC<TopCategoriesProps> = ({ categories }) => {
           </div>
           <div className="mt-1 h-1.5 w-full rounded-full bg-[#f2f4f6]">
             <div
-              className="h-1.5 rounded-full bg-[#004ac6]"
+              className="h-1.5 rounded-full bg-[#4077a6]"
               style={{ width: maxRevenue > 0 ? `${(cat.revenue / maxRevenue) * 100}%` : '0%' }}
             />
           </div>

@@ -123,7 +123,7 @@ const TopProductsCard: React.FC<TopProductsCardProps> = ({
                         to={`/products/${product.slug}`}
                         className="
                           truncate text-[12px] font-semibold text-[#101319]
-                          transition-colors hover:text-[#004ac6]
+                          transition-colors hover:text-[#4077a6]
                           sm:text-[13px]
                         "
                       >
@@ -140,7 +140,7 @@ const TopProductsCard: React.FC<TopProductsCardProps> = ({
                     <p className="text-[12px] font-bold text-[#101319] tabular-nums sm:text-[13px]">
                       {product.quantitySold} terjual
                     </p>
-                    <p className="text-[10px] font-semibold text-[#004ac6] tabular-nums">
+                    <p className="text-[10px] font-semibold text-[#4077a6] tabular-nums">
                       {formatRupiah(Number(product.revenue))}
                     </p>
                   </div>
@@ -148,7 +148,7 @@ const TopProductsCard: React.FC<TopProductsCardProps> = ({
 
                 <div className="h-1.5 w-full overflow-hidden rounded-full bg-[#F5F7FB]">
                   <div
-                    className="h-full rounded-full bg-gradient-to-r from-[#004ac6] to-[#003ea8]"
+                    className="h-full rounded-full bg-gradient-to-r from-[#538cbd] to-[#284a67]"
                     style={{
                       width: mounted ? `${widthPct}%` : '0%',
                       transition: `width 0.9s cubic-bezier(0.22, 0.9, 0.35, 1) ${index * 100}ms`,

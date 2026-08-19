@@ -71,8 +71,8 @@ const IllustrationPanel: React.FC<{
 }> = ({ icon, image, alt = '' }) => (
   <section
     className="
-      relative hidden overflow-hidden bg-gradient-to-br from-[#004ac6]
-      via-[#004ac6] to-[#003ea8] md:flex
+      relative hidden overflow-hidden bg-gradient-to-br from-[#538cbd]
+      via-[#538cbd] to-[#284a67] md:flex
     "
   >
 
@@ -173,7 +173,7 @@ const SaleSlide: React.FC<{ product: Product }> = ({ product }) => {
               </p>
 
               <div className="mt-4 flex items-baseline gap-2.5">
-                <span className="text-2xl font-extrabold text-[#004ac6]">
+                <span className="text-2xl font-extrabold text-[#4077a6]">
                   {formatRupiah(product.price)}
                 </span>
                 <span className="text-xs text-[#A2A8B3] line-through">
@@ -186,10 +186,10 @@ const SaleSlide: React.FC<{ product: Product }> = ({ product }) => {
               <Link
                 to={`/products/${product.slug}`}
                 className="
-                  mt-5 inline-flex items-center gap-2 rounded-full bg-[#004ac6]
+                  mt-5 inline-flex items-center gap-2 rounded-full bg-[#4077a6]
                   px-5 py-2.5 text-[12px] font-semibold text-white
                   shadow-[0_7px_18px_rgba(83,140,219,0.20)] transition-all
-                  duration-200 hover:gap-3 hover:bg-[#004ac6]
+                  duration-200 hover:gap-3 hover:bg-[#4077a6]
                   hover:shadow-[0_9px_22px_rgba(83,140,219,0.25)]
                   active:scale-[0.99]
                 "
@@ -225,7 +225,7 @@ const AppSlide: React.FC<{ promo: AppPromo }> = ({ promo }) => (
             <p
               className="
                 mb-2 text-[10px] font-semibold uppercase tracking-[0.18em]
-                text-[#004ac6]
+                text-[#4077a6]
               "
             >
               {promo.eyebrow}
@@ -247,10 +247,10 @@ const AppSlide: React.FC<{ promo: AppPromo }> = ({ promo }) => (
             <Link
               to={promo.to}
               className="
-                mt-5 inline-flex items-center gap-2 rounded-full bg-[#004ac6]
+                mt-5 inline-flex items-center gap-2 rounded-full bg-[#4077a6]
                 px-5 py-2.5 text-[12px] font-semibold text-white
                 shadow-[0_7px_18px_rgba(83,140,219,0.20)] transition-all
-                duration-200 hover:gap-3 hover:bg-[#004ac6]
+                duration-200 hover:gap-3 hover:bg-[#4077a6]
                 hover:shadow-[0_9px_22px_rgba(83,140,219,0.25)]
                 active:scale-[0.99]
               "
@@ -358,7 +358,7 @@ const PromoCarousel: React.FC<{
             flex snap-x snap-mandatory overflow-x-auto scroll-smooth
             rounded-[24px] [scrollbar-width:none]
             [&::-webkit-scrollbar]:hidden focus-visible:outline-2
-            focus-visible:outline-offset-2 focus-visible:outline-[#004ac6]
+            focus-visible:outline-offset-2 focus-visible:outline-[#4077a6]
           "
         >
           {slides.map(({ key, node }) => (
@@ -377,7 +377,7 @@ const PromoCarousel: React.FC<{
               className="
                 absolute -left-4 top-1/2 hidden h-10 w-10 -translate-y-1/2
                 items-center justify-center rounded-full border border-white/80
-                bg-white/95 text-[#004ac6] shadow-[0_8px_24px_rgba(32,36,45,0.12)]
+                bg-white/95 text-[#4077a6] shadow-[0_8px_24px_rgba(32,36,45,0.12)]
                 backdrop-blur-sm transition-all hover:bg-[#f5f7fb]
                 hover:shadow-[0_10px_28px_rgba(32,36,45,0.15)] sm:flex
               "
@@ -392,7 +392,7 @@ const PromoCarousel: React.FC<{
               className="
                 absolute -right-4 top-1/2 hidden h-10 w-10 -translate-y-1/2
                 items-center justify-center rounded-full border border-white/80
-                bg-white/95 text-[#004ac6] shadow-[0_8px_24px_rgba(32,36,45,0.12)]
+                bg-white/95 text-[#4077a6] shadow-[0_8px_24px_rgba(32,36,45,0.12)]
                 backdrop-blur-sm transition-all hover:bg-[#f5f7fb]
                 hover:shadow-[0_10px_28px_rgba(32,36,45,0.15)] sm:flex
               "
@@ -416,8 +416,8 @@ const PromoCarousel: React.FC<{
                 h-1.5 rounded-full transition-all duration-300
                 ${
                   index === active
-                    ? 'w-7 bg-[#004ac6]'
-                    : 'w-1.5 bg-[#e0e3e5] hover:bg-[#004ac6]'
+                    ? 'w-7 bg-[#4077a6]'
+                    : 'w-1.5 bg-[#e0e3e5] hover:bg-[#4077a6]'
                 }
               `}
             />

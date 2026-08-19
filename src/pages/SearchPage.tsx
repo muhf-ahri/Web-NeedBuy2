@@ -185,10 +185,10 @@ const SearchPage: React.FC = () => {
             <span
               className="
                 flex h-6 w-6 items-center justify-center rounded-lg
-                bg-[#004ac6]/10
+                bg-[#538cbd]/10
               "
             >
-              <Icon name="store" size={13} className="text-[#004ac6]" />
+              <Icon name="store" size={13} className="text-[#4077a6]" />
             </span>
             <p
               className="

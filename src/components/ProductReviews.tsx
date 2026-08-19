@@ -100,7 +100,7 @@ const ProductReviews: React.FC<{ productId: string }> = ({ productId }) => {
             {items.map((review) => (
               <li key={review.id} className="py-4">
                 <div className="flex items-center gap-3">
-                  <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#dbe1ff] text-[#004ac6]">
+                  <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#e4ebf1] text-[#4077a6]">
                     <Icon name="user" size={16} className="" />
                   </span>
                   <div className="min-w-0 flex-1">
@@ -174,7 +174,7 @@ const ProductReviews: React.FC<{ productId: string }> = ({ productId }) => {
             <button
               onClick={() => setPage((p) => p + 1)}
               disabled={loading}
-              className="mt-4 w-full rounded-full border border-[#c3c6d7] py-2.5 text-[13px] font-semibold text-[#434655] transition-colors hover:border-[#004ac6] hover:text-[#004ac6] disabled:opacity-60"
+              className="mt-4 w-full rounded-full border border-[#c3c6d7] py-2.5 text-[13px] font-semibold text-[#434655] transition-colors hover:border-[#538cbd] hover:text-[#4077a6] disabled:opacity-60"
             >
               {loading ? 'Sabar ya...' : 'Lihat ulasan lain'}
             </button>

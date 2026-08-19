@@ -35,14 +35,14 @@ const PlanCard: React.FC<PlanCardProps> = ({ plan, onClick }) => {
         transition-all duration-300 hover:-translate-y-0.5
         hover:shadow-[0_14px_36px_rgba(32,36,45,0.10)]
         focus-visible:outline-2 focus-visible:outline-offset-2
-        focus-visible:outline-[#004ac6]
+        focus-visible:outline-[#4077a6]
       "
     >
 
       <span
         className="
           pointer-events-none absolute -right-10 -top-10 h-24 w-24
-          rounded-full bg-[#004ac6]/10 opacity-0 blur-2xl
+          rounded-full bg-[#538cbd]/10 opacity-0 blur-2xl
           transition-opacity duration-300 group-hover:opacity-100
         "
       />
@@ -58,18 +58,18 @@ const PlanCard: React.FC<PlanCardProps> = ({ plan, onClick }) => {
         <span
           className="
             flex h-10 w-10 shrink-0 items-center justify-center
-            rounded-xl bg-[#004ac6]/10
+            rounded-xl bg-[#538cbd]/10
             transition-transform duration-300 group-hover:scale-105
           "
         >
-          <Icon name="grid" size={18} className="text-[#004ac6]" />
+          <Icon name="grid" size={18} className="text-[#4077a6]" />
         </span>
 
         <div className="min-w-0 flex-1">
           <h3
             className="
               truncate text-[15px] font-bold leading-tight text-[#101319]
-              transition-colors duration-200 group-hover:text-[#004ac6]
+              transition-colors duration-200 group-hover:text-[#4077a6]
             "
           >
             {planTitle(plan)}
@@ -87,7 +87,7 @@ const PlanCard: React.FC<PlanCardProps> = ({ plan, onClick }) => {
         </div>
       </div>
 
-      <p className="mt-4 text-[20px] font-extrabold tracking-tight text-[#004ac6]">
+      <p className="mt-4 text-[20px] font-extrabold tracking-tight text-[#4077a6]">
         {formatRupiah(totalNum)}
       </p>
 
@@ -97,7 +97,7 @@ const PlanCard: React.FC<PlanCardProps> = ({ plan, onClick }) => {
             <div
               className={`
                 h-full rounded-full transition-all duration-500
-                ${overBudget ? 'bg-[#ba1a1a]' : 'bg-[#004ac6]'}
+                ${overBudget ? 'bg-[#ba1a1a]' : 'bg-[#4077a6]'}
               `}
               style={{ width: `${pct}%` }}
             />
@@ -106,7 +106,7 @@ const PlanCard: React.FC<PlanCardProps> = ({ plan, onClick }) => {
             <span
               className={`
                 font-semibold
-                ${overBudget ? 'text-[#ba1a1a]' : 'text-[#004ac6]'}
+                ${overBudget ? 'text-[#ba1a1a]' : 'text-[#4077a6]'}
               `}
             >
               {pct}% terpakai
@@ -130,7 +130,7 @@ const PlanCard: React.FC<PlanCardProps> = ({ plan, onClick }) => {
           name="arrowRight"
           size={14}
           className="
-            text-[#004ac6] transition-transform duration-300
+            text-[#4077a6] transition-transform duration-300
             group-hover:translate-x-1
           "
         />

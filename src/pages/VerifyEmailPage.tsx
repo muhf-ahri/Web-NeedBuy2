@@ -55,7 +55,7 @@ const VerifyEmailPage: React.FC = () => {
           </>
         ) : (
           <>
-            <Icon name="clock" size={36} className="mx-auto animate-spin text-[#004ac6]" />
+            <Icon name="clock" size={36} className="mx-auto animate-spin text-[#4077a6]" />
             <h1 className="mt-4 text-[20px] font-bold text-[#101319]">Lagi verifikasi…</h1>
             <p className="mt-2 text-[14px] text-[#737686]">Bentar ya, sedetik lagi juga kelar.</p>
           </>

@@ -91,7 +91,7 @@ const CategoryModal: React.FC<CategoryModalProps> = ({
               w-full rounded-xl border border-[#e0e3e5] bg-[#F5F7FB] px-4
               py-3 text-[13px] text-[#101319] outline-none
               placeholder:text-[#A2A8B3] transition-all duration-200
-              focus:border-[#004ac6] focus:bg-white
+              focus:border-[#538cbd] focus:bg-white
               focus:shadow-[0_4px_16px_rgba(83,140,219,0.10)]
             "
           />
@@ -130,7 +130,7 @@ const CategoryModal: React.FC<CategoryModalProps> = ({
                 w-full rounded-xl border border-[#e0e3e5] bg-[#F5F7FB]
                 py-3 pl-10 pr-4 text-[13px] text-[#101319] outline-none
                 placeholder:text-[#A2A8B3] transition-all duration-200
-                focus:border-[#004ac6] focus:bg-white
+                focus:border-[#538cbd] focus:bg-white
                 focus:shadow-[0_4px_16px_rgba(83,140,219,0.10)]
                 [appearance:textfield]
                 [&::-webkit-inner-spin-button]:appearance-none
@@ -154,9 +154,9 @@ const CategoryModal: React.FC<CategoryModalProps> = ({
           disabled={saving}
           className="
             flex h-11 w-full items-center justify-center gap-2
-            rounded-full bg-[#004ac6] text-[14px] font-semibold text-white
+            rounded-full bg-[#4077a6] text-[14px] font-semibold text-white
             shadow-[0_7px_18px_rgba(83,140,219,0.25)] transition-all
-            duration-200 hover:bg-[#004ac6]
+            duration-200 hover:bg-[#4077a6]
             hover:shadow-[0_9px_22px_rgba(83,140,219,0.30)]
             active:scale-[0.99] disabled:cursor-not-allowed
             disabled:bg-[#A2A8B3] disabled:shadow-none

@@ -29,10 +29,10 @@ export interface IllustratedCardProps {
 
 const PILL_COLORS = {
   blue: {
-    text: 'text-[#004ac6]',
+    text: 'text-[#4077a6]',
     dot: 'bg-[#FFD500]',
-    eyebrow: 'text-[#004ac6]',
-    ring: 'bg-[#004ac6]/10',
+    eyebrow: 'text-[#4077a6]',
+    ring: 'bg-[#538cbd]/10',
   },
   red: {
     text: 'text-[#ba1a1a]',
@@ -130,7 +130,7 @@ const IllustratedCard: React.FC<IllustratedCardProps> = ({
                         className="
                           flex h-7 w-7 shrink-0 items-center justify-center
                           rounded-full bg-white text-[10px] font-bold
-                          text-[#004ac6] ring-1 ring-[#e0e3e5]
+                          text-[#4077a6] ring-1 ring-[#e0e3e5]
                         "
                       >
                         {i + 1}
@@ -152,9 +152,9 @@ const IllustratedCard: React.FC<IllustratedCardProps> = ({
                     onClick={primaryAction.onClick}
                     className="
                       inline-flex h-11 items-center justify-center gap-2
-                      rounded-full bg-[#004ac6] px-5 text-sm font-semibold
+                      rounded-full bg-[#4077a6] px-5 text-sm font-semibold
                       text-white shadow-[0_7px_18px_rgba(83,140,219,0.20)]
-                      transition-all duration-200 hover:bg-[#004ac6]
+                      transition-all duration-200 hover:bg-[#4077a6]
                       hover:shadow-[0_9px_22px_rgba(83,140,219,0.25)]
                       active:scale-[0.99]
                     "
@@ -176,8 +176,8 @@ const IllustratedCard: React.FC<IllustratedCardProps> = ({
                       inline-flex h-11 items-center justify-center gap-2
                       rounded-full border border-[#e0e3e5] bg-white px-5
                       text-sm font-semibold text-[#101319] transition-all
-                      duration-200 hover:border-[#004ac6]
-                      hover:text-[#004ac6] active:scale-[0.99]
+                      duration-200 hover:border-[#538cbd]
+                      hover:text-[#4077a6] active:scale-[0.99]
                     "
                   >
                     <Icon name={secondaryAction.icon} size={15} />

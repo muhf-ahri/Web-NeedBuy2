@@ -57,14 +57,14 @@ const AuthCallbackPage: React.FC = () => {
             <p className="text-[14px] text-[#93000a] mb-4">{error}</p>
             <Link
               to="/login"
-              className="inline-block px-6 py-2.5 rounded-full bg-[#004ac6] hover:bg-[#003ea8] text-white text-[14px] font-semibold transition-colors"
+              className="inline-block px-6 py-2.5 rounded-full bg-[#4077a6] hover:bg-[#284a67] text-white text-[14px] font-semibold transition-colors"
             >
               Balik ke login
             </Link>
           </>
         ) : (
           <div className="flex flex-col items-center gap-3">
-            <Icon name="clock" size={24} className="animate-spin text-[#004ac6]" />
+            <Icon name="clock" size={24} className="animate-spin text-[#4077a6]" />
             <p className="text-[14px] text-[#737686]">Bentar ya, lagi nyiapin akun kamu...</p>
           </div>
         )}

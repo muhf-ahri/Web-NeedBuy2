@@ -33,8 +33,8 @@ const shortenNumberPlain = (value: number): string => {
 const STATUS_STYLE: Record<string, string> = {
   COMPLETED: 'bg-[#e6f4ee] text-[#12805c]',
   DELIVERED: 'bg-[#e6f4ee] text-[#12805c]',
-  PROCESSING: 'bg-[#dbe1ff] text-[#004ac6]',
-  SHIPPED: 'bg-[#dbe1ff] text-[#004ac6]',
+  PROCESSING: 'bg-[#e4ebf1] text-[#4077a6]',
+  SHIPPED: 'bg-[#e4ebf1] text-[#4077a6]',
   WAITING_PAYMENT: 'bg-[#fff7e0] text-[#b45309]',
   CANCELLED: 'bg-[#fff0f0] text-[#93000a]',
 };
@@ -153,7 +153,7 @@ const DashboardPage: React.FC = () => {
                     {stat.hint}
                   </p>
                 </div>
-                <div className={`shrink-0 rounded-full bg-[#dbe1ff] p-2 ${stat.alert ? 'text-[#ba1a1a]' : 'text-[#004ac6]'}`}>
+                <div className={`shrink-0 rounded-full bg-[#e4ebf1] p-2 ${stat.alert ? 'text-[#ba1a1a]' : 'text-[#4077a6]'}`}>
                   <Icon name={stat.icon} size={20} />
                 </div>
               </div>
@@ -183,7 +183,7 @@ const DashboardPage: React.FC = () => {
                       <div key={point.month} className="flex flex-1 flex-col items-center min-w-0">
                         <div
                           title={`Komisi ${formatRupiah(point.revenue)}: omzet ${formatRupiah(point.gmv)}`}
-                          className="w-full rounded-t bg-[#004ac6] transition-all duration-300 hover:bg-[#003ea8]"
+                          className="w-full rounded-t bg-[#4077a6] transition-all duration-300 hover:bg-[#284a67]"
                           style={{ height: `${height}%`, minHeight: '6px' }}
                         />
                         <span className="mt-1.5 text-[8px] sm:text-[10px] text-[#737686]">{month}</span>
@@ -208,7 +208,7 @@ const DashboardPage: React.FC = () => {
                       <span className="shrink-0 font-semibold text-[#101319]">{cat.percentage}%</span>
                     </div>
                     <div className="mt-0.5 h-1.5 w-full rounded-full bg-[#f2f4f6]">
-                      <div className="h-1.5 rounded-full bg-[#004ac6]" style={{ width: `${cat.percentage}%` }} />
+                      <div className="h-1.5 rounded-full bg-[#4077a6]" style={{ width: `${cat.percentage}%` }} />
                     </div>
                   </div>
                 ))
@@ -240,7 +240,7 @@ const DashboardPage: React.FC = () => {
                 ) : (
                   data.recentOrders.map((order) => (
                     <tr key={order.id} className="text-[12px] sm:text-[13px]">
-                      <td className="py-2.5 pr-1 sm:pr-2 font-medium text-[#004ac6] truncate max-w-[80px] sm:max-w-none">
+                      <td className="py-2.5 pr-1 sm:pr-2 font-medium text-[#4077a6] truncate max-w-[80px] sm:max-w-none">
                         {order.orderNumber}
                       </td>
                       <td className="py-2.5 pr-1 sm:pr-2 hidden sm:table-cell truncate max-w-[100px]">
@@ -297,7 +297,7 @@ const DashboardPage: React.FC = () => {
               )}
               <Link
                 to="/admin/products"
-                className="inline-block pt-1 text-[13px] font-semibold text-[#004ac6] hover:underline"
+                className="inline-block pt-1 text-[13px] font-semibold text-[#4077a6] hover:underline"
               >
                 Lihat Semua Approval →
               </Link>
@@ -313,7 +313,7 @@ const DashboardPage: React.FC = () => {
               </p>
               <Link
                 to="/admin/withdrawals"
-                className="mt-2 inline-block text-[13px] font-semibold text-[#004ac6] hover:underline"
+                className="mt-2 inline-block text-[13px] font-semibold text-[#4077a6] hover:underline"
               >
                 Buka halaman Withdrawals →
               </Link>

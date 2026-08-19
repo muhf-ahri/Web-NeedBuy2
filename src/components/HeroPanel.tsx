@@ -12,7 +12,7 @@ const HeroPanel: React.FC = () => {
         hidden
         min-h-[500px]
         overflow-hidden
-        bg-[#004ac6]
+        bg-[#4077a6]
         p-7
         md:flex
         md:flex-col
@@ -74,7 +74,7 @@ const HeroPanel: React.FC = () => {
             bg-white
             text-sm
             font-bold
-            text-[#004ac6]
+            text-[#4077a6]
             shadow-sm
           ">
             N
@@ -109,7 +109,7 @@ const HeroPanel: React.FC = () => {
             py-1
             text-[10px]
             font-semibold
-            text-[#004ac6]
+            text-[#4077a6]
           "
         >
           Belanja lebih bijak

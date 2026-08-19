@@ -19,8 +19,8 @@ export const statusLabel: Record<OrderStatus, string> = {
 
 const statusColor: Record<OrderStatus, string> = {
   WAITING_PAYMENT: 'bg-[#fff7e0] text-[#b45309]',
-  PROCESSING: 'bg-[#dbe1ff] text-[#004ac6]',
-  SHIPPED: 'bg-[#dbe1ff] text-[#004ac6]',
+  PROCESSING: 'bg-[#e4ebf1] text-[#4077a6]',
+  SHIPPED: 'bg-[#e4ebf1] text-[#4077a6]',
   DELIVERED: 'bg-[#e6f4ee] text-[#12805c]',
   COMPLETED: 'bg-[#e6f4ee] text-[#12805c]',
   CANCELLED: 'bg-[#fff0f0] text-[#93000a]',
@@ -31,7 +31,7 @@ const paymentColor: Record<PaymentStatus, string> = {
   PENDING: 'bg-[#fff7e0] text-[#b45309]',
   FAILED: 'bg-[#fff0f0] text-[#93000a]',
   EXPIRED: 'bg-[#f2f4f6] text-[#737686]',
-  REFUNDED: 'bg-[#dbe1ff] text-[#004ac6]',
+  REFUNDED: 'bg-[#e4ebf1] text-[#4077a6]',
 };
 
 export const paymentLabel: Record<PaymentStatus, string> = {
@@ -51,7 +51,7 @@ const OrderTable: React.FC<OrderTableProps> = ({
     return (
       <tr>
         <td colSpan={7} className="py-10 text-center text-[#737686]">
-          <span className="inline-block h-5 w-5 animate-spin rounded-full border-2 border-[#004ac6] border-t-transparent" />
+          <span className="inline-block h-5 w-5 animate-spin rounded-full border-2 border-[#538cbd] border-t-transparent" />
           <span className="ml-2">Memuat…</span>
         </td>
       </tr>
@@ -72,14 +72,14 @@ const OrderTable: React.FC<OrderTableProps> = ({
     <>
       {orders.map((order) => (
         <tr key={order.id} className="text-[13px] transition-colors hover:bg-[#f5f7fb]">
-          <td className="py-2.5 pr-2 font-medium text-[#004ac6]">{order.orderNumber}</td>
+          <td className="py-2.5 pr-2 font-medium text-[#4077a6]">{order.orderNumber}</td>
           <td className="py-2.5 pr-2">
             <div className="font-medium text-[#101319]">{order.user.name}</div>
             <div className="text-[11px] text-[#737686]">{order.user.email}</div>
           </td>
           <td className="py-2.5 pr-2 text-[#434655]">{order.seller.storeName}</td>
           <td className="py-2.5 pr-2 text-center">{order.items.length} item</td>
-          <td className="py-2.5 pr-2 font-semibold text-[#004ac6]">
+          <td className="py-2.5 pr-2 font-semibold text-[#4077a6]">
             {formatRupiah(Number(order.total))}
           </td>
           <td className="py-2.5 pr-2 text-center">

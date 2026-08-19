@@ -51,7 +51,7 @@ const OrderCard: React.FC<OrderCardProps> = ({ order, onOpen }) => {
           size={16}
           className="
             shrink-0 text-[#A2A8B3] transition-transform duration-200
-            group-hover:translate-x-0.5 group-hover:text-[#004ac6]
+            group-hover:translate-x-0.5 group-hover:text-[#4077a6]
           "
         />
       </div>
@@ -124,7 +124,7 @@ const OrderCard: React.FC<OrderCardProps> = ({ order, onOpen }) => {
               }}
               className="
                 mt-0.5 inline-flex cursor-pointer items-center gap-1
-                text-[11px] font-semibold text-[#004ac6] hover:underline
+                text-[11px] font-semibold text-[#4077a6] hover:underline
               "
             >
               <Icon name="truck" size={12} />

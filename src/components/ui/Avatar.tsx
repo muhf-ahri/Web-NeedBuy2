@@ -33,7 +33,7 @@ const Avatar: React.FC<AvatarProps> = ({ src, name, className = 'h-11 w-11 text-
     <span
       className={`
         flex shrink-0 items-center justify-center rounded-full
-        bg-gradient-to-br from-[#004ac6] to-[#003ea8]
+        bg-gradient-to-br from-[#538cbd] to-[#284a67]
         font-extrabold text-white ring-2 ring-white ${className}
       `}
     >

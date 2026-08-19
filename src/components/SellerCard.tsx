@@ -49,7 +49,7 @@ const SellerCard: React.FC<{ seller: ProductDetailSeller }> = ({ seller }) => {
           <div className="flex flex-wrap items-center gap-2">
             <Link
               to={`/search?seller=${seller.id}`}
-              className="text-[15px] font-bold text-[#101319] hover:text-[#004ac6] transition-colors"
+              className="text-[15px] font-bold text-[#101319] hover:text-[#4077a6] transition-colors"
             >
               {seller.storeName}
             </Link>
@@ -81,7 +81,7 @@ const SellerCard: React.FC<{ seller: ProductDetailSeller }> = ({ seller }) => {
           className={`shrink-0 rounded-full px-4 py-2 text-[12px] font-semibold transition-colors disabled:opacity-60 ${
             following
               ? 'bg-[#f2f4f6] text-[#434655] hover:bg-[#e0e3e5]'
-              : 'bg-[#004ac6] text-white hover:bg-[#003ea8]'
+              : 'bg-[#4077a6] text-white hover:bg-[#284a67]'
           }`}
         >
           {following ? 'Diikuti' : 'Ikuti'}

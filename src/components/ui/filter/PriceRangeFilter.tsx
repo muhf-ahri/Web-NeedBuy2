@@ -57,7 +57,7 @@ const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
           className="
             flex h-8 min-w-0 flex-1 items-center rounded-full border
             border-[#e0e3e5] bg-[#F5F7FB] transition-all duration-200
-            focus-within:border-[#004ac6] focus-within:bg-white
+            focus-within:border-[#538cbd] focus-within:bg-white
             focus-within:shadow-[0_3px_10px_rgba(83,140,219,0.10)]
           "
         >
@@ -87,7 +87,7 @@ const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
           className="
             flex h-8 min-w-0 flex-1 items-center rounded-full border
             border-[#e0e3e5] bg-[#F5F7FB] transition-all duration-200
-            focus-within:border-[#004ac6] focus-within:bg-white
+            focus-within:border-[#538cbd] focus-within:bg-white
             focus-within:shadow-[0_3px_10px_rgba(83,140,219,0.10)]
           "
         >
@@ -118,7 +118,7 @@ const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
           onClick={handleReset}
           className="
             inline-flex items-center gap-1 text-[10px] font-semibold
-            text-[#737686] transition-colors hover:text-[#004ac6]
+            text-[#737686] transition-colors hover:text-[#4077a6]
           "
         >
           <Icon name="close" size={10} />

@@ -126,7 +126,7 @@ const CategoriesEmptyState: React.FC<CategoriesEmptyStateProps> = ({
           className="
             absolute left-4 top-4 inline-flex items-center gap-1.5
             rounded-full bg-white/90 px-3 py-1 text-[10px] font-semibold
-            uppercase tracking-[0.18em] text-[#004ac6] backdrop-blur-sm
+            uppercase tracking-[0.18em] text-[#4077a6] backdrop-blur-sm
           "
         >
           Kategori
@@ -144,7 +144,7 @@ const CategoriesEmptyState: React.FC<CategoriesEmptyStateProps> = ({
             <p
               className="
                 mb-2 text-[10px] font-semibold uppercase tracking-[0.18em]
-                text-[#004ac6]
+                text-[#4077a6]
               "
             >
               {config.eyebrow}
@@ -179,7 +179,7 @@ const CategoriesEmptyState: React.FC<CategoriesEmptyStateProps> = ({
                       className="
                         flex h-7 w-7 shrink-0 items-center justify-center
                         rounded-full bg-white text-[10px] font-bold
-                        text-[#004ac6] ring-1 ring-[#e0e3e5]
+                        text-[#4077a6] ring-1 ring-[#e0e3e5]
                       "
                     >
                       {i + 1}
@@ -199,9 +199,9 @@ const CategoriesEmptyState: React.FC<CategoriesEmptyStateProps> = ({
                   onClick={primary.onClick}
                   className="
                     inline-flex h-11 items-center justify-center gap-2
-                    rounded-full bg-[#004ac6] px-6 text-sm font-semibold
+                    rounded-full bg-[#4077a6] px-6 text-sm font-semibold
                     text-white shadow-[0_7px_18px_rgba(83,140,219,0.20)]
-                    transition-all duration-200 hover:bg-[#004ac6]
+                    transition-all duration-200 hover:bg-[#4077a6]
                     hover:shadow-[0_9px_22px_rgba(83,140,219,0.25)]
                     active:scale-[0.99]
                   "
@@ -219,7 +219,7 @@ const CategoriesEmptyState: React.FC<CategoriesEmptyStateProps> = ({
                     inline-flex h-11 items-center justify-center gap-2
                     rounded-full border border-[#e0e3e5] bg-white px-6
                     text-sm font-semibold text-[#101319] transition-all
-                    duration-200 hover:border-[#004ac6] hover:text-[#004ac6]
+                    duration-200 hover:border-[#538cbd] hover:text-[#4077a6]
                     active:scale-[0.99]
                   "
                 >
@@ -263,7 +263,7 @@ const CategoriesEmptyState: React.FC<CategoriesEmptyStateProps> = ({
             className="
               absolute right-6 top-6 z-10 inline-flex items-center gap-1.5
               rounded-full bg-white/90 px-3 py-1 text-[10px] font-semibold
-              uppercase tracking-[0.18em] text-[#004ac6] backdrop-blur-sm
+              uppercase tracking-[0.18em] text-[#4077a6] backdrop-blur-sm
             "
           >
             <span className="h-1.5 w-1.5 rounded-full bg-[#FFD500]" />

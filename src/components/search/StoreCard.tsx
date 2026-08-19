@@ -46,7 +46,7 @@ const StoreCard: React.FC<StoreCardProps> = ({
           <span
             className="
               flex h-full w-full items-center justify-center font-bold
-              text-[#004ac6]
+              text-[#4077a6]
             "
             style={{ fontSize: logoSize / 2.6 }}
           >
@@ -60,7 +60,7 @@ const StoreCard: React.FC<StoreCardProps> = ({
           <span
             className="
               truncate text-[13px] font-semibold text-[#101319]
-              transition-colors duration-200 group-hover:text-[#004ac6]
+              transition-colors duration-200 group-hover:text-[#4077a6]
             "
           >
             {store.storeName}
@@ -97,7 +97,7 @@ const StoreCard: React.FC<StoreCardProps> = ({
         size={15}
         className="
           shrink-0 text-[#A2A8B3] transition-all duration-200
-          group-hover:translate-x-0.5 group-hover:text-[#004ac6]
+          group-hover:translate-x-0.5 group-hover:text-[#4077a6]
         "
       />
     </button>

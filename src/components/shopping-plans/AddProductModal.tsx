@@ -42,14 +42,14 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
         className="
           group relative flex items-center rounded-full border
           border-[#e0e3e5] bg-[#F5F7FB] transition-all duration-200
-          focus-within:border-[#004ac6] focus-within:bg-white
+          focus-within:border-[#538cbd] focus-within:bg-white
           focus-within:shadow-[0_6px_20px_rgba(83,140,219,0.12)]
         "
       >
         <span
           className="
             flex h-10 w-10 shrink-0 items-center justify-center
-            text-[#737686] group-focus-within:text-[#004ac6]
+            text-[#737686] group-focus-within:text-[#4077a6]
           "
         >
           <Icon name="search" size={16} />
@@ -154,7 +154,7 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
                 className="
                   flex items-center gap-3 rounded-2xl border
                   border-[#e0e3e5] bg-white p-3 transition-all
-                  duration-200 hover:border-[#004ac6]/40
+                  duration-200 hover:border-[#538cbd]/40
                   hover:shadow-[0_4px_14px_rgba(83,140,219,0.08)]
                 "
               >
@@ -184,7 +184,7 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
                   <p className="truncate text-[13px] font-semibold text-[#101319]">
                     {p.name}
                   </p>
-                  <p className="mt-0.5 text-[12px] font-bold text-[#004ac6]">
+                  <p className="mt-0.5 text-[12px] font-bold text-[#4077a6]">
                     {formatRupiah(p.price)}
                   </p>
                 </div>
@@ -194,10 +194,10 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
                   onClick={() => add(p.id)}
                   disabled={isBusy}
                   className="
-                    shrink-0 rounded-full bg-[#004ac6] px-4 py-2 text-[11px]
+                    shrink-0 rounded-full bg-[#4077a6] px-4 py-2 text-[11px]
                     font-semibold text-white
                     shadow-[0_4px_12px_rgba(83,140,219,0.25)]
-                    transition-all duration-200 hover:bg-[#004ac6]
+                    transition-all duration-200 hover:bg-[#4077a6]
                     active:scale-[0.98] disabled:cursor-not-allowed
                     disabled:bg-[#A2A8B3] disabled:shadow-none
                   "

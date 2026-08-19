@@ -26,13 +26,13 @@ const Button: React.FC<ButtonProps> = ({
 
   const variants = {
     primary:
-      'bg-[#004ac6] text-white hover:bg-[#004ac6] focus:ring-[#004ac6]',
+      'bg-[#4077a6] text-white hover:bg-[#4077a6] focus:ring-[#538cbd]',
     secondary:
-      'bg-[#f5f7fb] text-[#004ac6] hover:bg-[#f5f7fb] focus:ring-[#004ac6] border border-[#e0e3e5]',
+      'bg-[#f5f7fb] text-[#4077a6] hover:bg-[#f5f7fb] focus:ring-[#538cbd] border border-[#e0e3e5]',
     outline:
-      'bg-white text-[#004ac6] border border-[#004ac6] hover:bg-[#f5f7fb] focus:ring-[#004ac6]',
+      'bg-white text-[#4077a6] border border-[#538cbd] hover:bg-[#f5f7fb] focus:ring-[#538cbd]',
     google:
-      'bg-white text-[#101319] border border-[#e0e3e5] hover:border-[#004ac6] hover:bg-[#f5f7fb] focus:ring-[#004ac6]',
+      'bg-white text-[#101319] border border-[#e0e3e5] hover:border-[#538cbd] hover:bg-[#f5f7fb] focus:ring-[#538cbd]',
     apple:
       'bg-[#101319] text-white hover:bg-[#434655] focus:ring-[#101319] border border-[#101319]',
     danger:

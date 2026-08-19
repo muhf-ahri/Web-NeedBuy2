@@ -3,7 +3,7 @@
 
 @layer base {
   :root {
-    --color-primary: #004ac6;
+    --color-primary: #4077a6;
     --color-secondary: #434655;
     --color-on-primary: #ffffff;
     --color-on-surface-variant: #434655;
@@ -14,14 +14,18 @@
     --color-error: #ba1a1a;
 
     /* ── Palet NeedBuy (dikunci) ────────────────────────────────────────────
-       Kobalt tetap jadi satu-satunya warna aksi. Warna promo dipisah supaya
+       Biru baja #538cbd adalah warna identitas. Satu hue, dua peran, dan
+       pembagiannya bukan selera: #538cbd hanya 3,59:1 terhadap putih, jadi
+       apa pun yang menanggung teks memakai --nb-cobalt yang lebih
+       gelap (4,76:1, lulus WCAG AA). Warna promo tetap dipisah supaya
        "diskon" tidak pernah tertukar dengan "tombol". */
     --nb-ink: #101319;          /* teks utama */
     --nb-slate: #434655;        /* teks sekunder */
     --nb-muted: #737686;        /* teks tersier */
-    --nb-cobalt: #004ac6;       /* brand & seluruh aksi utama */
-    --nb-cobalt-deep: #003ea8;  /* hover aksi utama */
-    --nb-cobalt-wash: #dbe1ff;  /* latar state aktif */
+    --nb-brand: #538cbd;        /* identitas: dekorasi, border, gradien */
+    --nb-cobalt: #4077a6;       /* aksi: tombol solid & teks di atas putih */
+    --nb-cobalt-deep: #284a67;  /* hover aksi utama */
+    --nb-cobalt-wash: #e4ebf1;  /* latar state aktif */
     --nb-mist: #f2f4f6;         /* permukaan */
     --nb-line: #e0e3e5;         /* garis pemisah */
     --nb-signal: #ff5a1f;       /* HANYA promo/diskon */

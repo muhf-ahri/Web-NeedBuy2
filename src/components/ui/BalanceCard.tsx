@@ -14,7 +14,7 @@ const BalanceCard: React.FC<BalanceCardProps> = ({
   loading = false,
 }) => {
   return (
-    <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#004ac6] to-[#003ea8] p-6 text-white shadow-lg">
+    <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#538cbd] to-[#284a67] p-6 text-white shadow-lg">
       
       <div className="absolute -right-12 -top-12 h-32 w-32 rounded-full bg-white/5" />
       <div className="absolute -bottom-8 -left-8 h-24 w-24 rounded-full bg-white/5" />

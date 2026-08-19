@@ -65,10 +65,10 @@ const FilterBar: React.FC<FilterBarProps> = ({
                 appearance-none px-4 py-2.5 pr-9 rounded-xl text-sm font-medium
                 border transition-all duration-200 ease-out
                 bg-white cursor-pointer
-                focus:outline-none focus:ring-2 focus:ring-[#004ac6]/30
+                focus:outline-none focus:ring-2 focus:ring-[#538cbd]/30
                 ${isActive
-                  ? 'border-[#004ac6] text-[#004ac6] bg-[#f5f7fb]'
-                  : 'border-[#c3c6d7] text-[#434655] hover:border-[#004ac6] hover:bg-[#f5f7fb]'
+                  ? 'border-[#538cbd] text-[#4077a6] bg-[#f5f7fb]'
+                  : 'border-[#c3c6d7] text-[#434655] hover:border-[#538cbd] hover:bg-[#f5f7fb]'
                 }
                 ${isClicked ? 'scale-95' : ''}
                 ${filter.className || ''}
@@ -88,7 +88,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
               className={`
                 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none
                 transition-transform duration-200
-                ${isActive ? 'text-[#004ac6]' : 'text-[#737686]'}
+                ${isActive ? 'text-[#4077a6]' : 'text-[#737686]'}
               `}
             >
               <Icon name="chevronDown" size={14} />
@@ -105,8 +105,8 @@ const FilterBar: React.FC<FilterBarProps> = ({
               px-4 py-2.5 rounded-xl text-sm font-medium
               border transition-all duration-200 ease-out
               ${isMoreOpen
-                ? 'border-[#004ac6] text-[#004ac6] bg-[#f5f7fb]'
-                : 'border-[#c3c6d7] text-[#434655] hover:border-[#004ac6] hover:bg-[#f5f7fb]'
+                ? 'border-[#538cbd] text-[#4077a6] bg-[#f5f7fb]'
+                : 'border-[#c3c6d7] text-[#434655] hover:border-[#538cbd] hover:bg-[#f5f7fb]'
               }
               hover:scale-[1.02] active:scale-95
               flex items-center gap-1.5
@@ -139,10 +139,10 @@ const FilterBar: React.FC<FilterBarProps> = ({
                         appearance-none w-full px-3 py-2 pr-8 rounded-lg text-sm font-medium
                         border transition-all duration-200 ease-out
                         bg-white cursor-pointer
-                        focus:outline-none focus:ring-2 focus:ring-[#004ac6]/30
+                        focus:outline-none focus:ring-2 focus:ring-[#538cbd]/30
                         ${isActive
-                          ? 'border-[#004ac6] text-[#004ac6] bg-[#f5f7fb]'
-                          : 'border-[#c3c6d7] text-[#434655] hover:border-[#004ac6] hover:bg-[#f5f7fb]'
+                          ? 'border-[#538cbd] text-[#4077a6] bg-[#f5f7fb]'
+                          : 'border-[#c3c6d7] text-[#434655] hover:border-[#538cbd] hover:bg-[#f5f7fb]'
                         }
                       `}
                     >
@@ -152,7 +152,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
                         </option>
                       ))}
                     </select>
-                    <div className={`absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none ${isActive ? 'text-[#004ac6]' : 'text-[#737686]'}`}>
+                    <div className={`absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none ${isActive ? 'text-[#4077a6]' : 'text-[#737686]'}`}>
                       <Icon name="chevronDown" size={12} />
                     </div>
                   </div>
@@ -166,7 +166,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
       {hiddenFilters.length === 0 && onMoreFilters && (
         <button
           onClick={handleMoreClick}
-          className="px-4 py-2.5 rounded-xl text-sm font-medium border border-[#c3c6d7] text-[#434655] hover:border-[#004ac6] hover:text-[#004ac6] hover:bg-[#f5f7fb] transition-all duration-200 hover:scale-[1.02] active:scale-95"
+          className="px-4 py-2.5 rounded-xl text-sm font-medium border border-[#c3c6d7] text-[#434655] hover:border-[#538cbd] hover:text-[#4077a6] hover:bg-[#f5f7fb] transition-all duration-200 hover:scale-[1.02] active:scale-95"
         >
           {moreFiltersLabel}
         </button>

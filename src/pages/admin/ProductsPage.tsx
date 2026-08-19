@@ -94,7 +94,7 @@ const ProductsPage: React.FC = () => {
               onClick={() => setTab(value)}
               className={`border-b-2 px-4 py-2 text-sm font-semibold transition-colors ${
                 tab === value
-                  ? 'border-[#004ac6] text-[#004ac6]'
+                  ? 'border-[#538cbd] text-[#4077a6]'
                   : 'border-transparent text-[#737686] hover:text-[#101319]'
               }`}
             >
@@ -110,7 +110,7 @@ const ProductsPage: React.FC = () => {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Cari nama produk atau SKU…"
-              className="w-64 rounded-xl border border-[#c3c6d7] px-4 py-2.5 pl-9 text-sm outline-none transition focus:border-[#004ac6] focus:ring-2 focus:ring-[#004ac6]/20"
+              className="w-64 rounded-xl border border-[#c3c6d7] px-4 py-2.5 pl-9 text-sm outline-none transition focus:border-[#538cbd] focus:ring-2 focus:ring-[#538cbd]/20"
             />
             <Icon
               name="search"
@@ -156,7 +156,7 @@ const ProductsPage: React.FC = () => {
                 {isLoading ? (
                   <tr>
                     <td colSpan={7} className="py-10 text-center text-[#737686]">
-                      <span className="inline-block h-5 w-5 animate-spin rounded-full border-2 border-[#004ac6] border-t-transparent" />
+                      <span className="inline-block h-5 w-5 animate-spin rounded-full border-2 border-[#538cbd] border-t-transparent" />
                       <span className="ml-2">Memuat…</span>
                     </td>
                   </tr>
@@ -181,7 +181,7 @@ const ProductsPage: React.FC = () => {
                       </td>
                       <td className="py-2.5 pr-2 text-[#434655]">{product.seller.storeName}</td>
                       <td className="py-2.5 pr-2 text-[#434655]">{product.category.name}</td>
-                      <td className="py-2.5 pr-2 font-semibold text-[#004ac6]">
+                      <td className="py-2.5 pr-2 font-semibold text-[#4077a6]">
                         {formatRupiah(Number(product.price))}
                       </td>
                       <td className="py-2.5 pr-2 text-center">{product.stock}</td>
@@ -203,7 +203,7 @@ const ProductsPage: React.FC = () => {
                           className={`rounded-full px-3 py-1 text-[12px] font-semibold text-white transition-colors disabled:opacity-50 ${
                             product.isActive
                               ? 'bg-[#ba1a1a] hover:bg-[#93000a]'
-                              : 'bg-[#004ac6] hover:bg-[#003ea8]'
+                              : 'bg-[#4077a6] hover:bg-[#284a67]'
                           }`}
                         >
                           {product.isActive ? 'Nonaktifkan' : 'Aktifkan'}

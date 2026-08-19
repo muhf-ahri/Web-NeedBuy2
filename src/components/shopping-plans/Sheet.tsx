@@ -57,7 +57,7 @@ const Sheet: React.FC<SheetProps> = ({
             <span
               className="
                 flex h-8 w-8 items-center justify-center rounded-lg
-                bg-[#004ac6]/10
+                bg-[#538cbd]/10
               "
             >
               <span className="h-1.5 w-1.5 rounded-full bg-[#FFD500]" />

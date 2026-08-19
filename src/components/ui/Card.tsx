@@ -13,7 +13,7 @@ const Card: React.FC<CardProps> = ({
 }) => {
   const variantClasses = {
     default: 'bg-white border border-[#e0e3e5]',
-    blue: 'bg-white border border-[#004ac6] shadow-sm shadow-[#004ac6]/5',
+    blue: 'bg-white border border-[#538cbd] shadow-sm shadow-[#538cbd]/5',
     yellow: 'bg-white border border-[#FFD500] shadow-sm shadow-[#FFD500]/5',
     coral: 'bg-white border border-[#ba1a1a] shadow-sm shadow-[#ba1a1a]/5',
     ghost: 'bg-transparent border-0',

@@ -93,7 +93,7 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
               onClick={() => navigate(`/messages?seller=${order.seller.id}`)}
               className="
                 mt-1.5 inline-flex items-center gap-1 text-[11px]
-                font-semibold text-[#004ac6] hover:underline
+                font-semibold text-[#4077a6] hover:underline
               "
             >
               <Icon name="chat" size={12} /> Chat penjual
@@ -121,7 +121,7 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
               "
             >
               <div className="flex items-center gap-2">
-                <Icon name="card" size={15} className="text-[#004ac6]" />
+                <Icon name="card" size={15} className="text-[#4077a6]" />
                 <span className="font-semibold text-[#101319]">
                   {paymentMethodLabel(order.payment?.method)}
                 </span>
@@ -172,7 +172,7 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
                           onClick={() => onOpenReview(order)}
                           className="
                             mt-1 inline-flex items-center gap-1 text-[11px]
-                            font-semibold text-[#004ac6] hover:underline
+                            font-semibold text-[#4077a6] hover:underline
                           "
                         >
                           <Icon name="star" size={11} />
@@ -215,7 +215,7 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
                     <Icon
                       name="pin"
                       size={15}
-                      className="mt-0.5 shrink-0 text-[#004ac6]"
+                      className="mt-0.5 shrink-0 text-[#4077a6]"
                     />
                     <div className="min-w-0">
                       <p className="text-[12px] font-semibold text-[#101319]">
@@ -255,7 +255,7 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
                   <span className="text-[13px] font-bold text-[#101319]">
                     Total
                   </span>
-                  <span className="text-[15px] font-extrabold text-[#004ac6]">
+                  <span className="text-[15px] font-extrabold text-[#4077a6]">
                     {formatRupiah(order.total)}
                   </span>
                 </div>
@@ -278,9 +278,9 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
                 disabled={busy}
                 className="
                   flex h-10 flex-1 items-center justify-center gap-2
-                  rounded-full bg-[#004ac6] px-4 text-[12px] font-semibold
+                  rounded-full bg-[#4077a6] px-4 text-[12px] font-semibold
                   text-white shadow-[0_6px_16px_rgba(83,140,219,0.25)]
-                  transition-all duration-200 hover:bg-[#004ac6]
+                  transition-all duration-200 hover:bg-[#4077a6]
                   active:scale-[0.99] disabled:cursor-not-allowed
                   disabled:bg-[#A2A8B3] disabled:shadow-none
                 "
@@ -298,9 +298,9 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
                 disabled={busy || checkingPayment}
                 className="
                   flex h-10 flex-1 items-center justify-center gap-2
-                  rounded-full border border-[#004ac6] bg-white px-4
-                  text-[12px] font-semibold text-[#004ac6] transition-all
-                  duration-200 hover:bg-[#004ac6] hover:text-white
+                  rounded-full border border-[#538cbd] bg-white px-4
+                  text-[12px] font-semibold text-[#4077a6] transition-all
+                  duration-200 hover:bg-[#4077a6] hover:text-white
                   active:scale-[0.99] disabled:cursor-not-allowed
                   disabled:opacity-50
                 "
@@ -406,7 +406,7 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
             <div
               className="
                 flex h-10 w-full items-center justify-center gap-2
-                text-[12px] font-semibold text-[#004ac6]
+                text-[12px] font-semibold text-[#4077a6]
               "
             >
               <Icon name="check" size={14} />

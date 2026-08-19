@@ -12,7 +12,7 @@ const Badge: React.FC<BadgeProps> = ({
   className = '',
 }) => {
   const variants = {
-    blue: 'bg-[#f5f7fb] text-[#004ac6]',
+    blue: 'bg-[#f5f7fb] text-[#4077a6]',
     yellow: 'bg-[#fff7e0] text-[#b45309]',
     coral: 'bg-[#FFF0F0] text-[#ba1a1a]',
     gray: 'bg-[#f5f7fb] text-[#737686]',

@@ -20,9 +20,9 @@ const AnalyticsHeader: React.FC<AnalyticsHeaderProps> = ({
   <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
     <div className="min-w-0">
       <div className="mb-2 flex items-center gap-2">
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-[#004ac6]/10 px-2.5 py-1">
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-[#538cbd]/10 px-2.5 py-1">
           <span className="h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
-          <p className="text-[9px] font-bold uppercase tracking-[0.20em] text-[#004ac6]">
+          <p className="text-[9px] font-bold uppercase tracking-[0.20em] text-[#4077a6]">
             Analitik Toko
           </p>
         </span>
@@ -54,8 +54,8 @@ const AnalyticsHeader: React.FC<AnalyticsHeaderProps> = ({
               transition-all duration-200 sm:px-4
               ${
                 active
-                  ? 'bg-[#004ac6] text-white shadow-[0_4px_12px_rgba(83,140,219,0.30)]'
-                  : 'text-[#737686] hover:text-[#004ac6]'
+                  ? 'bg-[#4077a6] text-white shadow-[0_4px_12px_rgba(83,140,219,0.30)]'
+                  : 'text-[#737686] hover:text-[#4077a6]'
               }
             `}
           >
@@ -63,7 +63,7 @@ const AnalyticsHeader: React.FC<AnalyticsHeaderProps> = ({
               <span
                 className="
                   pointer-events-none absolute -right-0.5 -top-0.5 h-1 w-1
-                  rounded-full bg-[#FFD500] ring-2 ring-[#004ac6]
+                  rounded-full bg-[#FFD500] ring-2 ring-[#538cbd]
                 "
               />
             )}

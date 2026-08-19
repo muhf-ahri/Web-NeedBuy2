@@ -17,7 +17,7 @@ const PlaceholderPage: React.FC = () => {
         </div>
 
         <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-[#c3c6d7] bg-white px-6 py-20 text-center">
-          <div className="rounded-full bg-[#dbe1ff] p-4 text-[#004ac6]">
+          <div className="rounded-full bg-[#e4ebf1] p-4 text-[#4077a6]">
             <Icon name={item?.icon ?? 'dashboard'} size={28} />
           </div>
           <h2 className="mt-4 text-[17px] font-bold text-[#101319]">

@@ -26,8 +26,8 @@ const OrdersTabs: React.FC<OrdersTabsProps> = ({ activeTab, onChange }) => (
             font-semibold transition-all duration-200 active:scale-[0.98]
             ${
               active
-                ? 'bg-[#004ac6] text-white shadow-[0_6px_16px_rgba(83,140,219,0.30)]'
-                : 'border border-[#e0e3e5] bg-white text-[#737686] hover:border-[#004ac6]/40 hover:text-[#004ac6]'
+                ? 'bg-[#4077a6] text-white shadow-[0_6px_16px_rgba(83,140,219,0.30)]'
+                : 'border border-[#e0e3e5] bg-white text-[#737686] hover:border-[#538cbd]/40 hover:text-[#4077a6]'
             }
           `}
         >

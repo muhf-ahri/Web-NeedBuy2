@@ -74,8 +74,8 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
           {!compact && isUnread && (
             <span
               className="
-                mt-2 h-2 w-2 shrink-0 rounded-full bg-[#004ac6]
-                ring-4 ring-[#004ac6]/15
+                mt-2 h-2 w-2 shrink-0 rounded-full bg-[#4077a6]
+                ring-4 ring-[#538cbd]/15
               "
             />
           )}
@@ -97,7 +97,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
               px-2.5 py-1.5 text-[10px]
             "
           >
-            <Icon name="orders" size={11} className="text-[#004ac6]" />
+            <Icon name="orders" size={11} className="text-[#4077a6]" />
             <span className="font-mono font-semibold text-[#101319]">
               #{notification.order.orderNumber}
             </span>

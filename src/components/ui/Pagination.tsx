@@ -70,10 +70,10 @@ const Pagination: React.FC<PaginationProps> = ({
           <span
             className="
               flex h-7 w-7 items-center justify-center rounded-lg
-              bg-[#004ac6]/10
+              bg-[#538cbd]/10
             "
           >
-            <Icon name="product" size={14} className="text-[#004ac6]" />
+            <Icon name="product" size={14} className="text-[#4077a6]" />
           </span>
           <p className="text-[12px] text-[#737686]">
             Menampilkan{' '}
@@ -108,8 +108,8 @@ const Pagination: React.FC<PaginationProps> = ({
           className="
             flex h-8 w-8 items-center justify-center rounded-full
             border border-[#e0e3e5] bg-white text-[#737686]
-            transition-all duration-200 hover:border-[#004ac6]
-            hover:text-[#004ac6] hover:shadow-[0_4px_12px_rgba(83,140,219,0.15)]
+            transition-all duration-200 hover:border-[#538cbd]
+            hover:text-[#4077a6] hover:shadow-[0_4px_12px_rgba(83,140,219,0.15)]
             active:scale-[0.95] disabled:cursor-not-allowed
             disabled:border-[#e0e3e5] disabled:bg-[#F5F7FB]
             disabled:text-[#e0e3e5] disabled:shadow-none sm:h-9 sm:w-9
@@ -147,8 +147,8 @@ const Pagination: React.FC<PaginationProps> = ({
                 sm:px-2 sm:text-[13px]
                 ${
                   isActive
-                    ? 'bg-[#004ac6] text-white shadow-[0_6px_16px_rgba(83,140,219,0.30)]'
-                    : 'border border-transparent text-[#737686] hover:border-[#e0e3e5] hover:bg-white hover:text-[#004ac6] hover:shadow-[0_3px_10px_rgba(83,140,219,0.10)]'
+                    ? 'bg-[#4077a6] text-white shadow-[0_6px_16px_rgba(83,140,219,0.30)]'
+                    : 'border border-transparent text-[#737686] hover:border-[#e0e3e5] hover:bg-white hover:text-[#4077a6] hover:shadow-[0_3px_10px_rgba(83,140,219,0.10)]'
                 }
               `}
               aria-current={isActive ? 'page' : undefined}
@@ -165,8 +165,8 @@ const Pagination: React.FC<PaginationProps> = ({
           className="
             flex h-8 w-8 items-center justify-center rounded-full
             border border-[#e0e3e5] bg-white text-[#737686]
-            transition-all duration-200 hover:border-[#004ac6]
-            hover:text-[#004ac6] hover:shadow-[0_4px_12px_rgba(83,140,219,0.15)]
+            transition-all duration-200 hover:border-[#538cbd]
+            hover:text-[#4077a6] hover:shadow-[0_4px_12px_rgba(83,140,219,0.15)]
             active:scale-[0.95] disabled:cursor-not-allowed
             disabled:border-[#e0e3e5] disabled:bg-[#F5F7FB]
             disabled:text-[#e0e3e5] disabled:shadow-none sm:h-9 sm:w-9

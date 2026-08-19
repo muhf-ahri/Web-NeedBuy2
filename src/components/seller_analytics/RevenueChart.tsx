@@ -87,7 +87,7 @@ const RevenueChart: React.FC<RevenueChartProps> = ({
         <div className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-[#737686]">
           <span>
             Total{' '}
-            <span className="font-bold text-[#004ac6] tabular-nums">
+            <span className="font-bold text-[#4077a6] tabular-nums">
               {formatRupiah(Number(total.revenue))}
             </span>
           </span>
@@ -140,7 +140,7 @@ const RevenueChart: React.FC<RevenueChartProps> = ({
                   duration-300 sm:text-[9px]
                   ${
                     isHovered
-                      ? 'text-[#004ac6] opacity-100'
+                      ? 'text-[#4077a6] opacity-100'
                       : 'text-[#A2A8B3] opacity-0 group-hover:opacity-100'
                   }
                 `}
@@ -154,8 +154,8 @@ const RevenueChart: React.FC<RevenueChartProps> = ({
                   transition-all duration-200
                   ${
                     isHovered
-                      ? 'bg-gradient-to-t from-[#003ea8] to-[#004ac6] shadow-[0_-4px_12px_rgba(83,140,219,0.40)]'
-                      : 'bg-gradient-to-t from-[#004ac6] to-[#004ac6]/80'
+                      ? 'bg-gradient-to-t from-[#284a67] to-[#538cbd] shadow-[0_-4px_12px_rgba(83,140,219,0.40)]'
+                      : 'bg-gradient-to-t from-[#538cbd] to-[#538cbd]/80'
                   }
                 `}
                 style={{
@@ -185,7 +185,7 @@ const RevenueChart: React.FC<RevenueChartProps> = ({
             key={i}
             className={`
               text-[9px] tabular-nums transition-colors sm:text-[10px]
-              ${hoverIndex === i ? 'font-bold text-[#004ac6]' : 'text-[#A2A8B3]'}
+              ${hoverIndex === i ? 'font-bold text-[#4077a6]' : 'text-[#A2A8B3]'}
             `}
           >
             {labelFor(p.bucket, granularity)}

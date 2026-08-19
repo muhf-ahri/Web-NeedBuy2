@@ -44,7 +44,7 @@ const CartItemRow: React.FC<CartItemRowProps> = ({
           checked={selected}
           disabled={unavailable}
           onChange={(e) => onToggleSelect(e.target.checked)}
-          className="mt-1 h-4 w-4 shrink-0 cursor-pointer accent-[#004ac6] disabled:cursor-not-allowed"
+          className="mt-1 h-4 w-4 shrink-0 cursor-pointer accent-[#4077a6] disabled:cursor-not-allowed"
           aria-label={`Pilih ${item.product.name} untuk checkout`}
         />
 
@@ -68,7 +68,7 @@ const CartItemRow: React.FC<CartItemRowProps> = ({
           {item.variant && (
             <p className="text-[11px] text-[#737686]">Model: {item.variant}</p>
           )}
-          <p className="mt-0.5 text-[12px] font-semibold text-[#004ac6]">
+          <p className="mt-0.5 text-[12px] font-semibold text-[#4077a6]">
             {formatRupiah(item.priceAtAdd)}
           </p>
 
@@ -102,7 +102,7 @@ const CartItemRow: React.FC<CartItemRowProps> = ({
             className="
               flex h-8 w-8 items-center justify-center rounded-l-full
               text-[#737686] transition-colors hover:bg-[#F5F7FB]
-              hover:text-[#004ac6] disabled:cursor-not-allowed
+              hover:text-[#4077a6] disabled:cursor-not-allowed
               disabled:opacity-40
             "
             aria-label="Kurangi jumlah"
@@ -119,7 +119,7 @@ const CartItemRow: React.FC<CartItemRowProps> = ({
             className="
               flex h-8 w-8 items-center justify-center rounded-r-full
               text-[#737686] transition-colors hover:bg-[#F5F7FB]
-              hover:text-[#004ac6] disabled:cursor-not-allowed
+              hover:text-[#4077a6] disabled:cursor-not-allowed
               disabled:opacity-40
             "
             aria-label="Tambah jumlah"

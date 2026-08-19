@@ -43,7 +43,7 @@ const Field: React.FC<FieldProps> = ({
         ${
           error
             ? 'border-[#ba1a1a] focus:border-[#ba1a1a] focus:shadow-[0_4px_16px_rgba(255,70,70,0.10)]'
-            : 'border-[#e0e3e5] bg-[#F5F7FB] focus:border-[#004ac6]'
+            : 'border-[#e0e3e5] bg-[#F5F7FB] focus:border-[#538cbd]'
         }
       `}
     />
@@ -104,10 +104,10 @@ const ProfileAddressSection: React.FC<ProfileAddressSectionProps> = ({
             <span
               className="
                 flex h-8 w-8 items-center justify-center rounded-lg
-                bg-[#004ac6]/10
+                bg-[#538cbd]/10
               "
             >
-              <Icon name="pin" size={15} className="text-[#004ac6]" />
+              <Icon name="pin" size={15} className="text-[#4077a6]" />
             </span>
             <div>
               <h3 className="text-[15px] font-bold text-[#101319]">
@@ -123,10 +123,10 @@ const ProfileAddressSection: React.FC<ProfileAddressSectionProps> = ({
             type="button"
             onClick={onAdd}
             className="
-              flex h-9 items-center gap-1.5 rounded-full bg-[#004ac6] px-3.5
+              flex h-9 items-center gap-1.5 rounded-full bg-[#4077a6] px-3.5
               text-[11px] font-semibold text-white
               shadow-[0_4px_12px_rgba(83,140,219,0.25)] transition-all
-              duration-200 hover:bg-[#004ac6] active:scale-[0.99]
+              duration-200 hover:bg-[#4077a6] active:scale-[0.99]
             "
           >
             <Icon name="plus" size={12} />
@@ -163,7 +163,7 @@ const ProfileAddressSection: React.FC<ProfileAddressSectionProps> = ({
                 key={addr.id}
                 className="
                   group rounded-2xl border border-[#e0e3e5] bg-white p-4
-                  transition-all duration-200 hover:border-[#004ac6]/40
+                  transition-all duration-200 hover:border-[#538cbd]/40
                   hover:shadow-[0_4px_14px_rgba(83,140,219,0.08)]
                 "
               >
@@ -177,11 +177,11 @@ const ProfileAddressSection: React.FC<ProfileAddressSectionProps> = ({
                         <span
                           className="
                             inline-flex items-center gap-1 rounded-full
-                            bg-[#004ac6]/10 px-2 py-0.5 text-[9px]
-                            font-semibold text-[#004ac6]
+                            bg-[#538cbd]/10 px-2 py-0.5 text-[9px]
+                            font-semibold text-[#4077a6]
                           "
                         >
-                          <span className="h-1 w-1 rounded-full bg-[#004ac6]" />
+                          <span className="h-1 w-1 rounded-full bg-[#4077a6]" />
                           Utama
                         </span>
                       )}
@@ -245,10 +245,10 @@ const ProfileAddressSection: React.FC<ProfileAddressSectionProps> = ({
                 <span
                   className="
                     flex h-8 w-8 items-center justify-center rounded-lg
-                    bg-[#004ac6]/10
+                    bg-[#538cbd]/10
                   "
                 >
-                  <Icon name="pin" size={14} className="text-[#004ac6]" />
+                  <Icon name="pin" size={14} className="text-[#4077a6]" />
                 </span>
                 <h3 className="text-[15px] font-bold text-[#101319]">
                   Alamat Baru
@@ -339,9 +339,9 @@ const ProfileAddressSection: React.FC<ProfileAddressSectionProps> = ({
                 disabled={saving}
                 className="
                   flex h-11 w-full items-center justify-center gap-2
-                  rounded-full bg-[#004ac6] px-6 text-[14px] font-semibold
+                  rounded-full bg-[#4077a6] px-6 text-[14px] font-semibold
                   text-white shadow-[0_7px_18px_rgba(83,140,219,0.25)]
-                  transition-all duration-200 hover:bg-[#004ac6]
+                  transition-all duration-200 hover:bg-[#4077a6]
                   hover:shadow-[0_9px_22px_rgba(83,140,219,0.30)]
                   active:scale-[0.99] disabled:cursor-not-allowed
                   disabled:bg-[#A2A8B3] disabled:shadow-none

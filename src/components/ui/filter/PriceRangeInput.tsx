@@ -10,7 +10,7 @@ interface PriceRangeFilterProps {
 }
 
 const inputClassName =
-  'w-full pl-7 pr-2 py-1.5 text-[12px] border border-[#c3c6d7] rounded-lg outline-none focus:border-[#004ac6] focus:ring-2 focus:ring-[#004ac6]/20 transition-colors [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none';
+  'w-full pl-7 pr-2 py-1.5 text-[12px] border border-[#c3c6d7] rounded-lg outline-none focus:border-[#538cbd] focus:ring-2 focus:ring-[#538cbd]/20 transition-colors [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none';
 
 const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
   minValue,

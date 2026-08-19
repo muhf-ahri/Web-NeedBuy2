@@ -63,7 +63,7 @@ const AnalyticsPage: React.FC = () => {
                 <span
                   className="
                     pointer-events-none absolute -right-16 -top-16 h-40 w-40
-                    rounded-full border border-[#004ac6]/10
+                    rounded-full border border-[#538cbd]/10
                   "
                 />
                 <span
@@ -74,7 +74,7 @@ const AnalyticsPage: React.FC = () => {
                 />
 
                 <div className="relative mb-4 flex items-center gap-2.5">
-                  <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#004ac6]/10">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#538cbd]/10">
                     <svg
                       width={15}
                       height={15}
@@ -84,7 +84,7 @@ const AnalyticsPage: React.FC = () => {
                       strokeWidth={2.5}
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      className="text-[#004ac6]"
+                      className="text-[#4077a6]"
                     >
                       <line x1="18" y1="20" x2="18" y2="10" />
                       <line x1="12" y1="20" x2="12" y2="4" />

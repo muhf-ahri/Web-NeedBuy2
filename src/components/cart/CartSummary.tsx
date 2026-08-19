@@ -35,7 +35,7 @@ const CartSummary: React.FC<CartSummaryProps> = ({
     <div
       className="
         relative overflow-hidden rounded-[24px] bg-gradient-to-br
-        from-[#004ac6] to-[#003ea8] p-5 text-white
+        from-[#538cbd] to-[#284a67] p-5 text-white
         shadow-[0_18px_50px_rgba(83,140,219,0.30)] sm:p-6
       "
     >
@@ -91,7 +91,7 @@ const CartSummary: React.FC<CartSummaryProps> = ({
             disabled={busy || !budgetInput.trim()}
             className="
               shrink-0 rounded-full bg-white px-4 py-2 text-[12px] font-bold
-              text-[#003ea8] transition-colors hover:bg-[#f5f7fb]
+              text-[#284a67] transition-colors hover:bg-[#f5f7fb]
               disabled:cursor-not-allowed disabled:opacity-50
             "
           >
@@ -121,9 +121,9 @@ const CartSummary: React.FC<CartSummaryProps> = ({
       disabled={selectedCount === 0}
       className="
         flex w-full items-center justify-center gap-2 rounded-full
-        bg-[#004ac6] px-6 py-3 font-semibold text-white
+        bg-[#4077a6] px-6 py-3 font-semibold text-white
         shadow-[0_7px_18px_rgba(83,140,219,0.25)] transition-all
-        duration-200 hover:bg-[#004ac6]
+        duration-200 hover:bg-[#4077a6]
         hover:shadow-[0_9px_22px_rgba(83,140,219,0.30)] active:scale-[0.99]
         disabled:cursor-not-allowed disabled:bg-[#A2A8B3] disabled:shadow-none
       "
@@ -140,8 +140,8 @@ const CartSummary: React.FC<CartSummaryProps> = ({
       className="
         flex w-full items-center justify-center gap-2 rounded-full border
         border-[#e0e3e5] bg-white px-6 py-3 font-semibold text-[#101319]
-        transition-all duration-200 hover:border-[#004ac6]
-        hover:text-[#004ac6] active:scale-[0.99]
+        transition-all duration-200 hover:border-[#538cbd]
+        hover:text-[#4077a6] active:scale-[0.99]
       "
     >
       Lanjut belanja

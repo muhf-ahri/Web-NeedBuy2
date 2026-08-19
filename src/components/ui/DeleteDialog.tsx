@@ -154,7 +154,7 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({
                 {product.name}
               </p>
               <div className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px] text-[#737686]">
-                <span className="font-bold text-[#004ac6] tabular-nums">
+                <span className="font-bold text-[#4077a6] tabular-nums">
                   {formatRupiah(product.price)}
                 </span>
                 <span className="h-1 w-1 rounded-full bg-[#e0e3e5]" />

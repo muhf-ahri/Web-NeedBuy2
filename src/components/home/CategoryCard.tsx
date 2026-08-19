@@ -82,13 +82,13 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category, rank }) => {
         backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5
         hover:shadow-[0_14px_36px_rgba(32,36,45,0.10)]
         focus-visible:outline-2 focus-visible:outline-offset-2
-        focus-visible:outline-[#004ac6]
+        focus-visible:outline-[#4077a6]
       "
     >
       <span
         className="
           pointer-events-none absolute -right-10 -top-10 h-28 w-28
-          rounded-full bg-[#004ac6]/10 opacity-0 blur-2xl
+          rounded-full bg-[#538cbd]/10 opacity-0 blur-2xl
           transition-opacity duration-300 group-hover:opacity-100
         "
       />
@@ -103,7 +103,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category, rank }) => {
       <span
         className="
           pointer-events-none absolute -bottom-6 -right-6 h-16 w-16
-          rounded-full border border-[#004ac6]/10
+          rounded-full border border-[#538cbd]/10
         "
       />
 
@@ -129,7 +129,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category, rank }) => {
             <span
               className="
                 relative flex h-full w-full items-center justify-center
-                overflow-hidden bg-gradient-to-br from-[#004ac6] to-[#003ea8]
+                overflow-hidden bg-gradient-to-br from-[#538cbd] to-[#284a67]
               "
             >
               <span className="pointer-events-none absolute -right-2 -top-2 h-6 w-6 rounded-full border border-white/25" />
@@ -153,7 +153,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category, rank }) => {
               ${
                 isTopThree
                   ? 'bg-[#FFD500] text-[#101319]'
-                  : 'bg-white/90 text-[#004ac6]'
+                  : 'bg-white/90 text-[#4077a6]'
               }
             `}
           >
@@ -166,7 +166,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category, rank }) => {
             className="
               block truncate text-[15px] font-bold leading-tight
               text-[#101319] transition-colors duration-200
-              group-hover:text-[#004ac6]
+              group-hover:text-[#4077a6]
             "
           >
             {category.name}
@@ -177,7 +177,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category, rank }) => {
               {category.sold.toLocaleString('id-ID')} terjual
             </span>
             <span className="h-1 w-1 shrink-0 rounded-full bg-[#e0e3e5]" />
-            <span className="truncate font-semibold text-[#004ac6]">
+            <span className="truncate font-semibold text-[#4077a6]">
               Mulai {formatRupiah(category.cheapest)}
             </span>
           </span>
@@ -185,7 +185,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category, rank }) => {
 
         <span
           className="
-            ml-auto shrink-0 translate-x-1 text-[#004ac6] opacity-0
+            ml-auto shrink-0 translate-x-1 text-[#4077a6] opacity-0
             transition-all duration-300 group-hover:translate-x-0
             group-hover:opacity-100
           "

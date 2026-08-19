@@ -48,7 +48,7 @@ const ProfileHero: React.FC<ProfileHeroProps> = ({
       <div
         className="
           relative overflow-hidden rounded-[24px] bg-gradient-to-br
-          from-[#004ac6] to-[#003ea8] p-5 text-white
+          from-[#538cbd] to-[#284a67] p-5 text-white
           shadow-[0_18px_50px_rgba(83,140,219,0.30)] sm:p-6
         "
       >
@@ -255,7 +255,7 @@ const ProfileHero: React.FC<ProfileHeroProps> = ({
                   ${
                     link.danger
                       ? 'bg-[#FFF0F0] text-[#ba1a1a]'
-                      : 'bg-[#004ac6]/10 text-[#004ac6]'
+                      : 'bg-[#538cbd]/10 text-[#4077a6]'
                   }
                 `}
               >
@@ -275,7 +275,7 @@ const ProfileHero: React.FC<ProfileHeroProps> = ({
                 <span
                   className="
                     flex h-5 min-w-5 items-center justify-center rounded-full
-                    bg-[#004ac6] px-1.5 text-[10px] font-bold text-white
+                    bg-[#4077a6] px-1.5 text-[10px] font-bold text-white
                   "
                 >
                   {link.badge}
@@ -286,7 +286,7 @@ const ProfileHero: React.FC<ProfileHeroProps> = ({
                 size={14}
                 className="
                   text-[#A2A8B3] transition-transform duration-200
-                  group-hover:translate-x-0.5 group-hover:text-[#004ac6]
+                  group-hover:translate-x-0.5 group-hover:text-[#4077a6]
                 "
               />
             </div>

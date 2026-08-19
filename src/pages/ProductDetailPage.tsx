@@ -162,7 +162,7 @@ const ProductDetailPage: React.FC = () => {
         <main className="flex-1 max-w-6xl mx-auto w-full px-5 sm:px-10 py-8 flex items-center justify-center">
           <div className="text-center">
             <p className="text-[#93000a] mb-4">{error ?? 'Produknya nggak ketemu'}</p>
-            <button onClick={() => navigate(-1)} className="text-[#004ac6] hover:underline">
+            <button onClick={() => navigate(-1)} className="text-[#4077a6] hover:underline">
               Balik
             </button>
           </div>
@@ -224,7 +224,7 @@ const ProductDetailPage: React.FC = () => {
                       aria-label={`Foto ${index + 1}`}
                       aria-current={index === selectedImage}
                       className={`shrink-0 w-20 h-20 rounded-xl overflow-hidden border-2 transition-colors ${
-                        index === selectedImage ? 'border-[#004ac6]' : 'border-transparent'
+                        index === selectedImage ? 'border-[#538cbd]' : 'border-transparent'
                       }`}
                     >
                       <img src={image.url} alt="" className="w-full h-full object-cover" />
@@ -344,8 +344,8 @@ const ProductDetailPage: React.FC = () => {
                             aria-pressed={active}
                             className={`rounded-full border px-4 py-2 text-[13px] font-medium transition-colors ${
                               active
-                                ? 'border-[#004ac6] bg-[#dbe1ff] text-[#004ac6]'
-                                : 'border-[#c3c6d7] text-[#434655] hover:border-[#004ac6]'
+                                ? 'border-[#538cbd] bg-[#e4ebf1] text-[#4077a6]'
+                                : 'border-[#c3c6d7] text-[#434655] hover:border-[#538cbd]'
                             }`}
                           >
                             {value}
@@ -459,7 +459,7 @@ const ProductDetailPage: React.FC = () => {
               <div className="mt-4 border-t border-[#e0e3e5] pt-4">
                 <div className="flex items-baseline justify-between">
                   <span className="text-[13px] text-[#737686]">Total</span>
-                  <span className="text-[26px] font-bold text-[#004ac6]">
+                  <span className="text-[26px] font-bold text-[#4077a6]">
                     {formatRupiah(payable)}
                   </span>
                 </div>
@@ -478,7 +478,7 @@ const ProductDetailPage: React.FC = () => {
                 <button
                   onClick={() => handleAddToCart(false)}
                   disabled={product.stock === 0 || adding}
-                  className="flex w-full items-center justify-center gap-2 rounded-full border-2 border-[#004ac6] px-6 py-3 text-[14px] font-semibold text-[#004ac6] transition-colors hover:bg-[#dbe1ff] disabled:opacity-50"
+                  className="flex w-full items-center justify-center gap-2 rounded-full border-2 border-[#538cbd] px-6 py-3 text-[14px] font-semibold text-[#4077a6] transition-colors hover:bg-[#e4ebf1] disabled:opacity-50"
                 >
                   <Icon name="cart" size={18} className="" />
                   {added ? 'Masuk keranjang!' : adding ? 'Bentar ya...' : 'Masukin Keranjang'}
@@ -486,7 +486,7 @@ const ProductDetailPage: React.FC = () => {
                 <button
                   onClick={() => handleAddToCart(true)}
                   disabled={product.stock === 0 || adding}
-                  className="w-full rounded-full bg-[#004ac6] px-6 py-3 text-[14px] font-semibold text-white transition-colors hover:bg-[#003ea8] disabled:opacity-50"
+                  className="w-full rounded-full bg-[#4077a6] px-6 py-3 text-[14px] font-semibold text-white transition-colors hover:bg-[#284a67] disabled:opacity-50"
                 >
                   Beli Langsung
                 </button>
@@ -495,7 +495,7 @@ const ProductDetailPage: React.FC = () => {
               <div className="mt-4 grid grid-cols-3 divide-x divide-[#e0e3e5] border-t border-[#e0e3e5] pt-3 text-[12px]">
                 <button
                   onClick={() => navigate(`/messages?seller=${product.seller.id}`)}
-                  className="flex flex-col items-center gap-1 py-1 text-[#434655] transition-colors hover:text-[#004ac6]"
+                  className="flex flex-col items-center gap-1 py-1 text-[#434655] transition-colors hover:text-[#4077a6]"
                 >
                   <Icon name="chat" size={18} className="" />
                   Chat
@@ -507,7 +507,7 @@ const ProductDetailPage: React.FC = () => {
                   }}
                   disabled={wishlistBusy}
                   className={`flex flex-col items-center gap-1 py-1 transition-colors disabled:opacity-60 ${
-                    wishlisted ? 'text-[#ba1a1a]' : 'text-[#434655] hover:text-[#004ac6]'
+                    wishlisted ? 'text-[#ba1a1a]' : 'text-[#434655] hover:text-[#4077a6]'
                   }`}
                 >
                   <Icon name="heart" size={18} className="" />
@@ -515,7 +515,7 @@ const ProductDetailPage: React.FC = () => {
                 </button>
                 <button
                   onClick={handleShare}
-                  className="flex flex-col items-center gap-1 py-1 text-[#434655] transition-colors hover:text-[#004ac6]"
+                  className="flex flex-col items-center gap-1 py-1 text-[#434655] transition-colors hover:text-[#4077a6]"
                 >
                   <Icon name="send" size={18} className="" />
                   Share

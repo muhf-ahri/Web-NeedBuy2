@@ -60,10 +60,10 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
           <span
             className="
               flex h-7 w-7 items-center justify-center rounded-lg
-              bg-[#004ac6]/10
+              bg-[#538cbd]/10
             "
           >
-            <Icon name="filter" size={14} className="text-[#004ac6]" />
+            <Icon name="filter" size={14} className="text-[#4077a6]" />
           </span>
           Filter
         </h2>
@@ -72,8 +72,8 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
           <button
             onClick={onClearAll}
             className="
-              text-[11px] font-semibold text-[#004ac6] transition-colors
-              hover:text-[#004ac6] hover:underline
+              text-[11px] font-semibold text-[#4077a6] transition-colors
+              hover:text-[#4077a6] hover:underline
             "
           >
             Hapus Semua

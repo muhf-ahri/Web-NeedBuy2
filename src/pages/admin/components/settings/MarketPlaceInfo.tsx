@@ -62,7 +62,7 @@ const MarketplaceInfo: React.FC<SettingsCardProps> = ({ values, onSave }) => {
             onChange={(e) => setForm({ ...form, name: e.target.value })}
             placeholder="Nama marketplace"
             maxLength={80}
-            className="w-full rounded-xl border border-[#c3c6d7] px-4 py-2.5 text-sm outline-none transition focus:border-[#004ac6] focus:ring-2 focus:ring-[#004ac6]/20 bg-white"
+            className="w-full rounded-xl border border-[#c3c6d7] px-4 py-2.5 text-sm outline-none transition focus:border-[#538cbd] focus:ring-2 focus:ring-[#538cbd]/20 bg-white"
             autoFocus
           />
           <p className="mt-1 text-[11px] text-[#737686]">
@@ -80,7 +80,7 @@ const MarketplaceInfo: React.FC<SettingsCardProps> = ({ values, onSave }) => {
             rows={3}
             placeholder="Deskripsikan marketplace kamu"
             maxLength={2000}
-            className="w-full resize-none rounded-xl border border-[#c3c6d7] px-4 py-2.5 text-sm outline-none transition focus:border-[#004ac6] focus:ring-2 focus:ring-[#004ac6]/20 bg-white"
+            className="w-full resize-none rounded-xl border border-[#c3c6d7] px-4 py-2.5 text-sm outline-none transition focus:border-[#538cbd] focus:ring-2 focus:ring-[#538cbd]/20 bg-white"
           />
           <p className="mt-1 text-[11px] text-[#737686]">Deskripsi singkat tentang marketplace.</p>
         </div>
@@ -114,14 +114,14 @@ const MarketplaceInfo: React.FC<SettingsCardProps> = ({ values, onSave }) => {
       <div className="group flex items-start justify-between gap-4 rounded-xl p-3 -mx-3 transition-colors hover:bg-[#f5f7fb]">
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
-            <Icon name="shop" size={16} className="text-[#737686] group-hover:text-[#004ac6] transition-colors" />
+            <Icon name="shop" size={16} className="text-[#737686] group-hover:text-[#4077a6] transition-colors" />
             <p className="text-[11px] font-semibold uppercase tracking-wider text-[#737686]">Nama Marketplace</p>
           </div>
           <p className="mt-1 text-[15px] font-semibold text-[#101319]">{name}</p>
         </div>
         <button
           onClick={startEdit}
-          className="shrink-0 rounded-lg p-2 text-[#737686] transition-all hover:bg-[#dbe1ff] hover:text-[#004ac6] hover:scale-110"
+          className="shrink-0 rounded-lg p-2 text-[#737686] transition-all hover:bg-[#e4ebf1] hover:text-[#4077a6] hover:scale-110"
           aria-label="Edit nama marketplace"
         >
           <Icon name="edit" size={16} />
@@ -131,7 +131,7 @@ const MarketplaceInfo: React.FC<SettingsCardProps> = ({ values, onSave }) => {
       <div className="group flex items-start justify-between gap-4 rounded-xl p-3 -mx-3 transition-colors hover:bg-[#f5f7fb]">
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
-            <Icon name="file-text" size={16} className="text-[#737686] group-hover:text-[#004ac6] transition-colors" />
+            <Icon name="file-text" size={16} className="text-[#737686] group-hover:text-[#4077a6] transition-colors" />
             <p className="text-[11px] font-semibold uppercase tracking-wider text-[#737686]">Deskripsi Marketplace</p>
           </div>
           <p className="mt-1 text-[14px] text-[#434655] leading-relaxed">
@@ -140,7 +140,7 @@ const MarketplaceInfo: React.FC<SettingsCardProps> = ({ values, onSave }) => {
         </div>
         <button
           onClick={startEdit}
-          className="shrink-0 rounded-lg p-2 text-[#737686] transition-all hover:bg-[#dbe1ff] hover:text-[#004ac6] hover:scale-110"
+          className="shrink-0 rounded-lg p-2 text-[#737686] transition-all hover:bg-[#e4ebf1] hover:text-[#4077a6] hover:scale-110"
           aria-label="Edit deskripsi marketplace"
         >
           <Icon name="edit" size={16} />
@@ -156,7 +156,7 @@ const MarketplaceInfo: React.FC<SettingsCardProps> = ({ values, onSave }) => {
           {ROLES.map((role) => (
             <span
               key={role}
-              className="rounded-full bg-[#dbe1ff] px-3 py-0.5 text-[12px] font-medium text-[#004ac6]"
+              className="rounded-full bg-[#e4ebf1] px-3 py-0.5 text-[12px] font-medium text-[#4077a6]"
             >
               {role}
             </span>

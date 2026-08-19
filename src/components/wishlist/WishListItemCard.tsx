@@ -46,9 +46,9 @@ const WishlistItemCard: React.FC<WishlistItemCardProps> = ({
         disabled={busy || !inStock}
         className="
           flex h-9 flex-1 items-center justify-center gap-1.5 rounded-full
-          bg-[#004ac6] px-4 text-[12px] font-semibold text-white
+          bg-[#4077a6] px-4 text-[12px] font-semibold text-white
           shadow-[0_4px_12px_rgba(83,140,219,0.25)] transition-all
-          duration-200 hover:bg-[#004ac6] active:scale-[0.98]
+          duration-200 hover:bg-[#4077a6] active:scale-[0.98]
           disabled:cursor-not-allowed disabled:bg-[#A2A8B3]
           disabled:shadow-none sm:flex-none
         "
@@ -118,7 +118,7 @@ const WishlistItemCard: React.FC<WishlistItemCardProps> = ({
           <p
             className="
               truncate text-[13px] font-semibold text-[#101319]
-              transition-colors duration-200 group-hover:text-[#004ac6]
+              transition-colors duration-200 group-hover:text-[#4077a6]
               sm:text-[14px]
             "
           >
@@ -152,12 +152,12 @@ const WishlistItemCard: React.FC<WishlistItemCardProps> = ({
             )}
           </div>
 
-          <p className="mt-1 text-[14px] font-bold text-[#004ac6] sm:hidden">
+          <p className="mt-1 text-[14px] font-bold text-[#4077a6] sm:hidden">
             {formatRupiah(product.price)}
           </p>
         </button>
 
-        <p className="hidden shrink-0 text-[14px] font-bold text-[#004ac6] sm:block">
+        <p className="hidden shrink-0 text-[14px] font-bold text-[#4077a6] sm:block">
           {formatRupiah(product.price)}
         </p>
 

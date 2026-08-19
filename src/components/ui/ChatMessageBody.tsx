@@ -39,19 +39,19 @@ export const ChatMessageBody: React.FC<{ message: ChatMessage; mine: boolean }> 
           className={`mb-1.5 flex w-full items-center gap-2 rounded-xl border px-2.5 py-2 text-left transition-colors ${
             mine
               ? 'border-white/30 bg-white/15 hover:bg-white/25'
-              : 'border-[#dbe1ff] bg-[#f5f7fb] hover:bg-[#dbe1ff]'
+              : 'border-[#e4ebf1] bg-[#f5f7fb] hover:bg-[#e4ebf1]'
           }`}
         >
-          <Icon name="orders" size={16} className={mine ? 'text-white' : 'text-[#004ac6]'} />
+          <Icon name="orders" size={16} className={mine ? 'text-white' : 'text-[#4077a6]'} />
           <span className="min-w-0 flex-1">
             <span className={`block text-[11px] font-bold uppercase tracking-wide ${mine ? 'text-white/75' : 'text-[#737686]'}`}>
               Pesanan
             </span>
-            <span className={`block text-[12px] font-semibold ${mine ? 'text-white' : 'text-[#004ac6]'}`}>
+            <span className={`block text-[12px] font-semibold ${mine ? 'text-white' : 'text-[#4077a6]'}`}>
               Lihat & lacak paket
             </span>
           </span>
-          <Icon name="chevronRight" size={14} className={mine ? 'text-white/75' : 'text-[#004ac6]'} />
+          <Icon name="chevronRight" size={14} className={mine ? 'text-white/75' : 'text-[#4077a6]'} />
         </button>
       )}
 
@@ -123,7 +123,7 @@ export const AttachPhotoButton: React.FC<{
         disabled={disabled || busy}
         onClick={() => inputRef.current?.click()}
         aria-label="Lampirkan foto"
-        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#c3c6d7] text-[#434655] transition-colors hover:border-[#004ac6] hover:text-[#004ac6] disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#004ac6]"
+        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#c3c6d7] text-[#434655] transition-colors hover:border-[#538cbd] hover:text-[#4077a6] disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4077a6]"
       >
         {busy ? <Icon name="clock" size={17} className="animate-spin" /> : <Icon name="upload" size={17} />}
       </button>
@@ -132,7 +132,7 @@ export const AttachPhotoButton: React.FC<{
 };
 
 export const PendingPhoto: React.FC<{ url: string; onRemove: () => void }> = ({ url, onRemove }) => (
-  <div className="mb-2 flex items-center gap-2 rounded-xl border border-[#dbe1ff] bg-[#f5f7fb] p-2">
+  <div className="mb-2 flex items-center gap-2 rounded-xl border border-[#e4ebf1] bg-[#f5f7fb] p-2">
     <img src={uploadSrc(url)} alt="" className="h-12 w-12 rounded-lg object-cover" />
     <span className="flex-1 text-[12px] text-[#434655]">Foto siap dikirim</span>
     <button

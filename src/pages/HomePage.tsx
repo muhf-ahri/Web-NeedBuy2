@@ -156,7 +156,7 @@ const HomePage: React.FC = () => {
                   <p
                     className="
                       mb-1 text-[10px] font-semibold uppercase
-                      tracking-[0.18em] text-[#004ac6]
+                      tracking-[0.18em] text-[#4077a6]
                     "
                   >
                     Pembayaran cepat
@@ -175,8 +175,8 @@ const HomePage: React.FC = () => {
                   <span
                     className="
                       inline-flex items-center gap-1.5 rounded-full
-                      bg-[#004ac6]/10 px-3.5 py-1.5 text-[11px] font-semibold
-                      text-[#004ac6] transition-colors hover:bg-[#004ac6]/15
+                      bg-[#538cbd]/10 px-3.5 py-1.5 text-[11px] font-semibold
+                      text-[#4077a6] transition-colors hover:bg-[#538cbd]/15
                     "
                   >
                     Kelola saldo
@@ -228,8 +228,8 @@ const HomePage: React.FC = () => {
                     <span
                       className="
                         inline-flex items-center gap-1.5 rounded-full
-                        bg-[#004ac6]/10 px-3.5 py-1.5 text-[11px] font-semibold
-                        text-[#004ac6] transition-colors hover:bg-[#004ac6]/15
+                        bg-[#538cbd]/10 px-3.5 py-1.5 text-[11px] font-semibold
+                        text-[#4077a6] transition-colors hover:bg-[#538cbd]/15
                       "
                     >
                       Kelola saldo

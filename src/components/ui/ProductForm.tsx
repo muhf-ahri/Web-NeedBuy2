@@ -57,7 +57,7 @@ const EMPTY_FORM: FormState = {
 const MAX_IMAGES = 5;
 
 const inputCls =
-  'w-full rounded-xl border border-[#e0e3e5] bg-[#F5F7FB] px-3.5 py-2.5 text-[13px] text-[#101319] outline-none placeholder:text-[#A2A8B3] transition-all duration-200 focus:border-[#004ac6] focus:bg-white focus:shadow-[0_4px_16px_rgba(83,140,219,0.10)] [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none';
+  'w-full rounded-xl border border-[#e0e3e5] bg-[#F5F7FB] px-3.5 py-2.5 text-[13px] text-[#101319] outline-none placeholder:text-[#A2A8B3] transition-all duration-200 focus:border-[#538cbd] focus:bg-white focus:shadow-[0_4px_16px_rgba(83,140,219,0.10)] [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none';
 const inputErrorCls = '!border-[#ba1a1a] focus:!border-[#ba1a1a] focus:!shadow-[0_4px_16px_rgba(255,70,70,0.10)]';
 
 const Section: React.FC<{
@@ -72,7 +72,7 @@ const Section: React.FC<{
       <div className="flex items-center gap-2.5">
         {icon}
         <div>
-          <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#004ac6]">
+          <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#4077a6]">
             {eyebrow}
           </p>
           <p className="text-[13px] font-bold text-[#101319]">{title}</p>
@@ -271,14 +271,14 @@ const ProductForm: React.FC<ProductFormProps> = ({
         "
       >
         <div className="relative flex items-center justify-between border-b border-[#e0e3e5] bg-white/95 px-5 py-4 backdrop-blur-sm sm:px-6">
-          <span className="pointer-events-none absolute -right-8 -top-8 h-20 w-20 rounded-full border border-[#004ac6]/10" />
+          <span className="pointer-events-none absolute -right-8 -top-8 h-20 w-20 rounded-full border border-[#538cbd]/10" />
           <span className="pointer-events-none absolute right-12 top-5 h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
 
           <div className="relative flex items-center gap-3">
             <span
               className="
                 flex h-10 w-10 items-center justify-center rounded-xl
-                bg-gradient-to-br from-[#004ac6] to-[#003ea8]
+                bg-gradient-to-br from-[#538cbd] to-[#284a67]
                 shadow-[0_6px_16px_rgba(83,140,219,0.30)]
               "
             >
@@ -289,7 +289,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
               />
             </span>
             <div>
-              <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#004ac6]">
+              <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#4077a6]">
                 {editing ? 'Ubah produk' : 'Produk baru'}
               </p>
               <h3 className="text-[16px] font-bold text-[#101319] sm:text-[18px]">
@@ -340,8 +340,8 @@ const ProductForm: React.FC<ProductFormProps> = ({
             eyebrow="Bagian 1"
             title="Informasi Dasar"
             icon={
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#004ac6]/10">
-                <Icon name="product" size={14} className="text-[#004ac6]" />
+              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#538cbd]/10">
+                <Icon name="product" size={14} className="text-[#4077a6]" />
               </span>
             }
           >
@@ -468,7 +468,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
                 </div>
               ) : (
                 <p className="flex items-start gap-2 text-[11px] leading-relaxed text-[#737686]">
-                  <Icon name="alert" size={12} className="mt-0.5 shrink-0 text-[#004ac6]" />
+                  <Icon name="alert" size={12} className="mt-0.5 shrink-0 text-[#4077a6]" />
                   <span>
                     Kosongkan dua-duanya kalau nggak ada harga grosir. Potongan
                     dihitung server saat pembeli nambah jumlah.
@@ -483,7 +483,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
             title="Gambar Produk"
             icon={
               <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#f5f7fb]">
-                <Icon name="upload" size={14} className="text-[#004ac6]" />
+                <Icon name="upload" size={14} className="text-[#4077a6]" />
               </span>
             }
             rightAction={
@@ -513,7 +513,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
                       <span
                         className="
                           absolute inset-x-0 bottom-0 bg-gradient-to-t
-                          from-[#004ac6] to-[#004ac6]/80 py-0.5 text-center
+                          from-[#538cbd] to-[#538cbd]/80 py-0.5 text-center
                           text-[8px] font-bold uppercase tracking-wider
                           text-white
                         "
@@ -548,11 +548,11 @@ const ProductForm: React.FC<ProductFormProps> = ({
                 ${
                   errors.images || imageError
                     ? 'border-[#ba1a1a]/50 bg-[#FFF0F0]/40'
-                    : 'border-[#e0e3e5] hover:border-[#004ac6]/50 hover:bg-[#f5f7fb]/50'
+                    : 'border-[#e0e3e5] hover:border-[#538cbd]/50 hover:bg-[#f5f7fb]/50'
                 }
               `}
             >
-              <span className="pointer-events-none absolute -right-6 -top-6 h-16 w-16 rounded-full border border-[#004ac6]/10" />
+              <span className="pointer-events-none absolute -right-6 -top-6 h-16 w-16 rounded-full border border-[#538cbd]/10" />
 
               <input
                 ref={fileInputRef}
@@ -575,7 +575,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
                     ${
                       errors.images || imageError
                         ? 'bg-[#ba1a1a]/15 text-[#ba1a1a]'
-                        : 'bg-[#004ac6]/10 text-[#004ac6]'
+                        : 'bg-[#538cbd]/10 text-[#4077a6]'
                     }
                   `}
                 >
@@ -619,9 +619,9 @@ const ProductForm: React.FC<ProductFormProps> = ({
                 type="button"
                 onClick={() => setSpecs((prev) => [...prev, { key: '', value: '' }])}
                 className="
-                  flex items-center gap-1 rounded-full bg-[#004ac6]/10 px-2.5
-                  py-1 text-[11px] font-semibold text-[#004ac6]
-                  transition-colors hover:bg-[#004ac6]/15
+                  flex items-center gap-1 rounded-full bg-[#538cbd]/10 px-2.5
+                  py-1 text-[11px] font-semibold text-[#4077a6]
+                  transition-colors hover:bg-[#538cbd]/15
                 "
               >
                 <Icon name="plus" size={11} />
@@ -631,7 +631,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
           >
             <p className="mb-3 text-[11px] leading-relaxed text-[#737686]">
               Isi beberapa baris dengan nama sama (mis. dua baris{' '}
-              <code className="rounded bg-[#F5F7FB] px-1.5 py-0.5 font-mono text-[10px] text-[#004ac6]">
+              <code className="rounded bg-[#F5F7FB] px-1.5 py-0.5 font-mono text-[10px] text-[#4077a6]">
                 warna
               </code>
               ) supaya pembeli dapat pilihan model di halaman produk.
@@ -651,7 +651,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
                   type="button"
                   onClick={() => setSpecs([{ key: '', value: '' }])}
                   className="
-                    mt-2 text-[11px] font-semibold text-[#004ac6]
+                    mt-2 text-[11px] font-semibold text-[#4077a6]
                     hover:underline
                   "
                 >
@@ -683,7 +683,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
                         min-w-0 w-1/3 rounded-lg border-0 bg-[#F5F7FB] px-3
                         py-2 text-[12px] text-[#101319] outline-none
                         placeholder:text-[#A2A8B3] focus:bg-white
-                        focus:ring-1 focus:ring-[#004ac6]
+                        focus:ring-1 focus:ring-[#538cbd]
                       "
                     />
                     <input
@@ -701,7 +701,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
                         min-w-0 flex-1 rounded-lg border-0 bg-[#F5F7FB] px-3
                         py-2 text-[12px] text-[#101319] outline-none
                         placeholder:text-[#A2A8B3] focus:bg-white
-                        focus:ring-1 focus:ring-[#004ac6]
+                        focus:ring-1 focus:ring-[#538cbd]
                       "
                     />
                     <button
@@ -747,12 +747,12 @@ const ProductForm: React.FC<ProductFormProps> = ({
                 />
               </div>
 
-              <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-[#e0e3e5] bg-white p-3 transition-colors hover:border-[#004ac6]/40 hover:bg-[#f5f7fb]/50">
+              <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-[#e0e3e5] bg-white p-3 transition-colors hover:border-[#538cbd]/40 hover:bg-[#f5f7fb]/50">
                 <input
                   type="checkbox"
                   checked={form.isActive}
                   onChange={(e) => setField('isActive', e.target.checked)}
-                  className="mt-0.5 h-4 w-4 shrink-0 cursor-pointer accent-[#004ac6]"
+                  className="mt-0.5 h-4 w-4 shrink-0 cursor-pointer accent-[#4077a6]"
                 />
                 <div className="min-w-0 flex-1">
                   <p className="text-[12px] font-semibold text-[#101319]">
@@ -787,9 +787,9 @@ const ProductForm: React.FC<ProductFormProps> = ({
             disabled={saving || uploading}
             className="
               flex flex-1 items-center justify-center gap-2 rounded-full
-              bg-[#004ac6] py-2.5 text-[13px] font-semibold text-white
+              bg-[#4077a6] py-2.5 text-[13px] font-semibold text-white
               shadow-[0_6px_16px_rgba(83,140,219,0.25)] transition-all
-              hover:bg-[#004ac6] hover:shadow-[0_8px_20px_rgba(83,140,219,0.30)]
+              hover:bg-[#4077a6] hover:shadow-[0_8px_20px_rgba(83,140,219,0.30)]
               active:scale-[0.99] disabled:cursor-not-allowed
               disabled:bg-[#A2A8B3] disabled:shadow-none
             "

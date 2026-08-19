@@ -32,10 +32,10 @@ const ProfileSellerSection: React.FC<ProfileSellerSectionProps> = ({
         <span
           className="
             flex h-8 w-8 items-center justify-center rounded-lg
-            bg-[#004ac6]/10
+            bg-[#538cbd]/10
           "
         >
-          <Icon name="shop" size={15} className="text-[#004ac6]" />
+          <Icon name="shop" size={15} className="text-[#4077a6]" />
         </span>
         <div>
           <h3 className="text-[15px] font-bold text-[#101319]">
@@ -65,7 +65,7 @@ const ProfileSellerSection: React.FC<ProfileSellerSectionProps> = ({
                   bg-white ring-1 ring-[#e0e3e5]
                 "
               >
-                <Icon name="shop" size={18} className="text-[#004ac6]" />
+                <Icon name="shop" size={18} className="text-[#4077a6]" />
               </div>
               <div className="min-w-0 flex-1">
                 <p className="truncate text-[14px] font-bold text-[#101319]">
@@ -109,10 +109,10 @@ const ProfileSellerSection: React.FC<ProfileSellerSectionProps> = ({
               type="button"
               onClick={() => navigate('/seller/dashboard')}
               className="
-                flex h-10 items-center gap-1.5 rounded-full bg-[#004ac6]
+                flex h-10 items-center gap-1.5 rounded-full bg-[#4077a6]
                 px-5 text-[12px] font-semibold text-white
                 shadow-[0_6px_16px_rgba(83,140,219,0.25)] transition-all
-                duration-200 hover:bg-[#004ac6]
+                duration-200 hover:bg-[#4077a6]
                 hover:shadow-[0_8px_20px_rgba(83,140,219,0.30)]
                 active:scale-[0.99]
               "
@@ -127,7 +127,7 @@ const ProfileSellerSection: React.FC<ProfileSellerSectionProps> = ({
                 flex h-10 items-center gap-1.5 rounded-full border
                 border-[#e0e3e5] bg-white px-5 text-[12px] font-semibold
                 text-[#101319] transition-all duration-200
-                hover:border-[#004ac6] hover:text-[#004ac6] active:scale-[0.99]
+                hover:border-[#538cbd] hover:text-[#4077a6] active:scale-[0.99]
               "
             >
               <Icon name="edit" size={13} />
@@ -143,7 +143,7 @@ const ProfileSellerSection: React.FC<ProfileSellerSectionProps> = ({
               py-3 text-[12px] text-[#737686]
             "
           >
-            <Icon name="alert" size={14} className="mt-0.5 shrink-0 text-[#004ac6]" />
+            <Icon name="alert" size={14} className="mt-0.5 shrink-0 text-[#4077a6]" />
             <p className="leading-relaxed">
               Lengkapi data perusahaan untuk mulai berjualan. Akun kamu
               tetap bisa dipakai membeli seperti biasa.

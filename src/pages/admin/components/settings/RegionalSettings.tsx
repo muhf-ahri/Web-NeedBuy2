@@ -66,7 +66,7 @@ const RegionalSettings: React.FC<SettingsCardProps> = ({ values, onSave }) => {
             <select
               value={form}
               onChange={(e) => setForm(e.target.value)}
-              className="w-full rounded-xl border border-[#c3c6d7] bg-white px-4 py-2.5 text-sm outline-none transition focus:border-[#004ac6] focus:ring-2 focus:ring-[#004ac6]/20"
+              className="w-full rounded-xl border border-[#c3c6d7] bg-white px-4 py-2.5 text-sm outline-none transition focus:border-[#538cbd] focus:ring-2 focus:ring-[#538cbd]/20"
               autoFocus
             >
               {Object.entries(TIMEZONES).map(([value, label]) => (
@@ -104,7 +104,7 @@ const RegionalSettings: React.FC<SettingsCardProps> = ({ values, onSave }) => {
         <div className="group flex items-start justify-between gap-4 rounded-xl p-3 -mx-3 transition-colors hover:bg-[#f5f7fb]">
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2">
-              <Icon name="clock" size={16} className="text-[#737686] group-hover:text-[#004ac6] transition-colors" />
+              <Icon name="clock" size={16} className="text-[#737686] group-hover:text-[#4077a6] transition-colors" />
               <p className="text-[11px] font-semibold uppercase tracking-wider text-[#737686]">Zona Waktu</p>
             </div>
             <p className="mt-1 text-[15px] font-semibold text-[#101319]">
@@ -120,7 +120,7 @@ const RegionalSettings: React.FC<SettingsCardProps> = ({ values, onSave }) => {
               setError(null);
               setIsEditing(true);
             }}
-            className="shrink-0 rounded-lg p-2 text-[#737686] transition-all hover:bg-[#dbe1ff] hover:text-[#004ac6] hover:scale-110"
+            className="shrink-0 rounded-lg p-2 text-[#737686] transition-all hover:bg-[#e4ebf1] hover:text-[#4077a6] hover:scale-110"
             aria-label="Edit zona waktu"
           >
             <Icon name="edit" size={16} />

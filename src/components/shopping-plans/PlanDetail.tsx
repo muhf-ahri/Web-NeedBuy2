@@ -119,9 +119,9 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
             onClick={onBack}
             className="
               mt-4 inline-flex items-center gap-1.5 rounded-full
-              bg-[#004ac6] px-4 py-2 text-[12px] font-semibold text-white
+              bg-[#4077a6] px-4 py-2 text-[12px] font-semibold text-white
               shadow-[0_6px_16px_rgba(83,140,219,0.25)] transition-all
-              hover:bg-[#004ac6]
+              hover:bg-[#4077a6]
             "
           >
             <Icon name="arrowLeft" size={13} />
@@ -152,7 +152,7 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
           className="
             mb-4 inline-flex items-center gap-1.5 rounded-full bg-white
             px-3.5 py-1.5 text-[12px] font-semibold text-[#737686]
-            shadow-sm transition-all duration-200 hover:text-[#004ac6]
+            shadow-sm transition-all duration-200 hover:text-[#4077a6]
             hover:shadow-[0_4px_12px_rgba(83,140,219,0.12)]
           "
         >
@@ -179,7 +179,7 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
               className="
                 absolute left-4 top-4 inline-flex items-center gap-1.5
                 rounded-full bg-white/90 px-3 py-1 text-[10px] font-semibold
-                uppercase tracking-[0.18em] text-[#004ac6] backdrop-blur-sm
+                uppercase tracking-[0.18em] text-[#4077a6] backdrop-blur-sm
               "
             >
               <span className="h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
@@ -220,7 +220,7 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
                 className="
                   absolute left-6 top-6 z-10 inline-flex items-center
                   gap-1.5 rounded-full bg-white/90 px-3 py-1 text-[10px]
-                  font-semibold uppercase tracking-[0.18em] text-[#004ac6]
+                  font-semibold uppercase tracking-[0.18em] text-[#4077a6]
                   backdrop-blur-sm
                 "
               >
@@ -246,7 +246,7 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
                   <p
                     className="
                       text-[10px] font-semibold uppercase tracking-[0.18em]
-                      text-[#004ac6]
+                      text-[#4077a6]
                     "
                   >
                     Rencana Belanja
@@ -280,7 +280,7 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
                       <div
                         className={`
                           h-full rounded-full transition-all duration-700
-                          ${overBudget ? 'bg-[#ba1a1a]' : 'bg-[#004ac6]'}
+                          ${overBudget ? 'bg-[#ba1a1a]' : 'bg-[#4077a6]'}
                         `}
                         style={{ width: `${pct}%` }}
                       />
@@ -293,7 +293,7 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
                       <span
                         className={`
                           font-semibold
-                          ${overBudget ? 'text-[#ba1a1a]' : 'text-[#004ac6]'}
+                          ${overBudget ? 'text-[#ba1a1a]' : 'text-[#4077a6]'}
                         `}
                       >
                         {formatRupiah(totalNum)} terpakai
@@ -313,8 +313,8 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
                       flex h-10 items-center gap-1.5 rounded-full border
                       border-[#e0e3e5] bg-white px-4 text-[12px]
                       font-semibold text-[#101319] transition-all
-                      duration-200 hover:border-[#004ac6]
-                      hover:text-[#004ac6]
+                      duration-200 hover:border-[#538cbd]
+                      hover:text-[#4077a6]
                     "
                   >
                     <Icon name="edit" size={13} />
@@ -325,9 +325,9 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
                     onClick={() => setShowAdd(true)}
                     className="
                       flex h-10 items-center gap-1.5 rounded-full
-                      bg-[#004ac6] px-4 text-[12px] font-semibold
+                      bg-[#4077a6] px-4 text-[12px] font-semibold
                       text-white shadow-[0_6px_16px_rgba(83,140,219,0.25)]
-                      transition-all duration-200 hover:bg-[#004ac6]
+                      transition-all duration-200 hover:bg-[#4077a6]
                       hover:shadow-[0_8px_20px_rgba(83,140,219,0.30)]
                       active:scale-[0.99]
                     "
@@ -405,7 +405,7 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
         <span
           className="
             pointer-events-none absolute -right-8 -top-8 h-20 w-20
-            rounded-full border border-[#004ac6]/10
+            rounded-full border border-[#538cbd]/10
           "
         />
         <span
@@ -418,14 +418,14 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
         <span
           className="
             inline-flex items-center gap-1.5 rounded-full
-            bg-[#004ac6]/10 px-2.5 py-1
+            bg-[#538cbd]/10 px-2.5 py-1
           "
         >
           <span className="h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
           <p
             className="
               text-[9px] font-bold uppercase tracking-[0.20em]
-              text-[#004ac6]
+              text-[#4077a6]
             "
           >
             Belum ada produk
@@ -451,9 +451,9 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
           onClick={() => setShowAdd(true)}
           className="
             mt-5 inline-flex items-center gap-1.5 rounded-full
-            bg-[#004ac6] px-5 py-2.5 text-[12px] font-semibold
+            bg-[#4077a6] px-5 py-2.5 text-[12px] font-semibold
             text-white shadow-[0_7px_18px_rgba(83,140,219,0.25)]
-            transition-all duration-200 hover:bg-[#004ac6]
+            transition-all duration-200 hover:bg-[#4077a6]
             hover:shadow-[0_9px_22px_rgba(83,140,219,0.30)]
             active:scale-[0.99]
           "
@@ -492,10 +492,10 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
                   <span
                     className="
                       flex h-7 w-7 items-center justify-center rounded-lg
-                      bg-[#004ac6]/10
+                      bg-[#538cbd]/10
                     "
                   >
-                    <Icon name="grid" size={13} className="text-[#004ac6]" />
+                    <Icon name="grid" size={13} className="text-[#4077a6]" />
                   </span>
                   <p className="text-[12px] font-bold text-[#101319]">
                     Daftar Produk
@@ -583,10 +583,10 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
               onClick={handleCheckoutAll}
               disabled={busy || plan.items.length === 0}
               className="
-                flex h-11 items-center gap-2 rounded-full bg-[#004ac6]
+                flex h-11 items-center gap-2 rounded-full bg-[#4077a6]
                 px-6 text-[13px] font-semibold text-white
                 shadow-[0_7px_18px_rgba(83,140,219,0.25)] transition-all
-                duration-200 hover:bg-[#004ac6]
+                duration-200 hover:bg-[#4077a6]
                 hover:shadow-[0_9px_22px_rgba(83,140,219,0.30)]
                 active:scale-[0.99] disabled:cursor-not-allowed
                 disabled:bg-[#A2A8B3] disabled:shadow-none

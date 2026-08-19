@@ -87,7 +87,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({
               value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
               placeholder={isChild ? 'Contoh: Smartphone' : 'Contoh: Elektronik'}
-              className="w-full rounded-xl border border-[#c3c6d7] px-3 py-2 text-sm outline-none transition focus:border-[#004ac6] focus:ring-2 focus:ring-[#004ac6]/20"
+              className="w-full rounded-xl border border-[#c3c6d7] px-3 py-2 text-sm outline-none transition focus:border-[#538cbd] focus:ring-2 focus:ring-[#538cbd]/20"
               autoFocus
             />
           </div>
@@ -100,7 +100,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({
               <select
                 value={form.parentId || ''}
                 onChange={(e) => setForm({ ...form, parentId: e.target.value || null })}
-                className="w-full rounded-xl border border-[#c3c6d7] px-3 py-2 text-sm outline-none transition focus:border-[#004ac6] focus:ring-2 focus:ring-[#004ac6]/20"
+                className="w-full rounded-xl border border-[#c3c6d7] px-3 py-2 text-sm outline-none transition focus:border-[#538cbd] focus:ring-2 focus:ring-[#538cbd]/20"
               >
                 <option value="">Pilih kategori induk</option>
                 {categories.map((cat) => (
@@ -121,7 +121,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({
               onChange={(e) => setForm({ ...form, description: e.target.value })}
               placeholder="Deskripsi singkat tentang kategori ini"
               rows={3}
-              className="w-full resize-none rounded-xl border border-[#c3c6d7] px-3 py-2 text-sm outline-none transition focus:border-[#004ac6] focus:ring-2 focus:ring-[#004ac6]/20"
+              className="w-full resize-none rounded-xl border border-[#c3c6d7] px-3 py-2 text-sm outline-none transition focus:border-[#538cbd] focus:ring-2 focus:ring-[#538cbd]/20"
             />
           </div>
 
@@ -130,7 +130,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({
               type="checkbox"
               checked={form.isActive}
               onChange={(e) => setForm({ ...form, isActive: e.target.checked })}
-              className="h-4 w-4 accent-[#004ac6]"
+              className="h-4 w-4 accent-[#4077a6]"
             />
             Aktif (kategori akan muncul di halaman pembeli)
           </label>

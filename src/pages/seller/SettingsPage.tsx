@@ -187,7 +187,7 @@ const SettingsPage: React.FC = () => {
                 description="Identitas yang ditampilkan ke pembeli"
                 icon="shop"
                 iconBg="bg-[#f5f7fb]"
-                iconText="text-[#004ac6]"
+                iconText="text-[#4077a6]"
               >
                 <SettingsFormFields form={form} setField={set} />
               </SettingsSection>

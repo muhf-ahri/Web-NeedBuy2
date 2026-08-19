@@ -30,7 +30,7 @@ const TopStores: React.FC<TopStoresProps> = ({ stores }) => {
         >
           <p className="text-[13px] font-medium text-[#101319]">{store.name}</p>
           <div className="flex items-center gap-4 text-right">
-            <span className="text-[13px] font-semibold text-[#004ac6]">
+            <span className="text-[13px] font-semibold text-[#4077a6]">
               {formatRupiah(store.sales)}
             </span>
             <span

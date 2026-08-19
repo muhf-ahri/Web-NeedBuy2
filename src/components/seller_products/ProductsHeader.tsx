@@ -11,9 +11,9 @@ const ProductsHeader: React.FC<ProductsHeaderProps> = () => (
   <div className="flex flex-wrap items-start justify-between gap-4">
     <div className="min-w-0">
       <div className="mb-2 flex items-center gap-2">
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-[#004ac6]/10 px-2.5 py-1">
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-[#538cbd]/10 px-2.5 py-1">
           <span className="h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
-          <p className="text-[9px] font-bold uppercase tracking-[0.20em] text-[#004ac6]">
+          <p className="text-[9px] font-bold uppercase tracking-[0.20em] text-[#4077a6]">
             Kelola Produk
           </p>
         </span>

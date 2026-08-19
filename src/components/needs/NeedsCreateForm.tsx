@@ -47,7 +47,7 @@ const NeedsCreateForm: React.FC<NeedsCreateFormProps> = ({
         <span
           className="
             flex h-9 w-9 shrink-0 items-center justify-center
-            rounded-xl bg-gradient-to-br from-[#004ac6] to-[#003ea8]
+            rounded-xl bg-gradient-to-br from-[#538cbd] to-[#284a67]
             shadow-[0_4px_12px_rgba(83,140,219,0.25)]
           "
         >
@@ -71,7 +71,7 @@ const NeedsCreateForm: React.FC<NeedsCreateFormProps> = ({
         <Icon
           name="alert"
           size={13}
-          className="mt-0.5 shrink-0 text-[#004ac6]"
+          className="mt-0.5 shrink-0 text-[#4077a6]"
         />
         <p className="text-[11px] leading-relaxed text-[#737686]">
           <span className="font-semibold text-[#101319]">Contoh:</span>{' '}
@@ -96,7 +96,7 @@ const NeedsCreateForm: React.FC<NeedsCreateFormProps> = ({
             w-full resize-none rounded-xl border border-[#e0e3e5]
             bg-[#F5F7FB] px-4 py-3 text-[13px] text-[#101319] outline-none
             placeholder:text-[#A2A8B3] transition-all duration-200
-            focus:border-[#004ac6] focus:bg-white
+            focus:border-[#538cbd] focus:bg-white
             focus:shadow-[0_4px_16px_rgba(83,140,219,0.10)]
           "
         />
@@ -106,10 +106,10 @@ const NeedsCreateForm: React.FC<NeedsCreateFormProps> = ({
             type="submit"
             disabled={creating || !rawInput.trim()}
             className="
-              flex h-10 items-center gap-2 rounded-full bg-[#004ac6] px-5
+              flex h-10 items-center gap-2 rounded-full bg-[#4077a6] px-5
               text-[12px] font-semibold text-white
               shadow-[0_6px_16px_rgba(83,140,219,0.25)] transition-all
-              duration-200 hover:bg-[#004ac6]
+              duration-200 hover:bg-[#4077a6]
               hover:shadow-[0_8px_20px_rgba(83,140,219,0.30)]
               active:scale-[0.99] disabled:cursor-not-allowed
               disabled:bg-[#A2A8B3] disabled:shadow-none
@@ -218,10 +218,10 @@ const NeedsCreateForm: React.FC<NeedsCreateFormProps> = ({
               onClick={() => onConfirm(parsed.need.id)}
               disabled={busyType === 'confirm'}
               className="
-                flex h-9 items-center gap-1.5 rounded-full bg-[#004ac6]
+                flex h-9 items-center gap-1.5 rounded-full bg-[#4077a6]
                 px-4 text-[12px] font-semibold text-white
                 shadow-[0_4px_12px_rgba(83,140,219,0.25)] transition-all
-                duration-200 hover:bg-[#004ac6] active:scale-[0.99]
+                duration-200 hover:bg-[#4077a6] active:scale-[0.99]
                 disabled:cursor-not-allowed disabled:bg-[#A2A8B3]
                 disabled:shadow-none
               "
@@ -237,8 +237,8 @@ const NeedsCreateForm: React.FC<NeedsCreateFormProps> = ({
               disabled={busyType === 'process'}
               className="
                 flex h-9 items-center gap-1.5 rounded-full border
-                border-[#004ac6] bg-white px-4 text-[12px] font-semibold
-                text-[#004ac6] transition-all duration-200 hover:bg-[#004ac6]
+                border-[#538cbd] bg-white px-4 text-[12px] font-semibold
+                text-[#4077a6] transition-all duration-200 hover:bg-[#4077a6]
                 hover:text-white active:scale-[0.99]
                 disabled:cursor-not-allowed disabled:opacity-50
               "

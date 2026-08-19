@@ -42,7 +42,7 @@ const StatCard: React.FC<StatCardProps> = ({
     <span
       className="
         pointer-events-none absolute -right-10 -top-10 h-24 w-24
-        rounded-full border border-[#004ac6]/10
+        rounded-full border border-[#538cbd]/10
       "
     />
     <span

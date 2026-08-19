@@ -63,7 +63,7 @@ const HomeSearch: React.FC<HomeSearchProps> = ({
             <p
               className="
                 mb-1 text-[10px] font-semibold uppercase tracking-[0.18em]
-                text-[#004ac6]
+                text-[#4077a6]
               "
             >
               Cari produk
@@ -84,7 +84,7 @@ const HomeSearch: React.FC<HomeSearchProps> = ({
           className="
             group/input relative flex items-center gap-2 rounded-full
             border border-[#e0e3e5] bg-[#F5F7FB] px-2 py-1.5
-            transition-all duration-300 focus-within:border-[#004ac6]
+            transition-all duration-300 focus-within:border-[#538cbd]
             focus-within:bg-white focus-within:shadow-[0_6px_20px_rgba(83,140,219,0.12)]
           "
         >
@@ -92,7 +92,7 @@ const HomeSearch: React.FC<HomeSearchProps> = ({
             className="
               relative flex h-8 w-8 shrink-0 items-center justify-center
               rounded-full transition-colors duration-300
-              group-focus-within/input:bg-[#004ac6]/10
+              group-focus-within/input:bg-[#538cbd]/10
             "
           >
             <Icon
@@ -100,7 +100,7 @@ const HomeSearch: React.FC<HomeSearchProps> = ({
               size={15}
               className="
                 text-[#737686] transition-colors duration-300
-                group-focus-within/input:text-[#004ac6]
+                group-focus-within/input:text-[#4077a6]
               "
             />
           </span>
@@ -152,9 +152,9 @@ const HomeSearch: React.FC<HomeSearchProps> = ({
             type="submit"
             className="
               flex h-10 w-10 shrink-0 items-center justify-center
-              rounded-full bg-[#004ac6] text-white
+              rounded-full bg-[#4077a6] text-white
               shadow-[0_7px_18px_rgba(83,140,219,0.25)] transition-all
-              duration-200 hover:bg-[#004ac6]
+              duration-200 hover:bg-[#4077a6]
               hover:shadow-[0_9px_22px_rgba(83,140,219,0.30)]
               active:scale-[0.95]
             "
@@ -184,8 +184,8 @@ const HomeSearch: React.FC<HomeSearchProps> = ({
                   h-1 rounded-full transition-all duration-300
                   ${
                     i === placeholderIdx
-                      ? 'w-5 bg-[#004ac6]'
-                      : 'w-1 bg-[#004ac6]/25 hover:bg-[#004ac6]/50'
+                      ? 'w-5 bg-[#4077a6]'
+                      : 'w-1 bg-[#538cbd]/25 hover:bg-[#538cbd]/50'
                   }
                 `}
               />

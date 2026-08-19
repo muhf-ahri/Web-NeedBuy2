@@ -24,7 +24,7 @@ const ProfileInfoForm: React.FC<ProfileInfoFormProps> = ({
   saving,
 }) => {
   const inputCls =
-    'w-full rounded-xl border border-[#e0e3e5] bg-[#F5F7FB] px-4 py-2.5 text-[13px] text-[#101319] outline-none placeholder:text-[#A2A8B3] transition-all duration-200 focus:border-[#004ac6] focus:bg-white focus:shadow-[0_4px_16px_rgba(83,140,219,0.10)]';
+    'w-full rounded-xl border border-[#e0e3e5] bg-[#F5F7FB] px-4 py-2.5 text-[13px] text-[#101319] outline-none placeholder:text-[#A2A8B3] transition-all duration-200 focus:border-[#538cbd] focus:bg-white focus:shadow-[0_4px_16px_rgba(83,140,219,0.10)]';
 
   const disabledCls =
     'w-full rounded-xl border border-[#e0e3e5] bg-[#F5F7FB]/50 px-4 py-2.5 text-[13px] text-[#A2A8B3] cursor-not-allowed';
@@ -41,10 +41,10 @@ const ProfileInfoForm: React.FC<ProfileInfoFormProps> = ({
         <span
           className="
             flex h-8 w-8 items-center justify-center rounded-lg
-            bg-[#004ac6]/10
+            bg-[#538cbd]/10
           "
         >
-          <Icon name="user" size={15} className="text-[#004ac6]" />
+          <Icon name="user" size={15} className="text-[#4077a6]" />
         </span>
         <div>
           <h3 className="text-[15px] font-bold text-[#101319]">
@@ -112,10 +112,10 @@ const ProfileInfoForm: React.FC<ProfileInfoFormProps> = ({
         onClick={onSave}
         disabled={saving}
         className="
-          mt-5 inline-flex h-11 items-center gap-2 rounded-full bg-[#004ac6]
+          mt-5 inline-flex h-11 items-center gap-2 rounded-full bg-[#4077a6]
           px-5 text-[13px] font-semibold text-white
           shadow-[0_6px_16px_rgba(83,140,219,0.25)] transition-all
-          duration-200 hover:bg-[#004ac6]
+          duration-200 hover:bg-[#4077a6]
           hover:shadow-[0_8px_20px_rgba(83,140,219,0.30)] active:scale-[0.99]
           disabled:cursor-not-allowed disabled:bg-[#A2A8B3]
           disabled:shadow-none

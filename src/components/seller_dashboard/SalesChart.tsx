@@ -205,8 +205,8 @@ const SalesChart: React.FC<SalesChartProps> = ({ points, granularity }) => {
         >
           <defs>
             <linearGradient id="revenue-gradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#004ac6" stopOpacity="0.35" />
-              <stop offset="100%" stopColor="#004ac6" stopOpacity="0" />
+              <stop offset="0%" stopColor="#4077a6" stopOpacity="0.35" />
+              <stop offset="100%" stopColor="#4077a6" stopOpacity="0" />
             </linearGradient>
           </defs>
 
@@ -245,7 +245,7 @@ const SalesChart: React.FC<SalesChartProps> = ({ points, granularity }) => {
           <path
             d={revenuePath}
             fill="none"
-            stroke="#004ac6"
+            stroke="#4077a6"
             strokeWidth={2.5}
             vectorEffect="non-scaling-stroke"
             strokeLinecap="round"
@@ -270,7 +270,7 @@ const SalesChart: React.FC<SalesChartProps> = ({ points, granularity }) => {
               cy={pt.y}
               r={hoverIndex === i ? 5 : 3}
               fill="white"
-              stroke="#004ac6"
+              stroke="#4077a6"
               strokeWidth={2}
               vectorEffect="non-scaling-stroke"
               style={{ transition: 'r 0.15s ease' }}
@@ -283,7 +283,7 @@ const SalesChart: React.FC<SalesChartProps> = ({ points, granularity }) => {
               y1={paddingY}
               x2={hoveredXY.x}
               y2={height - paddingY}
-              stroke="#004ac6"
+              stroke="#4077a6"
               strokeWidth={1}
               strokeDasharray="3 3"
               opacity={0.5}
@@ -300,7 +300,7 @@ const SalesChart: React.FC<SalesChartProps> = ({ points, granularity }) => {
           {xAxisLabels.map(({ p, i }) => (
             <span
               key={i}
-              className={hoverIndex === i ? 'font-bold text-[#004ac6]' : ''}
+              className={hoverIndex === i ? 'font-bold text-[#4077a6]' : ''}
             >
               {labelFor(p.bucket)}
             </span>
@@ -310,7 +310,7 @@ const SalesChart: React.FC<SalesChartProps> = ({ points, granularity }) => {
 
       <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-[#F5F7FB] pt-3">
         <span className="flex items-center gap-2 text-[10px] font-medium text-[#737686] sm:text-[11px]">
-          <span className="h-0.5 w-5 rounded-full bg-[#004ac6]" />
+          <span className="h-0.5 w-5 rounded-full bg-[#4077a6]" />
           Pemasukan (Rp)
         </span>
         <span className="flex items-center gap-2 text-[10px] font-medium text-[#737686] sm:text-[11px]">

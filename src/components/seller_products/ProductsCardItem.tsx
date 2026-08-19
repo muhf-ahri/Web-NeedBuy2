@@ -59,7 +59,7 @@ const ProductsCardItem: React.FC<ProductsCardItemProps> = ({
 
         <div className="min-w-0 flex-1">
           <Link to={`/products/${product.slug}`}>
-            <p className="line-clamp-2 text-[13px] font-bold leading-snug text-[#101319] transition-colors hover:text-[#004ac6] sm:text-[14px]">
+            <p className="line-clamp-2 text-[13px] font-bold leading-snug text-[#101319] transition-colors hover:text-[#4077a6] sm:text-[14px]">
               {product.name}
             </p>
           </Link>
@@ -82,7 +82,7 @@ const ProductsCardItem: React.FC<ProductsCardItemProps> = ({
           </div>
 
           <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1">
-            <span className="text-[13px] font-bold text-[#004ac6] tabular-nums sm:text-[14px]">
+            <span className="text-[13px] font-bold text-[#4077a6] tabular-nums sm:text-[14px]">
               {formatRupiah(Number(product.price))}
             </span>
             <span className="h-1 w-1 shrink-0 rounded-full bg-[#e0e3e5]" />
@@ -124,8 +124,8 @@ const ProductsCardItem: React.FC<ProductsCardItemProps> = ({
           className="
             flex flex-1 items-center justify-center gap-1.5 rounded-full
             border border-[#e0e3e5] bg-white py-2 text-[11px] font-semibold
-            text-[#101319] transition-all duration-200 hover:border-[#004ac6]
-            hover:text-[#004ac6] active:scale-[0.98]
+            text-[#101319] transition-all duration-200 hover:border-[#538cbd]
+            hover:text-[#4077a6] active:scale-[0.98]
           "
         >
           <Icon name="edit" size={12} />
@@ -137,8 +137,8 @@ const ProductsCardItem: React.FC<ProductsCardItemProps> = ({
           className="
             flex flex-1 items-center justify-center gap-1.5 rounded-full
             border border-[#e0e3e5] bg-white py-2 text-[11px] font-semibold
-            text-[#101319] transition-all duration-200 hover:border-[#004ac6]
-            hover:text-[#004ac6] active:scale-[0.98]
+            text-[#101319] transition-all duration-200 hover:border-[#538cbd]
+            hover:text-[#4077a6] active:scale-[0.98]
           "
         >
           <Icon name="eye" size={12} />

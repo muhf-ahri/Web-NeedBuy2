@@ -22,7 +22,7 @@ const priorityColor: Record<ReportPriority, string> = {
 
 const statusColor: Record<ReportStatus, string> = {
   OPEN: 'bg-[#fff0f0] text-[#93000a]',
-  INVESTIGATING: 'bg-[#dbe1ff] text-[#004ac6]',
+  INVESTIGATING: 'bg-[#e4ebf1] text-[#4077a6]',
   RESOLVED: 'bg-[#e6f4ee] text-[#12805c]',
 };
 
@@ -74,7 +74,7 @@ const TableReport: React.FC<ReportTableProps> = ({
     return (
       <tr>
         <td colSpan={8} className="py-10 text-center text-[#737686]">
-          <span className="inline-block h-5 w-5 animate-spin rounded-full border-2 border-[#004ac6] border-t-transparent" />
+          <span className="inline-block h-5 w-5 animate-spin rounded-full border-2 border-[#538cbd] border-t-transparent" />
           <span className="ml-2">Memuat…</span>
         </td>
       </tr>
@@ -96,7 +96,7 @@ const TableReport: React.FC<ReportTableProps> = ({
       {reports.map((report) => (
         <tr key={report.id} className="text-[13px] transition-colors hover:bg-[#f5f7fb]">
           
-          <td className="py-2.5 pr-2 font-medium text-[#004ac6]">
+          <td className="py-2.5 pr-2 font-medium text-[#4077a6]">
             #{report.id.slice(0, 8).toUpperCase()}
           </td>
           <td className="py-2.5 pr-2">
@@ -129,7 +129,7 @@ const TableReport: React.FC<ReportTableProps> = ({
               <button
                 onClick={() => onAdvance(report)}
                 disabled={pendingId === report.id}
-                className="rounded-full bg-[#004ac6] px-3 py-1 text-[12px] font-semibold text-white transition-colors hover:bg-[#003ea8] disabled:opacity-50"
+                className="rounded-full bg-[#4077a6] px-3 py-1 text-[12px] font-semibold text-white transition-colors hover:bg-[#284a67] disabled:opacity-50"
               >
                 {nextActionLabel[report.status]}
               </button>

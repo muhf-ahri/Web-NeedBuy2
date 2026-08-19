@@ -38,7 +38,7 @@ const Modal: React.FC<ModalProps> = ({
           <h3 className="text-lg font-bold text-[#101319]">{title}</h3>
           <button
             onClick={onClose}
-            className="rounded-full p-1.5 text-[#737686] transition-colors hover:bg-[#f5f7fb] hover:text-[#004ac6]"
+            className="rounded-full p-1.5 text-[#737686] transition-colors hover:bg-[#f5f7fb] hover:text-[#4077a6]"
           >
             <Icon name="close" size={20} className="" />
           </button>

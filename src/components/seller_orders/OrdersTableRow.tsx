@@ -8,7 +8,7 @@ import type { OrderStatus, SellerOrder } from '../../api/orders';
 const STATUS_CLASS: Record<OrderStatus, string> = {
   WAITING_PAYMENT: 'bg-[#F5F7FB] text-[#737686]',
   PROCESSING: 'bg-[#FFF7E0] text-[#B45309]',
-  SHIPPED: 'bg-[#f5f7fb] text-[#004ac6]',
+  SHIPPED: 'bg-[#f5f7fb] text-[#4077a6]',
   DELIVERED: 'bg-[#e6f4ee] text-[#12805c]',
   COMPLETED: 'bg-[#e6f4ee] text-[#12805c]',
   CANCELLED: 'bg-[#FFF0F0] text-[#ba1a1a]',
@@ -44,7 +44,7 @@ const OrdersTableRow: React.FC<OrdersTableRowProps> = ({
     <tr className="group border-b border-[#F5F7FB] transition-colors last:border-0 hover:bg-[#f5f7fb]/60">
 
       <td className="px-4 py-3.5">
-        <p className="font-mono text-[11px] font-bold text-[#004ac6]">
+        <p className="font-mono text-[11px] font-bold text-[#4077a6]">
           #{order.orderNumber}
         </p>
       </td>
@@ -94,10 +94,10 @@ const OrdersTableRow: React.FC<OrdersTableRowProps> = ({
               onClick={onAdvance}
               disabled={isBusy}
               className="
-                flex items-center gap-1.5 rounded-full bg-[#004ac6] px-3
+                flex items-center gap-1.5 rounded-full bg-[#4077a6] px-3
                 py-1.5 text-[11px] font-semibold text-white
                 shadow-[0_4px_12px_rgba(83,140,219,0.25)] transition-all
-                duration-200 hover:bg-[#004ac6]
+                duration-200 hover:bg-[#4077a6]
                 hover:shadow-[0_6px_16px_rgba(83,140,219,0.30)]
                 active:scale-[0.98] disabled:cursor-not-allowed
                 disabled:bg-[#A2A8B3] disabled:shadow-none
@@ -121,7 +121,7 @@ const OrdersTableRow: React.FC<OrdersTableRowProps> = ({
             className="
               flex h-8 w-8 items-center justify-center rounded-lg
               text-[#737686] transition-all duration-200
-              hover:bg-[#f5f7fb] hover:text-[#004ac6]
+              hover:bg-[#f5f7fb] hover:text-[#4077a6]
             "
             aria-label={isExpanded ? 'Tutup detail' : 'Lihat detail'}
             title={isExpanded ? 'Tutup detail' : 'Lihat detail'}

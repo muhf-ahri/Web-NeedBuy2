@@ -19,8 +19,8 @@ const NotFoundCard: React.FC = () => {
         
         <section
           className="
-            relative hidden overflow-hidden bg-gradient-to-br from-[#004ac6]
-            via-[#004ac6] to-[#003ea8] px-8 py-10 md:flex md:flex-col
+            relative hidden overflow-hidden bg-gradient-to-br from-[#538cbd]
+            via-[#538cbd] to-[#284a67] px-8 py-10 md:flex md:flex-col
             md:justify-between
           "
         >
@@ -71,7 +71,7 @@ const NotFoundCard: React.FC = () => {
           <div className="mx-auto w-full max-w-sm">
             
             <div className="mb-6 md:hidden">
-              <p className="text-xs font-semibold text-[#004ac6]">NeedBuy</p>
+              <p className="text-xs font-semibold text-[#4077a6]">NeedBuy</p>
             </div>
 
             <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#ba1a1a]">
@@ -99,9 +99,9 @@ const NotFoundCard: React.FC = () => {
                 "
               >
                 <span>4</span>
-                <span className="relative text-[#004ac6]">
+                <span className="relative text-[#4077a6]">
                   0
-                  <span className="absolute -bottom-1 left-0 right-0 h-1.5 rounded-full bg-[#004ac6]/50 blur-[2px]" />
+                  <span className="absolute -bottom-1 left-0 right-0 h-1.5 rounded-full bg-[#538cbd]/50 blur-[2px]" />
                 </span>
                 <span>4</span>
               </div>
@@ -116,11 +116,11 @@ const NotFoundCard: React.FC = () => {
                 fullWidth
                 onClick={() => navigate('/')}
                 className="
-                  h-11 rounded-full bg-[#004ac6] px-6 text-sm font-semibold
+                  h-11 rounded-full bg-[#4077a6] px-6 text-sm font-semibold
                   text-white shadow-[0_7px_18px_rgba(83,140,219,0.18)]
-                  transition-all duration-200 hover:bg-[#004ac6]
+                  transition-all duration-200 hover:bg-[#4077a6]
                   hover:shadow-[0_9px_22px_rgba(83,140,219,0.22)]
-                  focus:ring-4 focus:ring-[#004ac6]/15 active:scale-[0.99]
+                  focus:ring-4 focus:ring-[#538cbd]/15 active:scale-[0.99]
                 "
               >
                 <Icon name="arrowLeft" size={16} className="mr-1.5" />
@@ -136,9 +136,9 @@ const NotFoundCard: React.FC = () => {
             className="
                 flex h-11 w-full items-center justify-center gap-2
                 rounded-full border border-[#e0e3e5] bg-white
-                text-sm font-semibold text-[#003ea8]
+                text-sm font-semibold text-[#284a67]
                 shadow-sm transition-all duration-200
-                hover:border-[#004ac6] hover:bg-[#F5F7FB] hover:text-[#003ea8]
+                hover:border-[#538cbd] hover:bg-[#F5F7FB] hover:text-[#284a67]
                 active:scale-[0.99]
             "
             >

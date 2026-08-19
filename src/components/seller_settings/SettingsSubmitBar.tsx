@@ -62,9 +62,9 @@ const SettingsSubmitBar: React.FC<SettingsSubmitBarProps> = ({
       disabled={saving}
       className="
         inline-flex h-11 items-center justify-center gap-2 rounded-full
-        bg-[#004ac6] px-6 text-[13px] font-semibold text-white
+        bg-[#4077a6] px-6 text-[13px] font-semibold text-white
         shadow-[0_7px_18px_rgba(83,140,219,0.25)] transition-all duration-200
-        hover:bg-[#004ac6] hover:shadow-[0_9px_22px_rgba(83,140,219,0.30)]
+        hover:bg-[#4077a6] hover:shadow-[0_9px_22px_rgba(83,140,219,0.30)]
         active:scale-[0.99] disabled:cursor-not-allowed
         disabled:bg-[#A2A8B3] disabled:shadow-none
       "

@@ -67,9 +67,9 @@ const LoginForm: React.FC<LoginFormProps> = ({
           text-sm
           text-[#101319]
           placeholder:text-[#A2A8B3]
-          focus:border-[#004ac6]
+          focus:border-[#538cbd]
           focus:ring-4
-          focus:ring-[#004ac6]/10
+          focus:ring-[#538cbd]/10
         "
       />
 
@@ -90,9 +90,9 @@ const LoginForm: React.FC<LoginFormProps> = ({
             text-sm
             text-[#101319]
             placeholder:text-[#A2A8B3]
-            focus:border-[#004ac6]
+            focus:border-[#538cbd]
             focus:ring-4
-            focus:ring-[#004ac6]/10
+            focus:ring-[#538cbd]/10
           "
         />
 
@@ -103,9 +103,9 @@ const LoginForm: React.FC<LoginFormProps> = ({
             className="
               text-[11px]
               font-medium
-              text-[#004ac6]
+              text-[#4077a6]
               transition-colors
-              hover:text-[#004ac6]
+              hover:text-[#4077a6]
             "
           >
             Lupa password?
@@ -128,7 +128,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
         className="
           h-11
           rounded-full
-          bg-[#004ac6]
+          bg-[#4077a6]
           px-6
           text-sm
           font-semibold
@@ -136,10 +136,10 @@ const LoginForm: React.FC<LoginFormProps> = ({
           shadow-[0_7px_18px_rgba(83,140,219,0.18)]
           transition-all
           duration-200
-          hover:bg-[#004ac6]
+          hover:bg-[#4077a6]
           hover:shadow-[0_9px_22px_rgba(83,140,219,0.22)]
           focus:ring-4
-          focus:ring-[#004ac6]/15
+          focus:ring-[#538cbd]/15
           active:scale-[0.99]
           disabled:cursor-not-allowed
           disabled:opacity-60

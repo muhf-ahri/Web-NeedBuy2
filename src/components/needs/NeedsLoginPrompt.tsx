@@ -41,7 +41,7 @@ const NeedsLoginPrompt: React.FC = () => {
                 className="
                   absolute left-4 top-4 inline-flex items-center gap-1.5
                   rounded-full bg-white/90 px-3 py-1 text-[10px] font-semibold
-                  uppercase tracking-[0.18em] text-[#004ac6] backdrop-blur-sm
+                  uppercase tracking-[0.18em] text-[#4077a6] backdrop-blur-sm
                 "
               >
                 <span className="h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
@@ -60,14 +60,14 @@ const NeedsLoginPrompt: React.FC = () => {
               
               <section className="flex items-center bg-white px-6 py-8 sm:px-8 lg:px-10">
                 <div className="mx-auto w-full max-w-md">
-                  <h1 className="text-[30px] font-bold leading-tight tracking-tight text-[#004ac6] hover:text-[#004ac6] sm:text-[34px]">
+                  <h1 className="text-[30px] font-bold leading-tight tracking-tight text-[#4077a6] hover:text-[#4077a6] sm:text-[34px]">
                     Halaman Kebutuhan
                   </h1>
 
                   <p
                     className="
                       mt-4 mb-2 text-[10px] font-semibold uppercase
-                      tracking-[0.18em] text-[#004ac6]
+                      tracking-[0.18em] text-[#4077a6]
                     "
                   >
                     Area member
@@ -92,10 +92,10 @@ const NeedsLoginPrompt: React.FC = () => {
                     onClick={() => navigate('/login')}
                     className="
                       mt-5 inline-flex h-11 w-full items-center
-                      justify-center gap-2 rounded-full bg-[#004ac6] px-6
+                      justify-center gap-2 rounded-full bg-[#4077a6] px-6
                       text-sm font-semibold text-white
                       shadow-[0_7px_18px_rgba(83,140,219,0.20)]
-                      transition-all duration-200 hover:bg-[#004ac6]
+                      transition-all duration-200 hover:bg-[#4077a6]
                       hover:shadow-[0_9px_22px_rgba(83,140,219,0.25)]
                       active:scale-[0.99]
                     "
@@ -108,7 +108,7 @@ const NeedsLoginPrompt: React.FC = () => {
                     Belum punya akun?{' '}
                     <Link
                       to="/register"
-                      className="font-semibold text-[#004ac6] hover:underline"
+                      className="font-semibold text-[#4077a6] hover:underline"
                     >
                       Daftar gratis
                     </Link>
@@ -153,7 +153,7 @@ const NeedsLoginPrompt: React.FC = () => {
                   className="
                     absolute right-6 top-6 z-10 inline-flex items-center
                     gap-1.5 rounded-full bg-white/90 px-3 py-1 text-[10px]
-                    font-semibold uppercase tracking-[0.18em] text-[#004ac6]
+                    font-semibold uppercase tracking-[0.18em] text-[#4077a6]
                     backdrop-blur-sm
                   "
                 >

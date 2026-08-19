@@ -25,7 +25,7 @@ export const PriceWithDiscount: React.FC<{
 
   return (
     <div className={`min-w-0 ${className}`}>
-      <span className="block truncate text-[14px] font-bold text-[#004ac6]">
+      <span className="block truncate text-[14px] font-bold text-[#4077a6]">
         {formatRupiah(price)}
       </span>
       {onSale && (

@@ -90,7 +90,7 @@ const CouponCard: React.FC<{
             <button
               onClick={() => onClaim(coupon.id)}
               disabled={busy || coupon.soldOut}
-              className="px-4 py-1.5 rounded-full bg-[#004ac6] hover:bg-[#003ea8] text-white text-[12px] font-semibold transition-colors disabled:opacity-50"
+              className="px-4 py-1.5 rounded-full bg-[#4077a6] hover:bg-[#284a67] text-white text-[12px] font-semibold transition-colors disabled:opacity-50"
             >
               {coupon.soldOut ? 'Kuota habis' : 'Klaim'}
             </button>
@@ -174,7 +174,7 @@ const CouponsPage: React.FC = () => {
             <p className="text-[#737686] mb-4">Login dulu ya buat ngumpulin kupon.</p>
             <button
               onClick={() => navigate('/login')}
-              className="px-6 py-2.5 rounded-full bg-[#004ac6] hover:bg-[#003ea8] text-white text-[14px] font-semibold transition-colors"
+              className="px-6 py-2.5 rounded-full bg-[#4077a6] hover:bg-[#284a67] text-white text-[14px] font-semibold transition-colors"
             >
               Login
             </button>
@@ -200,13 +200,13 @@ const CouponsPage: React.FC = () => {
             value={code}
             onChange={(e) => setCode(e.target.value)}
             placeholder="Punya kode kupon? Tempel di sini"
-            className="flex-1 px-4 py-2.5 rounded-full border border-[#c3c6d7] outline-none focus:border-[#004ac6] focus:ring-2 focus:ring-[#004ac6]/20 text-[13px] uppercase transition"
+            className="flex-1 px-4 py-2.5 rounded-full border border-[#c3c6d7] outline-none focus:border-[#538cbd] focus:ring-2 focus:ring-[#538cbd]/20 text-[13px] uppercase transition"
             aria-label="Kode kupon"
           />
           <button
             type="submit"
             disabled={busy || !code.trim()}
-            className="px-5 py-2.5 rounded-full bg-[#004ac6] hover:bg-[#003ea8] text-white text-[13px] font-semibold transition-colors disabled:opacity-50"
+            className="px-5 py-2.5 rounded-full bg-[#4077a6] hover:bg-[#284a67] text-white text-[13px] font-semibold transition-colors disabled:opacity-50"
           >
             Tukar
           </button>
@@ -230,7 +230,7 @@ const CouponsPage: React.FC = () => {
               onClick={() => setTab(item.key)}
               className={`px-4 py-1.5 rounded-full text-[12px] font-semibold transition-colors ${
                 tab === item.key
-                  ? 'bg-[#004ac6] text-white'
+                  ? 'bg-[#4077a6] text-white'
                   : 'bg-[#f2f4f6] text-[#434655] hover:bg-[#e0e3e5]'
               }`}
             >

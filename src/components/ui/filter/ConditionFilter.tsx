@@ -36,8 +36,8 @@ const ConditionFilter: React.FC<ConditionFilterProps> = ({
               active:scale-[0.98]
               ${
                 active
-                  ? 'border-[#004ac6] bg-[#004ac6] text-white shadow-[0_4px_12px_rgba(83,140,219,0.25)]'
-                  : 'border-[#e0e3e5] bg-white text-[#101319] hover:border-[#004ac6]/40 hover:text-[#004ac6]'
+                  ? 'border-[#538cbd] bg-[#4077a6] text-white shadow-[0_4px_12px_rgba(83,140,219,0.25)]'
+                  : 'border-[#e0e3e5] bg-white text-[#101319] hover:border-[#538cbd]/40 hover:text-[#4077a6]'
               }
             `}
           >

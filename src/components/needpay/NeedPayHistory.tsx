@@ -135,7 +135,7 @@ const NeedPayHistory: React.FC<NeedPayHistoryProps> = ({
         <p
           className="
             mb-1 text-[10px] font-semibold uppercase tracking-[0.18em]
-            text-[#004ac6]
+            text-[#4077a6]
           "
         >
           Aktivitas akun

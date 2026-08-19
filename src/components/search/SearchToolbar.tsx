@@ -32,7 +32,7 @@ const SearchToolbar: React.FC<SearchToolbarProps> = ({
         className="
           cursor-pointer appearance-none rounded-full border border-[#e0e3e5]
           bg-white py-1.5 pl-4 pr-9 text-[13px] font-medium text-[#101319]
-          outline-none transition-colors focus:border-[#004ac6]
+          outline-none transition-colors focus:border-[#538cbd]
         "
       >
         {SORT_OPTIONS.map((opt) => (

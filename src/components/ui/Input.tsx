@@ -32,7 +32,7 @@ const Input: React.FC<InputProps> = ({
             px-3 py-2.5 text-sm text-[#101319] outline-none
             transition-all duration-200
             placeholder:text-[#737686]
-            focus:border-[#004ac6] focus:ring-4 focus:ring-[#004ac6]/20
+            focus:border-[#538cbd] focus:ring-4 focus:ring-[#538cbd]/20
             disabled:cursor-not-allowed disabled:bg-[#f5f7fb]
             ${icon ? 'pl-9' : ''}
             ${error ? 'border-[#ba1a1a] focus:border-[#ba1a1a] focus:ring-[#ba1a1a]/20' : ''}

@@ -13,8 +13,8 @@ const OrdersExpandedDetail: React.FC<OrdersExpandedDetailProps> = ({ order }) =>
     
     <div>
       <div className="mb-2.5 flex items-center gap-2">
-        <span className="flex h-6 w-6 items-center justify-center rounded-md bg-[#004ac6]/10">
-          <Icon name="orders" size={12} className="text-[#004ac6]" />
+        <span className="flex h-6 w-6 items-center justify-center rounded-md bg-[#538cbd]/10">
+          <Icon name="orders" size={12} className="text-[#4077a6]" />
         </span>
         <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#737686]">
           Barang Dipesan
@@ -66,7 +66,7 @@ const OrdersExpandedDetail: React.FC<OrdersExpandedDetailProps> = ({ order }) =>
         </div>
         <div className="flex justify-between border-t border-[#e0e3e5] pt-1 text-[12px]">
           <span className="font-bold text-[#101319]">Total</span>
-          <span className="font-extrabold text-[#004ac6] tabular-nums">
+          <span className="font-extrabold text-[#4077a6] tabular-nums">
             {formatRupiah(Number(order.total))}
           </span>
         </div>
@@ -88,7 +88,7 @@ const OrdersExpandedDetail: React.FC<OrdersExpandedDetailProps> = ({ order }) =>
           <p className="text-[13px] font-bold text-[#101319]">
             {order.address.recipientName}
           </p>
-          <p className="mt-1 text-[11px] font-medium text-[#004ac6]">
+          <p className="mt-1 text-[11px] font-medium text-[#4077a6]">
             {order.address.phone}
           </p>
           <p className="mt-2 text-[12px] leading-relaxed text-[#434655]">

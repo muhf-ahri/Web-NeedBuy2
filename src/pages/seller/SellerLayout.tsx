@@ -132,7 +132,7 @@ const SellerLayout: React.FC<SellerLayoutProps> = ({
                 duration-200
 
                 hover:bg-[#F5F7FB]
-                hover:text-[#004ac6]
+                hover:text-[#4077a6]
 
                 active:scale-[0.95]
 
@@ -169,7 +169,7 @@ const SellerLayout: React.FC<SellerLayoutProps> = ({
                     text-[15px]
                     font-extrabold
                     tracking-tight
-                    text-[#004ac6]
+                    text-[#4077a6]
                   "
                 >
                   NeedBuy
@@ -182,7 +182,7 @@ const SellerLayout: React.FC<SellerLayoutProps> = ({
                     font-bold
                     uppercase
                     tracking-[0.18em]
-                    text-[#004ac6]
+                    text-[#4077a6]
                   "
                 >
                   Seller Center
@@ -222,14 +222,14 @@ const SellerLayout: React.FC<SellerLayoutProps> = ({
 
                 text-[12px]
                 font-semibold
-                text-[#004ac6]
+                text-[#4077a6]
 
                 shadow-sm
 
                 transition-all
                 duration-200
 
-                hover:border-[#004ac6]
+                hover:border-[#538cbd]
                 hover:bg-[#f5f7fb]
                 hover:shadow-[0_4px_12px_rgba(83,140,219,0.12)]
 

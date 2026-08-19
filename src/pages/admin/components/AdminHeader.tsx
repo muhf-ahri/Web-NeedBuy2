@@ -53,7 +53,7 @@ const AdminHeader: React.FC = () => {
   return (
     <header className="sticky top-0 z-40 border-b border-[#e0e3e5] bg-white">
       <div className="mx-auto flex h-16 max-w-[1600px] items-center justify-between px-5 sm:px-10">
-        <Link to="/admin/dashboard" className="text-xl font-bold tracking-tight text-[#004ac6]">
+        <Link to="/admin/dashboard" className="text-xl font-bold tracking-tight text-[#4077a6]">
           NeedBuy Admin
         </Link>
 
@@ -62,7 +62,7 @@ const AdminHeader: React.FC = () => {
             <div
               className={`flex items-center overflow-hidden transition-all duration-300 ease-in-out ${
                 searchOpen
-                  ? 'w-40 sm:w-64 bg-[#f2f4f6] rounded-full border border-[#c3c6d7] focus-within:border-[#004ac6] focus-within:ring-2 focus-within:ring-[#004ac6]/20'
+                  ? 'w-40 sm:w-64 bg-[#f2f4f6] rounded-full border border-[#c3c6d7] focus-within:border-[#538cbd] focus-within:ring-2 focus-within:ring-[#538cbd]/20'
                   : 'w-0 border-transparent'
               }`}
             >
@@ -95,10 +95,10 @@ const AdminHeader: React.FC = () => {
                 setSearchOpen((prev) => !prev);
                 if (searchOpen) setSearchQuery('');
               }}
-              className={`p-2 rounded-full transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#004ac6] ${
+              className={`p-2 rounded-full transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4077a6] ${
                 searchOpen
-                  ? 'text-[#004ac6] bg-[#dbe1ff]'
-                  : 'text-[#434655] hover:text-[#004ac6] hover:bg-[#f2f4f6]'
+                  ? 'text-[#4077a6] bg-[#e4ebf1]'
+                  : 'text-[#434655] hover:text-[#4077a6] hover:bg-[#f2f4f6]'
               }`}
               aria-label={searchOpen ? 'Tutup pencarian' : 'Buka pencarian'}
             >

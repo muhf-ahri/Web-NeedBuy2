@@ -29,8 +29,8 @@ const AdminSidebar: React.FC = () => {
                   transition-all duration-200 ease-out
                   hover:translate-x-0.5
                   ${active
-                    ? 'bg-[#dbe1ff] text-[#004ac6] shadow-sm scale-[1.02]'
-                    : 'text-[#434655] hover:bg-[#f2f4f6] hover:text-[#004ac6]'
+                    ? 'bg-[#e4ebf1] text-[#4077a6] shadow-sm scale-[1.02]'
+                    : 'text-[#434655] hover:bg-[#f2f4f6] hover:text-[#4077a6]'
                   }
                 `}
               >
@@ -44,7 +44,7 @@ const AdminSidebar: React.FC = () => {
                 </span>
                 <span className="flex-1">{item.label}</span>
                 {active && (
-                  <span className="absolute right-2 top-1/2 -translate-y-1/2 w-1 h-6 rounded-full bg-[#004ac6] animate-pulse" />
+                  <span className="absolute right-2 top-1/2 -translate-y-1/2 w-1 h-6 rounded-full bg-[#4077a6] animate-pulse" />
                 )}
               </Link>
             </li>

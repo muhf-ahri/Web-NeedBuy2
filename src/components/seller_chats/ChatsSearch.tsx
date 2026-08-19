@@ -31,7 +31,7 @@ const ChatsSearch: React.FC<ChatsSearchProps> = ({
         w-full rounded-full border border-[#e0e3e5] bg-[#F5F7FB] py-2
         pl-9 pr-9 text-[12px] text-[#101319] outline-none
         placeholder:text-[#A2A8B3] transition-all duration-200
-        focus:border-[#004ac6] focus:bg-white
+        focus:border-[#538cbd] focus:bg-white
         focus:shadow-[0_4px_12px_rgba(83,140,219,0.10)]
       "
     />

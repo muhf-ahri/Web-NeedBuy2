@@ -78,7 +78,7 @@ const ChatsComposer: React.FC<ChatsComposerProps> = ({
         <div
           className="
             relative flex-1 rounded-full border border-[#e0e3e5] bg-[#F5F7FB]
-            transition-all duration-200 focus-within:border-[#004ac6]
+            transition-all duration-200 focus-within:border-[#538cbd]
             focus-within:bg-white
             focus-within:shadow-[0_4px_14px_rgba(83,140,219,0.10)]
           "
@@ -110,7 +110,7 @@ const ChatsComposer: React.FC<ChatsComposerProps> = ({
           disabled={!canSend}
           className="
             flex h-11 w-11 shrink-0 items-center justify-center rounded-full
-            bg-gradient-to-br from-[#004ac6] to-[#003ea8] text-white
+            bg-gradient-to-br from-[#538cbd] to-[#284a67] text-white
             shadow-[0_6px_16px_rgba(83,140,219,0.30)] transition-all
             duration-200 hover:shadow-[0_8px_20px_rgba(83,140,219,0.40)]
             active:scale-[0.95] disabled:cursor-not-allowed

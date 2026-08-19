@@ -316,8 +316,8 @@ const ProfilePage: React.FC = () => {
               type="button"
               onClick={loadData}
               className="
-                mt-5 w-full rounded-2xl bg-[#004ac6] px-4 py-2.5 text-[13px]
-                font-bold text-white transition-colors hover:bg-[#003ea8]
+                mt-5 w-full rounded-2xl bg-[#4077a6] px-4 py-2.5 text-[13px]
+                font-bold text-white transition-colors hover:bg-[#284a67]
               "
             >
               Coba lagi
@@ -346,9 +346,9 @@ const ProfilePage: React.FC = () => {
         <Reveal direction="up">
           <div className="mb-6">
             <div className="mb-2 flex items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-[#004ac6]/10 px-2.5 py-1">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-[#538cbd]/10 px-2.5 py-1">
                 <span className="h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
-                <p className="text-[9px] font-bold uppercase tracking-[0.20em] text-[#004ac6]">
+                <p className="text-[9px] font-bold uppercase tracking-[0.20em] text-[#4077a6]">
                   Akun saya
                 </p>
               </span>

@@ -93,7 +93,7 @@ const Branding: React.FC<SettingsCardProps> = ({ values, onSave }) => {
             <div className="flex flex-col items-start gap-5 sm:flex-row sm:items-center">
               <div
                 className={`flex shrink-0 items-center justify-center overflow-hidden border-2 border-dashed transition-colors ${slot.box} ${
-                  url ? 'border-[#004ac6] bg-[#f5f7fb]' : 'border-[#c3c6d7] bg-[#f5f7fb]'
+                  url ? 'border-[#538cbd] bg-[#f5f7fb]' : 'border-[#c3c6d7] bg-[#f5f7fb]'
                 }`}
               >
                 {busy ? (

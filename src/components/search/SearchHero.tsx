@@ -26,14 +26,14 @@ const SearchHero: React.FC<SearchHeroProps> = ({
       <div className="mb-2 flex items-center gap-2">
         <span
           className="
-            inline-flex items-center gap-1.5 rounded-full bg-[#004ac6]/10
+            inline-flex items-center gap-1.5 rounded-full bg-[#538cbd]/10
             px-2.5 py-1
           "
         >
           <span className="h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
           <p
             className="
-              text-[9px] font-bold uppercase tracking-[0.20em] text-[#004ac6]
+              text-[9px] font-bold uppercase tracking-[0.20em] text-[#4077a6]
             "
           >
             Pencarian
@@ -59,7 +59,7 @@ const SearchHero: React.FC<SearchHeroProps> = ({
         className="
           group flex items-center gap-2 rounded-full border border-[#e0e3e5]
           bg-white px-2 py-1.5 transition-all duration-200
-          focus-within:border-[#004ac6]
+          focus-within:border-[#538cbd]
           focus-within:shadow-[0_6px_20px_rgba(83,140,219,0.12)]
         "
       >
@@ -67,7 +67,7 @@ const SearchHero: React.FC<SearchHeroProps> = ({
           className="
             flex h-9 w-9 shrink-0 items-center justify-center rounded-full
             text-[#737686] transition-colors duration-200
-            group-focus-within:bg-[#004ac6]/10 group-focus-within:text-[#004ac6]
+            group-focus-within:bg-[#538cbd]/10 group-focus-within:text-[#4077a6]
           "
         >
           <Icon name="search" size={17} />
@@ -111,8 +111,8 @@ const SearchHero: React.FC<SearchHeroProps> = ({
           type="submit"
           className="
             flex h-10 w-10 shrink-0 items-center justify-center rounded-full
-            bg-[#004ac6] text-white shadow-[0_6px_16px_rgba(83,140,219,0.25)]
-            transition-all duration-200 hover:bg-[#004ac6]
+            bg-[#4077a6] text-white shadow-[0_6px_16px_rgba(83,140,219,0.25)]
+            transition-all duration-200 hover:bg-[#4077a6]
             hover:shadow-[0_8px_20px_rgba(83,140,219,0.30)]
             active:scale-[0.95]
           "

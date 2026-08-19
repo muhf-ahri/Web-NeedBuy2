@@ -33,7 +33,7 @@ const OpenedStoreHeader: React.FC<OpenedStoreHeaderProps> = ({
         <span
           className="
             flex h-full w-full items-center justify-center text-[26px]
-            font-bold text-[#004ac6]
+            font-bold text-[#4077a6]
           "
         >
           {store.storeName.charAt(0).toUpperCase()}
@@ -81,7 +81,7 @@ const OpenedStoreHeader: React.FC<OpenedStoreHeaderProps> = ({
       className="
         shrink-0 rounded-full border border-[#e0e3e5] bg-white px-3 py-1.5
         text-[11px] font-semibold text-[#737686] transition-all
-        duration-200 hover:border-[#004ac6] hover:text-[#004ac6]
+        duration-200 hover:border-[#538cbd] hover:text-[#4077a6]
       "
     >
       Tutup

@@ -60,7 +60,7 @@ const ChatsMessagesPanel: React.FC<ChatsMessagesPanelProps> = ({
               className="
                 flex h-9 w-9 shrink-0 items-center justify-center
                 rounded-full text-[#737686] transition-colors
-                hover:bg-[#F5F7FB] hover:text-[#004ac6]
+                hover:bg-[#F5F7FB] hover:text-[#4077a6]
               "
               aria-label="Kembali ke daftar chat"
             >

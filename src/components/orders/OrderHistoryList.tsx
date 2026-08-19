@@ -87,7 +87,7 @@ const OrdersHistoryList: React.FC<OrdersHistoryListProps> = ({
                       onOpen(order.id);
                     }}
                     className="
-                      font-mono text-[12px] font-bold text-[#004ac6]
+                      font-mono text-[12px] font-bold text-[#4077a6]
                       hover:underline
                     "
                   >
@@ -150,7 +150,7 @@ const OrdersHistoryList: React.FC<OrdersHistoryListProps> = ({
                     onOpen(order.id);
                   }}
                   className="
-                    font-mono text-[12px] font-bold text-[#004ac6]
+                    font-mono text-[12px] font-bold text-[#4077a6]
                     hover:underline
                   "
                 >

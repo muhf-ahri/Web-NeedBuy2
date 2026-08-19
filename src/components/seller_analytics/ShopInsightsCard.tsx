@@ -47,10 +47,10 @@ const SEVERITY_STYLE: Record<
     label: 'Positif',
   },
   info: {
-    box: 'border-[#004ac6]/20 bg-[#f5f7fb]',
-    iconBg: 'bg-[#004ac6]/15',
-    iconText: 'text-[#004ac6]',
-    dotColor: 'bg-[#004ac6]',
+    box: 'border-[#538cbd]/20 bg-[#f5f7fb]',
+    iconBg: 'bg-[#538cbd]/15',
+    iconText: 'text-[#4077a6]',
+    dotColor: 'bg-[#4077a6]',
     label: 'Info',
   },
 };
@@ -71,7 +71,7 @@ const ShopInsightsCard: React.FC<ShopInsightsCardProps> = ({
   return (
     <div
       className="
-        relative overflow-hidden rounded-[24px] border border-[#004ac6]/20
+        relative overflow-hidden rounded-[24px] border border-[#538cbd]/20
         bg-gradient-to-br from-[#f5f7fb] via-white to-[#f5f7fb] p-5
         shadow-[0_8px_24px_rgba(32,36,45,0.06)] backdrop-blur-sm sm:p-6
       "
@@ -80,7 +80,7 @@ const ShopInsightsCard: React.FC<ShopInsightsCardProps> = ({
       <span
         className="
           pointer-events-none absolute -right-16 -top-16 h-40 w-40
-          rounded-full border border-[#004ac6]/15
+          rounded-full border border-[#538cbd]/15
         "
       />
       <span
@@ -92,7 +92,7 @@ const ShopInsightsCard: React.FC<ShopInsightsCardProps> = ({
       <span
         className="
           pointer-events-none absolute right-24 top-20 h-1 w-1 rounded-full
-          bg-[#004ac6]/50
+          bg-[#538cbd]/50
         "
       />
 
@@ -100,7 +100,7 @@ const ShopInsightsCard: React.FC<ShopInsightsCardProps> = ({
         <span
           className="
             flex h-9 w-9 items-center justify-center rounded-xl
-            bg-gradient-to-br from-[#004ac6] to-[#003ea8]
+            bg-gradient-to-br from-[#538cbd] to-[#284a67]
             shadow-[0_6px_16px_rgba(83,140,219,0.30)]
           "
         >

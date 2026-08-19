@@ -13,14 +13,14 @@ const NeedsHero: React.FC<NeedsHeroProps> = ({ showCreate, onToggle }) => (
       <div className="mb-2 flex items-center gap-2">
         <span
           className="
-            inline-flex items-center gap-1.5 rounded-full bg-[#004ac6]/10
+            inline-flex items-center gap-1.5 rounded-full bg-[#538cbd]/10
             px-2.5 py-1
           "
         >
           <span className="h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
           <p
             className="
-              text-[9px] font-bold uppercase tracking-[0.20em] text-[#004ac6]
+              text-[9px] font-bold uppercase tracking-[0.20em] text-[#4077a6]
             "
           >
             Belanja pintar
@@ -46,10 +46,10 @@ const NeedsHero: React.FC<NeedsHeroProps> = ({ showCreate, onToggle }) => (
       type="button"
       onClick={onToggle}
       className="
-        flex h-11 shrink-0 items-center gap-2 rounded-full bg-[#004ac6]
+        flex h-11 shrink-0 items-center gap-2 rounded-full bg-[#4077a6]
         px-5 text-[13px] font-semibold text-white
         shadow-[0_7px_18px_rgba(83,140,219,0.25)] transition-all
-        duration-200 hover:bg-[#004ac6]
+        duration-200 hover:bg-[#4077a6]
         hover:shadow-[0_9px_22px_rgba(83,140,219,0.30)] active:scale-[0.99]
       "
     >

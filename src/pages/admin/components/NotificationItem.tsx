@@ -11,10 +11,10 @@ interface NotificationItemProps {
 
 const typeColor: Record<NotificationType, string> = {
   ORDER_NEW: 'border-[#e6f4ee] bg-[#e6f4ee]',
-  ORDER_STATUS: 'border-[#dbe1ff] bg-[#f5f7fb]',
+  ORDER_STATUS: 'border-[#e4ebf1] bg-[#f5f7fb]',
   PAYMENT: 'border-[#fff7e0] bg-[#fff7e0]',
   LOW_STOCK: 'border-[#fff0f0] bg-[#fff0f0]',
-  REVIEW: 'border-[#dbe1ff] bg-[#f5f7fb]',
+  REVIEW: 'border-[#e4ebf1] bg-[#f5f7fb]',
 };
 
 export const typeLabel: Record<NotificationType, string> = {
@@ -52,7 +52,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
           <div className="flex flex-wrap items-center gap-2">
             <span
               className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${
-                isUnread ? 'bg-[#004ac6] text-white' : 'bg-[#e0e3e5] text-[#737686]'
+                isUnread ? 'bg-[#4077a6] text-white' : 'bg-[#e0e3e5] text-[#737686]'
               }`}
             >
               {isUnread ? 'Baru' : 'Dibaca'}
@@ -71,7 +71,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
           {notification.order && (
             <Link
               to="/admin/orders"
-              className="mt-3 inline-flex items-center gap-1.5 text-[13px] font-semibold text-[#004ac6] hover:underline"
+              className="mt-3 inline-flex items-center gap-1.5 text-[13px] font-semibold text-[#4077a6] hover:underline"
             >
               Lihat pesanan {notification.order.orderNumber}
               <Icon name="arrowRight" size={14} />
@@ -83,7 +83,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
           <button
             onClick={() => onMarkRead(notification.id)}
             disabled={pending}
-            className="shrink-0 rounded-lg p-2 text-[#737686] transition-colors hover:bg-[#f2f4f6] hover:text-[#004ac6] disabled:opacity-40"
+            className="shrink-0 rounded-lg p-2 text-[#737686] transition-colors hover:bg-[#f2f4f6] hover:text-[#4077a6] disabled:opacity-40"
             aria-label="Tandai sudah dibaca"
           >
             <Icon name="check" size={18} />

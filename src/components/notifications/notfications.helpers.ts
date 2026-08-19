@@ -50,14 +50,14 @@ export function metaFor(notification: Notification): {
       return {
         icon: 'orders',
         bg: 'bg-[#f5f7fb]',
-        text: 'text-[#004ac6]',
+        text: 'text-[#4077a6]',
         label: 'Pesanan baru',
       };
     case 'ORDER_STATUS':
       return {
         icon: 'truck',
         bg: 'bg-[#f5f7fb]',
-        text: 'text-[#004ac6]',
+        text: 'text-[#4077a6]',
         label: 'Update pesanan',
       };
     default:

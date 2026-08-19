@@ -44,7 +44,7 @@ const ProductsToolbar: React.FC<ProductsToolbarProps> = ({
           w-full rounded-full border border-[#e0e3e5] bg-[#F5F7FB] py-2.5
           pl-10 pr-10 text-[13px] text-[#101319] outline-none
           placeholder:text-[#A2A8B3] transition-all duration-200
-          focus:border-[#004ac6] focus:bg-white
+          focus:border-[#538cbd] focus:bg-white
           focus:shadow-[0_4px_14px_rgba(83,140,219,0.10)]
         "
       />
@@ -80,10 +80,10 @@ const ProductsToolbar: React.FC<ProductsToolbarProps> = ({
         variant="primary"
         onClick={onAddNew}
         className="
-          inline-flex h-10 items-center gap-1.5 rounded-full bg-[#004ac6]
+          inline-flex h-10 items-center gap-1.5 rounded-full bg-[#4077a6]
           px-4 text-[12px] font-semibold text-white
           shadow-[0_6px_16px_rgba(83,140,219,0.25)] transition-all
-          hover:bg-[#004ac6] hover:shadow-[0_8px_20px_rgba(83,140,219,0.30)]
+          hover:bg-[#4077a6] hover:shadow-[0_8px_20px_rgba(83,140,219,0.30)]
           active:scale-[0.99] lg:hidden
         "
       >

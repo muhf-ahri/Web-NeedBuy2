@@ -172,7 +172,7 @@ const CategoriesPage: React.FC = () => {
             onClick={() => handleTabChange('parent')}
             className={`px-4 py-2 text-sm font-semibold transition-colors border-b-2 ${
               activeTab === 'parent'
-                ? 'border-[#004ac6] text-[#004ac6]'
+                ? 'border-[#538cbd] text-[#4077a6]'
                 : 'border-transparent text-[#737686] hover:text-[#101319]'
             }`}
           >
@@ -182,7 +182,7 @@ const CategoriesPage: React.FC = () => {
             onClick={() => handleTabChange('child')}
             className={`px-4 py-2 text-sm font-semibold transition-colors border-b-2 ${
               activeTab === 'child'
-                ? 'border-[#004ac6] text-[#004ac6]'
+                ? 'border-[#538cbd] text-[#4077a6]'
                 : 'border-transparent text-[#737686] hover:text-[#101319]'
             }`}
           >

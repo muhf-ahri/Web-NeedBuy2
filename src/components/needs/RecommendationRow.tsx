@@ -10,13 +10,13 @@ const LABEL_STYLE: Record<
 > = {
   BEST_MATCH: {
     label: 'Paling Cocok',
-    bg: 'bg-[#004ac6]',
+    bg: 'bg-[#4077a6]',
     text: 'text-white',
   },
   GOOD_MATCH: {
     label: 'Cocok',
-    bg: 'bg-[#004ac6]/15',
-    text: 'text-[#004ac6]',
+    bg: 'bg-[#538cbd]/15',
+    text: 'text-[#4077a6]',
   },
   ALTERNATIVE: {
     label: 'Alternatif',
@@ -50,7 +50,7 @@ const RecommendationRow: React.FC<RecommendationRowProps> = ({
       className="
         group flex cursor-pointer flex-col gap-3 rounded-2xl border
         border-[#e0e3e5] bg-white p-3 transition-all duration-200
-        hover:border-[#004ac6]/40
+        hover:border-[#538cbd]/40
         hover:shadow-[0_6px_18px_rgba(83,140,219,0.10)] sm:flex-row
         sm:items-center
       "
@@ -106,7 +106,7 @@ const RecommendationRow: React.FC<RecommendationRowProps> = ({
         <p
           className="
             mt-1 truncate text-[13px] font-semibold text-[#101319]
-            transition-colors duration-200 group-hover:text-[#004ac6]
+            transition-colors duration-200 group-hover:text-[#4077a6]
           "
         >
           {rec.product.name}
@@ -123,7 +123,7 @@ const RecommendationRow: React.FC<RecommendationRowProps> = ({
       </div>
 
       <div className="flex items-center justify-between gap-2 sm:flex-col sm:items-end sm:justify-center">
-        <p className="text-[14px] font-bold text-[#004ac6]">
+        <p className="text-[14px] font-bold text-[#4077a6]">
           {formatRupiah(rec.product.price)}
         </p>
         <button
@@ -131,10 +131,10 @@ const RecommendationRow: React.FC<RecommendationRowProps> = ({
           onClick={(e) => onAddToCart(e, rec.product.id)}
           disabled={busy}
           className="
-            flex h-8 items-center gap-1.5 rounded-full bg-[#004ac6] px-3
+            flex h-8 items-center gap-1.5 rounded-full bg-[#4077a6] px-3
             text-[11px] font-semibold text-white
             shadow-[0_4px_12px_rgba(83,140,219,0.25)] transition-all
-            duration-200 hover:bg-[#004ac6] active:scale-[0.97]
+            duration-200 hover:bg-[#4077a6] active:scale-[0.97]
             disabled:cursor-not-allowed disabled:bg-[#A2A8B3]
             disabled:shadow-none
           "

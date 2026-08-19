@@ -8,7 +8,7 @@ import type { OrderStatus, SellerOrder } from '../../api/orders';
 const STATUS_CLASS: Record<OrderStatus, string> = {
   WAITING_PAYMENT: 'bg-[#F5F7FB] text-[#737686]',
   PROCESSING: 'bg-[#FFF7E0] text-[#B45309]',
-  SHIPPED: 'bg-[#f5f7fb] text-[#004ac6]',
+  SHIPPED: 'bg-[#f5f7fb] text-[#4077a6]',
   DELIVERED: 'bg-[#e6f4ee] text-[#12805c]',
   COMPLETED: 'bg-[#e6f4ee] text-[#12805c]',
   CANCELLED: 'bg-[#FFF0F0] text-[#ba1a1a]',
@@ -52,7 +52,7 @@ const OrdersCardItem: React.FC<OrdersCardItemProps> = ({
     <div className="flex items-start justify-between gap-2 p-3.5 sm:p-4">
       <div className="min-w-0 flex-1">
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-          <span className="font-mono text-[11px] font-bold text-[#004ac6]">
+          <span className="font-mono text-[11px] font-bold text-[#4077a6]">
             #{order.orderNumber}
           </span>
           <span
@@ -91,9 +91,9 @@ const OrdersCardItem: React.FC<OrdersCardItemProps> = ({
           disabled={isBusy}
           className="
             flex flex-1 items-center justify-center gap-1.5 rounded-full
-            bg-[#004ac6] py-2 text-[11px] font-semibold text-white
+            bg-[#4077a6] py-2 text-[11px] font-semibold text-white
             shadow-[0_4px_12px_rgba(83,140,219,0.25)] transition-all
-            duration-200 hover:bg-[#004ac6]
+            duration-200 hover:bg-[#4077a6]
             hover:shadow-[0_6px_16px_rgba(83,140,219,0.30)]
             active:scale-[0.98] disabled:cursor-not-allowed
             disabled:bg-[#A2A8B3] disabled:shadow-none
@@ -120,8 +120,8 @@ const OrdersCardItem: React.FC<OrdersCardItemProps> = ({
           active:scale-[0.98]
           ${
             isExpanded
-              ? 'border-[#004ac6] bg-[#f5f7fb] text-[#004ac6]'
-              : 'border-[#e0e3e5] bg-white text-[#101319] hover:border-[#004ac6] hover:text-[#004ac6]'
+              ? 'border-[#538cbd] bg-[#f5f7fb] text-[#4077a6]'
+              : 'border-[#e0e3e5] bg-white text-[#101319] hover:border-[#538cbd] hover:text-[#4077a6]'
           }
         `}
       >

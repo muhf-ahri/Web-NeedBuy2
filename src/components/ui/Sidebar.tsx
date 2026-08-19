@@ -311,7 +311,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         ======================================================= */
 
         .sidebar-item-active {
-          color: #004ac6;
+          color: #4077a6;
         }
 
 
@@ -371,7 +371,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
         .sidebar-item-active
         .sidebar-item-icon {
-          background: #004ac6;
+          background: #4077a6;
           color: #ffffff;
 
           transform: scale(1.05);
@@ -390,7 +390,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         .sidebar-item-active
         .sidebar-item-icon {
           background: #ffffff;
-          color: #004ac6;
+          color: #4077a6;
 
           box-shadow:
             0 4px 12px
@@ -406,7 +406,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         .sidebar-item-active
         .sidebar-item-icon {
           background: #ffffff;
-          color: #004ac6;
+          color: #4077a6;
 
           box-shadow:
             0 4px 12px
@@ -419,7 +419,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         ======================================================= */
 
         .sidebar-item-chevron {
-          color: #004ac6;
+          color: #4077a6;
         }
 
 
@@ -525,7 +525,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
           border-radius: 0 999px 999px 0;
 
-          background: #004ac6;
+          background: #4077a6;
 
           transition:
             background-color 0.5s ease;
@@ -610,8 +610,8 @@ const Sidebar: React.FC<SidebarProps> = ({
               transition-all
               duration-200
 
-              hover:border-[#004ac6]
-              hover:text-[#004ac6]
+              hover:border-[#538cbd]
+              hover:text-[#4077a6]
 
               active:scale-[0.95]
             "
@@ -711,8 +711,8 @@ const Sidebar: React.FC<SidebarProps> = ({
                     justify-center
                     rounded-lg
 
-                    bg-[#004ac6]/10
-                    text-[#004ac6]
+                    bg-[#538cbd]/10
+                    text-[#4077a6]
                   "
                 >
                   <Icon

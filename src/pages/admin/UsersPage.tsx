@@ -83,7 +83,7 @@ const UsersPage: React.FC = () => {
               onClick={() => switchTab(tab)}
               className={`border-b-2 px-4 py-2 text-sm font-semibold transition-colors ${
                 activeTab === tab
-                  ? 'border-[#004ac6] text-[#004ac6]'
+                  ? 'border-[#538cbd] text-[#4077a6]'
                   : 'border-transparent text-[#737686] hover:text-[#101319]'
               }`}
             >
@@ -100,7 +100,7 @@ const UsersPage: React.FC = () => {
               setPage(1);
             }}
             placeholder="Cari nama, username, atau email…"
-            className="w-full max-w-sm rounded-full border border-[#c3c6d7] bg-white px-4 py-2 text-sm outline-none transition focus:border-[#004ac6] focus:ring-2 focus:ring-[#004ac6]/20"
+            className="w-full max-w-sm rounded-full border border-[#c3c6d7] bg-white px-4 py-2 text-sm outline-none transition focus:border-[#538cbd] focus:ring-2 focus:ring-[#538cbd]/20"
           />
         </div>
 
@@ -170,7 +170,7 @@ const UsersPage: React.FC = () => {
                       ) : (
                         <>
                           <td className="py-2.5 text-center font-medium text-[#101319]">{user.name}</td>
-                          <td className="py-2.5 text-center font-medium text-[#004ac6]">
+                          <td className="py-2.5 text-center font-medium text-[#4077a6]">
                             {user.seller?.storeName ?? 'Belum ada toko'}
                           </td>
                           <td className="py-2.5 text-center">{user.seller?.products ?? 0}</td>

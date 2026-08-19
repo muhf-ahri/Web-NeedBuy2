@@ -40,7 +40,7 @@ const StageRail: React.FC<{
   const reachedIndex = reached ? stages.indexOf(reached) : -1;
   const last = stages.length - 1;
   const progress = last > 0 ? Math.max(reachedIndex, 0) / last : 0;
-  const accent = isBadStage(reached) ? '#ba1a1a' : '#004ac6';
+  const accent = isBadStage(reached) ? '#ba1a1a' : '#4077a6';
 
   return (
     <div className="relative">
@@ -187,7 +187,7 @@ const TrackingPage: React.FC = () => {
       <Shell>
         <div className="rounded-[28px] border border-white bg-white/95 px-6 py-16 text-center shadow-[0_10px_30px_rgba(32,36,45,0.07)]">
           <span className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#f5f7fb]">
-            <Icon name="lock" size={26} className="text-[#004ac6]" />
+            <Icon name="lock" size={26} className="text-[#4077a6]" />
           </span>
           <p className="text-[16px] font-extrabold text-[#101319]">Login dulu buat lacak paketmu</p>
           <p className="mt-1.5 text-[13px] text-[#737686]">
@@ -195,7 +195,7 @@ const TrackingPage: React.FC = () => {
           </p>
           <button
             onClick={() => navigate('/login')}
-            className="mt-6 rounded-full bg-[#004ac6] px-7 py-3 text-[14px] font-bold text-white shadow-[0_8px_20px_rgba(83,140,219,0.35)] transition hover:bg-[#004ac6] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#101319]"
+            className="mt-6 rounded-full bg-[#4077a6] px-7 py-3 text-[14px] font-bold text-white shadow-[0_8px_20px_rgba(83,140,219,0.35)] transition hover:bg-[#4077a6] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#101319]"
           >
             Login
           </button>
@@ -230,7 +230,7 @@ const TrackingPage: React.FC = () => {
           </p>
           <button
             onClick={() => navigate('/orders')}
-            className="mt-6 rounded-full border border-[#e0e3e5] px-6 py-2.5 text-[13px] font-bold text-[#004ac6] transition hover:bg-[#f5f7fb]"
+            className="mt-6 rounded-full border border-[#e0e3e5] px-6 py-2.5 text-[13px] font-bold text-[#4077a6] transition hover:bg-[#f5f7fb]"
           >
             Balik ke daftar pesanan
           </button>
@@ -239,14 +239,14 @@ const TrackingPage: React.FC = () => {
     );
   }
 
-  const accent = isBadStage(data.currentStage) ? '#ba1a1a' : '#004ac6';
+  const accent = isBadStage(data.currentStage) ? '#ba1a1a' : '#4077a6';
   const stageNow = data.currentStage ? STAGE_LABEL[data.currentStage] : 'Belum jalan';
 
   return (
     <Shell>
       <button
         onClick={() => navigate('/orders')}
-        className="mb-5 flex items-center gap-1.5 rounded-full text-[#737686] transition-colors hover:text-[#101319] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#004ac6]"
+        className="mb-5 flex items-center gap-1.5 rounded-full text-[#737686] transition-colors hover:text-[#101319] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#4077a6]"
       >
         <Icon name="chevronLeft" size={16} />
         <span className="text-[13px] font-semibold">Balik ke pesanan</span>
@@ -261,7 +261,7 @@ const TrackingPage: React.FC = () => {
       >
         <div
           className="relative px-5 pb-8 pt-6 text-white sm:px-7"
-          style={{ background: `linear-gradient(135deg, ${accent} 0%, #003ea8 100%)` }}
+          style={{ background: `linear-gradient(135deg, ${accent} 0%, #284a67 100%)` }}
         >
           {/* garis rute dekoratif di latar */}
           <svg
@@ -352,7 +352,7 @@ const TrackingPage: React.FC = () => {
       <section className="mt-6 overflow-hidden rounded-[28px] border border-white bg-white/95 shadow-[0_10px_30px_rgba(32,36,45,0.06)]">
         <header className="flex items-center justify-between gap-3 border-b border-[#e0e3e5] bg-[#f5f7fb] px-5 py-4 sm:px-7">
           <h2 className="flex items-center gap-2 text-[14px] font-extrabold text-[#101319]">
-            <Icon name="activity" size={16} className="text-[#004ac6]" />
+            <Icon name="activity" size={16} className="text-[#4077a6]" />
             Riwayat perjalanan
           </h2>
           <span className="rounded-full bg-white px-2.5 py-1 text-[11px] font-bold text-[#737686]">
@@ -376,7 +376,7 @@ const TrackingPage: React.FC = () => {
               {timeline.map((event, index) => {
                 const newest = index === 0;
                 const bad = isBadStage(event.stage);
-                const dot = bad ? '#ba1a1a' : newest ? '#004ac6' : '#e0e3e5';
+                const dot = bad ? '#ba1a1a' : newest ? '#4077a6' : '#e0e3e5';
 
                 return (
                   <motion.li

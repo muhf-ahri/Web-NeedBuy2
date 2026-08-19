@@ -187,13 +187,13 @@ const CategoriesPage: React.FC = () => {
                       flex items-center gap-1.5 rounded-full border
                       border-[#e0e3e5] bg-white px-3.5 py-1.5 text-[13px]
                       font-semibold text-[#101319] transition-colors
-                      hover:border-[#004ac6] hover:text-[#004ac6] lg:hidden
+                      hover:border-[#538cbd] hover:text-[#4077a6] lg:hidden
                     "
                   >
                     <Icon name="filter" size={14} />
                     Filter
                     {hasActiveFilters && (
-                      <span className="flex h-4 min-w-4 items-center justify-center rounded-full bg-[#004ac6] px-1 text-[9px] font-bold text-white">
+                      <span className="flex h-4 min-w-4 items-center justify-center rounded-full bg-[#4077a6] px-1 text-[9px] font-bold text-white">
                         {selectedCategories.length + activeConditions.length + (priceMin || priceMax ? 1 : 0)}
                       </span>
                     )}
@@ -212,7 +212,7 @@ const CategoriesPage: React.FC = () => {
                       w-full cursor-pointer appearance-none rounded-full
                       border border-[#e0e3e5] bg-white py-1.5 pl-4 pr-9
                       text-[13px] font-medium text-[#101319] outline-none
-                      transition-colors focus:border-[#004ac6] sm:w-auto
+                      transition-colors focus:border-[#538cbd] sm:w-auto
                     "
                   >
                     {SORT_OPTIONS.map((opt) => (
@@ -241,15 +241,15 @@ const CategoriesPage: React.FC = () => {
                         key={slug}
                         className="
                           flex items-center gap-1.5 rounded-full
-                          bg-[#004ac6]/10 px-3 py-1 text-[12px] font-semibold
-                          text-[#004ac6]
+                          bg-[#538cbd]/10 px-3 py-1 text-[12px] font-semibold
+                          text-[#4077a6]
                         "
                       >
                         {cat?.name ?? slug}
                         <button
                           onClick={() => toggleCategory(slug)}
                           aria-label="Hapus filter"
-                          className="transition-colors hover:text-[#004ac6]"
+                          className="transition-colors hover:text-[#4077a6]"
                         >
                           <Icon name="close" size={12} />
                         </button>
@@ -361,10 +361,10 @@ const CategoriesPage: React.FC = () => {
                 <span
                   className="
                     flex h-6 w-6 items-center justify-center rounded-lg
-                    bg-[#004ac6]/10
+                    bg-[#538cbd]/10
                   "
                 >
-                  <Icon name="filter" size={13} className="text-[#004ac6]" />
+                  <Icon name="filter" size={13} className="text-[#4077a6]" />
                 </span>
                 Filter
               </span>
@@ -402,10 +402,10 @@ const CategoriesPage: React.FC = () => {
               <button
                 onClick={() => setMobileFilterOpen(false)}
                 className="
-                  w-full rounded-full bg-[#004ac6] py-2.5 text-[14px]
+                  w-full rounded-full bg-[#4077a6] py-2.5 text-[14px]
                   font-semibold text-white
                   shadow-[0_7px_18px_rgba(83,140,219,0.25)] transition-all
-                  hover:bg-[#004ac6] active:scale-[0.99]
+                  hover:bg-[#4077a6] active:scale-[0.99]
                 "
               >
                 Terapkan Filter

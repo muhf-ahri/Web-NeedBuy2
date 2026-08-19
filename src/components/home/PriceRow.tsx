@@ -32,7 +32,7 @@ const PriceRow: React.FC<{ product: Product }> = ({
           hover:bg-[#f5f7fb]
           focus-visible:outline-2
           focus-visible:outline-offset-2
-          focus-visible:outline-[#004ac6]
+          focus-visible:outline-[#4077a6]
         "
       >
         <span className="min-w-0 shrink">
@@ -43,7 +43,7 @@ const PriceRow: React.FC<{ product: Product }> = ({
                 text-[13px]
                 font-semibold
                 text-[#101319]
-                group-hover:text-[#004ac6]
+                group-hover:text-[#4077a6]
               "
             >
               {product.name}
@@ -84,7 +84,7 @@ const PriceRow: React.FC<{ product: Product }> = ({
 
         <span
           className="
-            hidden text-[#004ac6]
+            hidden text-[#4077a6]
             opacity-0
             transition-opacity
             group-hover:opacity-100

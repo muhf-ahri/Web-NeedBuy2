@@ -16,7 +16,7 @@ interface SettingsFormFieldsProps {
 }
 
 const inputCls =
-  'w-full rounded-xl border border-[#e0e3e5] bg-[#F5F7FB] px-3.5 py-2.5 text-[13px] text-[#101319] outline-none placeholder:text-[#A2A8B3] transition-all duration-200 focus:border-[#004ac6] focus:bg-white focus:shadow-[0_4px_16px_rgba(83,140,219,0.10)]';
+  'w-full rounded-xl border border-[#e0e3e5] bg-[#F5F7FB] px-3.5 py-2.5 text-[13px] text-[#101319] outline-none placeholder:text-[#A2A8B3] transition-all duration-200 focus:border-[#538cbd] focus:bg-white focus:shadow-[0_4px_16px_rgba(83,140,219,0.10)]';
 
 const labelCls =
   'mb-1.5 block text-[10px] font-bold uppercase tracking-[0.14em] text-[#737686]';
