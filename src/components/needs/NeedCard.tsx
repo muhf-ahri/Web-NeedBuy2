@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Icon from '../ui/Icon';
 import RecommendationRow from './RecommendationRow';
@@ -44,6 +44,8 @@ interface NeedCardProps {
   onMakePlan: (need: Need) => void;
   onOpenProduct: (slug: string) => void;
   onAddToCart: (e: React.MouseEvent, productId: string) => void;
+  onDelete: (need: Need) => void;
+  onUpdate: (need: Need, patch: { goal?: string; budget?: number }) => void;
 }
 
 const NeedCard: React.FC<NeedCardProps> = ({
@@ -56,7 +58,13 @@ const NeedCard: React.FC<NeedCardProps> = ({
   onMakePlan,
   onOpenProduct,
   onAddToCart,
+  onDelete,
+  onUpdate,
 }) => {
+  const [mengedit, setMengedit] = useState(false);
+  const [konfirmasiHapus, setKonfirmasiHapus] = useState(false);
+  const [goalDraft, setGoalDraft] = useState(need.goal ?? '');
+  const [budgetDraft, setBudgetDraft] = useState(need.budget ? String(need.budget) : '');
   const status = STATUS_STYLE[need.status] ?? STATUS_STYLE.DRAFT;
   const isDraft = need.status === 'DRAFT';
   const isProcessing = need.status === 'PROCESSING';
@@ -116,9 +124,112 @@ const NeedCard: React.FC<NeedCardProps> = ({
               Kebutuhan ini belum dicarikan barang. Tekan Rekomendasi buat mulai.
             </p>
           )}
+
+          {mengedit && (
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                const angka = Number(budgetDraft.replace(/[^0-9]/g, ''));
+                onUpdate(need, {
+                  goal: goalDraft.trim() || undefined,
+                  budget: Number.isFinite(angka) && angka > 0 ? angka : undefined,
+                });
+                setMengedit(false);
+              }}
+              className="mt-3 flex flex-wrap items-center gap-2 rounded-2xl bg-[#f5f7fb] p-3"
+            >
+              <input
+                value={goalDraft}
+                onChange={(e) => setGoalDraft(e.target.value)}
+                placeholder="Mau cari apa?"
+                className="
+                  h-9 min-w-0 flex-1 rounded-full border border-[#e0e3e5] bg-white
+                  px-3 text-[12px] text-[#101319] outline-none
+                  focus:border-[#538cbd]
+                "
+              />
+              <input
+                value={budgetDraft}
+                onChange={(e) => setBudgetDraft(e.target.value)}
+                inputMode="numeric"
+                placeholder="Budget (Rp)"
+                className="
+                  h-9 w-32 rounded-full border border-[#e0e3e5] bg-white px-3
+                  text-[12px] text-[#101319] outline-none focus:border-[#538cbd]
+                "
+              />
+              <button
+                type="submit"
+                disabled={busyId === `edit-${need.id}`}
+                className="
+                  h-9 rounded-full bg-[#4077a6] px-4 text-[12px] font-semibold
+                  text-white disabled:opacity-60
+                "
+              >
+                Simpan
+              </button>
+              <button
+                type="button"
+                onClick={() => setMengedit(false)}
+                className="h-9 px-2 text-[12px] text-[#737686]"
+              >
+                Batal
+              </button>
+            </form>
+          )}
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setMengedit((v) => !v)}
+            className="
+              flex h-9 items-center gap-1.5 rounded-full border border-[#e0e3e5]
+              bg-white px-3 text-[12px] font-semibold text-[#434655]
+              transition-colors hover:border-[#538cbd] hover:text-[#4077a6]
+            "
+          >
+            <Icon name="edit" size={13} />
+            Ubah
+          </button>
+
+          {konfirmasiHapus ? (
+            <span className="flex items-center gap-1.5">
+              <button
+                type="button"
+                onClick={() => onDelete(need)}
+                disabled={busyId === `del-${need.id}`}
+                className="
+                  flex h-9 items-center gap-1.5 rounded-full bg-[#ba1a1a] px-3
+                  text-[12px] font-semibold text-white disabled:opacity-60
+                "
+              >
+                Yakin hapus
+              </button>
+              <button
+                type="button"
+                onClick={() => setKonfirmasiHapus(false)}
+                className="h-9 rounded-full px-2 text-[12px] text-[#737686]"
+              >
+                Batal
+              </button>
+            </span>
+          ) : (
+            <button
+              type="button"
+              onClick={() => setKonfirmasiHapus(true)}
+              aria-label="Hapus kebutuhan"
+              className="
+                flex h-9 items-center gap-1.5 rounded-full border
+                border-[#e0e3e5] bg-white px-3 text-[12px] font-semibold
+                text-[#ba1a1a] transition-colors hover:border-[#ba1a1a]
+              "
+            >
+              <Icon name="trash" size={13} />
+              Hapus
+            </button>
+          )}
+
           <button
             type="button"
             onClick={() => onOpenRecommendations(need.id)}

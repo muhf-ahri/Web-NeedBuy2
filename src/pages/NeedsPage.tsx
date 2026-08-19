@@ -13,6 +13,8 @@ import NeedsErrorState from '../components/needs/NeedsErrorState';
 import {
   getNeeds,
   createNeed,
+  deleteNeed,
+  updateNeed,
   processNeed,
   getRecommendations,
   confirmNeed,
@@ -53,6 +55,36 @@ const NeedsPage: React.FC = () => {
   const retry = () => {
     setError(null);
     setReloadKey((k) => k + 1);
+  };
+
+  const handleDeleteNeed = async (need: Need) => {
+    setBusy(`del-${need.id}`);
+    setError(null);
+    try {
+      await deleteNeed(need.id);
+      setNeeds((prev) => prev.filter((n) => n.id !== need.id));
+    } catch (err: any) {
+      setError(err.message ?? 'Gagal hapus kebutuhan, coba lagi ya');
+    } finally {
+      setBusy(null);
+    }
+  };
+
+  const handleUpdateNeed = async (
+    need: Need,
+    patch: { goal?: string; budget?: number }
+  ) => {
+    setBusy(`edit-${need.id}`);
+    setError(null);
+    try {
+      const res = await updateNeed(need.id, patch);
+      const updated = res.data?.data;
+      setNeeds((prev) => prev.map((n) => (n.id === need.id ? { ...n, ...updated } : n)));
+    } catch (err: any) {
+      setError(err.message ?? 'Gagal simpan perubahan, coba lagi ya');
+    } finally {
+      setBusy(null);
+    }
   };
 
   const fetchNeeds = useCallback(async () => {
@@ -263,6 +295,8 @@ const NeedsPage: React.FC = () => {
               onMakePlan={handleMakePlan}
               onOpenProduct={(slug) => navigate(`/products/${slug}`)}
               onAddToCart={handleAddToCart}
+              onDelete={handleDeleteNeed}
+              onUpdate={handleUpdateNeed}
             />
           ))}
         </div>
