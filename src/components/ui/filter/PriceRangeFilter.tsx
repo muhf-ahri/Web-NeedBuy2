@@ -9,8 +9,6 @@ interface PriceRangeFilterProps {
   onMaxChange: (value: string) => void;
   minPlaceholder?: string;
   maxPlaceholder?: string;
-  
-  debounceMs?: number;
 }
 
 const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
@@ -20,7 +18,6 @@ const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
   onMaxChange,
   minPlaceholder = 'Min',
   maxPlaceholder = 'Maks',
-  debounceMs = 400,
 }) => {
   const [localMin, setLocalMin] = useState(minValue);
   const [localMax, setLocalMax] = useState(maxValue);
@@ -28,17 +25,22 @@ const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
   useEffect(() => setLocalMin(minValue), [minValue]);
   useEffect(() => setLocalMax(maxValue), [maxValue]);
 
-  useEffect(() => {
-    if (localMin === minValue) return; 
-    const timer = setTimeout(() => onMinChange(localMin), debounceMs);
-    return () => clearTimeout(timer);
-  }, [localMin, debounceMs, minValue, onMinChange]);
+  // Dulu nilai diterapkan sendiri setelah jeda 400ms, jadi mengetik "150000"
+  // menembakkan beberapa pencarian berturut-turut dan daftarnya berkedip di
+  // tengah pengetikan. Sekarang hanya Enter yang menerapkan — mengetik tidak
+  // mengubah apa pun sampai user memutuskan selesai.
+  const terapkan = () => {
+    if (localMin !== minValue) onMinChange(localMin);
+    if (localMax !== maxValue) onMaxChange(localMax);
+  };
 
-  useEffect(() => {
-    if (localMax === maxValue) return;
-    const timer = setTimeout(() => onMaxChange(localMax), debounceMs);
-    return () => clearTimeout(timer);
-  }, [localMax, debounceMs, maxValue, onMaxChange]);
+  const onEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key !== 'Enter') return;
+    e.preventDefault();
+    terapkan();
+  };
+
+  const belumDiterapkan = localMin !== minValue || localMax !== maxValue;
 
   const hasValue = localMin !== '' || localMax !== '';
 
@@ -71,6 +73,7 @@ const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
             min="0"
             value={localMin}
             onChange={(e) => setLocalMin(e.target.value)}
+            onKeyDown={onEnter}
             className="
               min-w-0 flex-1 bg-transparent pr-2.5 text-[11px] font-medium
               text-[#101319] outline-none placeholder:text-[#A2A8B3]
@@ -101,6 +104,7 @@ const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
             min="0"
             value={localMax}
             onChange={(e) => setLocalMax(e.target.value)}
+            onKeyDown={onEnter}
             className="
               min-w-0 flex-1 bg-transparent pr-2.5 text-[11px] font-medium
               text-[#101319] outline-none placeholder:text-[#A2A8B3]
@@ -112,7 +116,21 @@ const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
         </div>
       </div>
 
-      {hasValue && (
+      {belumDiterapkan && (
+        <button
+          type="button"
+          onClick={terapkan}
+          className="
+            inline-flex items-center gap-1 text-[10px] font-semibold
+            text-[#4077a6] transition-colors hover:text-[#284a67]
+          "
+        >
+          <Icon name="check" size={10} />
+          Terapkan · atau tekan Enter
+        </button>
+      )}
+
+      {hasValue && !belumDiterapkan && (
         <button
           type="button"
           onClick={handleReset}

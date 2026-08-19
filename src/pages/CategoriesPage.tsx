@@ -36,6 +36,9 @@ const CategoriesPage: React.FC = () => {
   const [page, setPage] = useState(1);
 
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  // Nilai yang DIPAKAI mencari. Nilai yang sedang diketik disimpan di dalam
+  // PriceRangeFilter dan baru dikirim ke sini saat user menekan Enter, jadi
+  // mengetik tidak lagi menembakkan pencarian di tiap angka.
   const [priceMin, setPriceMin] = useState('');
   const [priceMax, setPriceMax] = useState('');
   const [activeConditions, setActiveConditions] = useState<string[]>([]);
