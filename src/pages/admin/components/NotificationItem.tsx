@@ -15,6 +15,7 @@ const typeColor: Record<NotificationType, string> = {
   PAYMENT: 'border-[#fff7e0] bg-[#fff7e0]',
   LOW_STOCK: 'border-[#fff0f0] bg-[#fff0f0]',
   REVIEW: 'border-[#e4ebf1] bg-[#f5f7fb]',
+  CHAT: 'border-[#e4ebf1] bg-[#e4ebf1]',
 };
 
 export const typeLabel: Record<NotificationType, string> = {
@@ -23,6 +24,7 @@ export const typeLabel: Record<NotificationType, string> = {
   PAYMENT: 'Pembayaran',
   LOW_STOCK: 'Stok Menipis',
   REVIEW: 'Ulasan',
+  CHAT: 'Pesan Baru',
 };
 
 const formatDate = (iso: string) =>

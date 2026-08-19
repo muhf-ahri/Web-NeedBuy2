@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import Icon from '../ui/Icon';
 import type { Notification } from '../../api/notifications';
+import { useAuth } from '../../contexts/AuthContext';
 import { relativeTime, linkFor, metaFor } from './notfications.helpers';
 
 interface NotificationItemProps {
@@ -19,7 +20,8 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
   onOpen,
   compact = false,
 }) => {
-  const link = linkFor(notification);
+  const { user } = useAuth();
+  const link = linkFor(notification, user?.role);
   const isUnread = !notification.read;
   const meta = metaFor(notification);
 

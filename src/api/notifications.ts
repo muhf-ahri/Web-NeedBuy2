@@ -6,7 +6,7 @@ export type NotificationType =
   | 'ORDER_STATUS'
   | 'PAYMENT'
   | 'LOW_STOCK'
-  | 'REVIEW';
+  | 'REVIEW' | 'CHAT';
 
 export interface NotificationOrder {
   orderId: string;

@@ -12,14 +12,22 @@ export function relativeTime(iso: string): string {
   return days === 1 ? 'kemarin' : `${days} hari lalu`;
 }
 
-export function linkFor(notification: Notification): string | undefined {
+export function linkFor(notification: Notification, role?: string): string | undefined {
+  const isSeller = role === 'SELLER';
   switch (notification.type) {
+    // Notifikasi penjual: orderan masuk dan stok menipis.
     case 'ORDER_NEW':
-    case 'ORDER_STATUS':
-    case 'PAYMENT':
       return '/seller/orders';
     case 'LOW_STOCK':
       return '/seller/products';
+    // Notifikasi pembeli. Sebelumnya keduanya diarahkan ke /seller/orders,
+    // sehingga pembeli yang menekan "Pesanan dikirim" dilempar ke halaman
+    // dasbor penjual yang bukan miliknya.
+    case 'ORDER_STATUS':
+    case 'PAYMENT':
+      return '/orders';
+    case 'CHAT':
+      return isSeller ? '/seller/chats' : '/messages';
     default:
       return undefined;
   }
@@ -59,6 +67,13 @@ export function metaFor(notification: Notification): {
         bg: 'bg-[#f5f7fb]',
         text: 'text-[#4077a6]',
         label: 'Update pesanan',
+      };
+    case 'CHAT':
+      return {
+        icon: 'chat',
+        bg: 'bg-[#e4ebf1]',
+        text: 'text-[#4077a6]',
+        label: 'Pesan baru',
       };
     default:
       return {

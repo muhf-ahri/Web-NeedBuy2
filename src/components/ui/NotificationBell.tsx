@@ -14,7 +14,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { relativeTime, linkFor, metaFor } from '../notifications/notfications.helpers';
 
 const NotificationBell: React.FC = () => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [unreadCount, setUnreadCount] = useState(0);
@@ -200,7 +200,7 @@ const NotificationBell: React.FC = () => {
               </div>
             ) : (
               notifications.map((notification) => {
-                const link = linkFor(notification);
+                const link = linkFor(notification, user?.role);
                 const isUnread = !notification.read;
                 const meta = metaFor(notification);
 
