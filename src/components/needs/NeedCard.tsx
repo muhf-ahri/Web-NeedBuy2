@@ -5,21 +5,24 @@ import RecommendationRow from './RecommendationRow';
 import { formatRupiah } from '../../utils/currency';
 import type { Need, Recommendation } from '../../api/needs';
 
+// Status ditampilkan pakai bahasa manusia. Sebelumnya enum mentah "DRAFT"
+// yang bocor ke layar, dan tidak memberi tahu apa pun soal harus ngapain.
+const STATUS_LABEL: Record<string, string> = {
+  DRAFT: 'Belum diproses',
+  PROCESSING: 'Lagi diproses',
+  COMPLETED: 'Siap',
+};
+
 const STATUS_STYLE: Record<
   string,
   { bg: string; text: string; dot: string }
 > = {
   DRAFT: {
-    bg: 'bg-[#F5F7FB]',
-    text: 'text-[#737686]',
-    dot: 'bg-[#A2A8B3]',
-  },
-  PARSED: {
     bg: 'bg-[#FFF7E0]',
     text: 'text-[#B45309]',
     dot: 'bg-[#FFD500]',
   },
-  PROCESSED: {
+  PROCESSING: {
     bg: 'bg-[#538cbd]/15',
     text: 'text-[#4077a6]',
     dot: 'bg-[#4077a6]',
@@ -56,6 +59,8 @@ const NeedCard: React.FC<NeedCardProps> = ({
 }) => {
   const status = STATUS_STYLE[need.status] ?? STATUS_STYLE.DRAFT;
   const isDraft = need.status === 'DRAFT';
+  const isProcessing = need.status === 'PROCESSING';
+  const isReady = need.status === 'COMPLETED';
 
   return (
     <div
@@ -83,7 +88,7 @@ const NeedCard: React.FC<NeedCardProps> = ({
               `}
             >
               <span className={`h-1.5 w-1.5 rounded-full ${status.dot}`} />
-              {need.status}
+              {STATUS_LABEL[need.status] ?? 'Belum diproses'}
             </span>
           </div>
 
@@ -105,13 +110,22 @@ const NeedCard: React.FC<NeedCardProps> = ({
               </>
             ) : null}
           </p>
+
+          {isDraft && (
+            <p className="mt-1.5 text-[12px] text-[#B45309]">
+              Kebutuhan ini belum dicarikan barang. Tekan Rekomendasi buat mulai.
+            </p>
+          )}
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
           <button
             type="button"
             onClick={() => onOpenRecommendations(need.id)}
-            disabled={isDraft}
+            // Justru dari sinilah status DRAFT diselesaikan. Dulu tombol ini
+            // dimatikan saat DRAFT, jadi kebutuhannya terkunci selamanya:
+            // satu-satunya jalan keluar ikut terkunci.
+            disabled={isProcessing}
             className="
               flex h-9 items-center gap-1.5 rounded-full bg-[#4077a6] px-4
               text-[12px] font-semibold text-white
@@ -127,7 +141,7 @@ const NeedCard: React.FC<NeedCardProps> = ({
           <button
             type="button"
             onClick={() => onMakePlan(need)}
-            disabled={isDraft || busyId === `plan-${need.id}`}
+            disabled={!isReady || busyId === `plan-${need.id}`}
             className="
               flex h-9 items-center gap-1.5 rounded-full border
               border-[#538cbd] bg-white px-4 text-[12px] font-semibold

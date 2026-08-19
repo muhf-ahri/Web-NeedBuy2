@@ -81,6 +81,31 @@ export const ChatMessageBody: React.FC<{ message: ChatMessage; mine: boolean }> 
   );
 };
 
+/**
+ * Tanda status pesan sendiri: satu centang terkirim, dua centang sudah dibaca.
+ *
+ * Sebelumnya centang HANYA muncul kalau sudah dibaca, jadi pesan yang belum
+ * dibaca tidak punya tanda apa pun dan pengirim tidak bisa membedakan antara
+ * "belum sampai" dan "sudah sampai tapi belum dibuka".
+ */
+export const ReadReceipt: React.FC<{
+  readAt: string | null;
+  size?: number;
+  className?: string;
+}> = ({ readAt, size = 11, className = '' }) => {
+  const dibaca = Boolean(readAt);
+  return (
+    <span
+      className={`inline-flex shrink-0 items-center ${className}`}
+      title={dibaca ? 'Sudah dibaca' : 'Terkirim'}
+      aria-label={dibaca ? 'Sudah dibaca' : 'Terkirim'}
+    >
+      <Icon name="check" size={size} />
+      {dibaca && <Icon name="check" size={size} className="-ml-[5px]" />}
+    </span>
+  );
+};
+
 export const AttachPhotoButton: React.FC<{
   disabled?: boolean;
   onUploaded: (url: string) => void;

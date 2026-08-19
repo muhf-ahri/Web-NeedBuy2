@@ -5,7 +5,7 @@ import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import Avatar from '../components/ui/Avatar';
 import Icon from '../components/ui/Icon';
-import { ChatMessageBody, AttachPhotoButton, PendingPhoto, previewOf } from '../components/ui/ChatMessageBody';
+import { ReadReceipt, ChatMessageBody, AttachPhotoButton, PendingPhoto, previewOf } from '../components/ui/ChatMessageBody';
 import { useAuth } from '../contexts/AuthContext';
 import {
   getConversations,
@@ -286,7 +286,7 @@ const MessagesPage: React.FC = () => {
                             }`}
                           >
                             {timeLabel(message.createdAt)}
-                            {mine && message.readAt && <Icon name="check" size={11} />}
+                            {mine && <ReadReceipt readAt={message.readAt} size={11} />}
                           </p>
                         </div>
                       </div>

@@ -1,7 +1,6 @@
 import React from 'react';
 
-import Icon from '../ui/Icon';
-import { ChatMessageBody } from '../ui/ChatMessageBody';
+import { ReadReceipt, ChatMessageBody } from '../ui/ChatMessageBody';
 import type { ChatMessage } from '../../api/messages';
 
 interface ChatsMessageBubbleProps {
@@ -41,11 +40,11 @@ const ChatsMessageBubble: React.FC<ChatsMessageBubbleProps> = ({
         `}
       >
         <span>{timeLabel(message.createdAt)}</span>
-        {mine && message.readAt && (
+        {mine && (
           <span className="inline-flex items-center gap-0.5">
             <span className="h-1 w-1 rounded-full bg-white/80" />
-            <Icon name="check" size={10} className="text-white/90" />
-            Dibaca
+            <ReadReceipt readAt={message.readAt} size={10} className="text-white/90" />
+            {message.readAt ? 'Dibaca' : 'Terkirim'}
           </span>
         )}
       </div>

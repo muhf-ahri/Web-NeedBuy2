@@ -30,32 +30,6 @@ const Sidebar: React.FC<SidebarProps> = ({
   const [internalOpen, setInternalOpen] = useState(false);
   const drawerOpen = isControlled ? mobileOpen : internalOpen;
 
-  const [scrolled, setScrolled] = useState(false);
-
-  /* =========================================================
-     SCROLL DETECTION
-  ========================================================= */
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-
-    handleScroll();
-
-    window.addEventListener('scroll', handleScroll, {
-      passive: true,
-    });
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
-  /* =========================================================
-     CLOSE MOBILE DRAWER WHEN ROUTE CHANGES
-  ========================================================= */
-
   useEffect(() => {
     if (isControlled) {
       onMobileClose?.();
@@ -63,14 +37,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       setInternalOpen(false);
     }
 
-    // Jangan reset scrolled / hover di sini.
-    // Hover sepenuhnya ditangani oleh CSS.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
-
-  /* =========================================================
-     BODY SCROLL LOCK
-  ========================================================= */
 
   useEffect(() => {
     document.body.style.overflow = drawerOpen
@@ -82,10 +49,6 @@ const Sidebar: React.FC<SidebarProps> = ({
     };
   }, [drawerOpen]);
 
-  /* =========================================================
-     CLOSE DRAWER
-  ========================================================= */
-
   const closeDrawer = () => {
     if (isControlled) {
       onMobileClose?.();
@@ -94,15 +57,10 @@ const Sidebar: React.FC<SidebarProps> = ({
     }
   };
 
-  /* =========================================================
-     RENDER SIDEBAR CONTENT
-  ========================================================= */
-
   const buildContent = () => (
     <nav
       className={`
         sidebar-shell
-        ${scrolled ? 'sidebar-scrolled' : ''}
         relative
         overflow-hidden
         rounded-[20px]
@@ -147,10 +105,6 @@ const Sidebar: React.FC<SidebarProps> = ({
                   ease-out
                 `}
               >
-                {/* =================================================
-                    ICON
-                ================================================= */}
-
                 <span
                   className="
                     sidebar-item-icon
@@ -173,10 +127,6 @@ const Sidebar: React.FC<SidebarProps> = ({
                   />
                 </span>
 
-                {/* =================================================
-                    LABEL
-                ================================================= */}
-
                 <span
                   className="
                     sidebar-item-label
@@ -190,10 +140,6 @@ const Sidebar: React.FC<SidebarProps> = ({
                 >
                   {item.label}
                 </span>
-
-                {/* =================================================
-                    CHEVRON
-                ================================================= */}
 
                 <Icon
                   name="chevronRight"
@@ -219,352 +165,103 @@ const Sidebar: React.FC<SidebarProps> = ({
         })}
       </ul>
 
-      {/* =========================================================
-          SIDEBAR COLOR STYLES
-
-          Semua hover color sengaja dibuat menggunakan CSS biasa.
-          Jadi tidak tergantung variant Tailwind custom.
-      ========================================================= */}
-
       <style>{`
 
         /* =======================================================
-           DEFAULT WHITE
+           SIDEBAR STATIS
+
+           Dulu sidebar ini putih, lalu berubah biru saat di-hover ATAU saat
+           halaman di-scroll, dan seluruh warna isinya ikut membalik. Warnanya
+           jadi tidak bisa ditebak dan terasa berkedip saat menggulir.
+
+           Sekarang biru #538CBD permanen: satu keadaan, tidak ada yang
+           membalik, dan pendengar scroll-nya ikut dicabut karena tak berguna.
         ======================================================= */
 
         .sidebar-shell {
-          background: rgba(255, 255, 255, 0.95);
-          border-color: rgba(255, 255, 255, 0.8);
-          box-shadow:
-            0 8px 24px rgba(32, 36, 45, 0.06);
-        }
-
-
-        /* =======================================================
-           HOVER → BLUE
-           
-           Ini inti perbaikannya.
-        ======================================================= */
-
-        .sidebar-shell:hover {
-          background: rgba(83, 140, 219, 0.95);
+          background: #538CBD;
           border-color: rgba(255, 255, 255, 0.25);
-          box-shadow:
-            0 12px 32px rgba(83, 140, 219, 0.30);
+          box-shadow: 0 12px 32px rgba(83, 140, 189, 0.30);
         }
 
 
-        /* =======================================================
-           SCROLLED → BLUE
-        ======================================================= */
+        /* ITEM */
 
-        .sidebar-shell.sidebar-scrolled {
-          background: rgba(83, 140, 219, 0.95);
-          border-color: rgba(255, 255, 255, 0.25);
-          box-shadow:
-            0 12px 32px rgba(83, 140, 219, 0.30);
-        }
-
-
-        /* =======================================================
-           ITEM DEFAULT
-        ======================================================= */
-
-        .sidebar-item {
-          color: #434655;
-        }
-
-
-        /* =======================================================
-           ITEM HOVER → WHITE
-        ======================================================= */
-
-        .sidebar-shell:hover .sidebar-item {
-          color: rgba(255, 255, 255, 0.85);
-        }
-
-
-        .sidebar-shell:hover
-        .sidebar-item:hover {
-          color: #ffffff;
-        }
-
-
-        /* =======================================================
-           SCROLLED → WHITE
-        ======================================================= */
-
-        .sidebar-shell.sidebar-scrolled
         .sidebar-item {
           color: rgba(255, 255, 255, 0.85);
         }
 
-
-        .sidebar-shell.sidebar-scrolled
         .sidebar-item:hover {
           color: #ffffff;
         }
 
-
-        /* =======================================================
-           ACTIVE ITEM - DEFAULT WHITE SIDEBAR
-        ======================================================= */
-
-        .sidebar-item-active {
-          color: #4077a6;
-        }
-
-
-        /* =======================================================
-           ACTIVE ITEM - HOVER
-        ======================================================= */
-
-        .sidebar-shell:hover
         .sidebar-item-active {
           color: #ffffff;
         }
 
 
-        /* =======================================================
-           ACTIVE ITEM - SCROLLED
-        ======================================================= */
+        /* IKON */
 
-        .sidebar-shell.sidebar-scrolled
-        .sidebar-item-active {
-          color: #ffffff;
-        }
-
-
-        /* =======================================================
-           ICON DEFAULT
-        ======================================================= */
-
-        .sidebar-item-icon {
-          background: #F5F7FB;
-          color: #737686;
-        }
-
-
-        /* =======================================================
-           ICON HOVER
-        ======================================================= */
-
-        .sidebar-shell:hover
         .sidebar-item-icon {
           background: rgba(255, 255, 255, 0.15);
           color: rgba(255, 255, 255, 0.9);
         }
 
-
-        .sidebar-shell:hover
-        .sidebar-item:hover
-        .sidebar-item-icon {
+        .sidebar-item:hover .sidebar-item-icon {
           background: rgba(255, 255, 255, 0.25);
           color: #ffffff;
           transform: scale(1.05);
         }
 
-
-        /* =======================================================
-           ICON ACTIVE - WHITE SIDEBAR
-        ======================================================= */
-
-        .sidebar-item-active
-        .sidebar-item-icon {
-          background: #4077a6;
-          color: #ffffff;
-
+        .sidebar-item-active .sidebar-item-icon {
+          background: #ffffff;
+          color: #4077a6;
           transform: scale(1.05);
-
-          box-shadow:
-            0 4px 12px
-            rgba(83, 140, 219, 0.30);
+          box-shadow: 0 4px 12px rgba(255, 255, 255, 0.30);
         }
 
 
-        /* =======================================================
-           ICON ACTIVE - HOVER
-        ======================================================= */
+        /* CHEVRON */
 
-        .sidebar-shell:hover
-        .sidebar-item-active
-        .sidebar-item-icon {
-          background: #ffffff;
-          color: #4077a6;
-
-          box-shadow:
-            0 4px 12px
-            rgba(255, 255, 255, 0.30);
-        }
-
-
-        /* =======================================================
-           ICON ACTIVE - SCROLLED
-        ======================================================= */
-
-        .sidebar-shell.sidebar-scrolled
-        .sidebar-item-active
-        .sidebar-item-icon {
-          background: #ffffff;
-          color: #4077a6;
-
-          box-shadow:
-            0 4px 12px
-            rgba(255, 255, 255, 0.30);
-        }
-
-
-        /* =======================================================
-           CHEVRON
-        ======================================================= */
-
-        .sidebar-item-chevron {
-          color: #4077a6;
-        }
-
-
-        .sidebar-shell:hover
         .sidebar-item-chevron {
           color: #ffffff;
         }
 
-
-        .sidebar-shell.sidebar-scrolled
-        .sidebar-item-chevron {
-          color: #ffffff;
-        }
-
-
-        /* =======================================================
-           ACTIVE CHEVRON
-        ======================================================= */
-
-        .sidebar-item-active
-        .sidebar-item-chevron {
+        .sidebar-item-active .sidebar-item-chevron {
           transform: translateX(0);
           opacity: 1;
         }
 
 
-        /* =======================================================
-           ACTIVE PILL
-        ======================================================= */
+        /* PIL ITEM AKTIF */
 
         .sidebar-item-active::before {
           content: '';
-
           position: absolute;
-
           left: 8px;
           right: 8px;
           top: 0;
           bottom: 0;
-
           z-index: -1;
-
           border-radius: 12px;
-
-          background:
-            linear-gradient(
-              to right,
-              rgba(83, 140, 219, 0.15),
-              rgba(83, 140, 219, 0.10)
-            );
-
-          box-shadow:
-            inset 0 0 0 1px
-            rgba(83, 140, 219, 0.20);
-        }
-
-
-        /* =======================================================
-           ACTIVE PILL - HOVER
-        ======================================================= */
-
-        .sidebar-shell:hover
-        .sidebar-item-active::before {
           background: rgba(255, 255, 255, 0.20);
-
-          box-shadow:
-            inset 0 0 0 1px
-            rgba(255, 255, 255, 0.30);
+          box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.30);
         }
 
 
-        /* =======================================================
-           ACTIVE PILL - SCROLLED
-        ======================================================= */
-
-        .sidebar-shell.sidebar-scrolled
-        .sidebar-item-active::before {
-          background: rgba(255, 255, 255, 0.20);
-
-          box-shadow:
-            inset 0 0 0 1px
-            rgba(255, 255, 255, 0.30);
-        }
-
-
-        /* =======================================================
-           ACTIVE INDICATOR
-        ======================================================= */
+        /* PENANDA ITEM AKTIF */
 
         .sidebar-item-active::after {
           content: '';
-
           position: absolute;
-
           left: 8px;
           top: 50%;
-
           width: 2px;
           height: 20px;
-
-          transform:
-            translateY(-50%);
-
+          transform: translateY(-50%);
           border-radius: 0 999px 999px 0;
-
-          background: #4077a6;
-
-          transition:
-            background-color 0.5s ease;
-        }
-
-
-        .sidebar-shell:hover
-        .sidebar-item-active::after,
-
-        .sidebar-shell.sidebar-scrolled
-        .sidebar-item-active::after {
           background: #ffffff;
         }
-
-
-        /* =======================================================
-           ANIMATION
-        ======================================================= */
-
-        @keyframes sidebar-enter {
-          0% {
-            opacity: 0;
-            transform: translateX(-8px);
-          }
-
-          100% {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-
-        .animate-sidebar-enter {
-          animation:
-            sidebar-enter
-            0.4s
-            cubic-bezier(0.22, 0.9, 0.35, 1)
-            both;
-        }
-
       `}</style>
     </nav>
   );
