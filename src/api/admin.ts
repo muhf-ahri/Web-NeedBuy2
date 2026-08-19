@@ -78,6 +78,8 @@ export interface AdminUser {
   updatedAt: string;
   totalOrders: number;
   totalSpent: number;
+  /** User tidak punya status aktif/nonaktif; yang bisa dilaporkan adalah ini. */
+  emailVerified: boolean;
   seller: {
     id: string;
     storeName: string;

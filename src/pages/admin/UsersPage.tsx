@@ -161,8 +161,17 @@ const UsersPage: React.FC = () => {
                           <td className="py-2.5 text-center">{user.totalOrders}</td>
                           <td className="py-2.5 text-center font-semibold">{formatRupiah(user.totalSpent)}</td>
                           <td className="py-2.5 text-center">
-                            <span className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${statusColor.ACTIVE}`}>
-                              {statusLabel.ACTIVE}
+                            {/* Dulu kolom ini selalu menulis "Aktif" karena User
+                                memang tidak punya status. Verifikasi email itu
+                                keadaan yang benar-benar ada dan berguna. */}
+                            <span
+                              className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${
+                                user.emailVerified
+                                  ? 'bg-[#e6f4ee] text-[#12805c]'
+                                  : 'bg-[#fff7e0] text-[#b45309]'
+                              }`}
+                            >
+                              {user.emailVerified ? 'Terverifikasi' : 'Belum verifikasi'}
                             </span>
                           </td>
                           <td className="py-2.5 text-center text-[#737686]">{formatDate(user.createdAt)}</td>
