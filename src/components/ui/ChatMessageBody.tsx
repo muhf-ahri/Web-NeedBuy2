@@ -1,7 +1,12 @@
 import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Icon from './Icon';
-import { ACCEPTED_IMAGE_TYPES, MAX_IMAGE_BYTES, uploadImage } from '../../api/uploads';
+import {
+  ACCEPTED_IMAGE_TYPES,
+  MAX_IMAGE_BYTES,
+  prepareImageForUpload,
+  uploadImage,
+} from '../../api/uploads';
 import type { ChatMessage } from '../../api/messages';
 
 const API_ORIGIN = (import.meta.env.VITE_API_BASE_URL as string | undefined) ?? '';
@@ -89,14 +94,17 @@ export const AttachPhotoButton: React.FC<{
       onError('Formatnya belum didukung. Pakai PNG, JPG, WEBP, atau GIF ya.');
       return;
     }
-    if (file.size > MAX_IMAGE_BYTES) {
-      onError(`Fotonya kegedean. Maksimal ${Math.round(MAX_IMAGE_BYTES / 1024 / 1024)} MB.`);
-      return;
-    }
-
     setBusy(true);
     try {
-      const res = await uploadImage(file);
+      // Dikecilkan dulu, baru diperiksa batasnya: foto kamera HP lazimnya
+      // jauh di atas batas kalau diukur mentah-mentah, padahal setelah
+      // dikecilkan hampir selalu muat.
+      const prepared = await prepareImageForUpload(file);
+      if (prepared.size > MAX_IMAGE_BYTES) {
+        onError(`Fotonya kegedean. Maksimal ${Math.round(MAX_IMAGE_BYTES / 1024 / 1024)} MB.`);
+        return;
+      }
+      const res = await uploadImage(prepared);
       onUploaded(res.data.data.url);
     } catch (err: any) {
       onError(err.message ?? 'Gagal unggah foto, coba lagi ya');

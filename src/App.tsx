@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { getPublicSettings } from './api/admin';
 import ScrollToTop from './components/layout/ScrollToTop';
 import { AuthProvider } from './contexts/AuthContext';
+import NotificationToaster from './components/notifications/NotificationToaster';
 import { CartProvider } from './contexts/CartContext';
 import { WishlistProvider } from './contexts/WishlistContext';
 import Login from './pages/Login';
@@ -83,6 +84,7 @@ function App() {
         <WishlistProvider>
           <BrowserRouter>
           <ScrollToTop/>
+          <NotificationToaster />
             <Routes>
               
               <Route path="/" element={<HomePage />} />

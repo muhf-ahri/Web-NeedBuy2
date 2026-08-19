@@ -21,6 +21,7 @@ const NAV_LINKS = [
   { to: '/plans', label: 'Rencana Belanja' },
   { to: '/needs', label: 'Kebutuhan' },
   { to: '/orders', label: 'Pesanan' },
+  { to: '/messages', label: 'Pesan' },
 ];
 
 const QUICK_ACTIONS: Array<{
@@ -774,6 +775,49 @@ const Navbar: React.FC<NavbarProps> = ({
               aria-label="Wishlist"
             >
               <Icon name="heart" size={17} />
+            </Link>
+
+            {/* ===============================================
+                PESAN (CHAT)
+                Ditaruh di header, bukan cuma di menu sekunder: sebelumnya
+                satu-satunya jalan ke halaman chat dari desktop adalah lewat
+                menu yang tidak kelihatan, dan "Pesanan" gampang tertukar
+                dengan "Pesan".
+            ================================================ */}
+            <Link
+              to="/messages"
+              className={`
+                hidden
+                h-9
+                w-9
+                items-center
+                justify-center
+                rounded-full
+                transition-colors
+                duration-300
+                md:inline-flex
+
+                ${
+                  blueMode
+                    ? `
+                      text-white/90
+                      hover:bg-white/15
+                      hover:text-white
+                    `
+                    : `
+                      text-[#737686]
+                      hover:bg-[#f5f7fb]
+                      hover:text-[#4077a6]
+
+                      group-hover:text-white/90
+                      group-hover:hover:bg-white/15
+                      group-hover:hover:text-white
+                    `
+                }
+              `}
+              aria-label="Pesan"
+            >
+              <Icon name="chat" size={17} />
             </Link>
 
             {/* ===============================================
