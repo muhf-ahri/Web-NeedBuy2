@@ -58,6 +58,12 @@ const NotificationsPage: React.FC = () => {
     loadInitial();
   }, [loadInitial]);
 
+  // Membuka halaman ini berarti notifikasinya sudah dilihat. Tanpa ini lonceng
+  // terus menyala walau isinya sudah dibaca semua.
+  useEffect(() => {
+    readAllNotifications().catch(() => {});
+  }, []);
+
   const loadMore = async () => {
     if (loadingMore || !hasMore) return;
     setLoadingMore(true);

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import Icon from '../ui/Icon';
 import {
@@ -21,14 +21,17 @@ interface ChatsComposerProps {
 const ChatsComposer: React.FC<ChatsComposerProps> = ({
   draft,
   onDraftChange,
+  photoUrl,
+  onPhotoChange,
   onSend,
   sending,
   disabled,
   error,
   onError,
 }) => {
-  const [photoUrl, setPhotoUrl] = useState<string | null>(null);
-
+  // photoUrl dikendalikan induk. Sebelumnya komponen ini menyimpannya di state
+  // lokal dan tidak pernah mengambil props-nya, jadi foto yang dipilih penjual
+  // tampil di pratinjau tapi tidak pernah ikut terkirim — hanya teksnya sampai.
   const handleSend = (e: React.FormEvent) => {
     onSend(e);
   };
@@ -64,14 +67,14 @@ const ChatsComposer: React.FC<ChatsComposerProps> = ({
 
       {photoUrl && (
         <div className="mb-2">
-          <PendingPhoto url={photoUrl} onRemove={() => setPhotoUrl(null)} />
+          <PendingPhoto url={photoUrl} onRemove={() => onPhotoChange(null)} />
         </div>
       )}
 
       <div className="flex items-end gap-2">
         <AttachPhotoButton
           disabled={sending || disabled}
-          onUploaded={setPhotoUrl}
+          onUploaded={onPhotoChange}
           onError={onError}
         />
 

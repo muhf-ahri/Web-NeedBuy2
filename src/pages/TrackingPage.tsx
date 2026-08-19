@@ -5,7 +5,7 @@ import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import Icon, { type IconName } from '../components/ui/Icon';
 import { getAccessToken } from '../api/auth';
-import { notificationSocketUrl } from '../api/notifications';
+import { markReadWhere, notificationSocketUrl } from '../api/notifications';
 import {
   getTracking, STAGE_LABEL,
   type OrderTracking, type TrackingEvent, type TrackingStage,
@@ -139,6 +139,13 @@ const TrackingPage: React.FC = () => {
       setLoading(false);
     }
   }, [id, isAuthed]);
+
+  // Membuka lacak paket berarti update order ini sudah dilihat, jadi
+  // notifikasinya dilunasi — bukan semuanya, hanya yang menyangkut order ini.
+  useEffect(() => {
+    if (!id) return;
+    markReadWhere((n) => n.order?.orderId === id);
+  }, [id]);
 
   useEffect(() => {
     load();

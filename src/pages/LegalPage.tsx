@@ -143,7 +143,7 @@ export const LEGAL_DOCS: Record<string, Doc> = {
       },
       {
         heading: 'Alamat',
-        body: ['NeedBuy Indonesia, Jl. Casablanca Raya Kav. 88, Jakarta Selatan 12870.'],
+        body: ['NeedBuy Indonesia, Jl Rancabolang'],
       },
     ],
   },

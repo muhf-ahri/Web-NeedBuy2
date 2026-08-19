@@ -1,3 +1,4 @@
+import { markReadWhere } from '../../api/notifications';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import SellerLayout from './SellerLayout';
@@ -40,6 +41,11 @@ const ChatsPage: React.FC = () => {
   const [mobileView, setMobileView] = useState<MobileView>('list');
 
   const active = conversations.find((c) => c.id === activeId) ?? null;
+
+  // Membuka halaman pesan berarti notifikasi chatnya sudah dilihat.
+  useEffect(() => {
+    markReadWhere((n) => n.type === 'CHAT');
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => setDebouncedSearch(search.trim()), 300);

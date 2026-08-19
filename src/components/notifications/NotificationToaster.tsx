@@ -23,6 +23,10 @@ const NotificationToaster: React.FC = () => {
   const navigate = useNavigate();
   const [queue, setQueue] = useState<Notification[]>([]);
   const timers = useRef<Record<string, number>>({});
+  // Notifikasi yang sudah pernah tampil tidak boleh tampil lagi. React
+  // StrictMode menjalankan efek dua kali di mode pengembangan, sehingga socket
+  // terbuka dobel dan popup yang sama muncul dua kali.
+  const sudahTampil = useRef<Set<string>>(new Set());
 
   const dismiss = useCallback((id: string) => {
     setQueue((current) => current.filter((n) => n.id !== id));
@@ -36,10 +40,9 @@ const NotificationToaster: React.FC = () => {
   useNotificationSocket((payload) => {
     if (payload.event !== 'notification') return;
     const incoming = payload.data;
-    setQueue((current) => {
-      if (current.some((n) => n.id === incoming.id)) return current;
-      return [incoming, ...current].slice(0, MAX_VISIBLE);
-    });
+    if (sudahTampil.current.has(incoming.id)) return;
+    sudahTampil.current.add(incoming.id);
+    setQueue((current) => [incoming, ...current].slice(0, MAX_VISIBLE));
   });
 
   useEffect(() => {

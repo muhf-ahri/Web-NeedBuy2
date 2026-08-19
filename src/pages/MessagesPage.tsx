@@ -1,3 +1,4 @@
+import { markReadWhere } from '../api/notifications';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import Navbar from '../components/layout/Navbar';
@@ -46,6 +47,11 @@ const MessagesPage: React.FC = () => {
     const res = await getConversations();
     setConversations(res.data.data);
     return res.data.data;
+  }, []);
+
+  // Membuka halaman pesan berarti notifikasi chatnya sudah dilihat.
+  useEffect(() => {
+    markReadWhere((n) => n.type === 'CHAT');
   }, []);
 
   useEffect(() => {
