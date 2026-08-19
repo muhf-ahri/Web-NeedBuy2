@@ -42,8 +42,8 @@ const ChatsConversationItem: React.FC<ChatsConversationItemProps> = ({
 
         <div className="relative shrink-0">
           <Avatar
-            src={conversation.buyer.avatarUrl}
-            name={conversation.buyer.name}
+            src={conversation.counterpart.avatarUrl}
+            name={conversation.counterpart.name}
             className="h-11 w-11 text-[12px]"
           />
           {conversation.unreadCount > 0 && (
@@ -67,7 +67,7 @@ const ChatsConversationItem: React.FC<ChatsConversationItemProps> = ({
                 group-hover:text-[#4077a6]
               "
             >
-              {conversation.buyer.name}
+              {conversation.counterpart.name}
             </span>
             <span className="shrink-0 text-[10px] text-[#A2A8B3]">
               {timeLabel(conversation.lastMessageAt)}

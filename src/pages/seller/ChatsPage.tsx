@@ -56,7 +56,7 @@ const ChatsPage: React.FC = () => {
     if (!debouncedSearch) return conversations;
     const q = debouncedSearch.toLowerCase();
     return conversations.filter((c) => {
-      const name = c.buyer.name?.toLowerCase() ?? '';
+      const name = c.counterpart.name?.toLowerCase() ?? '';
       const preview = c.lastMessage?.body?.toLowerCase() ?? '';
       return name.includes(q) || preview.includes(q);
     });
@@ -68,7 +68,7 @@ const ChatsPage: React.FC = () => {
   );
 
   const loadConversations = useCallback(async () => {
-    const res = await getConversations();
+    const res = await getConversations('seller');
     setConversations(res.data.data);
     return res.data.data;
   }, []);

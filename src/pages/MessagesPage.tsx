@@ -19,8 +19,9 @@ import { getAccessToken } from '../api/auth';
 
 const POLL_MS = 4000;
 
-const storeFaceOf = (conversation: Conversation) =>
-  conversation.seller.logoUrl ?? conversation.seller.user?.avatarUrl ?? null;
+// Wajah lawan bicara sudah ditentukan backend lewat counterpart, jadi tidak
+// perlu lagi memilih sisi sendiri di sini.
+const storeFaceOf = (conversation: Conversation) => conversation.counterpart.avatarUrl;
 
 const timeLabel = (iso: string) =>
   new Date(iso).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
@@ -44,7 +45,7 @@ const MessagesPage: React.FC = () => {
   const active = conversations.find((c) => c.id === activeId) ?? null;
 
   const loadConversations = useCallback(async () => {
-    const res = await getConversations();
+    const res = await getConversations('buyer');
     setConversations(res.data.data);
     return res.data.data;
   }, []);
@@ -210,13 +211,13 @@ const MessagesPage: React.FC = () => {
                       <div className="flex items-center gap-2.5">
                         <Avatar
                           src={storeFaceOf(conversation)}
-                          name={conversation.seller.storeName}
+                          name={conversation.counterpart.name}
                           className="h-9 w-9 text-[11px]"
                         />
                         <div className="min-w-0 flex-1">
                           <div className="flex items-center justify-between gap-2">
                             <span className="text-[13px] font-semibold text-[#101319] truncate">
-                              {conversation.seller.storeName}
+                              {conversation.counterpart.name}
                             </span>
                             {conversation.unreadCount > 0 && (
                               <span className="bg-[#4077a6] text-white text-[10px] font-bold rounded-full min-w-5 h-5 px-1.5 flex items-center justify-center">
@@ -247,12 +248,12 @@ const MessagesPage: React.FC = () => {
                   </button>
                   <Avatar
                     src={storeFaceOf(active)}
-                    name={active.seller.storeName}
+                    name={active.counterpart.name}
                     className="h-9 w-9 text-[11px]"
                   />
                   <div className="min-w-0">
                     <p className="text-[14px] font-bold text-[#101319] truncate">
-                      {active.seller.storeName}
+                      {active.counterpart.name}
                     </p>
                     <p className="text-[11px] text-[#737686]">Penjual</p>
                   </div>

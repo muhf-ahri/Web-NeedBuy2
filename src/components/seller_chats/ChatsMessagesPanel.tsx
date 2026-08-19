@@ -69,14 +69,14 @@ const ChatsMessagesPanel: React.FC<ChatsMessagesPanelProps> = ({
           )}
 
           <Avatar
-            src={conversation.buyer.avatarUrl}
-            name={conversation.buyer.name}
+            src={conversation.counterpart.avatarUrl}
+            name={conversation.counterpart.name}
             className="h-10 w-10 text-[12px]"
           />
 
           <div className="min-w-0 flex-1">
             <p className="truncate text-[14px] font-bold text-[#101319]">
-              {conversation.buyer.name}
+              {conversation.counterpart.name}
             </p>
             <p className="flex items-center gap-1 text-[11px] text-[#12805c]">
               <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#12805c]" />

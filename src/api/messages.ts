@@ -27,12 +27,21 @@ export interface Conversation {
     logoUrl: string | null;
     user: { avatarUrl: string | null };
   };
+  /**
+   * Lawan bicara, ditentukan backend. Jangan lagi memilih sisi sendiri:
+   * satu akun bisa sekaligus jadi pembeli dan pemilik toko, dan menebak
+   * sisinya bikin daftar menampilkan nama sendiri di setiap baris.
+   */
+  viewerRole: 'BUYER' | 'SELLER';
+  counterpart: { name: string; avatarUrl: string | null };
   lastMessage: ChatMessage | null;
   unreadCount: number;
 }
 
-export const getConversations = () =>
-  apiClient.get<ApiResponse<Conversation[]>>('/messages/conversations');
+export const getConversations = (as?: 'buyer' | 'seller') =>
+  apiClient.get<ApiResponse<Conversation[]>>('/messages/conversations', {
+    params: as ? { as } : undefined,
+  });
 
 export const startConversation = (sellerId: string) =>
   apiClient.post<ApiResponse<Conversation>>('/messages/conversations', { sellerId });
