@@ -19,14 +19,14 @@ const NotFoundCard: React.FC = () => {
         
         <section
           className="
-            relative hidden overflow-hidden bg-gradient-to-br from-[#538CDB]
-            via-[#4A7ECB] to-[#3A66AC] px-8 py-10 md:flex md:flex-col
+            relative hidden overflow-hidden bg-gradient-to-br from-[#004ac6]
+            via-[#004ac6] to-[#003ea8] px-8 py-10 md:flex md:flex-col
             md:justify-between
           "
         >
           
           <svg
-            className="pointer-events-none absolute inset-y-0 right-0 h-full w-16 text-[#F5F5FF] md:w-20"
+            className="pointer-events-none absolute inset-y-0 right-0 h-full w-16 text-[#f5f7fb] md:w-20"
             viewBox="0 0 100 400"
             preserveAspectRatio="none"
             fill="none"
@@ -71,23 +71,23 @@ const NotFoundCard: React.FC = () => {
           <div className="mx-auto w-full max-w-sm">
             
             <div className="mb-6 md:hidden">
-              <p className="text-xs font-semibold text-[#538CDB]">NeedBuy</p>
+              <p className="text-xs font-semibold text-[#004ac6]">NeedBuy</p>
             </div>
 
-            <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#FF4646]">
+            <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#ba1a1a]">
               Halaman Hilang
             </p>
 
             <h1
               className="
                 text-[24px] font-bold leading-tight tracking-tight
-                text-[#20242D] sm:text-[26px]
+                text-[#101319] sm:text-[26px]
               "
             >
               WADUH, HALAMANNYA NGGAK KETEMU!
             </h1>
 
-            <p className="mt-2 text-[13px] leading-5 text-[#737A87]">
+            <p className="mt-2 text-[13px] leading-5 text-[#737686]">
               Mungkin alamatnya berubah, atau halamannya udah dipindah ke tempat lain.
             </p>
 
@@ -95,18 +95,18 @@ const NotFoundCard: React.FC = () => {
               <div
                 className="
                   flex items-center justify-center gap-0.5 text-6xl font-black
-                  tracking-tight text-[#20242D] sm:text-7xl
+                  tracking-tight text-[#101319] sm:text-7xl
                 "
               >
                 <span>4</span>
-                <span className="relative text-[#538CDB]">
+                <span className="relative text-[#004ac6]">
                   0
-                  <span className="absolute -bottom-1 left-0 right-0 h-1.5 rounded-full bg-[#538CDB]/50 blur-[2px]" />
+                  <span className="absolute -bottom-1 left-0 right-0 h-1.5 rounded-full bg-[#004ac6]/50 blur-[2px]" />
                 </span>
                 <span>4</span>
               </div>
               <div className="mt-1 text-3xl"></div>
-              <p className="mt-2 text-[11px] text-[#737A87]">
+              <p className="mt-2 text-[11px] text-[#737686]">
                 Tenang, yuk balik ke beranda dulu.
               </p>
             </div>
@@ -116,11 +116,11 @@ const NotFoundCard: React.FC = () => {
                 fullWidth
                 onClick={() => navigate('/')}
                 className="
-                  h-11 rounded-full bg-[#538CDB] px-6 text-sm font-semibold
+                  h-11 rounded-full bg-[#004ac6] px-6 text-sm font-semibold
                   text-white shadow-[0_7px_18px_rgba(83,140,219,0.18)]
-                  transition-all duration-200 hover:bg-[#467BC7]
+                  transition-all duration-200 hover:bg-[#004ac6]
                   hover:shadow-[0_9px_22px_rgba(83,140,219,0.22)]
-                  focus:ring-4 focus:ring-[#538CDB]/15 active:scale-[0.99]
+                  focus:ring-4 focus:ring-[#004ac6]/15 active:scale-[0.99]
                 "
               >
                 <Icon name="arrowLeft" size={16} className="mr-1.5" />
@@ -135,17 +135,17 @@ const NotFoundCard: React.FC = () => {
             onClick={() => navigate(-1)}
             className="
                 flex h-11 w-full items-center justify-center gap-2
-                rounded-full border border-[#D8DEE9] bg-white
-                text-sm font-semibold text-[#2F5AA0]
+                rounded-full border border-[#e0e3e5] bg-white
+                text-sm font-semibold text-[#003ea8]
                 shadow-sm transition-all duration-200
-                hover:border-[#538CDB] hover:bg-[#F5F7FB] hover:text-[#1E4080]
+                hover:border-[#004ac6] hover:bg-[#F5F7FB] hover:text-[#003ea8]
                 active:scale-[0.99]
             "
             >
             Balik ke Halaman Sebelumnya
             </button>
 
-            <p className="mt-5 text-center text-xs text-[#737A87]">
+            <p className="mt-5 text-center text-xs text-[#737686]">
               Cek lagi alamat URL-nya biar nggak nyasar lagi.
             </p>
           </div>

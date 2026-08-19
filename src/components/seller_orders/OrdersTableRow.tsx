@@ -6,12 +6,12 @@ import { formatRupiah } from '../../utils/currency';
 import type { OrderStatus, SellerOrder } from '../../api/orders';
 
 const STATUS_CLASS: Record<OrderStatus, string> = {
-  WAITING_PAYMENT: 'bg-[#F5F7FB] text-[#737A87]',
+  WAITING_PAYMENT: 'bg-[#F5F7FB] text-[#737686]',
   PROCESSING: 'bg-[#FFF7E0] text-[#B45309]',
-  SHIPPED: 'bg-[#EEF5FF] text-[#538CDB]',
-  DELIVERED: 'bg-[#DCFCE7] text-[#166534]',
-  COMPLETED: 'bg-[#F0FDF4] text-[#166534]',
-  CANCELLED: 'bg-[#FFF0F0] text-[#C73535]',
+  SHIPPED: 'bg-[#f5f7fb] text-[#004ac6]',
+  DELIVERED: 'bg-[#e6f4ee] text-[#12805c]',
+  COMPLETED: 'bg-[#e6f4ee] text-[#12805c]',
+  CANCELLED: 'bg-[#FFF0F0] text-[#ba1a1a]',
 };
 
 interface SellerAction {
@@ -41,32 +41,32 @@ const OrdersTableRow: React.FC<OrdersTableRowProps> = ({
   formatDate,
 }) => (
   <>
-    <tr className="group border-b border-[#F5F7FB] transition-colors last:border-0 hover:bg-[#F5F5FF]/60">
+    <tr className="group border-b border-[#F5F7FB] transition-colors last:border-0 hover:bg-[#f5f7fb]/60">
 
       <td className="px-4 py-3.5">
-        <p className="font-mono text-[11px] font-bold text-[#538CDB]">
+        <p className="font-mono text-[11px] font-bold text-[#004ac6]">
           #{order.orderNumber}
         </p>
       </td>
 
       <td className="px-4 py-3.5">
-        <p className="truncate text-[13px] font-semibold text-[#20242D]">
+        <p className="truncate text-[13px] font-semibold text-[#101319]">
           {order.user.name}
         </p>
-        <p className="mt-0.5 truncate text-[11px] text-[#737A87]">
+        <p className="mt-0.5 truncate text-[11px] text-[#737686]">
           {order.user.email}
         </p>
       </td>
 
-      <td className="px-4 py-3.5 whitespace-nowrap text-[12px] text-[#737A87]">
+      <td className="px-4 py-3.5 whitespace-nowrap text-[12px] text-[#737686]">
         {formatDate(order.createdAt)}
       </td>
 
       <td className="px-4 py-3.5 whitespace-nowrap">
-        <p className="text-[13px] font-bold text-[#20242D] tabular-nums">
+        <p className="text-[13px] font-bold text-[#101319] tabular-nums">
           {formatRupiah(Number(order.total))}
         </p>
-        <p className="mt-0.5 text-[10px] text-[#737A87]">
+        <p className="mt-0.5 text-[10px] text-[#737686]">
           {order.totalBarang} barang
         </p>
       </td>
@@ -94,10 +94,10 @@ const OrdersTableRow: React.FC<OrdersTableRowProps> = ({
               onClick={onAdvance}
               disabled={isBusy}
               className="
-                flex items-center gap-1.5 rounded-full bg-[#538CDB] px-3
+                flex items-center gap-1.5 rounded-full bg-[#004ac6] px-3
                 py-1.5 text-[11px] font-semibold text-white
                 shadow-[0_4px_12px_rgba(83,140,219,0.25)] transition-all
-                duration-200 hover:bg-[#467BC7]
+                duration-200 hover:bg-[#004ac6]
                 hover:shadow-[0_6px_16px_rgba(83,140,219,0.30)]
                 active:scale-[0.98] disabled:cursor-not-allowed
                 disabled:bg-[#A2A8B3] disabled:shadow-none
@@ -120,8 +120,8 @@ const OrdersTableRow: React.FC<OrdersTableRowProps> = ({
             onClick={onToggleExpand}
             className="
               flex h-8 w-8 items-center justify-center rounded-lg
-              text-[#737A87] transition-all duration-200
-              hover:bg-[#EEF5FF] hover:text-[#538CDB]
+              text-[#737686] transition-all duration-200
+              hover:bg-[#f5f7fb] hover:text-[#004ac6]
             "
             aria-label={isExpanded ? 'Tutup detail' : 'Lihat detail'}
             title={isExpanded ? 'Tutup detail' : 'Lihat detail'}
@@ -136,7 +136,7 @@ const OrdersTableRow: React.FC<OrdersTableRowProps> = ({
     </tr>
 
     {isExpanded && (
-      <tr className="bg-[#F5F5FF]/50">
+      <tr className="bg-[#f5f7fb]/50">
         <td colSpan={7} className="px-4 py-4 sm:px-6">
           <OrdersExpandedDetail order={order} />
         </td>

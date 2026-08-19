@@ -176,17 +176,17 @@ const WalletPage: React.FC = () => {
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div className="min-w-0">
               <div className="mb-2 flex items-center gap-2">
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-[#538CDB]/10 px-2.5 py-1">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-[#004ac6]/10 px-2.5 py-1">
                   <span className="h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
-                  <p className="text-[9px] font-bold uppercase tracking-[0.20em] text-[#538CDB]">
+                  <p className="text-[9px] font-bold uppercase tracking-[0.20em] text-[#004ac6]">
                     Saldo & Penarikan
                   </p>
                 </span>
               </div>
-              <h1 className="text-[22px] font-extrabold leading-tight tracking-tight text-[#20242D] sm:text-[28px]">
+              <h1 className="text-[22px] font-extrabold leading-tight tracking-tight text-[#101319] sm:text-[28px]">
                 Dompet Penjual
               </h1>
-              <p className="mt-1 max-w-xl text-[12px] leading-relaxed text-[#737A87] sm:text-[13px]">
+              <p className="mt-1 max-w-xl text-[12px] leading-relaxed text-[#737686] sm:text-[13px]">
                 Kelola saldo hasil penjualan toko, isi saldo belanja, atau tarik ke rekening bank.
               </p>
             </div>
@@ -204,24 +204,24 @@ const WalletPage: React.FC = () => {
                 <div
                   className="
                     flex items-center gap-3 rounded-2xl border
-                    border-[#FF4646]/20 bg-[#FFF0F0] px-4 py-3 backdrop-blur-sm
+                    border-[#ba1a1a]/20 bg-[#FFF0F0] px-4 py-3 backdrop-blur-sm
                   "
                 >
                   <span
                     className="
                       flex h-8 w-8 shrink-0 items-center justify-center
-                      rounded-full bg-[#FF4646]/15
+                      rounded-full bg-[#ba1a1a]/15
                     "
                   >
-                    <Icon name="alert" size={15} className="text-[#FF4646]" />
+                    <Icon name="alert" size={15} className="text-[#ba1a1a]" />
                   </span>
-                  <p className="flex-1 text-[13px] font-medium text-[#C73535]">
+                  <p className="flex-1 text-[13px] font-medium text-[#ba1a1a]">
                     {error}
                   </p>
                   <button
                     type="button"
                     onClick={() => setError(null)}
-                    className="shrink-0 text-[#C73535] hover:text-[#20242D]"
+                    className="shrink-0 text-[#ba1a1a] hover:text-[#101319]"
                     aria-label="Tutup"
                   >
                     <Icon name="close" size={14} />
@@ -235,24 +235,24 @@ const WalletPage: React.FC = () => {
                 <div
                   className="
                     flex items-center gap-3 rounded-2xl border
-                    border-[#22C55E]/20 bg-[#F0FDF4] px-4 py-3 backdrop-blur-sm
+                    border-[#12805c]/20 bg-[#e6f4ee] px-4 py-3 backdrop-blur-sm
                   "
                 >
                   <span
                     className="
                       flex h-8 w-8 shrink-0 items-center justify-center
-                      rounded-full bg-[#22C55E]/15
+                      rounded-full bg-[#12805c]/15
                     "
                   >
-                    <Icon name="check" size={15} className="text-[#22C55E]" />
+                    <Icon name="check" size={15} className="text-[#12805c]" />
                   </span>
-                  <p className="flex-1 text-[13px] font-medium text-[#166534]">
+                  <p className="flex-1 text-[13px] font-medium text-[#12805c]">
                     {notice}
                   </p>
                   <button
                     type="button"
                     onClick={() => setNotice(null)}
-                    className="shrink-0 text-[#166534] hover:text-[#20242D]"
+                    className="shrink-0 text-[#12805c] hover:text-[#101319]"
                     aria-label="Tutup"
                   >
                     <Icon name="close" size={14} />

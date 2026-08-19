@@ -18,8 +18,8 @@ const deriveStatus = (coupon: AdminCoupon): VoucherStatus => {
 };
 
 const statusColor: Record<VoucherStatus, string> = {
-  active: 'bg-[#d7f5dc] text-[#156b32]',
-  paused: 'bg-[#fff4e0] text-[#b45309]',
+  active: 'bg-[#e6f4ee] text-[#12805c]',
+  paused: 'bg-[#fff7e0] text-[#b45309]',
   expired: 'bg-[#f2f4f6] text-[#737686]',
 };
 
@@ -83,13 +83,13 @@ const TableVoucher: React.FC<TableVoucherProps> = ({
       {vouchers.map((voucher) => {
         const status = deriveStatus(voucher);
         return (
-          <tr key={voucher.id} className="text-[13px] transition-colors hover:bg-[#f8f9fb]">
+          <tr key={voucher.id} className="text-[13px] transition-colors hover:bg-[#f5f7fb]">
             <td className="py-2.5 pr-2">
               <div className="font-medium text-[#004ac6]">{voucher.code}</div>
               <div className="text-[11px] text-[#737686]">{voucher.title}</div>
             </td>
             <td className="py-2.5 pr-2 text-[#434655]">{typeLabel[voucher.type]}</td>
-            <td className="py-2.5 pr-2 font-semibold text-[#191c1e]">{formatValue(voucher)}</td>
+            <td className="py-2.5 pr-2 font-semibold text-[#101319]">{formatValue(voucher)}</td>
             <td className="py-2.5 pr-2 text-[#434655]">
               {voucher.usedCount.toLocaleString('id-ID')} /{' '}
               {voucher.quota === null ? '∞' : voucher.quota.toLocaleString('id-ID')}
@@ -110,7 +110,7 @@ const TableVoucher: React.FC<TableVoucherProps> = ({
                 disabled={pendingId === voucher.id || status === 'expired'}
                 className={`rounded-full px-3 py-1 text-[12px] font-semibold text-white transition-colors disabled:opacity-50 ${
                   voucher.isActive
-                    ? 'bg-[#ba1a1a] hover:bg-[#9a1515]'
+                    ? 'bg-[#ba1a1a] hover:bg-[#93000a]'
                     : 'bg-[#004ac6] hover:bg-[#003ea8]'
                 }`}
               >

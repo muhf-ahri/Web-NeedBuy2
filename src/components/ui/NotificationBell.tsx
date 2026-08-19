@@ -111,7 +111,7 @@ const NotificationBell: React.FC = () => {
           <span
             className="
               absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center
-              justify-center rounded-full bg-[#FF4646] px-0.5 text-[9px]
+              justify-center rounded-full bg-[#ba1a1a] px-0.5 text-[9px]
               font-bold leading-none text-white ring-2 ring-white
             "
           >
@@ -124,16 +124,16 @@ const NotificationBell: React.FC = () => {
         <div
           className="
             absolute right-0 top-full z-50 mt-2 w-[340px] overflow-hidden
-            rounded-2xl border border-[#E8ECF4] bg-white
+            rounded-2xl border border-[#e0e3e5] bg-white
             shadow-[0_18px_50px_rgba(32,36,45,0.15)] notif-dropdown-in
           "
         >
 
-          <div className="flex items-center justify-between border-b border-[#E8ECF4] px-4 py-3">
+          <div className="flex items-center justify-between border-b border-[#e0e3e5] px-4 py-3">
             <div className="flex items-center gap-2">
-              <span className="text-[13px] font-bold text-[#538CBD]">Notifikasi</span>
+              <span className="text-[13px] font-bold text-[#004ac6]">Notifikasi</span>
               {unreadCount > 0 && (
-                <span className="rounded-full bg-[#FF4646] px-1.5 py-0.5 text-[9px] font-bold text-white">
+                <span className="rounded-full bg-[#ba1a1a] px-1.5 py-0.5 text-[9px] font-bold text-white">
                   {unreadCount}
                 </span>
               )}
@@ -143,7 +143,7 @@ const NotificationBell: React.FC = () => {
               <button
                 type="button"
                 onClick={markAllAsRead}
-                className="text-[11px] font-semibold text-[#538CDB] transition-colors hover:text-[#467BC7]"
+                className="text-[11px] font-semibold text-[#004ac6] transition-colors hover:text-[#004ac6]"
               >
                 Tandai semua dibaca
               </button>
@@ -156,16 +156,16 @@ const NotificationBell: React.FC = () => {
                 <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[#F5F7FB]">
                   <Icon name="bell" size={20} className="text-[#A2A8B3]" />
                 </div>
-                <p className="mt-3 text-[13px] font-semibold text-[#20242D]">
+                <p className="mt-3 text-[13px] font-semibold text-[#101319]">
                   Masuk untuk melihat notifikasi
                 </p>
-                <p className="mt-1 text-[11px] text-[#737A87]">
+                <p className="mt-1 text-[11px] text-[#737686]">
                   Pantau status pesanan dan penawaran spesial langsung di sini.
                 </p>
                 <Link
                   to="/login"
                   onClick={() => setIsOpen(false)}
-                  className="mt-3 inline-block rounded-xl bg-[#538CDB] px-4 py-2 text-[11px] font-semibold text-white transition-opacity hover:opacity-90"
+                  className="mt-3 inline-block rounded-xl bg-[#004ac6] px-4 py-2 text-[11px] font-semibold text-white transition-opacity hover:opacity-90"
                 >
                   Masuk sekarang
                 </Link>
@@ -183,7 +183,7 @@ const NotificationBell: React.FC = () => {
                 ))}
               </div>
             ) : error ? (
-              <div className="px-4 py-8 text-center text-[12px] font-medium text-[#FF4646]">
+              <div className="px-4 py-8 text-center text-[12px] font-medium text-[#ba1a1a]">
                 {error}
               </div>
             ) : notifications.length === 0 ? (
@@ -191,7 +191,7 @@ const NotificationBell: React.FC = () => {
                 <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[#F5F7FB]">
                   <Icon name="bell" size={20} className="text-[#A2A8B3]" />
                 </div>
-                <p className="mt-3 text-[13px] font-semibold text-[#20242D]">
+                <p className="mt-3 text-[13px] font-semibold text-[#101319]">
                   Tidak ada notifikasi
                 </p>
                 <p className="mt-1 text-[11px] text-[#A2A8B3]">
@@ -220,17 +220,17 @@ const NotificationBell: React.FC = () => {
                         <p
                           className={`
                             text-[13px] leading-snug
-                            ${isUnread ? 'font-semibold text-[#20242D]' : 'font-medium text-[#20242D]'}
+                            ${isUnread ? 'font-semibold text-[#101319]' : 'font-medium text-[#101319]'}
                           `}
                         >
                           {notification.title}
                         </p>
                         {isUnread && (
-                          <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-[#538CDB]" />
+                          <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-[#004ac6]" />
                         )}
                       </div>
 
-                      <p className="mt-0.5 line-clamp-2 text-[11px] leading-relaxed text-[#737A87]">
+                      <p className="mt-0.5 line-clamp-2 text-[11px] leading-relaxed text-[#737686]">
                         {notification.message}
                       </p>
 
@@ -254,7 +254,7 @@ const NotificationBell: React.FC = () => {
 
                 const itemClass = `
                   block w-full px-3 py-2.5 text-left transition-colors
-                  ${isUnread ? 'bg-[#F5F5FF] hover:bg-[#EEF5FF]' : 'hover:bg-[#F5F7FB]'}
+                  ${isUnread ? 'bg-[#f5f7fb] hover:bg-[#f5f7fb]' : 'hover:bg-[#F5F7FB]'}
                 `;
 
                 return (
@@ -289,8 +289,8 @@ const NotificationBell: React.FC = () => {
             to="/notifications"
             onClick={() => setIsOpen(false)}
             className="
-              flex items-center justify-between border-t border-[#E8ECF4]
-              px-4 py-2.5 text-[12px] font-semibold text-[#538CDB]
+              flex items-center justify-between border-t border-[#e0e3e5]
+              px-4 py-2.5 text-[12px] font-semibold text-[#004ac6]
               transition-colors hover:bg-[#F5F7FB]
             "
           >

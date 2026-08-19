@@ -311,7 +311,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         ======================================================= */
 
         .sidebar-item-active {
-          color: #538CDB;
+          color: #004ac6;
         }
 
 
@@ -341,7 +341,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
         .sidebar-item-icon {
           background: #F5F7FB;
-          color: #737A87;
+          color: #737686;
         }
 
 
@@ -371,7 +371,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
         .sidebar-item-active
         .sidebar-item-icon {
-          background: #538CDB;
+          background: #004ac6;
           color: #ffffff;
 
           transform: scale(1.05);
@@ -390,7 +390,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         .sidebar-item-active
         .sidebar-item-icon {
           background: #ffffff;
-          color: #538CDB;
+          color: #004ac6;
 
           box-shadow:
             0 4px 12px
@@ -406,7 +406,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         .sidebar-item-active
         .sidebar-item-icon {
           background: #ffffff;
-          color: #538CDB;
+          color: #004ac6;
 
           box-shadow:
             0 4px 12px
@@ -419,7 +419,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         ======================================================= */
 
         .sidebar-item-chevron {
-          color: #538CDB;
+          color: #004ac6;
         }
 
 
@@ -525,7 +525,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
           border-radius: 0 999px 999px 0;
 
-          background: #538CDB;
+          background: #004ac6;
 
           transition:
             background-color 0.5s ease;
@@ -598,11 +598,11 @@ const Sidebar: React.FC<SidebarProps> = ({
               rounded-full
 
               border
-              border-[#E8ECF4]
+              border-[#e0e3e5]
 
               bg-white/95
 
-              text-[#20242D]
+              text-[#101319]
 
               shadow-sm
               backdrop-blur-sm
@@ -610,8 +610,8 @@ const Sidebar: React.FC<SidebarProps> = ({
               transition-all
               duration-200
 
-              hover:border-[#538CDB]
-              hover:text-[#538CDB]
+              hover:border-[#004ac6]
+              hover:text-[#004ac6]
 
               active:scale-[0.95]
             "
@@ -640,7 +640,7 @@ const Sidebar: React.FC<SidebarProps> = ({
               absolute
               inset-0
 
-              bg-[#20242D]/40
+              bg-[#101319]/40
               backdrop-blur-sm
 
               sidebar-backdrop-enter
@@ -665,7 +665,7 @@ const Sidebar: React.FC<SidebarProps> = ({
               max-w-[85vw]
               flex-col
 
-              bg-[#F5F5FF]
+              bg-[#f5f7fb]
 
               shadow-[12px_0_40px_rgba(32,36,45,0.15)]
 
@@ -683,7 +683,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                 justify-between
 
                 border-b
-                border-[#E8ECF4]
+                border-[#e0e3e5]
 
                 bg-white
 
@@ -699,7 +699,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
                   text-[15px]
                   font-bold
-                  text-[#20242D]
+                  text-[#101319]
                 "
               >
                 <span
@@ -711,8 +711,8 @@ const Sidebar: React.FC<SidebarProps> = ({
                     justify-center
                     rounded-lg
 
-                    bg-[#538CDB]/10
-                    text-[#538CDB]
+                    bg-[#004ac6]/10
+                    text-[#004ac6]
                   "
                 >
                   <Icon
@@ -731,13 +731,13 @@ const Sidebar: React.FC<SidebarProps> = ({
                   rounded-full
                   p-1.5
 
-                  text-[#737A87]
+                  text-[#737686]
 
                   transition-colors
                   duration-300
 
                   hover:bg-[#F5F7FB]
-                  hover:text-[#20242D]
+                  hover:text-[#101319]
                 "
                 aria-label="Tutup menu"
               >

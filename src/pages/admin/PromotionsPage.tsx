@@ -61,7 +61,7 @@ const PromotionsPage: React.FC = () => {
     <AdminLayout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-[28px] font-bold text-[#191c1e]">Promosi</h1>
+          <h1 className="text-[28px] font-bold text-[#101319]">Promosi</h1>
           <p className="text-[15px] text-[#737686]">
             Kelola kupon diskon yang bisa dipakai pembeli saat checkout.
           </p>
@@ -85,14 +85,14 @@ const PromotionsPage: React.FC = () => {
         </div>
 
         {error && (
-          <div className="rounded-2xl border border-[#ffcdd2] bg-[#fff5f5] p-4 text-[13px] text-[#a33131]">
+          <div className="rounded-2xl border border-[#ffdad6] bg-[#fff0f0] p-4 text-[13px] text-[#93000a]">
             {error}
           </div>
         )}
 
         <div className="overflow-hidden rounded-2xl border border-[#e0e3e5] bg-white p-5">
           <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+            <table className="stack-table w-full text-sm">
               <thead>
                 <tr className="border-b border-[#f2f4f6] text-[11px] font-semibold uppercase text-[#737686]">
                   <th className="pb-2 pr-2 text-left">Kode / Judul</th>

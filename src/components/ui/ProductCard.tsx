@@ -105,7 +105,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onNavigate }) => {
             size={15}
             className={`
               transition-colors duration-200
-              ${wishlisted ? 'fill-[#FF4646] text-[#FF4646]' : 'text-[#737A87]'}
+              ${wishlisted ? 'fill-[#ba1a1a] text-[#ba1a1a]' : 'text-[#737686]'}
             `}
           />
         </button>
@@ -115,7 +115,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onNavigate }) => {
         <span
           className="
             block truncate text-[11px] font-semibold uppercase
-            tracking-wide text-[#538CDB]
+            tracking-wide text-[#004ac6]
           "
         >
           {product.seller?.storeName ?? 'Toko'}
@@ -124,8 +124,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onNavigate }) => {
         <h3
           className="
             mt-1 line-clamp-2 flex-1 text-[13px] font-semibold
-            leading-snug text-[#20242D] transition-colors duration-200
-            group-hover:text-[#538CDB]
+            leading-snug text-[#101319] transition-colors duration-200
+            group-hover:text-[#004ac6]
           "
         >
           {product.name}
@@ -133,7 +133,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onNavigate }) => {
 
         <div className="mt-1.5 flex items-center gap-1">
         <Icon name="star" size={12} className="shrink-0 text-[#FFD500]" />
-        <span className="text-[11px] font-medium text-[#737A87]">
+        <span className="text-[11px] font-medium text-[#737686]">
             {Number(product.rating ?? 0).toFixed(1)}
         </span>
         <span className="text-[10px] text-[#A2A8B3]">
@@ -150,8 +150,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onNavigate }) => {
             onClick={handleAddToCart}
             className="
               flex h-9 w-9 shrink-0 items-center justify-center
-              rounded-full bg-[#538CDB] text-white shadow-[0_4px_12px_rgba(83,140,219,0.25)]
-              transition-all duration-200 hover:bg-[#467BC7]
+              rounded-full bg-[#004ac6] text-white shadow-[0_4px_12px_rgba(83,140,219,0.25)]
+              transition-all duration-200 hover:bg-[#004ac6]
               hover:shadow-[0_6px_16px_rgba(83,140,219,0.30)]
               active:scale-[0.95]
             "

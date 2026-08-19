@@ -108,7 +108,7 @@ const NotificationsPage: React.FC = () => {
     <AdminLayout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-[28px] font-bold text-[#191c1e]">Notifikasi</h1>
+          <h1 className="text-[28px] font-bold text-[#101319]">Notifikasi</h1>
           <p className="text-[15px] text-[#737686]">
             Pantau alert sistem, update pesanan, dan pembayaran.
           </p>
@@ -151,7 +151,7 @@ const NotificationsPage: React.FC = () => {
         </div>
 
         {error && (
-          <div className="rounded-2xl border border-[#ffcdd2] bg-[#fff5f5] p-4 text-[13px] text-[#a33131]">
+          <div className="rounded-2xl border border-[#ffdad6] bg-[#fff0f0] p-4 text-[13px] text-[#93000a]">
             {error}
           </div>
         )}
@@ -159,7 +159,7 @@ const NotificationsPage: React.FC = () => {
         <div className="grid grid-cols-2 gap-3">
           <div className="rounded-xl border border-[#e0e3e5] bg-white p-3 text-center">
             <p className="text-[11px] font-semibold uppercase text-[#737686]">Total</p>
-            <p className="text-xl font-bold text-[#191c1e]">{notifications.length}</p>
+            <p className="text-xl font-bold text-[#101319]">{notifications.length}</p>
           </div>
           <div className="rounded-xl border border-[#e0e3e5] bg-white p-3 text-center">
             <p className="text-[11px] font-semibold uppercase text-[#737686]">Belum Dibaca</p>

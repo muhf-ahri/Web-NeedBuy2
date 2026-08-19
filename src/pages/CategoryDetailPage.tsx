@@ -28,7 +28,7 @@ const FilterSection: React.FC<{ title: string; children: React.ReactNode }> = ({
   children,
 }) => (
   <div className="border-b border-[#F5F7FB] py-4 last:border-0">
-    <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.14em] text-[#737A87]">
+    <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.14em] text-[#737686]">
       {title}
     </p>
     {children}
@@ -63,17 +63,17 @@ const FilterBody: React.FC<{
   hasActive,
 }) => {
   const inputCls =
-    'w-full rounded-lg border border-[#E8ECF4] bg-[#F5F7FB] pl-7 pr-2 py-2 text-[12px] text-[#20242D] outline-none placeholder:text-[#A2A8B3] transition-all focus:border-[#538CDB] focus:bg-white focus:shadow-[0_3px_10px_rgba(83,140,219,0.10)]';
+    'w-full rounded-lg border border-[#e0e3e5] bg-[#F5F7FB] pl-7 pr-2 py-2 text-[12px] text-[#101319] outline-none placeholder:text-[#A2A8B3] transition-all focus:border-[#004ac6] focus:bg-white focus:shadow-[0_3px_10px_rgba(83,140,219,0.10)]';
 
   return (
     <div>
       <div className="mb-3 flex items-center justify-between">
-        <p className="text-[13px] font-bold text-[#20242D]">Filter</p>
+        <p className="text-[13px] font-bold text-[#101319]">Filter</p>
         {hasActive && (
           <button
             type="button"
             onClick={onClearAll}
-            className="text-[11px] font-semibold text-[#538CDB] hover:underline"
+            className="text-[11px] font-semibold text-[#004ac6] hover:underline"
           >
             Reset
           </button>
@@ -101,8 +101,8 @@ const FilterBody: React.FC<{
                         rounded-full border transition-colors
                         ${
                           active
-                            ? 'border-[#538CDB] bg-[#538CDB]'
-                            : 'border-[#D8DEE9] group-hover:border-[#538CDB]'
+                            ? 'border-[#004ac6] bg-[#004ac6]'
+                            : 'border-[#e0e3e5] group-hover:border-[#004ac6]'
                         }
                       `}
                     >
@@ -115,8 +115,8 @@ const FilterBody: React.FC<{
                         truncate text-[13px] transition-colors
                         ${
                           active
-                            ? 'font-semibold text-[#538CDB]'
-                            : 'text-[#434655] group-hover:text-[#20242D]'
+                            ? 'font-semibold text-[#004ac6]'
+                            : 'text-[#434655] group-hover:text-[#101319]'
                         }
                       `}
                     >
@@ -131,7 +131,7 @@ const FilterBody: React.FC<{
       <FilterSection title="Rentang Harga">
         <div className="flex items-center gap-2">
           <div className="relative flex-1">
-            <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[11px] font-semibold text-[#737A87]">
+            <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[11px] font-semibold text-[#737686]">
               Rp
             </span>
             <input
@@ -145,7 +145,7 @@ const FilterBody: React.FC<{
           </div>
           <span className="text-[11px] font-medium text-[#A2A8B3]">s/d</span>
           <div className="relative flex-1">
-            <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[11px] font-semibold text-[#737A87]">
+            <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[11px] font-semibold text-[#737686]">
               Rp
             </span>
             <input
@@ -174,8 +174,8 @@ const FilterBody: React.FC<{
                   transition-all duration-200 active:scale-[0.97]
                   ${
                     active
-                      ? 'border-[#538CDB] bg-[#538CDB] text-white shadow-[0_4px_12px_rgba(83,140,219,0.25)]'
-                      : 'border-[#E8ECF4] bg-white text-[#434655] hover:border-[#538CDB] hover:text-[#538CDB]'
+                      ? 'border-[#004ac6] bg-[#004ac6] text-white shadow-[0_4px_12px_rgba(83,140,219,0.25)]'
+                      : 'border-[#e0e3e5] bg-white text-[#434655] hover:border-[#004ac6] hover:text-[#004ac6]'
                   }
                 `}
               >
@@ -271,7 +271,7 @@ const CategoryDetailPage: React.FC = () => {
 
   return (
     <div
-      className="min-h-screen flex flex-col bg-[#F5F5FF]"
+      className="min-h-screen flex flex-col bg-[#f5f7fb]"
       style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
     >
       <Navbar />
@@ -288,7 +288,7 @@ const CategoryDetailPage: React.FC = () => {
               [&::-webkit-scrollbar]:w-1.5
               [&::-webkit-scrollbar-track]:bg-transparent
               [&::-webkit-scrollbar-thumb]:rounded-full
-              [&::-webkit-scrollbar-thumb]:bg-[#D8DEE9]
+              [&::-webkit-scrollbar-thumb]:bg-[#e0e3e5]
             "
           >
             <Reveal direction="left" duration={700}>
@@ -324,8 +324,8 @@ const CategoryDetailPage: React.FC = () => {
                   className="
                     mb-2 inline-flex items-center gap-1.5 rounded-full
                     bg-white px-3 py-1.5 text-[12px] font-semibold
-                    text-[#737A87] shadow-sm transition-all duration-200
-                    hover:text-[#538CDB]
+                    text-[#737686] shadow-sm transition-all duration-200
+                    hover:text-[#004ac6]
                     hover:shadow-[0_4px_12px_rgba(83,140,219,0.12)]
                   "
                 >
@@ -335,11 +335,11 @@ const CategoryDetailPage: React.FC = () => {
 
                 {catLoading ? (
                   <div className="mt-2 space-y-2">
-                    <div className="h-7 w-56 animate-pulse rounded-full bg-[#E8ECF4]" />
-                    <div className="h-3 w-80 animate-pulse rounded-full bg-[#E8ECF4]" />
+                    <div className="h-7 w-56 animate-pulse rounded-full bg-[#e0e3e5]" />
+                    <div className="h-3 w-80 animate-pulse rounded-full bg-[#e0e3e5]" />
                   </div>
                 ) : notFound ? (
-                  <h1 className="mt-2 text-[22px] font-bold text-[#FF4646] sm:text-[26px]">
+                  <h1 className="mt-2 text-[22px] font-bold text-[#ba1a1a] sm:text-[26px]">
                     Kategorinya nggak ketemu
                   </h1>
                 ) : (
@@ -348,14 +348,14 @@ const CategoryDetailPage: React.FC = () => {
                       <span
                         className="
                           inline-flex items-center gap-1.5 rounded-full
-                          bg-[#538CDB]/10 px-2.5 py-1
+                          bg-[#004ac6]/10 px-2.5 py-1
                         "
                       >
                         <span className="h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
                         <p
                           className="
                             text-[9px] font-bold uppercase tracking-[0.20em]
-                            text-[#538CDB]
+                            text-[#004ac6]
                           "
                         >
                           Kategori
@@ -365,13 +365,13 @@ const CategoryDetailPage: React.FC = () => {
                     <h1
                       className="
                         mt-2 text-[24px] font-extrabold leading-tight
-                        tracking-tight text-[#20242D] sm:text-[28px]
+                        tracking-tight text-[#101319] sm:text-[28px]
                       "
                     >
                       {pageTitle}
                     </h1>
                     {category?.description && (
-                      <p className="mt-1.5 max-w-2xl text-[13px] text-[#737A87]">
+                      <p className="mt-1.5 max-w-2xl text-[13px] text-[#737686]">
                         {category.description}
                       </p>
                     )}
@@ -388,9 +388,9 @@ const CategoryDetailPage: React.FC = () => {
                     onClick={() => setMobileFilterOpen(true)}
                     className="
                       flex items-center gap-1.5 rounded-full border
-                      border-[#E8ECF4] bg-white px-3.5 py-1.5 text-[13px]
-                      font-semibold text-[#20242D] transition-colors
-                      hover:border-[#538CDB] hover:text-[#538CDB] lg:hidden
+                      border-[#e0e3e5] bg-white px-3.5 py-1.5 text-[13px]
+                      font-semibold text-[#101319] transition-colors
+                      hover:border-[#004ac6] hover:text-[#004ac6] lg:hidden
                     "
                   >
                     <Icon name="filter" size={14} />
@@ -399,7 +399,7 @@ const CategoryDetailPage: React.FC = () => {
                       <span
                         className="
                           flex h-4 min-w-4 items-center justify-center
-                          rounded-full bg-[#538CDB] px-1 text-[9px]
+                          rounded-full bg-[#004ac6] px-1 text-[9px]
                           font-bold text-white
                         "
                       >
@@ -407,7 +407,7 @@ const CategoryDetailPage: React.FC = () => {
                       </span>
                     )}
                   </button>
-                  <p className="truncate text-[12px] text-[#737A87] sm:text-[13px]">
+                  <p className="truncate text-[12px] text-[#737686] sm:text-[13px]">
                     Menampilkan{' '}
                     {productsLoading ? '...' : `${filtered.length} produk`}
                   </p>
@@ -419,9 +419,9 @@ const CategoryDetailPage: React.FC = () => {
                     onChange={(e) => setSortBy(e.target.value)}
                     className="
                       w-full cursor-pointer appearance-none rounded-full
-                      border border-[#E8ECF4] bg-white py-1.5 pl-4 pr-9
-                      text-[13px] font-medium text-[#20242D] outline-none
-                      transition-colors focus:border-[#538CDB] sm:w-auto
+                      border border-[#e0e3e5] bg-white py-1.5 pl-4 pr-9
+                      text-[13px] font-medium text-[#101319] outline-none
+                      transition-colors focus:border-[#004ac6] sm:w-auto
                     "
                   >
                     {SORT_OPTIONS.map((opt) => (
@@ -433,7 +433,7 @@ const CategoryDetailPage: React.FC = () => {
                     size={14}
                     className="
                       pointer-events-none absolute right-3 top-1/2
-                      -translate-y-1/2 text-[#737A87]
+                      -translate-y-1/2 text-[#737686]
                     "
                   />
                 </div>
@@ -511,7 +511,7 @@ const CategoryDetailPage: React.FC = () => {
       {mobileFilterOpen && (
         <div className="fixed inset-0 z-50 lg:hidden">
           <div
-            className="absolute inset-0 bg-[#20242D]/40 backdrop-blur-sm"
+            className="absolute inset-0 bg-[#101319]/40 backdrop-blur-sm"
             onClick={() => setMobileFilterOpen(false)}
           />
           <div
@@ -521,15 +521,15 @@ const CategoryDetailPage: React.FC = () => {
               shadow-[-12px_0_40px_rgba(32,36,45,0.15)]
             "
           >
-            <div className="flex items-center justify-between border-b border-[#E8ECF4] px-5 py-4">
-              <span className="flex items-center gap-2 text-[15px] font-bold text-[#20242D]">
+            <div className="flex items-center justify-between border-b border-[#e0e3e5] px-5 py-4">
+              <span className="flex items-center gap-2 text-[15px] font-bold text-[#101319]">
                 <span
                   className="
                     flex h-6 w-6 items-center justify-center rounded-lg
-                    bg-[#538CDB]/10
+                    bg-[#004ac6]/10
                   "
                 >
-                  <Icon name="filter" size={13} className="text-[#538CDB]" />
+                  <Icon name="filter" size={13} className="text-[#004ac6]" />
                 </span>
                 Filter
               </span>
@@ -537,8 +537,8 @@ const CategoryDetailPage: React.FC = () => {
                 type="button"
                 onClick={() => setMobileFilterOpen(false)}
                 className="
-                  rounded-full p-1.5 text-[#737A87] transition-colors
-                  hover:bg-[#F5F7FB] hover:text-[#20242D]
+                  rounded-full p-1.5 text-[#737686] transition-colors
+                  hover:bg-[#F5F7FB] hover:text-[#101319]
                 "
                 aria-label="Tutup filter"
               >
@@ -566,15 +566,15 @@ const CategoryDetailPage: React.FC = () => {
               />
             </div>
 
-            <div className="border-t border-[#E8ECF4] p-4">
+            <div className="border-t border-[#e0e3e5] p-4">
               <button
                 type="button"
                 onClick={() => setMobileFilterOpen(false)}
                 className="
-                  w-full rounded-full bg-[#538CDB] py-2.5 text-[14px]
+                  w-full rounded-full bg-[#004ac6] py-2.5 text-[14px]
                   font-semibold text-white
                   shadow-[0_7px_18px_rgba(83,140,219,0.25)] transition-all
-                  hover:bg-[#467BC7] active:scale-[0.99]
+                  hover:bg-[#004ac6] active:scale-[0.99]
                 "
               >
                 Terapkan Filter

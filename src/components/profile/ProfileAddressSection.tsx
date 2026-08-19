@@ -25,7 +25,7 @@ const Field: React.FC<FieldProps> = ({
     <label
       className="
         mb-1.5 block text-[10px] font-semibold uppercase tracking-[0.14em]
-        text-[#737A87]
+        text-[#737686]
       "
     >
       {label}
@@ -37,17 +37,17 @@ const Field: React.FC<FieldProps> = ({
       required={required}
       placeholder={placeholder}
       className={`
-        w-full rounded-xl border px-4 py-2.5 text-[13px] text-[#20242D]
+        w-full rounded-xl border px-4 py-2.5 text-[13px] text-[#101319]
         outline-none placeholder:text-[#A2A8B3] transition-all duration-200
         focus:bg-white focus:shadow-[0_4px_16px_rgba(83,140,219,0.10)]
         ${
           error
-            ? 'border-[#FF4646] focus:border-[#FF4646] focus:shadow-[0_4px_16px_rgba(255,70,70,0.10)]'
-            : 'border-[#E8ECF4] bg-[#F5F7FB] focus:border-[#538CDB]'
+            ? 'border-[#ba1a1a] focus:border-[#ba1a1a] focus:shadow-[0_4px_16px_rgba(255,70,70,0.10)]'
+            : 'border-[#e0e3e5] bg-[#F5F7FB] focus:border-[#004ac6]'
         }
       `}
     />
-    {error && <p className="mt-1 text-[11px] text-[#FF4646]">{error}</p>}
+    {error && <p className="mt-1 text-[11px] text-[#ba1a1a]">{error}</p>}
   </div>
 );
 
@@ -104,16 +104,16 @@ const ProfileAddressSection: React.FC<ProfileAddressSectionProps> = ({
             <span
               className="
                 flex h-8 w-8 items-center justify-center rounded-lg
-                bg-[#538CDB]/10
+                bg-[#004ac6]/10
               "
             >
-              <Icon name="pin" size={15} className="text-[#538CDB]" />
+              <Icon name="pin" size={15} className="text-[#004ac6]" />
             </span>
             <div>
-              <h3 className="text-[15px] font-bold text-[#20242D]">
+              <h3 className="text-[15px] font-bold text-[#101319]">
                 Alamat Saya
               </h3>
-              <p className="text-[11px] text-[#737A87]">
+              <p className="text-[11px] text-[#737686]">
                 {addresses.length} alamat tersimpan
               </p>
             </div>
@@ -123,10 +123,10 @@ const ProfileAddressSection: React.FC<ProfileAddressSectionProps> = ({
             type="button"
             onClick={onAdd}
             className="
-              flex h-9 items-center gap-1.5 rounded-full bg-[#538CDB] px-3.5
+              flex h-9 items-center gap-1.5 rounded-full bg-[#004ac6] px-3.5
               text-[11px] font-semibold text-white
               shadow-[0_4px_12px_rgba(83,140,219,0.25)] transition-all
-              duration-200 hover:bg-[#467BC7] active:scale-[0.99]
+              duration-200 hover:bg-[#004ac6] active:scale-[0.99]
             "
           >
             <Icon name="plus" size={12} />
@@ -137,7 +137,7 @@ const ProfileAddressSection: React.FC<ProfileAddressSectionProps> = ({
         {addresses.length === 0 ? (
           <div
             className="
-              rounded-2xl border border-dashed border-[#D8DEE9] bg-[#F5F7FB]/50
+              rounded-2xl border border-dashed border-[#e0e3e5] bg-[#F5F7FB]/50
               py-10 text-center
             "
           >
@@ -149,10 +149,10 @@ const ProfileAddressSection: React.FC<ProfileAddressSectionProps> = ({
             >
               <Icon name="pin" size={18} className="text-[#A2A8B3]" />
             </div>
-            <p className="mt-3 text-[13px] font-semibold text-[#20242D]">
+            <p className="mt-3 text-[13px] font-semibold text-[#101319]">
               Belum ada alamat tersimpan
             </p>
-            <p className="mt-1 text-[11px] text-[#737A87]">
+            <p className="mt-1 text-[11px] text-[#737686]">
               Tambah alamat biar checkout lebih cepat.
             </p>
           </div>
@@ -162,26 +162,26 @@ const ProfileAddressSection: React.FC<ProfileAddressSectionProps> = ({
               <div
                 key={addr.id}
                 className="
-                  group rounded-2xl border border-[#E8ECF4] bg-white p-4
-                  transition-all duration-200 hover:border-[#538CDB]/40
+                  group rounded-2xl border border-[#e0e3e5] bg-white p-4
+                  transition-all duration-200 hover:border-[#004ac6]/40
                   hover:shadow-[0_4px_14px_rgba(83,140,219,0.08)]
                 "
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-2">
-                      <p className="text-[13px] font-semibold text-[#20242D]">
+                      <p className="text-[13px] font-semibold text-[#101319]">
                         {addr.recipientName}
                       </p>
                       {addr.isDefault && (
                         <span
                           className="
                             inline-flex items-center gap-1 rounded-full
-                            bg-[#538CDB]/10 px-2 py-0.5 text-[9px]
-                            font-semibold text-[#538CDB]
+                            bg-[#004ac6]/10 px-2 py-0.5 text-[9px]
+                            font-semibold text-[#004ac6]
                           "
                         >
-                          <span className="h-1 w-1 rounded-full bg-[#538CDB]" />
+                          <span className="h-1 w-1 rounded-full bg-[#004ac6]" />
                           Utama
                         </span>
                       )}
@@ -189,17 +189,17 @@ const ProfileAddressSection: React.FC<ProfileAddressSectionProps> = ({
                         <span
                           className="
                             rounded-full bg-[#F5F7FB] px-2 py-0.5 text-[9px]
-                            font-semibold text-[#737A87]
+                            font-semibold text-[#737686]
                           "
                         >
                           {addr.label}
                         </span>
                       )}
                     </div>
-                    <p className="mt-1 text-[11px] text-[#737A87]">
+                    <p className="mt-1 text-[11px] text-[#737686]">
                       {addr.phone}
                     </p>
-                    <p className="mt-0.5 text-[11px] leading-relaxed text-[#737A87]">
+                    <p className="mt-0.5 text-[11px] leading-relaxed text-[#737686]">
                       {addr.fullAddress}, {addr.city}, {addr.province}{' '}
                       {addr.postalCode}
                     </p>
@@ -211,8 +211,8 @@ const ProfileAddressSection: React.FC<ProfileAddressSectionProps> = ({
                     className="
                       shrink-0 rounded-full border border-transparent p-1.5
                       text-[#A2A8B3] transition-all duration-200
-                      hover:border-[#FF4646]/40 hover:bg-[#FFF0F0]
-                      hover:text-[#FF4646]
+                      hover:border-[#ba1a1a]/40 hover:bg-[#FFF0F0]
+                      hover:text-[#ba1a1a]
                     "
                     aria-label="Hapus alamat"
                   >
@@ -228,7 +228,7 @@ const ProfileAddressSection: React.FC<ProfileAddressSectionProps> = ({
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4">
           <div
-            className="absolute inset-0 bg-[#20242D]/50 backdrop-blur-sm"
+            className="absolute inset-0 bg-[#101319]/50 backdrop-blur-sm"
             onClick={onCloseModal}
           />
 
@@ -240,17 +240,17 @@ const ProfileAddressSection: React.FC<ProfileAddressSectionProps> = ({
               backdrop-blur-sm max-h-[90vh]
             "
           >
-            <div className="flex items-center justify-between border-b border-[#E8ECF4] px-5 py-4">
+            <div className="flex items-center justify-between border-b border-[#e0e3e5] px-5 py-4">
               <div className="flex items-center gap-2.5">
                 <span
                   className="
                     flex h-8 w-8 items-center justify-center rounded-lg
-                    bg-[#538CDB]/10
+                    bg-[#004ac6]/10
                   "
                 >
-                  <Icon name="pin" size={14} className="text-[#538CDB]" />
+                  <Icon name="pin" size={14} className="text-[#004ac6]" />
                 </span>
-                <h3 className="text-[15px] font-bold text-[#20242D]">
+                <h3 className="text-[15px] font-bold text-[#101319]">
                   Alamat Baru
                 </h3>
               </div>
@@ -258,8 +258,8 @@ const ProfileAddressSection: React.FC<ProfileAddressSectionProps> = ({
                 type="button"
                 onClick={onCloseModal}
                 className="
-                  rounded-full p-1.5 text-[#737A87] transition-colors
-                  hover:bg-[#F5F7FB] hover:text-[#20242D]
+                  rounded-full p-1.5 text-[#737686] transition-colors
+                  hover:bg-[#F5F7FB] hover:text-[#101319]
                 "
                 aria-label="Tutup"
               >
@@ -332,16 +332,16 @@ const ProfileAddressSection: React.FC<ProfileAddressSectionProps> = ({
               </div>
             </form>
 
-            <div className="border-t border-[#E8ECF4] bg-white/95 px-5 py-4">
+            <div className="border-t border-[#e0e3e5] bg-white/95 px-5 py-4">
               <button
                 type="button"
                 onClick={(e) => onSubmit(e as any)}
                 disabled={saving}
                 className="
                   flex h-11 w-full items-center justify-center gap-2
-                  rounded-full bg-[#538CDB] px-6 text-[14px] font-semibold
+                  rounded-full bg-[#004ac6] px-6 text-[14px] font-semibold
                   text-white shadow-[0_7px_18px_rgba(83,140,219,0.25)]
-                  transition-all duration-200 hover:bg-[#467BC7]
+                  transition-all duration-200 hover:bg-[#004ac6]
                   hover:shadow-[0_9px_22px_rgba(83,140,219,0.30)]
                   active:scale-[0.99] disabled:cursor-not-allowed
                   disabled:bg-[#A2A8B3] disabled:shadow-none

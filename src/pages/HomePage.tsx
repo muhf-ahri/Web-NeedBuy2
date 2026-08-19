@@ -115,7 +115,7 @@ const HomePage: React.FC = () => {
 
   return (
     <div
-      className="min-h-screen flex flex-col text-[#191c1e]"
+      className="min-h-screen flex flex-col text-[#101319]"
       style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
     >
       <Navbar showSearch={false} />
@@ -156,7 +156,7 @@ const HomePage: React.FC = () => {
                   <p
                     className="
                       mb-1 text-[10px] font-semibold uppercase
-                      tracking-[0.18em] text-[#538CDB]
+                      tracking-[0.18em] text-[#004ac6]
                     "
                   >
                     Pembayaran cepat
@@ -164,7 +164,7 @@ const HomePage: React.FC = () => {
                   <h2
                     className="
                       text-[16px] font-bold leading-tight tracking-tight
-                      text-[#20242D] sm:text-[18px] md:text-[20px]
+                      text-[#101319] sm:text-[18px] md:text-[20px]
                     "
                   >
                     NeedPay, saldo sekali untuk semua
@@ -175,8 +175,8 @@ const HomePage: React.FC = () => {
                   <span
                     className="
                       inline-flex items-center gap-1.5 rounded-full
-                      bg-[#538CDB]/10 px-3.5 py-1.5 text-[11px] font-semibold
-                      text-[#538CDB] transition-colors hover:bg-[#538CDB]/15
+                      bg-[#004ac6]/10 px-3.5 py-1.5 text-[11px] font-semibold
+                      text-[#004ac6] transition-colors hover:bg-[#004ac6]/15
                     "
                   >
                     Kelola saldo
@@ -188,15 +188,15 @@ const HomePage: React.FC = () => {
               <div className="flex flex-col gap-5 lg:flex-row lg:items-center">
                 <NeedPayStrip className="w-full lg:w-[430px] lg:shrink-0" />
 
-                <div className="h-px w-full bg-[#E8ECF4] lg:hidden" />
-                <div className="hidden h-24 w-px bg-[#E8ECF4] lg:block" />
+                <div className="h-px w-full bg-[#e0e3e5] lg:hidden" />
+                <div className="hidden h-24 w-px bg-[#e0e3e5] lg:block" />
 
                 <div className="min-w-0 flex-1">
                   <div className="mb-2.5 flex items-center justify-between">
                     <p
                       className="
                         text-[10px] font-semibold uppercase tracking-[0.18em]
-                        text-[#737A87]
+                        text-[#737686]
                       "
                     >
                       Isi saldo lewat
@@ -219,7 +219,7 @@ const HomePage: React.FC = () => {
                     ))}
                   </div>
 
-                  <p className="mt-3 text-[11px] leading-relaxed text-[#737A87]">
+                  <p className="mt-3 text-[11px] leading-relaxed text-[#737686]">
                     Satu saldo untuk semua transaksi di NeedBuy, checkout
                     tinggal satu ketukan.
                   </p>
@@ -228,8 +228,8 @@ const HomePage: React.FC = () => {
                     <span
                       className="
                         inline-flex items-center gap-1.5 rounded-full
-                        bg-[#538CDB]/10 px-3.5 py-1.5 text-[11px] font-semibold
-                        text-[#538CDB] transition-colors hover:bg-[#538CDB]/15
+                        bg-[#004ac6]/10 px-3.5 py-1.5 text-[11px] font-semibold
+                        text-[#004ac6] transition-colors hover:bg-[#004ac6]/15
                       "
                     >
                       Kelola saldo
@@ -248,15 +248,15 @@ const HomePage: React.FC = () => {
               <div
                 className="
                   flex items-center gap-3 rounded-2xl border
-                  border-[#FF4646]/20 bg-[#FFF0F0] px-4 py-3
-                  text-[13px] text-[#C73535] backdrop-blur-sm
+                  border-[#ba1a1a]/20 bg-[#FFF0F0] px-4 py-3
+                  text-[13px] text-[#ba1a1a] backdrop-blur-sm
                 "
               >
                 <span
                   className="
                     flex h-8 w-8 shrink-0 items-center justify-center
-                    rounded-full bg-[#FF4646]/15 text-sm font-bold
-                    text-[#FF4646]
+                    rounded-full bg-[#ba1a1a]/15 text-sm font-bold
+                    text-[#ba1a1a]
                   "
                 >
                   !
@@ -302,11 +302,11 @@ const HomePage: React.FC = () => {
             <Reveal direction="up">
               <div
                 className="
-                  rounded-[22px] border border-dashed border-[#D8DEE9]
+                  rounded-[22px] border border-dashed border-[#e0e3e5]
                   bg-white/70 py-14 text-center backdrop-blur-sm
                 "
               >
-                <p className="text-[13px] text-[#737A87]">
+                <p className="text-[13px] text-[#737686]">
                   Belum ada kategori yang punya produk.
                 </p>
               </div>
@@ -377,8 +377,8 @@ const HomePage: React.FC = () => {
               <div
                 className="
                   mb-2 hidden items-center justify-between border-b
-                  border-[#E8ECF4] px-3 pb-2 text-[9px] font-bold
-                  uppercase tracking-wider text-[#737A87] sm:flex
+                  border-[#e0e3e5] px-3 pb-2 text-[9px] font-bold
+                  uppercase tracking-wider text-[#737686] sm:flex
                 "
               >
                 <span>Produk</span>
@@ -401,11 +401,11 @@ const HomePage: React.FC = () => {
               ) : cheapest.length === 0 ? (
                 <div
                   className="
-                    rounded-[22px] border border-dashed border-[#D8DEE9]
+                    rounded-[22px] border border-dashed border-[#e0e3e5]
                     bg-white/70 py-14 text-center
                   "
                 >
-                  <p className="text-[13px] text-[#737A87]">
+                  <p className="text-[13px] text-[#737686]">
                     Belum ada produk yang dijual.
                   </p>
                 </div>

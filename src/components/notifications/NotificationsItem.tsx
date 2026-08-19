@@ -64,7 +64,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
               className={`
                 mt-1 leading-snug
                 ${compact ? 'text-[13px]' : 'text-[14px]'}
-                ${isUnread ? 'font-semibold text-[#20242D]' : 'font-medium text-[#20242D]'}
+                ${isUnread ? 'font-semibold text-[#101319]' : 'font-medium text-[#101319]'}
               `}
             >
               {notification.title}
@@ -74,8 +74,8 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
           {!compact && isUnread && (
             <span
               className="
-                mt-2 h-2 w-2 shrink-0 rounded-full bg-[#538CDB]
-                ring-4 ring-[#538CDB]/15
+                mt-2 h-2 w-2 shrink-0 rounded-full bg-[#004ac6]
+                ring-4 ring-[#004ac6]/15
               "
             />
           )}
@@ -83,7 +83,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
 
         <p
           className={`
-            mt-1 leading-relaxed text-[#737A87]
+            mt-1 leading-relaxed text-[#737686]
             ${compact ? 'line-clamp-2 text-[11px]' : 'text-[12px] sm:text-[13px]'}
           `}
         >
@@ -97,22 +97,22 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
               px-2.5 py-1.5 text-[10px]
             "
           >
-            <Icon name="orders" size={11} className="text-[#538CDB]" />
-            <span className="font-mono font-semibold text-[#20242D]">
+            <Icon name="orders" size={11} className="text-[#004ac6]" />
+            <span className="font-mono font-semibold text-[#101319]">
               #{notification.order.orderNumber}
             </span>
             {notification.order.orderType && (
               <>
-                <span className="h-1 w-1 rounded-full bg-[#D8DEE9]" />
-                <span className="text-[#737A87]">
+                <span className="h-1 w-1 rounded-full bg-[#e0e3e5]" />
+                <span className="text-[#737686]">
                   {notification.order.orderType}
                 </span>
               </>
             )}
             {notification.order.items.length > 0 && (
               <>
-                <span className="h-1 w-1 rounded-full bg-[#D8DEE9]" />
-                <span className="truncate text-[#737A87]">
+                <span className="h-1 w-1 rounded-full bg-[#e0e3e5]" />
+                <span className="truncate text-[#737686]">
                   {notification.order.items
                     .slice(0, 2)
                     .map((i) => `${i.productName} x${i.quantity}`)
@@ -138,10 +138,10 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
     ${
       compact
         ? isUnread
-          ? 'bg-[#F5F5FF] hover:bg-[#EEF5FF]'
+          ? 'bg-[#f5f7fb] hover:bg-[#f5f7fb]'
           : 'hover:bg-[#F5F7FB]'
         : isUnread
-          ? 'bg-[#F5F5FF] hover:bg-[#EEF5FF]'
+          ? 'bg-[#f5f7fb] hover:bg-[#f5f7fb]'
           : 'bg-white hover:bg-[#F5F7FB]'
     }
   `;

@@ -14,11 +14,11 @@ const SearchErrorBanner: React.FC<SearchErrorBannerProps> = ({
   const style =
     variant === 'error'
       ? {
-          border: 'border-[#FF4646]/20',
+          border: 'border-[#ba1a1a]/20',
           bg: 'bg-[#FFF0F0]',
-          icon: 'bg-[#FF4646]/15',
-          iconColor: 'text-[#FF4646]',
-          text: 'text-[#C73535]',
+          icon: 'bg-[#ba1a1a]/15',
+          iconColor: 'text-[#ba1a1a]',
+          text: 'text-[#ba1a1a]',
         }
       : {
           border: 'border-[#FFD500]/30',

@@ -14,12 +14,12 @@ export const STATUS_TABS: Array<{ key: TabKey; label: string }> = [
 ];
 
 export const STATUS_STYLE: Record<OrderStatus, string> = {
-  WAITING_PAYMENT: 'bg-[#FFF7E0] text-[#B45309]',
-  PROCESSING: 'bg-[#EEF5FF] text-[#538CDB]',
-  SHIPPED: 'bg-[#DBEAFE] text-[#0369A1]',
-  DELIVERED: 'bg-[#DCFCE7] text-[#166534]',
-  COMPLETED: 'bg-[#F5F5FF] text-[#538CDB]',
-  CANCELLED: 'bg-[#FFF0F0] text-[#C73535]',
+  WAITING_PAYMENT: 'bg-[#fff7e0] text-[#b45309]',
+  PROCESSING: 'bg-[#dbe1ff] text-[#003ea8]',
+  SHIPPED: 'bg-[#f5f7fb] text-[#004ac6]',
+  DELIVERED: 'bg-[#e6f4ee] text-[#12805c]',
+  COMPLETED: 'bg-[#f2f4f6] text-[#434655]',
+  CANCELLED: 'bg-[#fff0f0] text-[#ba1a1a]',
 };
 
 export const STATUS_LABEL: Record<OrderStatus, string> = {
@@ -43,9 +43,9 @@ export const historyLabel = (status: OrderStatus) =>
 
 export const historyStyle = (status: OrderStatus) =>
   status === 'CANCELLED'
-    ? 'bg-[#FFF0F0] text-[#C73535]'
+    ? 'bg-[#FFF0F0] text-[#ba1a1a]'
     : isSettled(status)
-      ? 'bg-[#DCFCE7] text-[#166534]'
+      ? 'bg-[#e6f4ee] text-[#12805c]'
       : 'bg-[#FFF7E0] text-[#B45309]';
 
 export const dateTimeLabel = (iso: string) =>

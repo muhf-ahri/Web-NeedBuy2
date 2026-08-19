@@ -23,13 +23,13 @@ const NeedsEmptyState: React.FC<NeedsEmptyStateProps> = ({ onWrite }) => (
         draggable={false}
         className="absolute inset-0 h-full w-full select-none object-cover"
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#20242D]/55 via-transparent to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#101319]/55 via-transparent to-transparent" />
 
       <div
         className="
           absolute left-4 top-4 inline-flex items-center gap-1.5
           rounded-full bg-white/90 px-3 py-1 text-[10px] font-semibold
-          uppercase tracking-[0.18em] text-[#538CDB] backdrop-blur-sm
+          uppercase tracking-[0.18em] text-[#004ac6] backdrop-blur-sm
         "
       >
         <span className="h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
@@ -48,13 +48,13 @@ const NeedsEmptyState: React.FC<NeedsEmptyStateProps> = ({ onWrite }) => (
         <div className="mx-auto w-full max-w-lg">
           
           <div className="mb-4 md:hidden">
-            <p className="text-xs font-semibold text-[#538CDB]">Kebutuhan</p>
+            <p className="text-xs font-semibold text-[#004ac6]">Kebutuhan</p>
           </div>
 
           <p
             className="
               mb-2 text-[10px] font-semibold uppercase tracking-[0.18em]
-              text-[#538CDB]
+              text-[#004ac6]
             "
           >
             Mulai dari sini
@@ -63,13 +63,13 @@ const NeedsEmptyState: React.FC<NeedsEmptyStateProps> = ({ onWrite }) => (
           <h3
             className="
               text-[22px] font-bold leading-tight tracking-tight
-              text-[#20242D] sm:text-[26px]
+              text-[#101319] sm:text-[26px]
             "
           >
             Belum ada kebutuhan yang ditulis.
           </h3>
 
-          <p className="mt-2 max-w-sm text-[13px] leading-5 text-[#737A87]">
+          <p className="mt-2 max-w-sm text-[13px] leading-5 text-[#737686]">
             Tulis kebutuhanmu dalam kalimat bebas, nanti kami cariin produk
             yang paling pas buat kamu.
           </p>
@@ -78,7 +78,7 @@ const NeedsEmptyState: React.FC<NeedsEmptyStateProps> = ({ onWrite }) => (
             <p
               className="
                 text-[10px] font-semibold uppercase tracking-[0.18em]
-                text-[#737A87]
+                text-[#737686]
               "
             >
               Cara kerjanya
@@ -90,12 +90,12 @@ const NeedsEmptyState: React.FC<NeedsEmptyStateProps> = ({ onWrite }) => (
                   className="
                     flex h-7 w-7 shrink-0 items-center justify-center
                     rounded-full bg-white text-[10px] font-bold
-                    text-[#538CDB] ring-1 ring-[#E8ECF4]
+                    text-[#004ac6] ring-1 ring-[#e0e3e5]
                   "
                 >
                   1
                 </span>
-                <span className="text-[12px] font-medium text-[#20242D]">
+                <span className="text-[12px] font-medium text-[#101319]">
                   Tulis kebutuhanmu pakai kalimat sehari-hari
                 </span>
               </li>
@@ -104,12 +104,12 @@ const NeedsEmptyState: React.FC<NeedsEmptyStateProps> = ({ onWrite }) => (
                   className="
                     flex h-7 w-7 shrink-0 items-center justify-center
                     rounded-full bg-white text-[10px] font-bold
-                    text-[#538CDB] ring-1 ring-[#E8ECF4]
+                    text-[#004ac6] ring-1 ring-[#e0e3e5]
                   "
                 >
                   2
                 </span>
-                <span className="text-[12px] font-medium text-[#20242D]">
+                <span className="text-[12px] font-medium text-[#101319]">
                   AI menganalisis & mencocokkan dengan produk
                 </span>
               </li>
@@ -118,12 +118,12 @@ const NeedsEmptyState: React.FC<NeedsEmptyStateProps> = ({ onWrite }) => (
                   className="
                     flex h-7 w-7 shrink-0 items-center justify-center
                     rounded-full bg-white text-[10px] font-bold
-                    text-[#538CDB] ring-1 ring-[#E8ECF4]
+                    text-[#004ac6] ring-1 ring-[#e0e3e5]
                   "
                 >
                   3
                 </span>
-                <span className="text-[12px] font-medium text-[#20242D]">
+                <span className="text-[12px] font-medium text-[#101319]">
                   Lihat rekomendasi, pilih, dan checkout
                 </span>
               </li>
@@ -135,9 +135,9 @@ const NeedsEmptyState: React.FC<NeedsEmptyStateProps> = ({ onWrite }) => (
             onClick={onWrite}
             className="
               mt-5 inline-flex h-11 w-full items-center justify-center
-              gap-2 rounded-full bg-[#538CDB] px-6 text-sm font-semibold
+              gap-2 rounded-full bg-[#004ac6] px-6 text-sm font-semibold
               text-white shadow-[0_7px_18px_rgba(83,140,219,0.20)]
-              transition-all duration-200 hover:bg-[#467BC7]
+              transition-all duration-200 hover:bg-[#004ac6]
               hover:shadow-[0_9px_22px_rgba(83,140,219,0.25)]
               active:scale-[0.99]
             "
@@ -159,7 +159,7 @@ const NeedsEmptyState: React.FC<NeedsEmptyStateProps> = ({ onWrite }) => (
           "
         />
 
-        <div className="absolute inset-0 bg-gradient-to-t from-[#20242D]/55 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#101319]/55 via-transparent to-transparent" />
 
         <svg
           className="
@@ -185,7 +185,7 @@ const NeedsEmptyState: React.FC<NeedsEmptyStateProps> = ({ onWrite }) => (
           className="
             absolute right-6 top-6 z-10 inline-flex items-center gap-1.5
             rounded-full bg-white/90 px-3 py-1 text-[10px] font-semibold
-            uppercase tracking-[0.18em] text-[#538CDB] backdrop-blur-sm
+            uppercase tracking-[0.18em] text-[#004ac6] backdrop-blur-sm
           "
         >
           <span className="h-1.5 w-1.5 rounded-full bg-[#FFD500]" />

@@ -263,8 +263,8 @@ const CheckoutPage: React.FC = () => {
         <Navbar />
         <main className="flex-1 max-w-2xl mx-auto w-full px-5 sm:px-10 py-12">
           <div className="text-center mb-8">
-            <Icon name="check" size={56} className="text-[#15803d] mx-auto mb-3" />
-            <h1 className="text-[26px] font-bold text-[#191c1e]">Checkout Berhasil!</h1>
+            <Icon name="check" size={56} className="text-[#12805c] mx-auto mb-3" />
+            <h1 className="text-[26px] font-bold text-[#101319]">Checkout Berhasil!</h1>
             <p className="text-[14px] text-[#737686] mt-1">
               {allNeedPay
                 ? `${createdOrders.length} pesanan dibuat dan sudah dibayar pakai saldo NeedPay.`
@@ -285,7 +285,7 @@ const CheckoutPage: React.FC = () => {
               <div key={order.orderId} className="px-5 py-4 border-b border-[#e0e3e5] last:border-0">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-[14px] font-semibold text-[#191c1e]">#{order.orderNumber}</p>
+                    <p className="text-[14px] font-semibold text-[#101319]">#{order.orderNumber}</p>
                     <p className="text-[12px] text-[#737686]">
                       {order.paymentMethod === 'COD'
                         ? 'Bayar saat barang tiba (COD)'
@@ -313,7 +313,7 @@ const CheckoutPage: React.FC = () => {
           <div className="mt-6 flex gap-3">
             <button
               onClick={() => navigate('/orders')}
-              className="flex-1 px-6 py-3 rounded-full border border-[#c3c6d7] text-[14px] font-semibold text-[#191c1e] hover:border-[#004ac6] hover:text-[#004ac6] transition-colors"
+              className="flex-1 px-6 py-3 rounded-full border border-[#c3c6d7] text-[14px] font-semibold text-[#101319] hover:border-[#004ac6] hover:text-[#004ac6] transition-colors"
             >
               {allCod ? 'Lihat Pesanan' : 'Bayar Nanti Aja'}
             </button>
@@ -433,7 +433,7 @@ const CheckoutPage: React.FC = () => {
                 ) : (
                   <>
                     {shipTo && (
-                      <dl className="mb-4 grid grid-cols-1 gap-4 rounded-xl bg-[#f7f9ff] p-4 sm:grid-cols-2">
+                      <dl className="mb-4 grid grid-cols-1 gap-4 rounded-xl bg-[#f5f7fb] p-4 sm:grid-cols-2">
                         <div className="sm:col-span-2">
                           <DataRow label="Alamat lengkap" value={shipTo.fullAddress} />
                         </div>
@@ -535,7 +535,7 @@ const CheckoutPage: React.FC = () => {
                             to={`/products/${line.productSlug}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="group -mx-2 flex items-center justify-between gap-3 rounded-xl px-2 py-1.5 transition-colors hover:bg-[#f7f9ff]"
+                            className="group -mx-2 flex items-center justify-between gap-3 rounded-xl px-2 py-1.5 transition-colors hover:bg-[#f5f7fb]"
                           >
                             <span className="flex min-w-0 items-center gap-3">
                               <img
@@ -573,10 +573,10 @@ const CheckoutPage: React.FC = () => {
               </section>
 
               {preview.stockProblems.length > 0 && (
-                <div className="rounded-2xl border border-[#ffe0b0] bg-[#fff4e0] px-4 py-3">
-                  <p className="text-[13px] font-semibold text-[#7c3e00]">Ada item yang stoknya kurang</p>
+                <div className="rounded-2xl border border-[#fff7e0] bg-[#fff7e0] px-4 py-3">
+                  <p className="text-[13px] font-semibold text-[#b45309]">Ada item yang stoknya kurang</p>
                   {preview.stockProblems.map((sp) => (
-                    <p key={sp.cartItemId} className="mt-0.5 text-[12px] text-[#7c3e00]">
+                    <p key={sp.cartItemId} className="mt-0.5 text-[12px] text-[#b45309]">
                       {sp.productName ?? 'Produk'}: diminta {sp.requested}, tersedia {sp.available}
                     </p>
                   ))}
@@ -586,7 +586,7 @@ const CheckoutPage: React.FC = () => {
 
             <aside className="lg:sticky lg:top-24">
               <div className="overflow-hidden rounded-2xl border border-[#e0e3e5] bg-white">
-                <div className="bg-gradient-to-br from-[#004ac6] to-[#002a7a] p-5 text-white">
+                <div className="bg-gradient-to-br from-[#004ac6] to-[#003ea8] p-5 text-white">
                   <p className="text-[11px] font-semibold uppercase tracking-widest text-white/70">
                     Total bayar
                   </p>
@@ -702,14 +702,14 @@ const CheckoutPage: React.FC = () => {
       {showAddressForm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
           <div className="bg-white rounded-2xl shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
-            <div className="flex items-start justify-between gap-3 border-b border-[#e0e3e5] bg-[#f7f9ff] p-4">
+            <div className="flex items-start justify-between gap-3 border-b border-[#e0e3e5] bg-[#f5f7fb] p-4">
               <div>
                 <h3 className="text-[15px] font-bold text-[#101319]">Alamat & kontak penerima</h3>
                 <p className="mt-0.5 text-[12px] text-[#737686]">Mengisi langkah 1 dan 2 sekaligus.</p>
               </div>
               <button
                 onClick={() => setShowAddressForm(false)}
-                className="text-[#737686] hover:text-[#191c1e] transition-colors"
+                className="text-[#737686] hover:text-[#101319] transition-colors"
               >
                 <Icon name="close" size={20} className="" />
               </button>

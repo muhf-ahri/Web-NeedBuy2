@@ -53,10 +53,10 @@ const TopProductsCard: React.FC<TopProductsCardProps> = ({
           <Icon name="star" size={15} className="text-[#B45309]" />
         </span>
         <div>
-          <h3 className="text-[14px] font-bold text-[#20242D] sm:text-[15px]">
+          <h3 className="text-[14px] font-bold text-[#101319] sm:text-[15px]">
             Produk Paling Laris
           </h3>
-          <p className="text-[10px] text-[#737A87]">Top {products.length} produk</p>
+          <p className="text-[10px] text-[#737686]">Top {products.length} produk</p>
         </div>
       </div>
 
@@ -73,7 +73,7 @@ const TopProductsCard: React.FC<TopProductsCardProps> = ({
           ))}
         </div>
       ) : error ? (
-        <div className="rounded-xl border border-[#FF4646]/20 bg-[#FFF0F0] px-3 py-2 text-[12px] font-medium text-[#C73535]">
+        <div className="rounded-xl border border-[#ba1a1a]/20 bg-[#FFF0F0] px-3 py-2 text-[12px] font-medium text-[#ba1a1a]">
           {error}
         </div>
       ) : products.length === 0 ? (
@@ -82,10 +82,10 @@ const TopProductsCard: React.FC<TopProductsCardProps> = ({
             <Icon name="product" size={16} className="text-[#A2A8B3]" />
           </span>
           <div>
-            <p className="text-[13px] font-semibold text-[#20242D]">
+            <p className="text-[13px] font-semibold text-[#101319]">
               Belum ada penjualan
             </p>
-            <p className="text-[11px] text-[#737A87]">
+            <p className="text-[11px] text-[#737686]">
               Produk laris akan muncul setelah ada transaksi.
             </p>
           </div>
@@ -106,12 +106,12 @@ const TopProductsCard: React.FC<TopProductsCardProps> = ({
                         rounded-full text-[10px] font-extrabold
                         ${
                           index === 0
-                            ? 'bg-gradient-to-br from-[#FFD500] to-[#F59E0B] text-white shadow-[0_2px_6px_rgba(245,158,11,0.40)]'
+                            ? 'bg-gradient-to-br from-[#FFD500] to-[#ffd500] text-white shadow-[0_2px_6px_rgba(245,158,11,0.40)]'
                             : index === 1
-                              ? 'bg-gradient-to-br from-[#D8DEE9] to-[#A2A8B3] text-white'
+                              ? 'bg-gradient-to-br from-[#e0e3e5] to-[#A2A8B3] text-white'
                               : index === 2
                                 ? 'bg-gradient-to-br from-[#E6A87A] to-[#B45309] text-white'
-                                : 'bg-[#F5F7FB] text-[#737A87]'
+                                : 'bg-[#F5F7FB] text-[#737686]'
                         }
                       `}
                     >
@@ -122,25 +122,25 @@ const TopProductsCard: React.FC<TopProductsCardProps> = ({
                       <Link
                         to={`/products/${product.slug}`}
                         className="
-                          truncate text-[12px] font-semibold text-[#20242D]
-                          transition-colors hover:text-[#538CDB]
+                          truncate text-[12px] font-semibold text-[#101319]
+                          transition-colors hover:text-[#004ac6]
                           sm:text-[13px]
                         "
                       >
                         {product.productName}
                       </Link>
                     ) : (
-                      <span className="truncate text-[12px] font-semibold text-[#20242D] sm:text-[13px]">
+                      <span className="truncate text-[12px] font-semibold text-[#101319] sm:text-[13px]">
                         {product.productName}
                       </span>
                     )}
                   </div>
 
                   <div className="shrink-0 text-right">
-                    <p className="text-[12px] font-bold text-[#20242D] tabular-nums sm:text-[13px]">
+                    <p className="text-[12px] font-bold text-[#101319] tabular-nums sm:text-[13px]">
                       {product.quantitySold} terjual
                     </p>
-                    <p className="text-[10px] font-semibold text-[#538CDB] tabular-nums">
+                    <p className="text-[10px] font-semibold text-[#004ac6] tabular-nums">
                       {formatRupiah(Number(product.revenue))}
                     </p>
                   </div>
@@ -148,7 +148,7 @@ const TopProductsCard: React.FC<TopProductsCardProps> = ({
 
                 <div className="h-1.5 w-full overflow-hidden rounded-full bg-[#F5F7FB]">
                   <div
-                    className="h-full rounded-full bg-gradient-to-r from-[#5B93E0] to-[#3A66AC]"
+                    className="h-full rounded-full bg-gradient-to-r from-[#004ac6] to-[#003ea8]"
                     style={{
                       width: mounted ? `${widthPct}%` : '0%',
                       transition: `width 0.9s cubic-bezier(0.22, 0.9, 0.35, 1) ${index * 100}ms`,

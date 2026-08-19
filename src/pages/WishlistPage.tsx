@@ -61,7 +61,7 @@ const WishlistPage: React.FC = () => {
 
   return (
     <div
-      className="min-h-screen flex flex-col bg-[#F5F5FF]"
+      className="min-h-screen flex flex-col bg-[#f5f7fb]"
       style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
     >
       <Navbar />
@@ -72,18 +72,18 @@ const WishlistPage: React.FC = () => {
           <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
             <div className="min-w-0">
               <div className="mb-2 flex items-center gap-2">
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-[#538CDB]/10 px-2.5 py-1">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-[#004ac6]/10 px-2.5 py-1">
                   <span className="h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
-                  <p className="text-[9px] font-bold uppercase tracking-[0.20em] text-[#538CDB]">
+                  <p className="text-[9px] font-bold uppercase tracking-[0.20em] text-[#004ac6]">
                     Produk simpanan
                   </p>
                 </span>
               </div>
 
-              <h1 className="text-[26px] font-extrabold leading-tight tracking-tight text-[#20242D] sm:text-[32px]">
+              <h1 className="text-[26px] font-extrabold leading-tight tracking-tight text-[#101319] sm:text-[32px]">
                 Wishlist
               </h1>
-              <p className="mt-2 max-w-xl text-[13px] leading-relaxed text-[#737A87]">
+              <p className="mt-2 max-w-xl text-[13px] leading-relaxed text-[#737686]">
                 {loading
                   ? 'Muat produk simpananmu...'
                   : `${items.length} produk tersimpan yang siap kamu checkout.`}
@@ -93,7 +93,7 @@ const WishlistPage: React.FC = () => {
             <div
               className="
                 hidden h-12 w-12 items-center justify-center rounded-2xl
-                bg-gradient-to-br from-[#5B93E0] to-[#3A66AC]
+                bg-gradient-to-br from-[#004ac6] to-[#003ea8]
                 shadow-[0_6px_16px_rgba(83,140,219,0.30)] sm:flex
               "
             >
@@ -107,13 +107,13 @@ const WishlistPage: React.FC = () => {
             <div
               className="
                 mb-5 flex items-center gap-3 rounded-2xl border
-                border-[#FF4646]/20 bg-[#FFF0F0] px-4 py-3 backdrop-blur-sm
+                border-[#ba1a1a]/20 bg-[#FFF0F0] px-4 py-3 backdrop-blur-sm
               "
             >
-              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#FF4646]/15">
-                <Icon name="alert" size={15} className="text-[#FF4646]" />
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#ba1a1a]/15">
+                <Icon name="alert" size={15} className="text-[#ba1a1a]" />
               </span>
-              <p className="text-[13px] font-medium text-[#C73535]">{error}</p>
+              <p className="text-[13px] font-medium text-[#ba1a1a]">{error}</p>
             </div>
           </Reveal>
         )}

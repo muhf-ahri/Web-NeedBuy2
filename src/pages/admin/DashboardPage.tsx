@@ -31,12 +31,12 @@ const shortenNumberPlain = (value: number): string => {
 };
 
 const STATUS_STYLE: Record<string, string> = {
-  COMPLETED: 'bg-[#d7f5dc] text-[#156b32]',
-  DELIVERED: 'bg-[#d7f5dc] text-[#156b32]',
-  PROCESSING: 'bg-[#cfe8ff] text-[#0057b8]',
-  SHIPPED: 'bg-[#cfe8ff] text-[#0057b8]',
-  WAITING_PAYMENT: 'bg-[#fff4e0] text-[#b45309]',
-  CANCELLED: 'bg-[#ffe0e0] text-[#a33131]',
+  COMPLETED: 'bg-[#e6f4ee] text-[#12805c]',
+  DELIVERED: 'bg-[#e6f4ee] text-[#12805c]',
+  PROCESSING: 'bg-[#dbe1ff] text-[#004ac6]',
+  SHIPPED: 'bg-[#dbe1ff] text-[#004ac6]',
+  WAITING_PAYMENT: 'bg-[#fff7e0] text-[#b45309]',
+  CANCELLED: 'bg-[#fff0f0] text-[#93000a]',
 };
 
 const STATUS_LABEL: Record<string, string> = {
@@ -81,7 +81,7 @@ const DashboardPage: React.FC = () => {
   if (error || !data) {
     return (
       <AdminLayout>
-        <div className="rounded-2xl border border-[#ffcdd2] bg-[#fff5f5] p-6 text-center text-[#a33131]">
+        <div className="rounded-2xl border border-[#ffdad6] bg-[#fff0f0] p-6 text-center text-[#93000a]">
           {error ?? 'Data dashboard nggak bisa dimuat.'}
         </div>
       </AdminLayout>
@@ -129,7 +129,7 @@ const DashboardPage: React.FC = () => {
     <AdminLayout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-[28px] font-bold text-[#191c1e]">Admin Central</h1>
+          <h1 className="text-[28px] font-bold text-[#101319]">Admin Central</h1>
           <p className="text-[15px] text-[#737686]">Ringkasan marketplace hari ini.</p>
         </div>
 
@@ -142,10 +142,10 @@ const DashboardPage: React.FC = () => {
                     {stat.title}
                   </p>
                   <div className="mt-1">
-                    <p className="text-xl sm:text-2xl font-bold leading-tight text-[#191c1e] truncate hidden sm:block">
+                    <p className="text-xl sm:text-2xl font-bold leading-tight text-[#101319] truncate hidden sm:block">
                       {stat.value}
                     </p>
-                    <p className="text-xl sm:text-2xl font-bold leading-tight text-[#191c1e] truncate block sm:hidden">
+                    <p className="text-xl sm:text-2xl font-bold leading-tight text-[#101319] truncate block sm:hidden">
                       {stat.valueShort}
                     </p>
                   </div>
@@ -163,7 +163,7 @@ const DashboardPage: React.FC = () => {
 
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
           <div className="rounded-2xl border border-[#e0e3e5] bg-white p-5 lg:col-span-2">
-            <h2 className="text-[15px] font-bold text-[#191c1e]">
+            <h2 className="text-[15px] font-bold text-[#101319]">
               Pendapatan Platform 7 Bulan Terakhir
             </h2>
             <p className="text-[12px] text-[#737686]">
@@ -196,7 +196,7 @@ const DashboardPage: React.FC = () => {
           </div>
 
           <div className="rounded-2xl border border-[#e0e3e5] bg-white p-5">
-            <h2 className="text-[15px] font-bold text-[#191c1e]">Kategori Teratas</h2>
+            <h2 className="text-[15px] font-bold text-[#101319]">Kategori Teratas</h2>
             <div className="mt-4 space-y-3">
               {data.topCategories.length === 0 ? (
                 <p className="text-[13px] text-[#737686]">Belum ada penjualan.</p>
@@ -205,7 +205,7 @@ const DashboardPage: React.FC = () => {
                   <div key={cat.name}>
                     <div className="flex items-center justify-between text-[12px] sm:text-[13px]">
                       <span className="truncate text-[#434655] pr-2">{cat.name}</span>
-                      <span className="shrink-0 font-semibold text-[#191c1e]">{cat.percentage}%</span>
+                      <span className="shrink-0 font-semibold text-[#101319]">{cat.percentage}%</span>
                     </div>
                     <div className="mt-0.5 h-1.5 w-full rounded-full bg-[#f2f4f6]">
                       <div className="h-1.5 rounded-full bg-[#004ac6]" style={{ width: `${cat.percentage}%` }} />
@@ -218,7 +218,7 @@ const DashboardPage: React.FC = () => {
         </div>
 
         <div className="rounded-2xl border border-[#e0e3e5] bg-white p-4 sm:p-5 overflow-hidden">
-          <h2 className="text-[15px] font-bold text-[#191c1e]">Order Terbaru</h2>
+          <h2 className="text-[15px] font-bold text-[#101319]">Order Terbaru</h2>
           <div className="mt-3 overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
@@ -272,7 +272,7 @@ const DashboardPage: React.FC = () => {
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
           <div className="rounded-2xl border border-[#e0e3e5] bg-white p-4 sm:p-5">
             <div className="flex items-center justify-between gap-2">
-              <h2 className="text-[15px] font-bold text-[#191c1e] truncate">Pending Approvals</h2>
+              <h2 className="text-[15px] font-bold text-[#101319] truncate">Pending Approvals</h2>
               {data.pendingProducts.total > 0 && (
                 <span className="shrink-0 rounded-full bg-[#ba1a1a] px-2 py-0.5 text-[11px] font-semibold text-white">
                   {data.pendingProducts.total} Baru
@@ -285,7 +285,7 @@ const DashboardPage: React.FC = () => {
               ) : (
                 data.pendingProducts.items.slice(0, 3).map((product) => (
                   <div key={product.id} className="rounded-xl border border-[#e0e3e5] p-3">
-                    <p className="text-[13px] font-semibold text-[#191c1e] truncate">{product.name}</p>
+                    <p className="text-[13px] font-semibold text-[#101319] truncate">{product.name}</p>
                     <p className="text-[12px] text-[#737686] truncate">{product.store}</p>
                   </div>
                 ))
@@ -305,7 +305,7 @@ const DashboardPage: React.FC = () => {
           </div>
 
           <div className="rounded-2xl border border-[#e0e3e5] bg-white p-4 sm:p-5">
-            <h2 className="text-[15px] font-bold text-[#191c1e]">Withdrawal Requests</h2>
+            <h2 className="text-[15px] font-bold text-[#101319]">Withdrawal Requests</h2>
             <div className="mt-3 rounded-xl border border-dashed border-[#c3c6d7] p-4 sm:p-6 text-center">
               <p className="text-[13px] text-[#737686]">
                 Belum ada permintaan penarikan. Fitur penarikan saldo penjual masih dalam

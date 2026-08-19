@@ -16,10 +16,10 @@ interface SettingsFormFieldsProps {
 }
 
 const inputCls =
-  'w-full rounded-xl border border-[#E8ECF4] bg-[#F5F7FB] px-3.5 py-2.5 text-[13px] text-[#20242D] outline-none placeholder:text-[#A2A8B3] transition-all duration-200 focus:border-[#538CDB] focus:bg-white focus:shadow-[0_4px_16px_rgba(83,140,219,0.10)]';
+  'w-full rounded-xl border border-[#e0e3e5] bg-[#F5F7FB] px-3.5 py-2.5 text-[13px] text-[#101319] outline-none placeholder:text-[#A2A8B3] transition-all duration-200 focus:border-[#004ac6] focus:bg-white focus:shadow-[0_4px_16px_rgba(83,140,219,0.10)]';
 
 const labelCls =
-  'mb-1.5 block text-[10px] font-bold uppercase tracking-[0.14em] text-[#737A87]';
+  'mb-1.5 block text-[10px] font-bold uppercase tracking-[0.14em] text-[#737686]';
 
 const Field: React.FC<{
   label: string;
@@ -30,7 +30,7 @@ const Field: React.FC<{
     <label className={labelCls}>{label}</label>
     {children}
     {hint && (
-      <p className="mt-1 text-[10px] leading-relaxed text-[#737A87]">{hint}</p>
+      <p className="mt-1 text-[10px] leading-relaxed text-[#737686]">{hint}</p>
     )}
   </div>
 );

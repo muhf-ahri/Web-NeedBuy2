@@ -44,7 +44,7 @@ const TableCategoryParent: React.FC<TableCategoryParentProps> = ({
   return (
     <div className="overflow-hidden rounded-2xl border border-[#e0e3e5] bg-white p-5">
       <div className="overflow-x-auto">
-        <table className="w-full text-sm">
+        <table className="stack-table w-full text-sm">
           <thead>
             <tr className="border-b border-[#f2f4f6] text-[11px] font-semibold uppercase text-[#737686]">
               <th className="pb-2 pr-2 text-left">Nama Kategori</th>
@@ -65,8 +65,8 @@ const TableCategoryParent: React.FC<TableCategoryParentProps> = ({
               </tr>
             ) : (
               data.map((category) => (
-                <tr key={category.id} className="text-[13px] transition-colors hover:bg-[#f8f9fb]">
-                  <td className="py-2.5 pr-2 font-medium text-[#191c1e]">{category.name}</td>
+                <tr key={category.id} className="text-[13px] transition-colors hover:bg-[#f5f7fb]">
+                  <td className="py-2.5 pr-2 font-medium text-[#101319]">{category.name}</td>
                   <td className="py-2.5 pr-2 text-[#737686]">
                     {category.description || ', '}
                   </td>
@@ -99,7 +99,7 @@ const TableCategoryParent: React.FC<TableCategoryParentProps> = ({
                       </button>
                       <button
                         onClick={() => onDelete(category.id)}
-                        className="rounded-lg p-1.5 text-[#737686] transition-colors hover:bg-[#ffe0e0] hover:text-[#ba1a1a]"
+                        className="rounded-lg p-1.5 text-[#737686] transition-colors hover:bg-[#fff0f0] hover:text-[#ba1a1a]"
                         aria-label="Hapus kategori"
                       >
                         <Icon name="trash" size={16} />

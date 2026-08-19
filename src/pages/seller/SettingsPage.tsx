@@ -186,8 +186,8 @@ const SettingsPage: React.FC = () => {
                 title="Informasi Toko"
                 description="Identitas yang ditampilkan ke pembeli"
                 icon="shop"
-                iconBg="bg-[#EEF5FF]"
-                iconText="text-[#538CDB]"
+                iconBg="bg-[#f5f7fb]"
+                iconText="text-[#004ac6]"
               >
                 <SettingsFormFields form={form} setField={set} />
               </SettingsSection>
@@ -217,8 +217,8 @@ const SettingsPage: React.FC = () => {
                 title="Mode Operasional"
                 description="Kontrol ketersediaan toko untuk pembeli"
                 icon="moon"
-                iconBg="bg-[#F0FDF4]"
-                iconText="text-[#166534]"
+                iconBg="bg-[#e6f4ee]"
+                iconText="text-[#12805c]"
               >
                 <VacationToggle
                   checked={form.vacationMode}

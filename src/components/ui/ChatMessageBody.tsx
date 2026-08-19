@@ -39,7 +39,7 @@ export const ChatMessageBody: React.FC<{ message: ChatMessage; mine: boolean }> 
           className={`mb-1.5 flex w-full items-center gap-2 rounded-xl border px-2.5 py-2 text-left transition-colors ${
             mine
               ? 'border-white/30 bg-white/15 hover:bg-white/25'
-              : 'border-[#dbe1ff] bg-[#f7f9ff] hover:bg-[#dbe1ff]'
+              : 'border-[#dbe1ff] bg-[#f5f7fb] hover:bg-[#dbe1ff]'
           }`}
         >
           <Icon name="orders" size={16} className={mine ? 'text-white' : 'text-[#004ac6]'} />
@@ -132,7 +132,7 @@ export const AttachPhotoButton: React.FC<{
 };
 
 export const PendingPhoto: React.FC<{ url: string; onRemove: () => void }> = ({ url, onRemove }) => (
-  <div className="mb-2 flex items-center gap-2 rounded-xl border border-[#dbe1ff] bg-[#f7f9ff] p-2">
+  <div className="mb-2 flex items-center gap-2 rounded-xl border border-[#dbe1ff] bg-[#f5f7fb] p-2">
     <img src={uploadSrc(url)} alt="" className="h-12 w-12 rounded-lg object-cover" />
     <span className="flex-1 text-[12px] text-[#434655]">Foto siap dikirim</span>
     <button

@@ -10,11 +10,11 @@ interface NotificationItemProps {
 }
 
 const typeColor: Record<NotificationType, string> = {
-  ORDER_NEW: 'border-[#d7f5dc] bg-[#f0faf2]',
-  ORDER_STATUS: 'border-[#cfe8ff] bg-[#f0f7ff]',
-  PAYMENT: 'border-[#fff4e0] bg-[#fffbee]',
-  LOW_STOCK: 'border-[#ffe0e0] bg-[#fff5f5]',
-  REVIEW: 'border-[#efe7fb] bg-[#f8f5ff]',
+  ORDER_NEW: 'border-[#e6f4ee] bg-[#e6f4ee]',
+  ORDER_STATUS: 'border-[#dbe1ff] bg-[#f5f7fb]',
+  PAYMENT: 'border-[#fff7e0] bg-[#fff7e0]',
+  LOW_STOCK: 'border-[#fff0f0] bg-[#fff0f0]',
+  REVIEW: 'border-[#dbe1ff] bg-[#f5f7fb]',
 };
 
 export const typeLabel: Record<NotificationType, string> = {
@@ -44,7 +44,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
   return (
     <div
       className={`rounded-xl border-l-4 p-4 transition-colors ${
-        isUnread ? 'bg-white' : 'bg-[#f8f9fb] opacity-80'
+        isUnread ? 'bg-white' : 'bg-[#f5f7fb] opacity-80'
       } ${typeColor[notification.type]}`}
     >
       <div className="flex items-start justify-between gap-3">
@@ -65,7 +65,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
             </span>
           </div>
 
-          <h3 className="mt-1.5 text-[15px] font-bold text-[#191c1e]">{notification.title}</h3>
+          <h3 className="mt-1.5 text-[15px] font-bold text-[#101319]">{notification.title}</h3>
           <p className="mt-1 text-[13px] leading-relaxed text-[#434655]">{notification.message}</p>
 
           {notification.order && (

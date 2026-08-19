@@ -259,7 +259,7 @@ const ProfilePage: React.FC = () => {
   if (loading) {
     return (
       <div
-        className="min-h-screen flex flex-col bg-[#F5F5FF]"
+        className="min-h-screen flex flex-col bg-[#f5f7fb]"
         style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
       >
         <Navbar />
@@ -288,7 +288,7 @@ const ProfilePage: React.FC = () => {
   if (!profile) {
     return (
       <div
-        className="min-h-screen flex flex-col bg-[#F5F5FF]"
+        className="min-h-screen flex flex-col bg-[#f5f7fb]"
         style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
       >
         <Navbar />
@@ -300,13 +300,13 @@ const ProfilePage: React.FC = () => {
               backdrop-blur-sm
             "
           >
-            <span className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[#FF4646]/15">
-              <Icon name="alert" size={20} className="text-[#FF4646]" />
+            <span className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[#ba1a1a]/15">
+              <Icon name="alert" size={20} className="text-[#ba1a1a]" />
             </span>
-            <h1 className="text-[18px] font-extrabold text-[#20242D]">
+            <h1 className="text-[18px] font-extrabold text-[#101319]">
               Profil kamu nggak bisa dimuat
             </h1>
-            <p className="mt-2 text-[13px] leading-relaxed text-[#737A87]">
+            <p className="mt-2 text-[13px] leading-relaxed text-[#737686]">
               {error ?? 'Ada yang error di jalan. Coba lagi ya.'}
             </p>
             <p className="mt-1 text-[12px] text-[#A2A8B3]">
@@ -316,8 +316,8 @@ const ProfilePage: React.FC = () => {
               type="button"
               onClick={loadData}
               className="
-                mt-5 w-full rounded-2xl bg-[#538CDB] px-4 py-2.5 text-[13px]
-                font-bold text-white transition-colors hover:bg-[#3A66AC]
+                mt-5 w-full rounded-2xl bg-[#004ac6] px-4 py-2.5 text-[13px]
+                font-bold text-white transition-colors hover:bg-[#003ea8]
               "
             >
               Coba lagi
@@ -337,7 +337,7 @@ const ProfilePage: React.FC = () => {
 
   return (
     <div
-      className="min-h-screen flex flex-col bg-[#F5F5FF]"
+      className="min-h-screen flex flex-col bg-[#f5f7fb]"
       style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
     >
       <Navbar />
@@ -346,17 +346,17 @@ const ProfilePage: React.FC = () => {
         <Reveal direction="up">
           <div className="mb-6">
             <div className="mb-2 flex items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-[#538CDB]/10 px-2.5 py-1">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-[#004ac6]/10 px-2.5 py-1">
                 <span className="h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
-                <p className="text-[9px] font-bold uppercase tracking-[0.20em] text-[#538CDB]">
+                <p className="text-[9px] font-bold uppercase tracking-[0.20em] text-[#004ac6]">
                   Akun saya
                 </p>
               </span>
             </div>
-            <h1 className="text-[26px] font-extrabold leading-tight tracking-tight text-[#20242D] sm:text-[32px]">
+            <h1 className="text-[26px] font-extrabold leading-tight tracking-tight text-[#101319] sm:text-[32px]">
               Profil Saya
             </h1>
-            <p className="mt-2 max-w-xl text-[13px] leading-relaxed text-[#737A87]">
+            <p className="mt-2 max-w-xl text-[13px] leading-relaxed text-[#737686]">
               Kelola informasi akun, alamat, dan pengaturan toko di satu
               tempat.
             </p>
@@ -372,13 +372,13 @@ const ProfilePage: React.FC = () => {
             <div
               className="
                 mb-5 flex items-center gap-3 rounded-2xl border
-                border-[#FF4646]/20 bg-[#FFF0F0] px-4 py-3 backdrop-blur-sm
+                border-[#ba1a1a]/20 bg-[#FFF0F0] px-4 py-3 backdrop-blur-sm
               "
             >
-              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#FF4646]/15">
-                <Icon name="alert" size={15} className="text-[#FF4646]" />
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#ba1a1a]/15">
+                <Icon name="alert" size={15} className="text-[#ba1a1a]" />
               </span>
-              <p className="text-[13px] font-medium text-[#C73535]">{error}</p>
+              <p className="text-[13px] font-medium text-[#ba1a1a]">{error}</p>
             </div>
           </Reveal>
         )}
@@ -388,13 +388,13 @@ const ProfilePage: React.FC = () => {
             <div
               className="
                 mb-5 flex items-center gap-3 rounded-2xl border
-                border-[#22C55E]/20 bg-[#F0FDF4] px-4 py-3 backdrop-blur-sm
+                border-[#12805c]/20 bg-[#e6f4ee] px-4 py-3 backdrop-blur-sm
               "
             >
-              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#22C55E]/15">
-                <Icon name="check" size={15} className="text-[#22C55E]" />
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#12805c]/15">
+                <Icon name="check" size={15} className="text-[#12805c]" />
               </span>
-              <p className="text-[13px] font-medium text-[#166534]">
+              <p className="text-[13px] font-medium text-[#12805c]">
                 {savedMessage}
               </p>
             </div>

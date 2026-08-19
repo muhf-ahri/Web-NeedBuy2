@@ -32,7 +32,7 @@ const RevenueChart: React.FC<RevenueChartProps> = ({ data }) => {
           return (
             <div key={point.month} className="flex flex-1 flex-col items-center">
               <div
-                className="w-full rounded-t bg-gradient-to-t from-[#004ac6] to-[#1a5fc7] transition-all duration-300 hover:opacity-80"
+                className="w-full rounded-t bg-gradient-to-t from-[#004ac6] to-[#004ac6] transition-all duration-300 hover:opacity-80"
                 style={{ height: `${height}%`, minHeight: '8px' }}
                 title={point.month}
               />

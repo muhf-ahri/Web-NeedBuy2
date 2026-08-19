@@ -49,14 +49,14 @@ const PlansListView: React.FC<PlansListViewProps> = ({ onSelect }) => {
             <span
               className="
                 inline-flex items-center gap-1.5 rounded-full
-                bg-[#538CDB]/10 px-2.5 py-1
+                bg-[#004ac6]/10 px-2.5 py-1
               "
             >
               <span className="h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
               <p
                 className="
                   text-[9px] font-bold uppercase tracking-[0.20em]
-                  text-[#538CDB]
+                  text-[#004ac6]
                 "
               >
                 Belanja terarah
@@ -67,12 +67,12 @@ const PlansListView: React.FC<PlansListViewProps> = ({ onSelect }) => {
           <h1
             className="
               text-[26px] font-extrabold leading-tight tracking-tight
-              text-[#20242D] sm:text-[32px]
+              text-[#101319] sm:text-[32px]
             "
           >
             Rencana Belanja
           </h1>
-          <p className="mt-2 max-w-xl text-[13px] leading-relaxed text-[#737A87]">
+          <p className="mt-2 max-w-xl text-[13px] leading-relaxed text-[#737686]">
             Kelompokkan belanjaanmu per kategori, misalnya "Kamar" isi kipas dan
             lampu, lalu checkout sekaligus dengan mudah.
           </p>
@@ -124,7 +124,7 @@ const PlansListView: React.FC<PlansListViewProps> = ({ onSelect }) => {
 
 const Shell: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <div
-    className="min-h-screen flex flex-col bg-[#F5F5FF]"
+    className="min-h-screen flex flex-col bg-[#f5f7fb]"
     style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
   >
     <Navbar />
@@ -137,9 +137,9 @@ const Shell: React.FC<{ children: React.ReactNode }> = ({ children }) => (
 
 const HeaderSkeleton: React.FC = () => (
   <div className="space-y-3">
-    <div className="h-5 w-32 animate-pulse rounded-full bg-[#E8ECF4]" />
-    <div className="h-8 w-64 animate-pulse rounded-full bg-[#E8ECF4]" />
-    <div className="h-3 w-96 max-w-full animate-pulse rounded-full bg-[#E8ECF4]" />
+    <div className="h-5 w-32 animate-pulse rounded-full bg-[#e0e3e5]" />
+    <div className="h-8 w-64 animate-pulse rounded-full bg-[#e0e3e5]" />
+    <div className="h-3 w-96 max-w-full animate-pulse rounded-full bg-[#e0e3e5]" />
   </div>
 );
 

@@ -64,9 +64,9 @@ const DashboardPage: React.FC = () => {
           <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between">
             <div className="min-w-0">
               <div className="mb-2 flex items-center gap-2">
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-[#538CDB]/10 px-2.5 py-1">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-[#004ac6]/10 px-2.5 py-1">
                   <span className="h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
-                  <p className="text-[9px] font-bold uppercase tracking-[0.20em] text-[#538CDB]">
+                  <p className="text-[9px] font-bold uppercase tracking-[0.20em] text-[#004ac6]">
                     Seller Dashboard
                   </p>
                 </span>
@@ -74,13 +74,13 @@ const DashboardPage: React.FC = () => {
               <h1
                 className="
                   text-[22px] font-extrabold leading-tight tracking-tight
-                  text-[#20242D] sm:text-[28px]
+                  text-[#101319] sm:text-[28px]
                 "
               >
                 Selamat datang kembali,{' '}
-                <span className="text-[#538CDB]">{user?.name ?? 'Seller'}</span>
+                <span className="text-[#004ac6]">{user?.name ?? 'Seller'}</span>
               </h1>
-              <p className="mt-1 max-w-xl text-[12px] leading-relaxed text-[#737A87] sm:text-[13px]">
+              <p className="mt-1 max-w-xl text-[12px] leading-relaxed text-[#737686] sm:text-[13px]">
                 Pantau performa tokomu {periodLabel} di satu tempat.
               </p>
             </div>
@@ -101,8 +101,8 @@ const DashboardPage: React.FC = () => {
                 <StatCard
                   title="Total Sales"
                   icon="card"
-                  iconBg="bg-[#EEF5FF]"
-                  iconText="text-[#538CDB]"
+                  iconBg="bg-[#f5f7fb]"
+                  iconText="text-[#004ac6]"
                   loading={sales.loading}
                   error={sales.error}
                   value={formatRupiah(sales.data?.value ?? 0)}
@@ -141,8 +141,8 @@ const DashboardPage: React.FC = () => {
                 <StatCard
                   title="Product Views"
                   icon="eye"
-                  iconBg="bg-[#F0FDF4]"
-                  iconText="text-[#166534]"
+                  iconBg="bg-[#e6f4ee]"
+                  iconText="text-[#12805c]"
                   loading={views.loading}
                   error={views.error}
                   value={String(views.data?.value ?? 0)}
@@ -162,7 +162,7 @@ const DashboardPage: React.FC = () => {
                 <span
                   className="
                     pointer-events-none absolute -right-16 -top-16 h-40 w-40
-                    rounded-full border border-[#538CDB]/10
+                    rounded-full border border-[#004ac6]/10
                   "
                 />
                 <span
@@ -174,7 +174,7 @@ const DashboardPage: React.FC = () => {
 
                 <div className="relative mb-5 flex flex-wrap items-baseline justify-between gap-3">
                   <div className="flex items-center gap-2.5">
-                    <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#538CDB]/10">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#004ac6]/10">
                       <svg
                         width={15}
                         height={15}
@@ -184,32 +184,32 @@ const DashboardPage: React.FC = () => {
                         strokeWidth={2.5}
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        className="text-[#538CDB]"
+                        className="text-[#004ac6]"
                       >
                         <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
                       </svg>
                     </span>
                     <div>
-                      <h3 className="text-[14px] font-bold text-[#20242D] sm:text-[15px]">
+                      <h3 className="text-[14px] font-bold text-[#101319] sm:text-[15px]">
                         Performa Penjualan
                       </h3>
-                      <p className="text-[10px] text-[#737A87]">
+                      <p className="text-[10px] text-[#737686]">
                         Grafik pendapatan & barang terjual
                       </p>
                     </div>
                   </div>
 
                   {performance.data && (
-                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-[#737A87]">
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-[#737686]">
                       <span>
-                        <span className="font-bold text-[#20242D]">
+                        <span className="font-bold text-[#101319]">
                           {performance.data.totals.items}
                         </span>{' '}
                         barang
                       </span>
-                      <span className="h-1 w-1 rounded-full bg-[#D8DEE9]" />
+                      <span className="h-1 w-1 rounded-full bg-[#e0e3e5]" />
                       <span>
-                        <span className="font-bold text-[#538CDB]">
+                        <span className="font-bold text-[#004ac6]">
                           {formatRupiah(performance.data.totals.revenue)}
                         </span>{' '}
                         total
@@ -223,8 +223,8 @@ const DashboardPage: React.FC = () => {
                 ) : performance.error ? (
                   <div
                     className="
-                      rounded-xl border border-[#FF4646]/20 bg-[#FFF0F0] px-3
-                      py-2 text-[12px] font-medium text-[#C73535]
+                      rounded-xl border border-[#ba1a1a]/20 bg-[#FFF0F0] px-3
+                      py-2 text-[12px] font-medium text-[#ba1a1a]
                     "
                   >
                     {performance.error}

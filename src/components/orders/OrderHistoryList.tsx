@@ -31,12 +31,12 @@ const OrdersHistoryList: React.FC<OrdersHistoryListProps> = ({
       >
         <table className="w-full min-w-[640px] text-left">
           <thead>
-            <tr className="border-b border-[#E8ECF4] bg-[#F5F7FB]">
+            <tr className="border-b border-[#e0e3e5] bg-[#F5F7FB]">
               <th
                 scope="col"
                 className="
                   px-5 py-3.5 text-[10px] font-bold uppercase
-                  tracking-[0.14em] text-[#737A87]
+                  tracking-[0.14em] text-[#737686]
                 "
               >
                 ID Pesanan
@@ -45,7 +45,7 @@ const OrdersHistoryList: React.FC<OrdersHistoryListProps> = ({
                 scope="col"
                 className="
                   px-5 py-3.5 text-[10px] font-bold uppercase
-                  tracking-[0.14em] text-[#737A87]
+                  tracking-[0.14em] text-[#737686]
                 "
               >
                 Tanggal & Jam
@@ -54,7 +54,7 @@ const OrdersHistoryList: React.FC<OrdersHistoryListProps> = ({
                 scope="col"
                 className="
                   px-5 py-3.5 text-[10px] font-bold uppercase
-                  tracking-[0.14em] text-[#737A87]
+                  tracking-[0.14em] text-[#737686]
                 "
               >
                 Status
@@ -63,7 +63,7 @@ const OrdersHistoryList: React.FC<OrdersHistoryListProps> = ({
                 scope="col"
                 className="
                   px-5 py-3.5 text-right text-[10px] font-bold uppercase
-                  tracking-[0.14em] text-[#737A87]
+                  tracking-[0.14em] text-[#737686]
                 "
               >
                 Total
@@ -87,17 +87,17 @@ const OrdersHistoryList: React.FC<OrdersHistoryListProps> = ({
                       onOpen(order.id);
                     }}
                     className="
-                      font-mono text-[12px] font-bold text-[#538CDB]
+                      font-mono text-[12px] font-bold text-[#004ac6]
                       hover:underline
                     "
                   >
                     #{order.orderNumber}
                   </button>
-                  <p className="mt-0.5 text-[11px] text-[#737A87]">
+                  <p className="mt-0.5 text-[11px] text-[#737686]">
                     {order.seller.storeName}
                   </p>
                 </td>
-                <td className="px-5 py-4 whitespace-nowrap text-[12px] text-[#737A87]">
+                <td className="px-5 py-4 whitespace-nowrap text-[12px] text-[#737686]">
                   {dateTimeLabel(order.createdAt)}
                 </td>
                 <td className="px-5 py-4">
@@ -116,7 +116,7 @@ const OrdersHistoryList: React.FC<OrdersHistoryListProps> = ({
                 </td>
                 <td
                   className="
-                    px-5 py-4 text-right text-[13px] font-bold text-[#20242D]
+                    px-5 py-4 text-right text-[13px] font-bold text-[#101319]
                     whitespace-nowrap
                   "
                 >
@@ -150,13 +150,13 @@ const OrdersHistoryList: React.FC<OrdersHistoryListProps> = ({
                     onOpen(order.id);
                   }}
                   className="
-                    font-mono text-[12px] font-bold text-[#538CDB]
+                    font-mono text-[12px] font-bold text-[#004ac6]
                     hover:underline
                   "
                 >
                   #{order.orderNumber}
                 </button>
-                <p className="mt-0.5 truncate text-[11px] text-[#737A87]">
+                <p className="mt-0.5 truncate text-[11px] text-[#737686]">
                   {order.seller.storeName}
                 </p>
               </div>
@@ -176,7 +176,7 @@ const OrdersHistoryList: React.FC<OrdersHistoryListProps> = ({
               >
                 {historyLabel(order.status)}
               </span>
-              <span className="text-[12px] font-bold text-[#20242D]">
+              <span className="text-[12px] font-bold text-[#101319]">
                 {formatRupiah(order.total)}
               </span>
             </div>

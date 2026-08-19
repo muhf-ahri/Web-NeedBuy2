@@ -33,8 +33,8 @@ const PeriodFilter: React.FC<PeriodFilterProps> = ({ value, onChange }) => (
                 transition-all duration-200 sm:px-4 sm:text-[12px]
                 ${
                 active
-                    ? 'bg-[#538CDB] text-white shadow-[0_4px_12px_rgba(83,140,219,0.30)]'
-                    : 'text-[#737A87] hover:text-[#538CDB]'
+                    ? 'bg-[#004ac6] text-white shadow-[0_4px_12px_rgba(83,140,219,0.30)]'
+                    : 'text-[#737686] hover:text-[#004ac6]'
                 }
             `}
             >
@@ -42,7 +42,7 @@ const PeriodFilter: React.FC<PeriodFilterProps> = ({ value, onChange }) => (
             <span
               className="
                 pointer-events-none absolute -right-0.5 -top-0.5 h-1 w-1
-                rounded-full bg-[#FFD500] ring-2 ring-[#538CDB]
+                rounded-full bg-[#FFD500] ring-2 ring-[#004ac6]
               "
             />
           )}

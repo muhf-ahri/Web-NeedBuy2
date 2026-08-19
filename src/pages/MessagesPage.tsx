@@ -253,7 +253,7 @@ const MessagesPage: React.FC = () => {
                 </header>
               )}
 
-              <div className="flex-1 overflow-y-auto px-4 py-4 space-y-2 bg-[#f8f9fb]">
+              <div className="flex-1 overflow-y-auto px-4 py-4 space-y-2 bg-[#f5f7fb]">
                 {messages.length === 0 ? (
                   <p className="text-center text-[13px] text-[#737686] py-10">
                     Mulai percakapan dengan menanyakan stok, warna, atau estimasi pengiriman.

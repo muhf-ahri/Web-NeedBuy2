@@ -15,15 +15,15 @@ interface ReportTableProps {
 }
 
 const priorityColor: Record<ReportPriority, string> = {
-  HIGH: 'bg-[#ffe0e0] text-[#a33131]',
-  MEDIUM: 'bg-[#fff4e0] text-[#b45309]',
+  HIGH: 'bg-[#fff0f0] text-[#93000a]',
+  MEDIUM: 'bg-[#fff7e0] text-[#b45309]',
   LOW: 'bg-[#f2f4f6] text-[#737686]',
 };
 
 const statusColor: Record<ReportStatus, string> = {
-  OPEN: 'bg-[#ffe0e0] text-[#a33131]',
-  INVESTIGATING: 'bg-[#cfe8ff] text-[#0057b8]',
-  RESOLVED: 'bg-[#d7f5dc] text-[#156b32]',
+  OPEN: 'bg-[#fff0f0] text-[#93000a]',
+  INVESTIGATING: 'bg-[#dbe1ff] text-[#004ac6]',
+  RESOLVED: 'bg-[#e6f4ee] text-[#12805c]',
 };
 
 export const priorityLabel: Record<ReportPriority, string> = {
@@ -94,7 +94,7 @@ const TableReport: React.FC<ReportTableProps> = ({
   return (
     <>
       {reports.map((report) => (
-        <tr key={report.id} className="text-[13px] transition-colors hover:bg-[#f8f9fb]">
+        <tr key={report.id} className="text-[13px] transition-colors hover:bg-[#f5f7fb]">
           
           <td className="py-2.5 pr-2 font-medium text-[#004ac6]">
             #{report.id.slice(0, 8).toUpperCase()}
@@ -106,7 +106,7 @@ const TableReport: React.FC<ReportTableProps> = ({
           </td>
           <td className="py-2.5 pr-2 text-[#737686]">{report.reporter.email}</td>
           <td className="py-2.5 pr-2">
-            <div className="text-[#191c1e]">{report.targetLabel}</div>
+            <div className="text-[#101319]">{report.targetLabel}</div>
             <div className="text-[11px] text-[#737686]">{report.reason}</div>
           </td>
           <td className="py-2.5 pr-2">

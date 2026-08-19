@@ -56,12 +56,12 @@ const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
         <div
           className="
             flex h-8 min-w-0 flex-1 items-center rounded-full border
-            border-[#E8ECF4] bg-[#F5F7FB] transition-all duration-200
-            focus-within:border-[#538CDB] focus-within:bg-white
+            border-[#e0e3e5] bg-[#F5F7FB] transition-all duration-200
+            focus-within:border-[#004ac6] focus-within:bg-white
             focus-within:shadow-[0_3px_10px_rgba(83,140,219,0.10)]
           "
         >
-          <span className="pl-2.5 pr-1 text-[10px] font-bold text-[#737A87]">
+          <span className="pl-2.5 pr-1 text-[10px] font-bold text-[#737686]">
             Rp
           </span>
           <input
@@ -73,7 +73,7 @@ const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
             onChange={(e) => setLocalMin(e.target.value)}
             className="
               min-w-0 flex-1 bg-transparent pr-2.5 text-[11px] font-medium
-              text-[#20242D] outline-none placeholder:text-[#A2A8B3]
+              text-[#101319] outline-none placeholder:text-[#A2A8B3]
               [appearance:textfield]
               [&::-webkit-inner-spin-button]:appearance-none
               [&::-webkit-outer-spin-button]:appearance-none
@@ -86,12 +86,12 @@ const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
         <div
           className="
             flex h-8 min-w-0 flex-1 items-center rounded-full border
-            border-[#E8ECF4] bg-[#F5F7FB] transition-all duration-200
-            focus-within:border-[#538CDB] focus-within:bg-white
+            border-[#e0e3e5] bg-[#F5F7FB] transition-all duration-200
+            focus-within:border-[#004ac6] focus-within:bg-white
             focus-within:shadow-[0_3px_10px_rgba(83,140,219,0.10)]
           "
         >
-          <span className="pl-2.5 pr-1 text-[10px] font-bold text-[#737A87]">
+          <span className="pl-2.5 pr-1 text-[10px] font-bold text-[#737686]">
             Rp
           </span>
           <input
@@ -103,7 +103,7 @@ const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
             onChange={(e) => setLocalMax(e.target.value)}
             className="
               min-w-0 flex-1 bg-transparent pr-2.5 text-[11px] font-medium
-              text-[#20242D] outline-none placeholder:text-[#A2A8B3]
+              text-[#101319] outline-none placeholder:text-[#A2A8B3]
               [appearance:textfield]
               [&::-webkit-inner-spin-button]:appearance-none
               [&::-webkit-outer-spin-button]:appearance-none
@@ -118,7 +118,7 @@ const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
           onClick={handleReset}
           className="
             inline-flex items-center gap-1 text-[10px] font-semibold
-            text-[#737A87] transition-colors hover:text-[#538CDB]
+            text-[#737686] transition-colors hover:text-[#004ac6]
           "
         >
           <Icon name="close" size={10} />

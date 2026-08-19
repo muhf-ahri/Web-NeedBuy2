@@ -56,7 +56,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
         className="
           group flex items-center gap-2 rounded-full p-1 transition-all
           duration-200 hover:bg-[#F5F7FB] focus:outline-none
-          focus-visible:ring-2 focus-visible:ring-[#538CDB]/30
+          focus-visible:ring-2 focus-visible:ring-[#004ac6]/30
         "
         aria-label="Menu profil"
         aria-expanded={isOpen}
@@ -65,9 +65,9 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
         <span
           className={`
             relative flex h-9 w-9 items-center justify-center overflow-hidden
-            rounded-full bg-gradient-to-br from-[#5B93E0] to-[#3A66AC]
+            rounded-full bg-gradient-to-br from-[#004ac6] to-[#003ea8]
             ring-2 transition-all duration-200
-            ${isOpen ? 'ring-[#538CDB]' : 'ring-white group-hover:ring-[#538CDB]/50'}
+            ${isOpen ? 'ring-[#004ac6]' : 'ring-white group-hover:ring-[#004ac6]/50'}
           `}
         >
           {avatarUrl ? (
@@ -80,14 +80,14 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
           <span className="pointer-events-none absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-[#FFD500] ring-2 ring-white" />
         </span>
 
-        <span className="hidden text-[13px] font-semibold text-[#20242D] sm:inline">
+        <span className="hidden text-[13px] font-semibold text-[#101319] sm:inline">
           {sellerName}
         </span>
         <Icon
           name="chevronDown"
           size={14}
           className={`
-            hidden shrink-0 text-[#737A87] transition-transform duration-200
+            hidden shrink-0 text-[#737686] transition-transform duration-200
             sm:block ${isOpen ? 'rotate-180' : ''}
           `}
         />
@@ -104,13 +104,13 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
         >
           <div
             className="
-              relative overflow-hidden border-b border-[#E8ECF4] px-4 py-3.5
+              relative overflow-hidden border-b border-[#e0e3e5] px-4 py-3.5
             "
           >
             <span
               className="
                 pointer-events-none absolute -right-6 -top-6 h-16 w-16
-                rounded-full bg-[#538CDB]/5
+                rounded-full bg-[#004ac6]/5
               "
             />
             <span
@@ -125,7 +125,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
                 className="
                   flex h-10 w-10 shrink-0 items-center justify-center
                   overflow-hidden rounded-full bg-gradient-to-br
-                  from-[#5B93E0] to-[#3A66AC] ring-2 ring-white
+                  from-[#004ac6] to-[#003ea8] ring-2 ring-white
                 "
               >
                 {avatarUrl ? (
@@ -141,7 +141,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
                 )}
               </span>
               <div className="min-w-0 flex-1">
-                <p className="truncate text-[14px] font-bold text-[#20242D]">
+                <p className="truncate text-[14px] font-bold text-[#101319]">
                   {sellerName}
                 </p>
                 <span
@@ -150,15 +150,15 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
                     py-0.5 text-[9px] font-bold uppercase tracking-wider
                     ${
                       isAdmin
-                        ? 'bg-[#FFF0F0] text-[#C73535]'
-                        : 'bg-[#EEF5FF] text-[#538CDB]'
+                        ? 'bg-[#FFF0F0] text-[#ba1a1a]'
+                        : 'bg-[#f5f7fb] text-[#004ac6]'
                     }
                   `}
                 >
                   <span
                     className={`
                       h-1 w-1 rounded-full
-                      ${isAdmin ? 'bg-[#FF4646]' : 'bg-[#538CDB]'}
+                      ${isAdmin ? 'bg-[#ba1a1a]' : 'bg-[#004ac6]'}
                     `}
                   />
                   {isAdmin ? 'Admin' : 'Penjual'}
@@ -176,15 +176,15 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
                   className="
                     group flex items-center gap-3 rounded-xl px-2.5 py-2
                     text-[13px] font-medium text-[#434655] transition-all
-                    duration-200 hover:bg-[#F5F7FB] hover:text-[#538CDB]
+                    duration-200 hover:bg-[#F5F7FB] hover:text-[#004ac6]
                   "
                 >
                   <span
                     className="
                       flex h-7 w-7 shrink-0 items-center justify-center
-                      rounded-lg bg-[#F5F7FB] text-[#737A87] transition-all
-                      duration-200 group-hover:bg-[#538CDB]/10
-                      group-hover:text-[#538CDB]
+                      rounded-lg bg-[#F5F7FB] text-[#737686] transition-all
+                      duration-200 group-hover:bg-[#004ac6]/10
+                      group-hover:text-[#004ac6]
                     "
                   >
                     <Icon name={item.icon as any} size={14} />
@@ -196,7 +196,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
                     className="
                       -translate-x-1 text-[#A2A8B3] opacity-0
                       transition-all duration-200 group-hover:translate-x-0
-                      group-hover:opacity-100 group-hover:text-[#538CDB]
+                      group-hover:opacity-100 group-hover:text-[#004ac6]
                     "
                   />
                 </Link>
@@ -204,21 +204,21 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
             ))}
           </ul>
 
-          <div className="border-t border-[#E8ECF4] p-1.5">
+          <div className="border-t border-[#e0e3e5] p-1.5">
             <button
               type="button"
               onClick={handleLogout}
               className="
                 group flex w-full items-center gap-3 rounded-xl px-2.5 py-2
-                text-[13px] font-semibold text-[#FF4646] transition-all
+                text-[13px] font-semibold text-[#ba1a1a] transition-all
                 duration-200 hover:bg-[#FFF0F0]
               "
             >
               <span
                 className="
                   flex h-7 w-7 shrink-0 items-center justify-center
-                  rounded-lg bg-[#FFF0F0] text-[#FF4646] transition-colors
-                  group-hover:bg-[#FF4646] group-hover:text-white
+                  rounded-lg bg-[#FFF0F0] text-[#ba1a1a] transition-colors
+                  group-hover:bg-[#ba1a1a] group-hover:text-white
                 "
               >
                 <Icon name="logout" size={14} />

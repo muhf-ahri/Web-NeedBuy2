@@ -63,7 +63,7 @@ const AnalyticsPage: React.FC = () => {
                 <span
                   className="
                     pointer-events-none absolute -right-16 -top-16 h-40 w-40
-                    rounded-full border border-[#538CDB]/10
+                    rounded-full border border-[#004ac6]/10
                   "
                 />
                 <span
@@ -74,7 +74,7 @@ const AnalyticsPage: React.FC = () => {
                 />
 
                 <div className="relative mb-4 flex items-center gap-2.5">
-                  <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#538CDB]/10">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#004ac6]/10">
                     <svg
                       width={15}
                       height={15}
@@ -84,7 +84,7 @@ const AnalyticsPage: React.FC = () => {
                       strokeWidth={2.5}
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      className="text-[#538CDB]"
+                      className="text-[#004ac6]"
                     >
                       <line x1="18" y1="20" x2="18" y2="10" />
                       <line x1="12" y1="20" x2="12" y2="4" />
@@ -92,10 +92,10 @@ const AnalyticsPage: React.FC = () => {
                     </svg>
                   </span>
                   <div>
-                    <h3 className="text-[14px] font-bold text-[#20242D] sm:text-[15px]">
+                    <h3 className="text-[14px] font-bold text-[#101319] sm:text-[15px]">
                       Pertumbuhan Omzet
                     </h3>
-                    <p className="text-[10px] text-[#737A87]">
+                    <p className="text-[10px] text-[#737686]">
                       Pendapatan per periode waktu
                     </p>
                   </div>
@@ -104,7 +104,7 @@ const AnalyticsPage: React.FC = () => {
                 {revenue.loading ? (
                   <div className="h-60 animate-pulse rounded-2xl bg-[#F5F7FB] sm:h-64" />
                 ) : revenue.error ? (
-                  <div className="rounded-xl border border-[#FF4646]/20 bg-[#FFF0F0] px-3 py-2 text-[12px] font-medium text-[#C73535]">
+                  <div className="rounded-xl border border-[#ba1a1a]/20 bg-[#FFF0F0] px-3 py-2 text-[12px] font-medium text-[#ba1a1a]">
                     {revenue.error}
                   </div>
                 ) : (

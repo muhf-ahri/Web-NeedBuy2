@@ -20,7 +20,7 @@ const ProfilePasswordForm: React.FC<ProfilePasswordFormProps> = ({
   saving,
 }) => {
   const inputCls =
-    'w-full rounded-xl border border-[#E8ECF4] bg-[#F5F7FB] px-4 py-2.5 text-[13px] text-[#20242D] outline-none placeholder:text-[#A2A8B3] transition-all duration-200 focus:border-[#538CDB] focus:bg-white focus:shadow-[0_4px_16px_rgba(83,140,219,0.10)]';
+    'w-full rounded-xl border border-[#e0e3e5] bg-[#F5F7FB] px-4 py-2.5 text-[13px] text-[#101319] outline-none placeholder:text-[#A2A8B3] transition-all duration-200 focus:border-[#004ac6] focus:bg-white focus:shadow-[0_4px_16px_rgba(83,140,219,0.10)]';
 
   return (
     <div
@@ -34,16 +34,16 @@ const ProfilePasswordForm: React.FC<ProfilePasswordFormProps> = ({
         <span
           className="
             flex h-8 w-8 items-center justify-center rounded-lg
-            bg-[#538CDB]/10
+            bg-[#004ac6]/10
           "
         >
-          <Icon name="lock" size={15} className="text-[#538CDB]" />
+          <Icon name="lock" size={15} className="text-[#004ac6]" />
         </span>
         <div>
-          <h3 className="text-[15px] font-bold text-[#20242D]">
+          <h3 className="text-[15px] font-bold text-[#101319]">
             Ganti Password
           </h3>
-          <p className="text-[11px] text-[#737A87]">
+          <p className="text-[11px] text-[#737686]">
             Minimal 8 karakter untuk keamanan akun
           </p>
         </div>
@@ -55,7 +55,7 @@ const ProfilePasswordForm: React.FC<ProfilePasswordFormProps> = ({
             htmlFor="pw-current"
             className="
               mb-1.5 block text-[10px] font-semibold uppercase
-              tracking-[0.14em] text-[#737A87]
+              tracking-[0.14em] text-[#737686]
             "
           >
             Password Saat Ini
@@ -73,7 +73,7 @@ const ProfilePasswordForm: React.FC<ProfilePasswordFormProps> = ({
             htmlFor="pw-new"
             className="
               mb-1.5 block text-[10px] font-semibold uppercase
-              tracking-[0.14em] text-[#737A87]
+              tracking-[0.14em] text-[#737686]
             "
           >
             Password Baru
@@ -93,9 +93,9 @@ const ProfilePasswordForm: React.FC<ProfilePasswordFormProps> = ({
         onClick={onSubmit}
         disabled={saving || !currentPassword || !newPassword}
         className="
-          mt-5 inline-flex h-11 items-center gap-2 rounded-full bg-[#20242D]
+          mt-5 inline-flex h-11 items-center gap-2 rounded-full bg-[#101319]
           px-5 text-[13px] font-semibold text-white shadow-[0_6px_16px_rgba(32,36,45,0.15)]
-          transition-all duration-200 hover:bg-[#538CDB]
+          transition-all duration-200 hover:bg-[#004ac6]
           hover:shadow-[0_8px_20px_rgba(83,140,219,0.30)] active:scale-[0.99]
           disabled:cursor-not-allowed disabled:bg-[#A2A8B3]
           disabled:shadow-none

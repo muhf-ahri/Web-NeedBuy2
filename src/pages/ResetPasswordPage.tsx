@@ -60,7 +60,7 @@ const ResetPasswordPage: React.FC = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#f8f9fb] p-4">
+    <div className="flex min-h-screen items-center justify-center bg-[#f5f7fb] p-4">
       <div className="w-full max-w-md rounded-2xl border border-[#e0e3e5] bg-white p-8">
         {valid === null ? (
           <div className="space-y-3">
@@ -70,8 +70,8 @@ const ResetPasswordPage: React.FC = () => {
           </div>
         ) : done ? (
           <div className="text-center">
-            <Icon name="check" size={36} className="mx-auto text-[#156b32]" />
-            <h1 className="mt-4 text-[20px] font-bold text-[#191c1e]">Password udah diganti</h1>
+            <Icon name="check" size={36} className="mx-auto text-[#12805c]" />
+            <h1 className="mt-4 text-[20px] font-bold text-[#101319]">Password udah diganti</h1>
             <p className="mt-2 text-[14px] leading-relaxed text-[#737686]">
               Semua perangkat yang tadinya masih login udah dikeluarkan. Masuk lagi pakai
               password barumu ya.
@@ -87,7 +87,7 @@ const ResetPasswordPage: React.FC = () => {
         ) : !valid ? (
           <div className="text-center">
             <Icon name="alert" size={36} className="mx-auto text-[#ba1a1a]" />
-            <h1 className="mt-4 text-[20px] font-bold text-[#191c1e]">Tautannya udah nggak berlaku</h1>
+            <h1 className="mt-4 text-[20px] font-bold text-[#101319]">Tautannya udah nggak berlaku</h1>
             <p className="mt-2 text-[14px] leading-relaxed text-[#737686]">
               Tautan reset cuma bertahan 1 jam dan sekali pakai. Minta yang baru aja ya.
             </p>
@@ -99,14 +99,14 @@ const ResetPasswordPage: React.FC = () => {
           </div>
         ) : (
           <>
-            <h1 className="text-[22px] font-bold text-[#191c1e]">Bikin password baru</h1>
+            <h1 className="text-[22px] font-bold text-[#101319]">Bikin password baru</h1>
             <p className="mt-1.5 text-[14px] text-[#737686]">
               Minimal 8 karakter. Setelah diganti, semua perangkat bakal dikeluarkan.
             </p>
 
             <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
               {error && (
-                <div className="rounded-lg border border-[#ffbcbc] bg-[#ffe0e0] p-2.5 text-xs text-[#a33131]">
+                <div className="rounded-lg border border-[#ffdad6] bg-[#fff0f0] p-2.5 text-xs text-[#93000a]">
                   {error}
                 </div>
               )}

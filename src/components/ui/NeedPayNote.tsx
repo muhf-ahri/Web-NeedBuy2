@@ -54,10 +54,10 @@ const BrandPanel: React.FC<{ footer?: string; image?: string }> = ({
         "
       />
     ) : (
-      <div className="absolute inset-0 bg-gradient-to-br from-[#538CDB] via-[#4A7ECB] to-[#3A66AC]" />
+      <div className="absolute inset-0 bg-gradient-to-br from-[#004ac6] via-[#004ac6] to-[#003ea8]" />
     )}
 
-    <div className="absolute inset-0 bg-gradient-to-t from-[#20242D]/55 via-transparent to-transparent" />
+    <div className="absolute inset-0 bg-gradient-to-t from-[#101319]/55 via-transparent to-transparent" />
 
     <svg
       className="pointer-events-none absolute inset-y-0 right-0 h-full w-16 md:w-20"
@@ -80,7 +80,7 @@ const BrandPanel: React.FC<{ footer?: string; image?: string }> = ({
       className="
         absolute left-6 top-6 z-10 inline-flex items-center gap-1.5
         rounded-full bg-white/90 px-3 py-1 text-[10px] font-semibold
-        uppercase tracking-[0.18em] text-[#538CDB] backdrop-blur-sm
+        uppercase tracking-[0.18em] text-[#004ac6] backdrop-blur-sm
       "
     >
       <span className="h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
@@ -99,16 +99,16 @@ const BrandPanel: React.FC<{ footer?: string; image?: string }> = ({
 export const PaymentTile: React.FC<{ method: PaymentMethod }> = ({ method }) => (
   <div
     className="
-      flex flex-col items-center gap-1.5 rounded-xl border border-[#E8ECF4]
+      flex flex-col items-center gap-1.5 rounded-xl border border-[#e0e3e5]
       bg-white px-1.5 py-2.5 shadow-sm transition-all duration-200
-      hover:-translate-y-0.5 hover:border-[#538CDB]/40
+      hover:-translate-y-0.5 hover:border-[#004ac6]/40
       hover:shadow-[0_6px_16px_rgba(83,140,219,0.12)]
     "
   >
     <span
       className="
         flex h-8 w-10 items-center justify-center overflow-hidden
-        rounded-lg bg-white ring-1 ring-[#E8ECF4]
+        rounded-lg bg-white ring-1 ring-[#e0e3e5]
       "
     >
       <img
@@ -120,7 +120,7 @@ export const PaymentTile: React.FC<{ method: PaymentMethod }> = ({ method }) => 
       />
     </span>
 
-    <span className="text-[10px] font-semibold leading-none text-[#20242D]">
+    <span className="text-[10px] font-semibold leading-none text-[#101319]">
       {method.label}
     </span>
     <span className="text-[8px] uppercase tracking-wider text-[#A2A8B3]">
@@ -154,13 +154,13 @@ export const NeedPayNote: React.FC<{
           draggable={false}
           className="absolute inset-0 h-full w-full select-none object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#20242D]/55 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#101319]/55 via-transparent to-transparent" />
 
         <div
           className="
             absolute left-4 top-4 inline-flex items-center gap-1.5
             rounded-full bg-white/90 px-3 py-1 text-[10px] font-semibold
-            uppercase tracking-[0.18em] text-[#538CDB] backdrop-blur-sm
+            uppercase tracking-[0.18em] text-[#004ac6] backdrop-blur-sm
           "
         >
           <span className="h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
@@ -179,13 +179,13 @@ export const NeedPayNote: React.FC<{
         <section className="flex items-center bg-white px-6 py-7 sm:px-8 lg:px-10">
           <div className="mx-auto w-full max-w-lg">
             <div className="mb-4 md:hidden">
-              <p className="text-xs font-semibold text-[#538CDB]">NeedPay</p>
+              <p className="text-xs font-semibold text-[#004ac6]">NeedPay</p>
             </div>
 
             <p
               className="
                 mb-2 text-[10px] font-semibold uppercase tracking-[0.18em]
-                text-[#538CDB]
+                text-[#004ac6]
               "
             >
               Saldo NeedPay
@@ -194,7 +194,7 @@ export const NeedPayNote: React.FC<{
             <h3
               className="
                 text-[22px] font-bold leading-tight tracking-tight
-                text-[#20242D] sm:text-[26px]
+                text-[#101319] sm:text-[26px]
               "
             >
               Saldo kamu, siap dipakai.
@@ -207,12 +207,12 @@ export const NeedPayNote: React.FC<{
               "
             >
               {loading ? (
-                <div className="h-8 w-32 animate-pulse rounded-lg bg-[#538CDB]/15" />
+                <div className="h-8 w-32 animate-pulse rounded-lg bg-[#004ac6]/15" />
               ) : (
                 <p
                   className="
                     truncate text-[26px] font-extrabold tracking-tight
-                    text-[#20242D] sm:text-[28px]
+                    text-[#101319] sm:text-[28px]
                   "
                   title={formatted}
                 >
@@ -224,10 +224,10 @@ export const NeedPayNote: React.FC<{
                 className="
                   inline-flex shrink-0 items-center gap-1.5 rounded-full
                   bg-white px-2.5 py-1 text-[10px] font-semibold
-                  text-[#20242D] ring-1 ring-[#E8ECF4]
+                  text-[#101319] ring-1 ring-[#e0e3e5]
                 "
               >
-                <span className="h-1.5 w-1.5 rounded-full bg-[#22C55E]" />
+                <span className="h-1.5 w-1.5 rounded-full bg-[#12805c]" />
                 Aktif
               </span>
 
@@ -241,7 +241,7 @@ export const NeedPayNote: React.FC<{
                 <p
                   className="
                     text-[10px] font-semibold uppercase tracking-[0.18em]
-                    text-[#737A87]
+                    text-[#737686]
                   "
                 >
                   Isi saldo lewat
@@ -263,9 +263,9 @@ export const NeedPayNote: React.FC<{
               onClick={handleTopUp}
               className="
                 mt-5 inline-flex h-11 w-full items-center justify-center
-                gap-2 rounded-full bg-[#538CDB] px-6 text-sm font-semibold
+                gap-2 rounded-full bg-[#004ac6] px-6 text-sm font-semibold
                 text-white shadow-[0_7px_18px_rgba(83,140,219,0.20)]
-                transition-all duration-200 hover:bg-[#467BC7]
+                transition-all duration-200 hover:bg-[#004ac6]
                 hover:shadow-[0_9px_22px_rgba(83,140,219,0.25)]
                 active:scale-[0.99]
               "
@@ -298,7 +298,7 @@ export const NeedPayBanner: React.FC<{
         transition-all duration-300 hover:-translate-y-0.5
         hover:shadow-[0_16px_40px_rgba(32,36,45,0.12)] active:scale-[0.99]
         focus-visible:outline-2 focus-visible:outline-offset-4
-        focus-visible:outline-[#538CDB] ${className}
+        focus-visible:outline-[#004ac6] ${className}
       `}
     >
       <span className="relative w-32 shrink-0 overflow-hidden sm:w-40">
@@ -334,7 +334,7 @@ export const NeedPayBanner: React.FC<{
         <span
           className="
             text-[10px] font-semibold uppercase tracking-[0.18em]
-            text-[#538CDB]
+            text-[#004ac6]
           "
         >
           NeedPay
@@ -345,20 +345,20 @@ export const NeedPayBanner: React.FC<{
             <span
               className="
                 truncate text-xl font-extrabold tracking-tight
-                text-[#20242D] sm:text-2xl
+                text-[#101319] sm:text-2xl
               "
             >
               {formatRupiah(balance as string | number)}
             </span>
-            <span className="flex items-center gap-1.5 text-[11px] text-[#737A87]">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#22C55E]" />
+            <span className="flex items-center gap-1.5 text-[11px] text-[#737686]">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#12805c]" />
               Aktif · siap dipakai checkout
             </span>
           </>
         ) : (
           <span
             className="
-              text-[14px] font-bold leading-snug text-[#20242D]
+              text-[14px] font-bold leading-snug text-[#101319]
               sm:text-[15px]
             "
           >
@@ -369,10 +369,10 @@ export const NeedPayBanner: React.FC<{
 
       <span
         className="
-          mr-4 shrink-0 self-center rounded-full bg-[#538CDB] px-4 py-2.5
+          mr-4 shrink-0 self-center rounded-full bg-[#004ac6] px-4 py-2.5
           text-[11px] font-semibold text-white
           shadow-[0_6px_16px_rgba(83,140,219,0.20)] transition-all
-          duration-200 group-hover:bg-[#467BC7]
+          duration-200 group-hover:bg-[#004ac6]
           group-hover:shadow-[0_8px_20px_rgba(83,140,219,0.25)] sm:mr-5
         "
       >

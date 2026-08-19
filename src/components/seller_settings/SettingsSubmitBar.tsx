@@ -20,20 +20,20 @@ const SettingsSubmitBar: React.FC<SettingsSubmitBarProps> = ({
     {error && (
       <div
         className="
-          flex items-center gap-2.5 rounded-xl border border-[#FF4646]/20
+          flex items-center gap-2.5 rounded-xl border border-[#ba1a1a]/20
           bg-[#FFF0F0] px-3 py-2.5
         "
       >
-        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#FF4646]/15">
-          <Icon name="alert" size={12} className="text-[#FF4646]" />
+        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#ba1a1a]/15">
+          <Icon name="alert" size={12} className="text-[#ba1a1a]" />
         </span>
-        <p className="flex-1 text-[11px] font-medium text-[#C73535]">
+        <p className="flex-1 text-[11px] font-medium text-[#ba1a1a]">
           {error}
         </p>
         <button
           type="button"
           onClick={onDismissError}
-          className="shrink-0 text-[#C73535] hover:text-[#20242D]"
+          className="shrink-0 text-[#ba1a1a] hover:text-[#101319]"
           aria-label="Tutup"
         >
           <Icon name="close" size={12} />
@@ -44,14 +44,14 @@ const SettingsSubmitBar: React.FC<SettingsSubmitBarProps> = ({
     {saved && !error && (
       <div
         className="
-          flex items-center gap-2.5 rounded-xl border border-[#22C55E]/20
-          bg-[#F0FDF4] px-3 py-2.5
+          flex items-center gap-2.5 rounded-xl border border-[#12805c]/20
+          bg-[#e6f4ee] px-3 py-2.5
         "
       >
-        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#22C55E]/15">
-          <Icon name="check" size={12} className="text-[#22C55E]" />
+        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#12805c]/15">
+          <Icon name="check" size={12} className="text-[#12805c]" />
         </span>
-        <p className="text-[11px] font-medium text-[#166534]">
+        <p className="text-[11px] font-medium text-[#12805c]">
           Setelan toko udah tersimpan.
         </p>
       </div>
@@ -62,9 +62,9 @@ const SettingsSubmitBar: React.FC<SettingsSubmitBarProps> = ({
       disabled={saving}
       className="
         inline-flex h-11 items-center justify-center gap-2 rounded-full
-        bg-[#538CDB] px-6 text-[13px] font-semibold text-white
+        bg-[#004ac6] px-6 text-[13px] font-semibold text-white
         shadow-[0_7px_18px_rgba(83,140,219,0.25)] transition-all duration-200
-        hover:bg-[#467BC7] hover:shadow-[0_9px_22px_rgba(83,140,219,0.30)]
+        hover:bg-[#004ac6] hover:shadow-[0_9px_22px_rgba(83,140,219,0.30)]
         active:scale-[0.99] disabled:cursor-not-allowed
         disabled:bg-[#A2A8B3] disabled:shadow-none
       "

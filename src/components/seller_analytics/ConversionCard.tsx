@@ -50,7 +50,7 @@ const ConversionCard: React.FC<ConversionCardProps> = ({
       <span
         className="
           pointer-events-none absolute -right-10 -top-10 h-24 w-24
-          rounded-full border border-[#538CDB]/10
+          rounded-full border border-[#004ac6]/10
         "
       />
       <span
@@ -61,14 +61,14 @@ const ConversionCard: React.FC<ConversionCardProps> = ({
       />
 
       <div className="mb-4 flex items-center gap-2.5">
-        <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#F0FDF4]">
-          <Icon name="analytics" size={15} className="text-[#166534]" />
+        <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#e6f4ee]">
+          <Icon name="analytics" size={15} className="text-[#12805c]" />
         </span>
         <div>
-          <h3 className="text-[14px] font-bold text-[#20242D] sm:text-[15px]">
+          <h3 className="text-[14px] font-bold text-[#101319] sm:text-[15px]">
             Rasio Konversi
           </h3>
-          <p className="text-[10px] text-[#737A87]">Order / kunjungan</p>
+          <p className="text-[10px] text-[#737686]">Order / kunjungan</p>
         </div>
       </div>
 
@@ -82,7 +82,7 @@ const ConversionCard: React.FC<ConversionCardProps> = ({
           </div>
         </div>
       ) : error ? (
-        <div className="rounded-xl border border-[#FF4646]/20 bg-[#FFF0F0] px-3 py-2 text-[12px] font-medium text-[#C73535]">
+        <div className="rounded-xl border border-[#ba1a1a]/20 bg-[#FFF0F0] px-3 py-2 text-[12px] font-medium text-[#ba1a1a]">
           {error}
         </div>
       ) : (
@@ -112,13 +112,13 @@ const ConversionCard: React.FC<ConversionCardProps> = ({
               />
               <defs>
                 <linearGradient id="conversion-gradient" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stopColor="#5B93E0" />
-                  <stop offset="100%" stopColor="#3A66AC" />
+                  <stop offset="0%" stopColor="#004ac6" />
+                  <stop offset="100%" stopColor="#003ea8" />
                 </linearGradient>
               </defs>
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className="text-[22px] font-extrabold leading-none tabular-nums text-[#20242D] sm:text-[24px]">
+              <span className="text-[22px] font-extrabold leading-none tabular-nums text-[#101319] sm:text-[24px]">
                 {conversionRate.toFixed(1)}%
               </span>
               <span className="mt-0.5 text-[9px] font-semibold uppercase tracking-wider text-[#A2A8B3]">
@@ -128,9 +128,9 @@ const ConversionCard: React.FC<ConversionCardProps> = ({
           </div>
 
           <div className="min-w-0 flex-1">
-            <p className="text-[12px] text-[#737A87]">
-              <span className="font-bold text-[#20242D] tabular-nums">{orders}</span> order dari{' '}
-              <span className="font-bold text-[#20242D] tabular-nums">{views}</span> kunjungan
+            <p className="text-[12px] text-[#737686]">
+              <span className="font-bold text-[#101319] tabular-nums">{orders}</span> order dari{' '}
+              <span className="font-bold text-[#101319] tabular-nums">{views}</span> kunjungan
             </p>
 
             {previousViews > 0 && (
@@ -141,15 +141,15 @@ const ConversionCard: React.FC<ConversionCardProps> = ({
                     text-[10px] font-bold tabular-nums
                     ${
                       isPositive
-                        ? 'bg-[#DCFCE7] text-[#166534]'
-                        : 'bg-[#FFF0F0] text-[#C73535]'
+                        ? 'bg-[#e6f4ee] text-[#12805c]'
+                        : 'bg-[#FFF0F0] text-[#ba1a1a]'
                     }
                   `}
                 >
                   <Icon
                     name={isPositive ? 'arrowUp' : 'arrowDown'}
                     size={9}
-                    className={isPositive ? 'text-[#22C55E]' : 'text-[#FF4646]'}
+                    className={isPositive ? 'text-[#12805c]' : 'text-[#ba1a1a]'}
                   />
                   {isPositive ? '+' : ''}
                   {Math.abs(changePoint).toFixed(1)} poin

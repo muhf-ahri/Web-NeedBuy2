@@ -24,10 +24,10 @@ const ProfileInfoForm: React.FC<ProfileInfoFormProps> = ({
   saving,
 }) => {
   const inputCls =
-    'w-full rounded-xl border border-[#E8ECF4] bg-[#F5F7FB] px-4 py-2.5 text-[13px] text-[#20242D] outline-none placeholder:text-[#A2A8B3] transition-all duration-200 focus:border-[#538CDB] focus:bg-white focus:shadow-[0_4px_16px_rgba(83,140,219,0.10)]';
+    'w-full rounded-xl border border-[#e0e3e5] bg-[#F5F7FB] px-4 py-2.5 text-[13px] text-[#101319] outline-none placeholder:text-[#A2A8B3] transition-all duration-200 focus:border-[#004ac6] focus:bg-white focus:shadow-[0_4px_16px_rgba(83,140,219,0.10)]';
 
   const disabledCls =
-    'w-full rounded-xl border border-[#E8ECF4] bg-[#F5F7FB]/50 px-4 py-2.5 text-[13px] text-[#A2A8B3] cursor-not-allowed';
+    'w-full rounded-xl border border-[#e0e3e5] bg-[#F5F7FB]/50 px-4 py-2.5 text-[13px] text-[#A2A8B3] cursor-not-allowed';
 
   return (
     <div
@@ -41,16 +41,16 @@ const ProfileInfoForm: React.FC<ProfileInfoFormProps> = ({
         <span
           className="
             flex h-8 w-8 items-center justify-center rounded-lg
-            bg-[#538CDB]/10
+            bg-[#004ac6]/10
           "
         >
-          <Icon name="user" size={15} className="text-[#538CDB]" />
+          <Icon name="user" size={15} className="text-[#004ac6]" />
         </span>
         <div>
-          <h3 className="text-[15px] font-bold text-[#20242D]">
+          <h3 className="text-[15px] font-bold text-[#101319]">
             Informasi Akun
           </h3>
-          <p className="text-[11px] text-[#737A87]">
+          <p className="text-[11px] text-[#737686]">
             Data yang tampil di pesanan & chat
           </p>
         </div>
@@ -62,7 +62,7 @@ const ProfileInfoForm: React.FC<ProfileInfoFormProps> = ({
             htmlFor="profile-name"
             className="
               mb-1.5 block text-[10px] font-semibold uppercase
-              tracking-[0.14em] text-[#737A87]
+              tracking-[0.14em] text-[#737686]
             "
           >
             Nama
@@ -76,13 +76,13 @@ const ProfileInfoForm: React.FC<ProfileInfoFormProps> = ({
           />
         </div>
         <div>
-          <label className="mb-1.5 block text-[10px] font-semibold uppercase tracking-[0.14em] text-[#737A87]">
+          <label className="mb-1.5 block text-[10px] font-semibold uppercase tracking-[0.14em] text-[#737686]">
             Username
           </label>
           <input type="text" value={username} disabled className={disabledCls} />
         </div>
         <div>
-          <label className="mb-1.5 block text-[10px] font-semibold uppercase tracking-[0.14em] text-[#737A87]">
+          <label className="mb-1.5 block text-[10px] font-semibold uppercase tracking-[0.14em] text-[#737686]">
             Email
           </label>
           <input type="email" value={email} disabled className={disabledCls} />
@@ -92,7 +92,7 @@ const ProfileInfoForm: React.FC<ProfileInfoFormProps> = ({
             htmlFor="profile-phone"
             className="
               mb-1.5 block text-[10px] font-semibold uppercase
-              tracking-[0.14em] text-[#737A87]
+              tracking-[0.14em] text-[#737686]
             "
           >
             No. HP
@@ -112,10 +112,10 @@ const ProfileInfoForm: React.FC<ProfileInfoFormProps> = ({
         onClick={onSave}
         disabled={saving}
         className="
-          mt-5 inline-flex h-11 items-center gap-2 rounded-full bg-[#538CDB]
+          mt-5 inline-flex h-11 items-center gap-2 rounded-full bg-[#004ac6]
           px-5 text-[13px] font-semibold text-white
           shadow-[0_6px_16px_rgba(83,140,219,0.25)] transition-all
-          duration-200 hover:bg-[#467BC7]
+          duration-200 hover:bg-[#004ac6]
           hover:shadow-[0_8px_20px_rgba(83,140,219,0.30)] active:scale-[0.99]
           disabled:cursor-not-allowed disabled:bg-[#A2A8B3]
           disabled:shadow-none

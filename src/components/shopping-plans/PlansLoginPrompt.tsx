@@ -11,7 +11,7 @@ const PlansLoginPrompt: React.FC = () => {
 
   return (
     <div
-      className="min-h-screen flex flex-col bg-[#F5F5FF]"
+      className="min-h-screen flex flex-col bg-[#f5f7fb]"
       style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
     >
       <Navbar />
@@ -35,13 +35,13 @@ const PlansLoginPrompt: React.FC = () => {
                   absolute inset-0 h-full w-full select-none object-cover
                 "
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#20242D]/55 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#101319]/55 via-transparent to-transparent" />
 
               <div
                 className="
                   absolute left-4 top-4 inline-flex items-center gap-1.5
                   rounded-full bg-white/90 px-3 py-1 text-[10px] font-semibold
-                  uppercase tracking-[0.18em] text-[#538CDB] backdrop-blur-sm
+                  uppercase tracking-[0.18em] text-[#004ac6] backdrop-blur-sm
                 "
               >
                 <span className="h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
@@ -60,14 +60,14 @@ const PlansLoginPrompt: React.FC = () => {
               
               <section className="flex items-center bg-white px-6 py-8 sm:px-8 lg:px-10">
                 <div className="mx-auto w-full max-w-md">
-                  <h1 className="text-[30px] font-bold leading-tight tracking-tight text-[#538CBD] hover:text-[#467BC7] sm:text-[34px]">
+                  <h1 className="text-[30px] font-bold leading-tight tracking-tight text-[#004ac6] hover:text-[#004ac6] sm:text-[34px]">
                     Halaman Rencana
                   </h1>
 
                   <p
                     className="
                       mt-4 mb-2 text-[10px] font-semibold uppercase
-                      tracking-[0.18em] text-[#538CDB]
+                      tracking-[0.18em] text-[#004ac6]
                     "
                   >
                     Area member
@@ -76,13 +76,13 @@ const PlansLoginPrompt: React.FC = () => {
                   <h2
                     className="
                       text-[22px] font-bold leading-tight tracking-tight
-                      text-[#20242D] sm:text-[26px]
+                      text-[#101319] sm:text-[26px]
                     "
                   >
                     Login untuk Bikin Rencana
                   </h2>
 
-                  <p className="mt-2 text-[13px] leading-5 text-[#737A87]">
+                  <p className="mt-2 text-[13px] leading-5 text-[#737686]">
                     Masuk ke akunmu untuk membuat dan mengelola kelompok belanja,
                     misalnya "Kamar" isi kipas dan lampu, lalu checkout
                     sekaligus dengan mudah.
@@ -93,10 +93,10 @@ const PlansLoginPrompt: React.FC = () => {
                     onClick={() => navigate('/login')}
                     className="
                       mt-5 inline-flex h-11 w-full items-center
-                      justify-center gap-2 rounded-full bg-[#538CDB] px-6
+                      justify-center gap-2 rounded-full bg-[#004ac6] px-6
                       text-sm font-semibold text-white
                       shadow-[0_7px_18px_rgba(83,140,219,0.20)]
-                      transition-all duration-200 hover:bg-[#467BC7]
+                      transition-all duration-200 hover:bg-[#004ac6]
                       hover:shadow-[0_9px_22px_rgba(83,140,219,0.25)]
                       active:scale-[0.99]
                     "
@@ -105,11 +105,11 @@ const PlansLoginPrompt: React.FC = () => {
                     <Icon name="arrowRight" size={15} className="text-white" />
                   </button>
 
-                  <p className="mt-3 text-center text-[12px] text-[#737A87]">
+                  <p className="mt-3 text-center text-[12px] text-[#737686]">
                     Belum punya akun?{' '}
                     <Link
                       to="/register"
-                      className="font-semibold text-[#538CDB] hover:underline"
+                      className="font-semibold text-[#004ac6] hover:underline"
                     >
                       Daftar gratis
                     </Link>
@@ -128,7 +128,7 @@ const PlansLoginPrompt: React.FC = () => {
                   "
                 />
 
-                <div className="absolute inset-0 bg-gradient-to-t from-[#20242D]/55 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#101319]/55 via-transparent to-transparent" />
 
                 <svg
                   className="
@@ -154,7 +154,7 @@ const PlansLoginPrompt: React.FC = () => {
                   className="
                     absolute right-6 top-6 z-10 inline-flex items-center
                     gap-1.5 rounded-full bg-white/90 px-3 py-1 text-[10px]
-                    font-semibold uppercase tracking-[0.18em] text-[#538CDB]
+                    font-semibold uppercase tracking-[0.18em] text-[#004ac6]
                     backdrop-blur-sm
                   "
                 >

@@ -7,7 +7,7 @@ const SearchShell: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => (
   <div
-    className="min-h-screen flex flex-col bg-[#F5F5FF]"
+    className="min-h-screen flex flex-col bg-[#f5f7fb]"
     style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
   >
     <Navbar />

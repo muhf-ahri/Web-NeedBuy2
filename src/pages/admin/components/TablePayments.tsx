@@ -9,19 +9,19 @@ interface TablePaymentsProps {
 }
 
 const statusColor: Record<PaymentStatus, string> = {
-  PAID: 'bg-[#d7f5dc] text-[#156b32]',
-  PENDING: 'bg-[#fff4e0] text-[#b45309]',
-  FAILED: 'bg-[#ffe0e0] text-[#a33131]',
+  PAID: 'bg-[#e6f4ee] text-[#12805c]',
+  PENDING: 'bg-[#fff7e0] text-[#b45309]',
+  FAILED: 'bg-[#fff0f0] text-[#93000a]',
   EXPIRED: 'bg-[#f2f4f6] text-[#737686]',
-  REFUNDED: 'bg-[#e3e0ff] text-[#4338ca]',
+  REFUNDED: 'bg-[#dbe1ff] text-[#004ac6]',
 };
 
 const statusDotColor: Record<PaymentStatus, string> = {
-  PAID: 'bg-[#156b32]',
+  PAID: 'bg-[#12805c]',
   PENDING: 'bg-[#b45309]',
-  FAILED: 'bg-[#a33131]',
+  FAILED: 'bg-[#93000a]',
   EXPIRED: 'bg-[#737686]',
-  REFUNDED: 'bg-[#4338ca]',
+  REFUNDED: 'bg-[#004ac6]',
 };
 
 const statusLabel: Record<PaymentStatus, string> = {
@@ -69,9 +69,9 @@ const TablePayments: React.FC<TablePaymentsProps> = ({
   return (
     <>
       {payments.map((payment) => (
-        <tr key={payment.id} className="text-[13px] transition-colors hover:bg-[#f8f9fb]">
+        <tr key={payment.id} className="text-[13px] transition-colors hover:bg-[#f5f7fb]">
           <td className="py-2.5 pr-2 font-medium text-[#004ac6]">{payment.midtransOrderId}</td>
-          <td className="py-2.5 pr-2 font-medium text-[#191c1e]">{payment.order.orderNumber}</td>
+          <td className="py-2.5 pr-2 font-medium text-[#101319]">{payment.order.orderNumber}</td>
           <td className="py-2.5 pr-2">
             <div className="text-[#434655]">{payment.order.user.name}</div>
             <div className="text-[11px] text-[#737686]">{payment.order.user.email}</div>

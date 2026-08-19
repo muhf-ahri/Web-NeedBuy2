@@ -47,7 +47,7 @@ const MarketplaceInfo: React.FC<SettingsCardProps> = ({ values, onSave }) => {
     return (
       <div className="space-y-4 animate-slideDown">
         {error && (
-          <div className="rounded-lg border border-[#ffbcbc] bg-[#ffe0e0] p-2.5 text-xs text-[#a33131]">
+          <div className="rounded-lg border border-[#ffdad6] bg-[#fff0f0] p-2.5 text-xs text-[#93000a]">
             {error}
           </div>
         )}
@@ -111,13 +111,13 @@ const MarketplaceInfo: React.FC<SettingsCardProps> = ({ values, onSave }) => {
   return (
     <div className="space-y-5">
       
-      <div className="group flex items-start justify-between gap-4 rounded-xl p-3 -mx-3 transition-colors hover:bg-[#f8f9fb]">
+      <div className="group flex items-start justify-between gap-4 rounded-xl p-3 -mx-3 transition-colors hover:bg-[#f5f7fb]">
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
             <Icon name="shop" size={16} className="text-[#737686] group-hover:text-[#004ac6] transition-colors" />
             <p className="text-[11px] font-semibold uppercase tracking-wider text-[#737686]">Nama Marketplace</p>
           </div>
-          <p className="mt-1 text-[15px] font-semibold text-[#191c1e]">{name}</p>
+          <p className="mt-1 text-[15px] font-semibold text-[#101319]">{name}</p>
         </div>
         <button
           onClick={startEdit}
@@ -128,7 +128,7 @@ const MarketplaceInfo: React.FC<SettingsCardProps> = ({ values, onSave }) => {
         </button>
       </div>
 
-      <div className="group flex items-start justify-between gap-4 rounded-xl p-3 -mx-3 transition-colors hover:bg-[#f8f9fb]">
+      <div className="group flex items-start justify-between gap-4 rounded-xl p-3 -mx-3 transition-colors hover:bg-[#f5f7fb]">
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
             <Icon name="file-text" size={16} className="text-[#737686] group-hover:text-[#004ac6] transition-colors" />

@@ -17,7 +17,7 @@ const ratingStars = (rating: number) => (
         key={star}
         name="star"
         size={14}
-        className={star <= rating ? 'text-[#f59e0b]' : 'text-[#e0e3e5]'}
+        className={star <= rating ? 'text-[#ffd500]' : 'text-[#e0e3e5]'}
       />
     ))}
   </span>
@@ -57,9 +57,9 @@ const TableReview: React.FC<ReviewTableProps> = ({
   return (
     <>
       {reviews.map((review) => (
-        <tr key={review.id} className="text-[13px] transition-colors hover:bg-[#f8f9fb]">
+        <tr key={review.id} className="text-[13px] transition-colors hover:bg-[#f5f7fb]">
           <td className="py-2.5 pr-2">
-            <div className="font-medium text-[#191c1e]">{review.product.name}</div>
+            <div className="font-medium text-[#101319]">{review.product.name}</div>
             <div className="text-[11px] text-[#737686]">
               {review.product.category.name} · {review.product.seller.storeName}
             </div>
@@ -74,7 +74,7 @@ const TableReview: React.FC<ReviewTableProps> = ({
           <td className="py-2.5 pr-2">
             <span
               className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${
-                review.isHidden ? 'bg-[#f2f4f6] text-[#737686]' : 'bg-[#d7f5dc] text-[#156b32]'
+                review.isHidden ? 'bg-[#f2f4f6] text-[#737686]' : 'bg-[#e6f4ee] text-[#12805c]'
               }`}
             >
               {review.isHidden ? 'Disembunyikan' : 'Tampil'}
@@ -88,7 +88,7 @@ const TableReview: React.FC<ReviewTableProps> = ({
               className={`rounded-full px-3 py-1 text-[12px] font-semibold text-white transition-colors disabled:opacity-50 ${
                 review.isHidden
                   ? 'bg-[#004ac6] hover:bg-[#003ea8]'
-                  : 'bg-[#ba1a1a] hover:bg-[#9a1515]'
+                  : 'bg-[#ba1a1a] hover:bg-[#93000a]'
               }`}
             >
               {review.isHidden ? 'Tampilkan' : 'Sembunyikan'}

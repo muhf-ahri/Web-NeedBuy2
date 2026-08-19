@@ -110,7 +110,7 @@ const SellerRegisterForm: React.FC<Props> = ({ onRegistered }) => {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       {error && (
-        <div className="p-2.5 bg-[#ffe0e0] border border-[#ffbcbc] text-[#a33131] text-xs rounded-lg">
+        <div className="p-2.5 bg-[#fff0f0] border border-[#ffdad6] text-[#93000a] text-xs rounded-lg">
           {error}
         </div>
       )}
@@ -209,7 +209,7 @@ const SellerRegisterForm: React.FC<Props> = ({ onRegistered }) => {
                 type="button"
                 disabled={uploading}
                 onClick={() => fileInputRef.current?.click()}
-                className="px-4 py-2 rounded-full border border-[#c3c6d7] text-[12px] font-semibold text-[#191c1e] hover:bg-[#f8f9fb] transition-colors disabled:opacity-50"
+                className="px-4 py-2 rounded-full border border-[#c3c6d7] text-[12px] font-semibold text-[#101319] hover:bg-[#f5f7fb] transition-colors disabled:opacity-50"
               >
                 {uploading ? 'Ngunggah…' : 'Pilih Berkas'}
               </button>

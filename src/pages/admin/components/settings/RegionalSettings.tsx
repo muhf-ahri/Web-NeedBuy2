@@ -42,7 +42,7 @@ const RegionalSettings: React.FC<SettingsCardProps> = ({ values, onSave }) => {
           <Icon name="wallet" size={16} className="text-[#737686]" />
           <p className="text-[11px] font-semibold uppercase tracking-wider text-[#737686]">Mata Uang</p>
         </div>
-        <p className="mt-1 text-[15px] font-semibold text-[#191c1e]">
+        <p className="mt-1 text-[15px] font-semibold text-[#101319]">
           IDR
           <span className="ml-2 text-[13px] font-normal text-[#737686]">Rupiah (Rp)</span>
         </p>
@@ -55,7 +55,7 @@ const RegionalSettings: React.FC<SettingsCardProps> = ({ values, onSave }) => {
       {isEditing ? (
         <div className="space-y-4 animate-slideDown">
           {error && (
-            <div className="rounded-lg border border-[#ffbcbc] bg-[#ffe0e0] p-2.5 text-xs text-[#a33131]">
+            <div className="rounded-lg border border-[#ffdad6] bg-[#fff0f0] p-2.5 text-xs text-[#93000a]">
               {error}
             </div>
           )}
@@ -101,13 +101,13 @@ const RegionalSettings: React.FC<SettingsCardProps> = ({ values, onSave }) => {
           </div>
         </div>
       ) : (
-        <div className="group flex items-start justify-between gap-4 rounded-xl p-3 -mx-3 transition-colors hover:bg-[#f8f9fb]">
+        <div className="group flex items-start justify-between gap-4 rounded-xl p-3 -mx-3 transition-colors hover:bg-[#f5f7fb]">
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2">
               <Icon name="clock" size={16} className="text-[#737686] group-hover:text-[#004ac6] transition-colors" />
               <p className="text-[11px] font-semibold uppercase tracking-wider text-[#737686]">Zona Waktu</p>
             </div>
-            <p className="mt-1 text-[15px] font-semibold text-[#191c1e]">
+            <p className="mt-1 text-[15px] font-semibold text-[#101319]">
               {timezone}
               <span className="ml-2 text-[13px] font-normal text-[#737686]">
                 {TIMEZONES[timezone] ?? ''}

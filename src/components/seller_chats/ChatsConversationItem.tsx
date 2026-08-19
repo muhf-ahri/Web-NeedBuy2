@@ -31,13 +31,13 @@ const ChatsConversationItem: React.FC<ChatsConversationItemProps> = ({
           transition-all duration-200
           ${
             active
-              ? 'bg-gradient-to-r from-[#EEF5FF] to-[#F5F5FF]'
+              ? 'bg-gradient-to-r from-[#f5f7fb] to-[#f5f7fb]'
               : 'hover:bg-[#F5F7FB]'
           }
         `}
       >
         {active && (
-          <span className="absolute left-0 top-1/2 h-8 w-0.5 -translate-y-1/2 rounded-r-full bg-[#538CDB]" />
+          <span className="absolute left-0 top-1/2 h-8 w-0.5 -translate-y-1/2 rounded-r-full bg-[#004ac6]" />
         )}
 
         <div className="relative shrink-0">
@@ -50,7 +50,7 @@ const ChatsConversationItem: React.FC<ChatsConversationItemProps> = ({
             <span
               className="
                 absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center
-                justify-center rounded-full bg-[#FF4646] px-1 text-[9px]
+                justify-center rounded-full bg-[#ba1a1a] px-1 text-[9px]
                 font-bold text-white ring-2 ring-white
               "
             >
@@ -63,8 +63,8 @@ const ChatsConversationItem: React.FC<ChatsConversationItemProps> = ({
           <div className="flex items-center justify-between gap-2">
             <span
               className="
-                truncate text-[13px] font-semibold text-[#20242D]
-                group-hover:text-[#538CDB]
+                truncate text-[13px] font-semibold text-[#101319]
+                group-hover:text-[#004ac6]
               "
             >
               {conversation.buyer.name}
@@ -79,8 +79,8 @@ const ChatsConversationItem: React.FC<ChatsConversationItemProps> = ({
               mt-0.5 truncate text-[11px]
               ${
                 conversation.unreadCount > 0
-                  ? 'font-semibold text-[#20242D]'
-                  : 'text-[#737A87]'
+                  ? 'font-semibold text-[#101319]'
+                  : 'text-[#737686]'
               }
             `}
           >

@@ -61,15 +61,15 @@ const LoginForm: React.FC<LoginFormProps> = ({
         error={errors.email}
         className="
           rounded-xl
-          border-[#E8ECF4]
+          border-[#e0e3e5]
           bg-white
           py-2.5
           text-sm
-          text-[#20242D]
+          text-[#101319]
           placeholder:text-[#A2A8B3]
-          focus:border-[#538CDB]
+          focus:border-[#004ac6]
           focus:ring-4
-          focus:ring-[#538CDB]/10
+          focus:ring-[#004ac6]/10
         "
       />
 
@@ -84,15 +84,15 @@ const LoginForm: React.FC<LoginFormProps> = ({
           error={errors.password}
           className="
             rounded-xl
-            border-[#E8ECF4]
+            border-[#e0e3e5]
             bg-white
             py-2.5
             text-sm
-            text-[#20242D]
+            text-[#101319]
             placeholder:text-[#A2A8B3]
-            focus:border-[#538CDB]
+            focus:border-[#004ac6]
             focus:ring-4
-            focus:ring-[#538CDB]/10
+            focus:ring-[#004ac6]/10
           "
         />
 
@@ -103,9 +103,9 @@ const LoginForm: React.FC<LoginFormProps> = ({
             className="
               text-[11px]
               font-medium
-              text-[#538CDB]
+              text-[#004ac6]
               transition-colors
-              hover:text-[#467BC7]
+              hover:text-[#004ac6]
             "
           >
             Lupa password?
@@ -116,7 +116,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
       </div>
 
       {error && (
-        <div className="rounded-xl bg-[#FFF0F0] px-3 py-2.5 text-xs text-[#C73535]">
+        <div className="rounded-xl bg-[#FFF0F0] px-3 py-2.5 text-xs text-[#ba1a1a]">
           {error}
         </div>
       )}
@@ -128,7 +128,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
         className="
           h-11
           rounded-full
-          bg-[#538CDB]
+          bg-[#004ac6]
           px-6
           text-sm
           font-semibold
@@ -136,10 +136,10 @@ const LoginForm: React.FC<LoginFormProps> = ({
           shadow-[0_7px_18px_rgba(83,140,219,0.18)]
           transition-all
           duration-200
-          hover:bg-[#467BC7]
+          hover:bg-[#004ac6]
           hover:shadow-[0_9px_22px_rgba(83,140,219,0.22)]
           focus:ring-4
-          focus:ring-[#538CDB]/15
+          focus:ring-[#004ac6]/15
           active:scale-[0.99]
           disabled:cursor-not-allowed
           disabled:opacity-60

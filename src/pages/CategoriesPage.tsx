@@ -124,7 +124,7 @@ const CategoriesPage: React.FC = () => {
 
   return (
     <div
-      className="min-h-screen flex flex-col bg-[#F5F5FF]"
+      className="min-h-screen flex flex-col bg-[#f5f7fb]"
       style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
     >
       <Navbar />
@@ -155,7 +155,7 @@ const CategoriesPage: React.FC = () => {
               [&::-webkit-scrollbar]:w-1.5
               [&::-webkit-scrollbar-track]:bg-transparent
               [&::-webkit-scrollbar-thumb]:rounded-full
-              [&::-webkit-scrollbar-thumb]:bg-[#D8DEE9]
+              [&::-webkit-scrollbar-thumb]:bg-[#e0e3e5]
             "
           >
             <Reveal direction="left" duration={700}>
@@ -185,20 +185,20 @@ const CategoriesPage: React.FC = () => {
                     onClick={() => setMobileFilterOpen(true)}
                     className="
                       flex items-center gap-1.5 rounded-full border
-                      border-[#E8ECF4] bg-white px-3.5 py-1.5 text-[13px]
-                      font-semibold text-[#20242D] transition-colors
-                      hover:border-[#538CDB] hover:text-[#538CDB] lg:hidden
+                      border-[#e0e3e5] bg-white px-3.5 py-1.5 text-[13px]
+                      font-semibold text-[#101319] transition-colors
+                      hover:border-[#004ac6] hover:text-[#004ac6] lg:hidden
                     "
                   >
                     <Icon name="filter" size={14} />
                     Filter
                     {hasActiveFilters && (
-                      <span className="flex h-4 min-w-4 items-center justify-center rounded-full bg-[#538CDB] px-1 text-[9px] font-bold text-white">
+                      <span className="flex h-4 min-w-4 items-center justify-center rounded-full bg-[#004ac6] px-1 text-[9px] font-bold text-white">
                         {selectedCategories.length + activeConditions.length + (priceMin || priceMax ? 1 : 0)}
                       </span>
                     )}
                   </button>
-                  <p className="truncate text-[12px] text-[#737A87] sm:text-[13px]">
+                  <p className="truncate text-[12px] text-[#737686] sm:text-[13px]">
                     Menampilkan{' '}
                     {productsLoading ? '...' : `${total} produk`}
                   </p>
@@ -210,9 +210,9 @@ const CategoriesPage: React.FC = () => {
                     onChange={(e) => setSortBy(e.target.value)}
                     className="
                       w-full cursor-pointer appearance-none rounded-full
-                      border border-[#E8ECF4] bg-white py-1.5 pl-4 pr-9
-                      text-[13px] font-medium text-[#20242D] outline-none
-                      transition-colors focus:border-[#538CDB] sm:w-auto
+                      border border-[#e0e3e5] bg-white py-1.5 pl-4 pr-9
+                      text-[13px] font-medium text-[#101319] outline-none
+                      transition-colors focus:border-[#004ac6] sm:w-auto
                     "
                   >
                     {SORT_OPTIONS.map((opt) => (
@@ -224,7 +224,7 @@ const CategoriesPage: React.FC = () => {
                     size={14}
                     className="
                       pointer-events-none absolute right-3 top-1/2
-                      -translate-y-1/2 text-[#737A87]
+                      -translate-y-1/2 text-[#737686]
                     "
                   />
                 </div>
@@ -241,15 +241,15 @@ const CategoriesPage: React.FC = () => {
                         key={slug}
                         className="
                           flex items-center gap-1.5 rounded-full
-                          bg-[#538CDB]/10 px-3 py-1 text-[12px] font-semibold
-                          text-[#538CDB]
+                          bg-[#004ac6]/10 px-3 py-1 text-[12px] font-semibold
+                          text-[#004ac6]
                         "
                       >
                         {cat?.name ?? slug}
                         <button
                           onClick={() => toggleCategory(slug)}
                           aria-label="Hapus filter"
-                          className="transition-colors hover:text-[#467BC7]"
+                          className="transition-colors hover:text-[#004ac6]"
                         >
                           <Icon name="close" size={12} />
                         </button>
@@ -340,7 +340,7 @@ const CategoriesPage: React.FC = () => {
       {mobileFilterOpen && (
         <div className="fixed inset-0 z-50 lg:hidden">
           <div
-            className="absolute inset-0 bg-[#20242D]/40 backdrop-blur-sm"
+            className="absolute inset-0 bg-[#101319]/40 backdrop-blur-sm"
             onClick={() => setMobileFilterOpen(false)}
           />
 
@@ -353,26 +353,26 @@ const CategoriesPage: React.FC = () => {
           >
             <div
               className="
-                flex items-center justify-between border-b border-[#E8ECF4]
+                flex items-center justify-between border-b border-[#e0e3e5]
                 px-5 py-4
               "
             >
-              <span className="flex items-center gap-2 text-[15px] font-bold text-[#20242D]">
+              <span className="flex items-center gap-2 text-[15px] font-bold text-[#101319]">
                 <span
                   className="
                     flex h-6 w-6 items-center justify-center rounded-lg
-                    bg-[#538CDB]/10
+                    bg-[#004ac6]/10
                   "
                 >
-                  <Icon name="filter" size={13} className="text-[#538CDB]" />
+                  <Icon name="filter" size={13} className="text-[#004ac6]" />
                 </span>
                 Filter
               </span>
               <button
                 onClick={() => setMobileFilterOpen(false)}
                 className="
-                  rounded-full p-1.5 text-[#737A87] transition-colors
-                  hover:bg-[#F5F7FB] hover:text-[#20242D]
+                  rounded-full p-1.5 text-[#737686] transition-colors
+                  hover:bg-[#F5F7FB] hover:text-[#101319]
                 "
                 aria-label="Tutup filter"
               >
@@ -398,14 +398,14 @@ const CategoriesPage: React.FC = () => {
               />
             </div>
 
-            <div className="border-t border-[#E8ECF4] p-4">
+            <div className="border-t border-[#e0e3e5] p-4">
               <button
                 onClick={() => setMobileFilterOpen(false)}
                 className="
-                  w-full rounded-full bg-[#538CDB] py-2.5 text-[14px]
+                  w-full rounded-full bg-[#004ac6] py-2.5 text-[14px]
                   font-semibold text-white
                   shadow-[0_7px_18px_rgba(83,140,219,0.25)] transition-all
-                  hover:bg-[#467BC7] active:scale-[0.99]
+                  hover:bg-[#004ac6] active:scale-[0.99]
                 "
               >
                 Terapkan Filter

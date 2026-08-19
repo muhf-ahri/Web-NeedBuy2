@@ -33,12 +33,12 @@ const NeedPayTopup: React.FC<NeedPayTopupProps> = ({
           <p
             className="
               mb-1 text-[10px] font-semibold uppercase tracking-[0.18em]
-              text-[#538CDB]
+              text-[#004ac6]
             "
           >
             Tambah saldo
           </p>
-          <h2 className="text-[17px] font-bold text-[#20242D]">Isi Saldo</h2>
+          <h2 className="text-[17px] font-bold text-[#101319]">Isi Saldo</h2>
         </div>
 
         <span
@@ -56,7 +56,7 @@ const NeedPayTopup: React.FC<NeedPayTopupProps> = ({
         <p
           className="
             mb-2 text-[10px] font-semibold uppercase tracking-[0.16em]
-            text-[#737A87]
+            text-[#737686]
           "
         >
           Nominal cepat
@@ -74,8 +74,8 @@ const NeedPayTopup: React.FC<NeedPayTopupProps> = ({
                   transition-all duration-200
                   ${
                     picked
-                      ? 'bg-[#538CDB] text-white shadow-[0_6px_16px_rgba(83,140,219,0.25)]'
-                      : 'bg-[#F5F7FB] text-[#20242D] hover:bg-[#EEF5FF] hover:text-[#538CDB]'
+                      ? 'bg-[#004ac6] text-white shadow-[0_6px_16px_rgba(83,140,219,0.25)]'
+                      : 'bg-[#F5F7FB] text-[#101319] hover:bg-[#f5f7fb] hover:text-[#004ac6]'
                   }
                 `}
               >
@@ -91,7 +91,7 @@ const NeedPayTopup: React.FC<NeedPayTopupProps> = ({
           <span
             className="
               absolute left-4 top-1/2 -translate-y-1/2 text-[13px]
-              font-semibold text-[#737A87]
+              font-semibold text-[#737686]
             "
           >
             Rp
@@ -104,9 +104,9 @@ const NeedPayTopup: React.FC<NeedPayTopupProps> = ({
             onChange={(e) => onAmountChange(e.target.value)}
             placeholder={`Min ${formatRupiah(minTopup)}`}
             className="
-              w-full rounded-full border border-[#E8ECF4] bg-[#F5F7FB]
-              py-3 pl-10 pr-4 text-[13px] text-[#20242D] outline-none
-              transition-all duration-200 focus:border-[#538CDB]
+              w-full rounded-full border border-[#e0e3e5] bg-[#F5F7FB]
+              py-3 pl-10 pr-4 text-[13px] text-[#101319] outline-none
+              transition-all duration-200 focus:border-[#004ac6]
               focus:bg-white focus:shadow-[0_6px_20px_rgba(83,140,219,0.12)]
             "
           />
@@ -118,9 +118,9 @@ const NeedPayTopup: React.FC<NeedPayTopupProps> = ({
           disabled={busy || !amount}
           className="
             flex h-11 items-center justify-center gap-2 rounded-full
-            bg-[#538CDB] px-6 text-[13px] font-semibold text-white
+            bg-[#004ac6] px-6 text-[13px] font-semibold text-white
             shadow-[0_7px_18px_rgba(83,140,219,0.25)] transition-all
-            duration-200 hover:bg-[#467BC7]
+            duration-200 hover:bg-[#004ac6]
             hover:shadow-[0_9px_22px_rgba(83,140,219,0.30)]
             active:scale-[0.99] disabled:cursor-not-allowed
             disabled:bg-[#A2A8B3] disabled:shadow-none sm:w-auto

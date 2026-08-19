@@ -231,7 +231,7 @@ const CouponsPage: React.FC = () => {
               className={`px-4 py-1.5 rounded-full text-[12px] font-semibold transition-colors ${
                 tab === item.key
                   ? 'bg-[#004ac6] text-white'
-                  : 'bg-[#f2f4f6] text-[#434655] hover:bg-[#e5e8f0]'
+                  : 'bg-[#f2f4f6] text-[#434655] hover:bg-[#e0e3e5]'
               }`}
             >
               {item.label}

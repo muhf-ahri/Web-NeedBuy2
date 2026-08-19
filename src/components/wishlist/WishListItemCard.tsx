@@ -46,9 +46,9 @@ const WishlistItemCard: React.FC<WishlistItemCardProps> = ({
         disabled={busy || !inStock}
         className="
           flex h-9 flex-1 items-center justify-center gap-1.5 rounded-full
-          bg-[#538CDB] px-4 text-[12px] font-semibold text-white
+          bg-[#004ac6] px-4 text-[12px] font-semibold text-white
           shadow-[0_4px_12px_rgba(83,140,219,0.25)] transition-all
-          duration-200 hover:bg-[#467BC7] active:scale-[0.98]
+          duration-200 hover:bg-[#004ac6] active:scale-[0.98]
           disabled:cursor-not-allowed disabled:bg-[#A2A8B3]
           disabled:shadow-none sm:flex-none
         "
@@ -67,9 +67,9 @@ const WishlistItemCard: React.FC<WishlistItemCardProps> = ({
         disabled={busy}
         className="
           flex h-9 w-9 shrink-0 items-center justify-center rounded-full
-          border border-[#E8ECF4] bg-white text-[#737A87] transition-all
-          duration-200 hover:border-[#FF4646]/40 hover:bg-[#FFF0F0]
-          hover:text-[#FF4646] active:scale-[0.95]
+          border border-[#e0e3e5] bg-white text-[#737686] transition-all
+          duration-200 hover:border-[#ba1a1a]/40 hover:bg-[#FFF0F0]
+          hover:text-[#ba1a1a] active:scale-[0.95]
           disabled:cursor-not-allowed disabled:opacity-50
         "
         aria-label="Hapus dari wishlist"
@@ -92,7 +92,7 @@ const WishlistItemCard: React.FC<WishlistItemCardProps> = ({
         <button
           type="button"
           onClick={onOpen}
-          className="h-16 w-16 shrink-0 overflow-hidden rounded-xl bg-[#F5F7FB] ring-1 ring-[#E8ECF4] sm:h-20 sm:w-20"
+          className="h-16 w-16 shrink-0 overflow-hidden rounded-xl bg-[#F5F7FB] ring-1 ring-[#e0e3e5] sm:h-20 sm:w-20"
         >
           {image ? (
             <img
@@ -117,8 +117,8 @@ const WishlistItemCard: React.FC<WishlistItemCardProps> = ({
         >
           <p
             className="
-              truncate text-[13px] font-semibold text-[#20242D]
-              transition-colors duration-200 group-hover:text-[#538CDB]
+              truncate text-[13px] font-semibold text-[#101319]
+              transition-colors duration-200 group-hover:text-[#004ac6]
               sm:text-[14px]
             "
           >
@@ -132,15 +132,15 @@ const WishlistItemCard: React.FC<WishlistItemCardProps> = ({
                 text-[9px] font-semibold
                 ${
                   inStock
-                    ? 'bg-[#DCFCE7] text-[#166534]'
-                    : 'bg-[#FFF0F0] text-[#C73535]'
+                    ? 'bg-[#e6f4ee] text-[#12805c]'
+                    : 'bg-[#FFF0F0] text-[#ba1a1a]'
                 }
               `}
             >
               <span
                 className={`
                   h-1 w-1 rounded-full
-                  ${inStock ? 'bg-[#22C55E]' : 'bg-[#FF4646]'}
+                  ${inStock ? 'bg-[#12805c]' : 'bg-[#ba1a1a]'}
                 `}
               />
               {inStock ? `${product.stock} tersedia` : 'Stok habis'}
@@ -152,12 +152,12 @@ const WishlistItemCard: React.FC<WishlistItemCardProps> = ({
             )}
           </div>
 
-          <p className="mt-1 text-[14px] font-bold text-[#538CDB] sm:hidden">
+          <p className="mt-1 text-[14px] font-bold text-[#004ac6] sm:hidden">
             {formatRupiah(product.price)}
           </p>
         </button>
 
-        <p className="hidden shrink-0 text-[14px] font-bold text-[#538CDB] sm:block">
+        <p className="hidden shrink-0 text-[14px] font-bold text-[#004ac6] sm:block">
           {formatRupiah(product.price)}
         </p>
 

@@ -28,7 +28,7 @@ const PlanItemRow: React.FC<PlanItemRowProps> = ({
       <div
         className="
           h-14 w-14 shrink-0 overflow-hidden rounded-xl bg-[#F5F7FB]
-          ring-1 ring-[#E8ECF4]
+          ring-1 ring-[#e0e3e5]
         "
       >
         {image ? (
@@ -48,13 +48,13 @@ const PlanItemRow: React.FC<PlanItemRowProps> = ({
       </div>
 
       <div className="min-w-0 flex-1">
-        <p className="truncate text-[13px] font-semibold leading-snug text-[#20242D]">
+        <p className="truncate text-[13px] font-semibold leading-snug text-[#101319]">
           {item.product.name}
         </p>
-        <p className="mt-0.5 text-[11px] text-[#737A87]">
+        <p className="mt-0.5 text-[11px] text-[#737686]">
           {item.product.category?.name ?? 'Kategori umum'}
         </p>
-        <p className="mt-0.5 text-[11px] font-semibold text-[#538CDB]">
+        <p className="mt-0.5 text-[11px] font-semibold text-[#004ac6]">
           {formatRupiah(parseFloat(item.product.price))} / item
         </p>
       </div>
@@ -66,16 +66,16 @@ const PlanItemRow: React.FC<PlanItemRowProps> = ({
           disabled={disabled || item.quantity <= 1}
           className="
             flex h-7 w-7 items-center justify-center rounded-full
-            border border-[#E8ECF4] bg-white text-[#737A87]
-            transition-colors hover:border-[#538CDB] hover:text-[#538CDB]
-            disabled:cursor-not-allowed disabled:border-[#E8ECF4]
-            disabled:bg-[#F5F7FB] disabled:text-[#D8DEE9]
+            border border-[#e0e3e5] bg-white text-[#737686]
+            transition-colors hover:border-[#004ac6] hover:text-[#004ac6]
+            disabled:cursor-not-allowed disabled:border-[#e0e3e5]
+            disabled:bg-[#F5F7FB] disabled:text-[#e0e3e5]
           "
           aria-label="Kurangi jumlah"
         >
           <Icon name="minus" size={12} />
         </button>
-        <span className="w-7 text-center text-[13px] font-bold text-[#20242D]">
+        <span className="w-7 text-center text-[13px] font-bold text-[#101319]">
           {item.quantity}
         </span>
         <button
@@ -84,10 +84,10 @@ const PlanItemRow: React.FC<PlanItemRowProps> = ({
           disabled={disabled}
           className="
             flex h-7 w-7 items-center justify-center rounded-full
-            border border-[#E8ECF4] bg-white text-[#737A87]
-            transition-colors hover:border-[#538CDB] hover:text-[#538CDB]
-            disabled:cursor-not-allowed disabled:border-[#E8ECF4]
-            disabled:bg-[#F5F7FB] disabled:text-[#D8DEE9]
+            border border-[#e0e3e5] bg-white text-[#737686]
+            transition-colors hover:border-[#004ac6] hover:text-[#004ac6]
+            disabled:cursor-not-allowed disabled:border-[#e0e3e5]
+            disabled:bg-[#F5F7FB] disabled:text-[#e0e3e5]
           "
           aria-label="Tambah jumlah"
         >
@@ -96,7 +96,7 @@ const PlanItemRow: React.FC<PlanItemRowProps> = ({
       </div>
 
       <div className="shrink-0 text-right">
-        <p className="text-[14px] font-bold text-[#20242D]">
+        <p className="text-[14px] font-bold text-[#101319]">
           {formatRupiah(parseFloat(item.subtotal))}
         </p>
         <button
@@ -105,8 +105,8 @@ const PlanItemRow: React.FC<PlanItemRowProps> = ({
           disabled={disabled}
           className="
             mt-0.5 inline-flex items-center gap-1 text-[10px]
-            font-semibold text-[#FF4646] transition-colors
-            hover:text-[#C73535] disabled:cursor-not-allowed
+            font-semibold text-[#ba1a1a] transition-colors
+            hover:text-[#ba1a1a] disabled:cursor-not-allowed
             disabled:opacity-50
           "
         >

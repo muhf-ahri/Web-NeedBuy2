@@ -44,11 +44,11 @@ const CartItemRow: React.FC<CartItemRowProps> = ({
           checked={selected}
           disabled={unavailable}
           onChange={(e) => onToggleSelect(e.target.checked)}
-          className="mt-1 h-4 w-4 shrink-0 cursor-pointer accent-[#538CDB] disabled:cursor-not-allowed"
+          className="mt-1 h-4 w-4 shrink-0 cursor-pointer accent-[#004ac6] disabled:cursor-not-allowed"
           aria-label={`Pilih ${item.product.name} untuk checkout`}
         />
 
-        <div className="h-16 w-16 shrink-0 overflow-hidden rounded-xl bg-[#F5F7FB] ring-1 ring-[#E8ECF4] sm:h-[72px] sm:w-[72px]">
+        <div className="h-16 w-16 shrink-0 overflow-hidden rounded-xl bg-[#F5F7FB] ring-1 ring-[#e0e3e5] sm:h-[72px] sm:w-[72px]">
           {image ? (
             <img src={image} alt={item.product.name} className="h-full w-full object-cover" />
           ) : (
@@ -59,16 +59,16 @@ const CartItemRow: React.FC<CartItemRowProps> = ({
         </div>
 
         <div className="min-w-0">
-          <p className="truncate text-[13px] font-semibold leading-tight text-[#20242D] sm:text-[14px]">
+          <p className="truncate text-[13px] font-semibold leading-tight text-[#101319] sm:text-[14px]">
             {item.product.name}
           </p>
-          <p className="mt-0.5 truncate text-[11px] text-[#737A87]">
+          <p className="mt-0.5 truncate text-[11px] text-[#737686]">
             {item.product.seller.storeName}
           </p>
           {item.variant && (
-            <p className="text-[11px] text-[#737A87]">Model: {item.variant}</p>
+            <p className="text-[11px] text-[#737686]">Model: {item.variant}</p>
           )}
-          <p className="mt-0.5 text-[12px] font-semibold text-[#538CDB]">
+          <p className="mt-0.5 text-[12px] font-semibold text-[#004ac6]">
             {formatRupiah(item.priceAtAdd)}
           </p>
 
@@ -76,17 +76,17 @@ const CartItemRow: React.FC<CartItemRowProps> = ({
             <span
               className="
                 mt-1 inline-flex items-center gap-1 rounded-full
-                bg-[#DCFCE7] px-2 py-0.5 text-[9px] font-semibold
-                text-[#166534]
+                bg-[#e6f4ee] px-2 py-0.5 text-[9px] font-semibold
+                text-[#12805c]
               "
             >
-              <span className="h-1 w-1 rounded-full bg-[#22C55E]" />
+              <span className="h-1 w-1 rounded-full bg-[#12805c]" />
               Grosir -{item.bulkDiscountPercent}% kepake
             </span>
           )}
 
           {unavailable && (
-            <p className="mt-1 text-[11px] font-medium text-[#FF4646]">
+            <p className="mt-1 text-[11px] font-medium text-[#ba1a1a]">
               Stoknya nggak cukup: kurangi jumlahnya atau hapus.
             </p>
           )}
@@ -94,22 +94,22 @@ const CartItemRow: React.FC<CartItemRowProps> = ({
       </div>
 
       <div className="flex items-center justify-between gap-3 pl-7 sm:justify-end sm:pl-0">
-        <div className="flex items-center rounded-full border border-[#E8ECF4] bg-white">
+        <div className="flex items-center rounded-full border border-[#e0e3e5] bg-white">
           <button
             type="button"
             onClick={() => onQty(Math.max(1, item.quantity - 1))}
             disabled={busy || item.quantity <= 1}
             className="
               flex h-8 w-8 items-center justify-center rounded-l-full
-              text-[#737A87] transition-colors hover:bg-[#F5F7FB]
-              hover:text-[#538CDB] disabled:cursor-not-allowed
+              text-[#737686] transition-colors hover:bg-[#F5F7FB]
+              hover:text-[#004ac6] disabled:cursor-not-allowed
               disabled:opacity-40
             "
             aria-label="Kurangi jumlah"
           >
             <Icon name="minus" size={13} />
           </button>
-          <span className="w-9 text-center text-[13px] font-bold text-[#20242D]">
+          <span className="w-9 text-center text-[13px] font-bold text-[#101319]">
             {item.quantity}
           </span>
           <button
@@ -118,8 +118,8 @@ const CartItemRow: React.FC<CartItemRowProps> = ({
             disabled={busy || item.quantity >= item.product.stock}
             className="
               flex h-8 w-8 items-center justify-center rounded-r-full
-              text-[#737A87] transition-colors hover:bg-[#F5F7FB]
-              hover:text-[#538CDB] disabled:cursor-not-allowed
+              text-[#737686] transition-colors hover:bg-[#F5F7FB]
+              hover:text-[#004ac6] disabled:cursor-not-allowed
               disabled:opacity-40
             "
             aria-label="Tambah jumlah"
@@ -128,7 +128,7 @@ const CartItemRow: React.FC<CartItemRowProps> = ({
           </button>
         </div>
 
-        <span className="w-24 text-right text-[13px] font-bold text-[#20242D] sm:text-[14px]">
+        <span className="w-24 text-right text-[13px] font-bold text-[#101319] sm:text-[14px]">
           {formatRupiah(item.subtotal)}
         </span>
 
@@ -138,9 +138,9 @@ const CartItemRow: React.FC<CartItemRowProps> = ({
           disabled={busy}
           className="
             flex h-8 w-8 items-center justify-center rounded-full
-            border border-[#E8ECF4] bg-white text-[#737A87] transition-all
-            duration-200 hover:border-[#FF4646]/40 hover:bg-[#FFF0F0]
-            hover:text-[#FF4646] active:scale-[0.95]
+            border border-[#e0e3e5] bg-white text-[#737686] transition-all
+            duration-200 hover:border-[#ba1a1a]/40 hover:bg-[#FFF0F0]
+            hover:text-[#ba1a1a] active:scale-[0.95]
             disabled:cursor-not-allowed disabled:opacity-50
           "
           aria-label="Hapus item"

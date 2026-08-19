@@ -12,7 +12,7 @@ const PlaceholderPage: React.FC = () => {
     <AdminLayout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-[28px] font-bold text-[#191c1e]">{item?.label ?? 'Admin'}</h1>
+          <h1 className="text-[28px] font-bold text-[#101319]">{item?.label ?? 'Admin'}</h1>
           <p className="text-[15px] text-[#737686]">Halaman ini masih dalam pengembangan.</p>
         </div>
 
@@ -20,7 +20,7 @@ const PlaceholderPage: React.FC = () => {
           <div className="rounded-full bg-[#dbe1ff] p-4 text-[#004ac6]">
             <Icon name={item?.icon ?? 'dashboard'} size={28} />
           </div>
-          <h2 className="mt-4 text-[17px] font-bold text-[#191c1e]">
+          <h2 className="mt-4 text-[17px] font-bold text-[#101319]">
             {item?.label ?? 'Halaman'} belum tersedia
           </h2>
           <p className="mt-1 max-w-md text-[13px] text-[#737686]">

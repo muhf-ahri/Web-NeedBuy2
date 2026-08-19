@@ -32,7 +32,7 @@ const StoreCard: React.FC<StoreCardProps> = ({
       <div
         className="
           shrink-0 overflow-hidden rounded-xl bg-[#F5F7FB] ring-1
-          ring-[#E8ECF4]
+          ring-[#e0e3e5]
         "
         style={{ width: logoSize, height: logoSize }}
       >
@@ -46,7 +46,7 @@ const StoreCard: React.FC<StoreCardProps> = ({
           <span
             className="
               flex h-full w-full items-center justify-center font-bold
-              text-[#538CDB]
+              text-[#004ac6]
             "
             style={{ fontSize: logoSize / 2.6 }}
           >
@@ -59,8 +59,8 @@ const StoreCard: React.FC<StoreCardProps> = ({
         <div className="flex flex-wrap items-center gap-1.5">
           <span
             className="
-              truncate text-[13px] font-semibold text-[#20242D]
-              transition-colors duration-200 group-hover:text-[#538CDB]
+              truncate text-[13px] font-semibold text-[#101319]
+              transition-colors duration-200 group-hover:text-[#004ac6]
             "
           >
             {store.storeName}
@@ -78,16 +78,16 @@ const StoreCard: React.FC<StoreCardProps> = ({
           )}
         </div>
 
-        <p className="mt-0.5 line-clamp-2 text-[11px] leading-relaxed text-[#737A87]">
+        <p className="mt-0.5 line-clamp-2 text-[11px] leading-relaxed text-[#737686]">
           {store.description || 'Toko ini belum nulis deskripsi.'}
         </p>
 
-        <div className="mt-1.5 flex items-center gap-2 text-[11px] text-[#737A87]">
+        <div className="mt-1.5 flex items-center gap-2 text-[11px] text-[#737686]">
           <span className="inline-flex items-center gap-0.5">
             <Icon name="star" size={11} className="text-[#FFD500]" />
             {Number(store.rating).toFixed(1)}
           </span>
-          <span className="h-1 w-1 shrink-0 rounded-full bg-[#D8DEE9]" />
+          <span className="h-1 w-1 shrink-0 rounded-full bg-[#e0e3e5]" />
           <span>{store._count?.products ?? 0} produk</span>
         </div>
       </div>
@@ -97,7 +97,7 @@ const StoreCard: React.FC<StoreCardProps> = ({
         size={15}
         className="
           shrink-0 text-[#A2A8B3] transition-all duration-200
-          group-hover:translate-x-0.5 group-hover:text-[#538CDB]
+          group-hover:translate-x-0.5 group-hover:text-[#004ac6]
         "
       />
     </button>

@@ -15,18 +15,18 @@ const GrowthBadge: React.FC<GrowthBadgeProps> = ({ value, label }) => {
       className={`
         inline-flex items-center gap-1 rounded-full px-2 py-0.5
         text-[10px] font-bold tabular-nums
-        ${up ? 'bg-[#DCFCE7] text-[#166534]' : 'bg-[#FFF0F0] text-[#C73535]'}
+        ${up ? 'bg-[#e6f4ee] text-[#12805c]' : 'bg-[#FFF0F0] text-[#ba1a1a]'}
       `}
     >
       <Icon
         name={up ? 'arrowUp' : 'arrowDown'}
         size={10}
-        className={up ? 'text-[#22C55E]' : 'text-[#FF4646]'}
+        className={up ? 'text-[#12805c]' : 'text-[#ba1a1a]'}
       />
       {up ? '+' : ''}
       {value.toFixed(1)}%
       {label && (
-        <span className={up ? 'text-[#166534]/70' : 'text-[#C73535]/70'}>
+        <span className={up ? 'text-[#12805c]/70' : 'text-[#ba1a1a]/70'}>
           {label}
         </span>
       )}

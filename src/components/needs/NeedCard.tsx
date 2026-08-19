@@ -11,7 +11,7 @@ const STATUS_STYLE: Record<
 > = {
   DRAFT: {
     bg: 'bg-[#F5F7FB]',
-    text: 'text-[#737A87]',
+    text: 'text-[#737686]',
     dot: 'bg-[#A2A8B3]',
   },
   PARSED: {
@@ -20,14 +20,14 @@ const STATUS_STYLE: Record<
     dot: 'bg-[#FFD500]',
   },
   PROCESSED: {
-    bg: 'bg-[#538CDB]/15',
-    text: 'text-[#538CDB]',
-    dot: 'bg-[#538CDB]',
+    bg: 'bg-[#004ac6]/15',
+    text: 'text-[#004ac6]',
+    dot: 'bg-[#004ac6]',
   },
   COMPLETED: {
-    bg: 'bg-[#DCFCE7]',
-    text: 'text-[#166534]',
-    dot: 'bg-[#22C55E]',
+    bg: 'bg-[#e6f4ee]',
+    text: 'text-[#12805c]',
+    dot: 'bg-[#12805c]',
   },
 };
 
@@ -71,7 +71,7 @@ const NeedCard: React.FC<NeedCardProps> = ({
           <div className="flex flex-wrap items-center gap-2">
             <p
               className="
-                line-clamp-2 text-[14px] font-semibold text-[#20242D]
+                line-clamp-2 text-[14px] font-semibold text-[#101319]
               "
             >
               {need.rawInput}
@@ -87,20 +87,20 @@ const NeedCard: React.FC<NeedCardProps> = ({
             </span>
           </div>
 
-          <p className="mt-1 line-clamp-1 text-[12px] text-[#737A87]">
+          <p className="mt-1 line-clamp-1 text-[12px] text-[#737686]">
             {need.goal ?? 'Belum dianalisis'}
             {need.budget ? (
               <>
-                <span className="mx-1.5 text-[#D8DEE9]">·</span>
+                <span className="mx-1.5 text-[#e0e3e5]">·</span>
                 Budget{' '}
-                <span className="font-semibold text-[#20242D]">
+                <span className="font-semibold text-[#101319]">
                   {formatRupiah(need.budget)}
                 </span>
               </>
             ) : null}
             {need.location ? (
               <>
-                <span className="mx-1.5 text-[#D8DEE9]">·</span>
+                <span className="mx-1.5 text-[#e0e3e5]">·</span>
                 {need.location}
               </>
             ) : null}
@@ -113,10 +113,10 @@ const NeedCard: React.FC<NeedCardProps> = ({
             onClick={() => onOpenRecommendations(need.id)}
             disabled={isDraft}
             className="
-              flex h-9 items-center gap-1.5 rounded-full bg-[#538CDB] px-4
+              flex h-9 items-center gap-1.5 rounded-full bg-[#004ac6] px-4
               text-[12px] font-semibold text-white
               shadow-[0_4px_12px_rgba(83,140,219,0.25)] transition-all
-              duration-200 hover:bg-[#467BC7] active:scale-[0.98]
+              duration-200 hover:bg-[#004ac6] active:scale-[0.98]
               disabled:cursor-not-allowed disabled:bg-[#A2A8B3]
               disabled:shadow-none
             "
@@ -130,8 +130,8 @@ const NeedCard: React.FC<NeedCardProps> = ({
             disabled={isDraft || busyId === `plan-${need.id}`}
             className="
               flex h-9 items-center gap-1.5 rounded-full border
-              border-[#538CDB] bg-white px-4 text-[12px] font-semibold
-              text-[#538CDB] transition-all duration-200 hover:bg-[#538CDB]
+              border-[#004ac6] bg-white px-4 text-[12px] font-semibold
+              text-[#004ac6] transition-all duration-200 hover:bg-[#004ac6]
               hover:text-white active:scale-[0.98]
               disabled:cursor-not-allowed disabled:opacity-50
             "
@@ -147,17 +147,17 @@ const NeedCard: React.FC<NeedCardProps> = ({
       </div>
 
       {isActive && (
-        <div className="mt-4 border-t border-[#E8ECF4] pt-4">
+        <div className="mt-4 border-t border-[#e0e3e5] pt-4">
           <div className="mb-3 flex items-center gap-2">
             <span
               className="
                 flex h-6 w-6 items-center justify-center rounded-lg
-                bg-[#538CDB]/10
+                bg-[#004ac6]/10
               "
             >
-              <Icon name="layers" size={12} className="text-[#538CDB]" />
+              <Icon name="layers" size={12} className="text-[#004ac6]" />
             </span>
-            <p className="text-[12px] font-bold text-[#20242D]">
+            <p className="text-[12px] font-bold text-[#101319]">
               Rekomendasi Produk
             </p>
             <span className="text-[11px] text-[#A2A8B3]">
@@ -175,11 +175,11 @@ const NeedCard: React.FC<NeedCardProps> = ({
                     bg-[#F5F7FB] p-3
                   "
                 >
-                  <div className="h-16 w-16 shrink-0 rounded-xl bg-[#E8ECF4]" />
+                  <div className="h-16 w-16 shrink-0 rounded-xl bg-[#e0e3e5]" />
                   <div className="flex-1 space-y-2">
-                    <div className="h-2.5 w-20 rounded-full bg-[#E8ECF4]" />
-                    <div className="h-3 w-3/4 rounded-full bg-[#E8ECF4]" />
-                    <div className="h-2.5 w-1/2 rounded-full bg-[#E8ECF4]" />
+                    <div className="h-2.5 w-20 rounded-full bg-[#e0e3e5]" />
+                    <div className="h-3 w-3/4 rounded-full bg-[#e0e3e5]" />
+                    <div className="h-2.5 w-1/2 rounded-full bg-[#e0e3e5]" />
                   </div>
                 </div>
               ))}
@@ -187,7 +187,7 @@ const NeedCard: React.FC<NeedCardProps> = ({
           ) : recs.length === 0 ? (
             <div
               className="
-                rounded-2xl border border-dashed border-[#D8DEE9]
+                rounded-2xl border border-dashed border-[#e0e3e5]
                 bg-white/70 py-10 text-center
               "
             >
@@ -199,10 +199,10 @@ const NeedCard: React.FC<NeedCardProps> = ({
               >
                 <Icon name="product" size={18} className="text-[#A2A8B3]" />
               </div>
-              <p className="mt-3 text-[13px] font-semibold text-[#20242D]">
+              <p className="mt-3 text-[13px] font-semibold text-[#101319]">
                 Belum ada rekomendasi
               </p>
-              <p className="mt-1 text-[11px] text-[#737A87]">
+              <p className="mt-1 text-[11px] text-[#737686]">
                 Proses kebutuhan ini dulu supaya AI bisa mencarikan produk
                 yang pas.
               </p>

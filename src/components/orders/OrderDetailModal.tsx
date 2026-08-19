@@ -53,7 +53,7 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4">
       <div
-        className="absolute inset-0 bg-[#20242D]/50 backdrop-blur-sm"
+        className="absolute inset-0 bg-[#101319]/50 backdrop-blur-sm"
         onClick={onClose}
       />
 
@@ -66,7 +66,7 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
         "
       >
 
-        <div className="flex items-start justify-between gap-3 border-b border-[#E8ECF4] px-5 py-4 sm:px-6">
+        <div className="flex items-start justify-between gap-3 border-b border-[#e0e3e5] px-5 py-4 sm:px-6">
           <div className="min-w-0">
             <div className="mb-1 flex items-center gap-2">
               <span
@@ -78,11 +78,11 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
                 <span className="h-1 w-1 rounded-full bg-current opacity-60" />
                 {STATUS_LABEL[order.status]}
               </span>
-              <span className="font-mono text-[11px] font-bold text-[#737A87]">
+              <span className="font-mono text-[11px] font-bold text-[#737686]">
                 #{order.orderNumber}
               </span>
             </div>
-            <p className="truncate text-[13px] font-bold text-[#20242D]">
+            <p className="truncate text-[13px] font-bold text-[#101319]">
               {order.seller.storeName}
             </p>
             <p className="mt-0.5 text-[11px] text-[#A2A8B3]">
@@ -93,7 +93,7 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
               onClick={() => navigate(`/messages?seller=${order.seller.id}`)}
               className="
                 mt-1.5 inline-flex items-center gap-1 text-[11px]
-                font-semibold text-[#538CDB] hover:underline
+                font-semibold text-[#004ac6] hover:underline
               "
             >
               <Icon name="chat" size={12} /> Chat penjual
@@ -103,8 +103,8 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
             type="button"
             onClick={onClose}
             className="
-              shrink-0 rounded-full p-1.5 text-[#737A87] transition-colors
-              hover:bg-[#F5F7FB] hover:text-[#20242D]
+              shrink-0 rounded-full p-1.5 text-[#737686] transition-colors
+              hover:bg-[#F5F7FB] hover:text-[#101319]
             "
             aria-label="Tutup"
           >
@@ -121,12 +121,12 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
               "
             >
               <div className="flex items-center gap-2">
-                <Icon name="card" size={15} className="text-[#538CDB]" />
-                <span className="font-semibold text-[#20242D]">
+                <Icon name="card" size={15} className="text-[#004ac6]" />
+                <span className="font-semibold text-[#101319]">
                   {paymentMethodLabel(order.payment?.method)}
                 </span>
               </div>
-              <span className="text-[#737A87]">
+              <span className="text-[#737686]">
                 {order.statusPembayaranLabel}
               </span>
             </div>
@@ -135,7 +135,7 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
               <p
                 className="
                   mb-3 text-[10px] font-bold uppercase tracking-[0.16em]
-                  text-[#737A87]
+                  text-[#737686]
                 "
               >
                 Detail Produk
@@ -146,15 +146,15 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
                     key={item.id}
                     className="
                       flex items-center justify-between gap-3 rounded-xl
-                      border border-[#E8ECF4] bg-white p-3
+                      border border-[#e0e3e5] bg-white p-3
                     "
                   >
                     <div className="min-w-0 flex-1">
-                      <p className="text-[13px] font-semibold text-[#20242D]">
+                      <p className="text-[13px] font-semibold text-[#101319]">
                         {item.productName}
                       </p>
                       {item.variant && (
-                        <p className="mt-0.5 text-[11px] text-[#737A87]">
+                        <p className="mt-0.5 text-[11px] text-[#737686]">
                           Model: {item.variant}
                         </p>
                       )}
@@ -163,7 +163,7 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
                       </p>
                     </div>
                     <div className="shrink-0 text-right">
-                      <p className="text-[13px] font-bold text-[#20242D]">
+                      <p className="text-[13px] font-bold text-[#101319]">
                         {formatRupiah(item.subtotal)}
                       </p>
                       {order.status === 'COMPLETED' && !item.review && (
@@ -172,7 +172,7 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
                           onClick={() => onOpenReview(order)}
                           className="
                             mt-1 inline-flex items-center gap-1 text-[11px]
-                            font-semibold text-[#538CDB] hover:underline
+                            font-semibold text-[#004ac6] hover:underline
                           "
                         >
                           <Icon name="star" size={11} />
@@ -183,7 +183,7 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
                         <p
                           className="
                             mt-1 inline-flex items-center gap-1 text-[11px]
-                            text-[#737A87]
+                            text-[#737686]
                           "
                         >
                           <Icon
@@ -205,7 +205,7 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
                 <p
                   className="
                     mb-2 text-[10px] font-bold uppercase tracking-[0.16em]
-                    text-[#737A87]
+                    text-[#737686]
                   "
                 >
                   Alamat Pengiriman
@@ -215,13 +215,13 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
                     <Icon
                       name="pin"
                       size={15}
-                      className="mt-0.5 shrink-0 text-[#538CDB]"
+                      className="mt-0.5 shrink-0 text-[#004ac6]"
                     />
                     <div className="min-w-0">
-                      <p className="text-[12px] font-semibold text-[#20242D]">
+                      <p className="text-[12px] font-semibold text-[#101319]">
                         {order.address.recipientName} · {order.address.phone}
                       </p>
-                      <p className="mt-0.5 text-[11px] leading-relaxed text-[#737A87]">
+                      <p className="mt-0.5 text-[11px] leading-relaxed text-[#737686]">
                         {order.address.fullAddress}, {order.address.city},{' '}
                         {order.address.province} {order.address.postalCode}
                       </p>
@@ -234,14 +234,14 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
             <div className="rounded-2xl bg-[#F5F7FB] p-4">
               <div className="space-y-2 text-[12px]">
                 <div className="flex justify-between">
-                  <span className="text-[#737A87]">Subtotal</span>
-                  <span className="font-semibold text-[#20242D]">
+                  <span className="text-[#737686]">Subtotal</span>
+                  <span className="font-semibold text-[#101319]">
                     {formatRupiah(order.subtotal)}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#737A87]">Ongkos kirim</span>
-                  <span className="font-semibold text-[#20242D]">
+                  <span className="text-[#737686]">Ongkos kirim</span>
+                  <span className="font-semibold text-[#101319]">
                     {order.shippingCost === '0' || !order.shippingCost
                       ? 'Gratis'
                       : formatRupiah(order.shippingCost)}
@@ -249,13 +249,13 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
                 </div>
                 <div
                   className="
-                    flex justify-between border-t border-[#E8ECF4] pt-2
+                    flex justify-between border-t border-[#e0e3e5] pt-2
                   "
                 >
-                  <span className="text-[13px] font-bold text-[#20242D]">
+                  <span className="text-[13px] font-bold text-[#101319]">
                     Total
                   </span>
-                  <span className="text-[15px] font-extrabold text-[#538CDB]">
+                  <span className="text-[15px] font-extrabold text-[#004ac6]">
                     {formatRupiah(order.total)}
                   </span>
                 </div>
@@ -266,7 +266,7 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
 
         <div
           className="
-            flex flex-wrap gap-2 border-t border-[#E8ECF4] bg-white/95
+            flex flex-wrap gap-2 border-t border-[#e0e3e5] bg-white/95
             px-5 py-4 backdrop-blur-sm sm:px-6
           "
         >
@@ -278,9 +278,9 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
                 disabled={busy}
                 className="
                   flex h-10 flex-1 items-center justify-center gap-2
-                  rounded-full bg-[#538CDB] px-4 text-[12px] font-semibold
+                  rounded-full bg-[#004ac6] px-4 text-[12px] font-semibold
                   text-white shadow-[0_6px_16px_rgba(83,140,219,0.25)]
-                  transition-all duration-200 hover:bg-[#467BC7]
+                  transition-all duration-200 hover:bg-[#004ac6]
                   active:scale-[0.99] disabled:cursor-not-allowed
                   disabled:bg-[#A2A8B3] disabled:shadow-none
                 "
@@ -298,9 +298,9 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
                 disabled={busy || checkingPayment}
                 className="
                   flex h-10 flex-1 items-center justify-center gap-2
-                  rounded-full border border-[#538CDB] bg-white px-4
-                  text-[12px] font-semibold text-[#538CDB] transition-all
-                  duration-200 hover:bg-[#538CDB] hover:text-white
+                  rounded-full border border-[#004ac6] bg-white px-4
+                  text-[12px] font-semibold text-[#004ac6] transition-all
+                  duration-200 hover:bg-[#004ac6] hover:text-white
                   active:scale-[0.99] disabled:cursor-not-allowed
                   disabled:opacity-50
                 "
@@ -318,9 +318,9 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
                 disabled={busy}
                 className="
                   flex h-10 flex-1 items-center justify-center gap-2
-                  rounded-full border border-[#FF4646]/30 bg-white px-4
-                  text-[12px] font-semibold text-[#C73535] transition-all
-                  duration-200 hover:border-[#FF4646] hover:bg-[#FFF0F0]
+                  rounded-full border border-[#ba1a1a]/30 bg-white px-4
+                  text-[12px] font-semibold text-[#ba1a1a] transition-all
+                  duration-200 hover:border-[#ba1a1a] hover:bg-[#FFF0F0]
                   active:scale-[0.99] disabled:cursor-not-allowed
                   disabled:opacity-50
                 "
@@ -335,7 +335,7 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
               <div
                 className="
                   flex h-10 flex-1 items-center justify-center gap-2
-                  text-[12px] text-[#737A87]
+                  text-[12px] text-[#737686]
                 "
               >
                 <Icon name="clock" size={14} />
@@ -347,9 +347,9 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
                 disabled={busy}
                 className="
                   flex h-10 flex-1 items-center justify-center gap-2
-                  rounded-full border border-[#FF4646]/30 bg-white px-4
-                  text-[12px] font-semibold text-[#C73535] transition-all
-                  duration-200 hover:border-[#FF4646] hover:bg-[#FFF0F0]
+                  rounded-full border border-[#ba1a1a]/30 bg-white px-4
+                  text-[12px] font-semibold text-[#ba1a1a] transition-all
+                  duration-200 hover:border-[#ba1a1a] hover:bg-[#FFF0F0]
                   active:scale-[0.99] disabled:cursor-not-allowed
                   disabled:opacity-50
                 "
@@ -365,7 +365,7 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
             <div
               className="
                 flex h-10 w-full items-center justify-center gap-2
-                text-[12px] text-[#737A87]
+                text-[12px] text-[#737686]
               "
             >
               <Icon name="clock" size={14} />
@@ -381,9 +381,9 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
                 disabled={busy}
                 className="
                   flex h-10 w-full items-center justify-center gap-2
-                  rounded-full bg-[#22C55E] px-4 text-[12px] font-semibold
+                  rounded-full bg-[#12805c] px-4 text-[12px] font-semibold
                   text-white shadow-[0_6px_16px_rgba(34,197,94,0.25)]
-                  transition-all duration-200 hover:bg-[#16A34A]
+                  transition-all duration-200 hover:bg-[#12805c]
                   active:scale-[0.99] disabled:cursor-not-allowed
                   disabled:bg-[#A2A8B3] disabled:shadow-none
                 "
@@ -406,7 +406,7 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
             <div
               className="
                 flex h-10 w-full items-center justify-center gap-2
-                text-[12px] font-semibold text-[#538CDB]
+                text-[12px] font-semibold text-[#004ac6]
               "
             >
               <Icon name="check" size={14} />
@@ -418,7 +418,7 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
             <div
               className="
                 flex h-10 w-full items-center justify-center gap-2
-                text-[12px] font-semibold text-[#C73535]
+                text-[12px] font-semibold text-[#ba1a1a]
               "
             >
               <Icon name="close" size={14} />

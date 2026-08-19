@@ -54,7 +54,7 @@ const ReviewModal: React.FC<ReviewModalProps> = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4">
       <div
-        className="absolute inset-0 bg-[#20242D]/50 backdrop-blur-sm"
+        className="absolute inset-0 bg-[#101319]/50 backdrop-blur-sm"
         onClick={onClose}
       />
 
@@ -67,17 +67,17 @@ const ReviewModal: React.FC<ReviewModalProps> = ({
         "
       >
 
-        <div className="flex items-center justify-between border-b border-[#E8ECF4] px-5 py-4">
+        <div className="flex items-center justify-between border-b border-[#e0e3e5] px-5 py-4">
           <div className="flex items-center gap-2.5">
             <span
               className="
                 flex h-8 w-8 items-center justify-center rounded-lg
-                bg-[#538CDB]/10
+                bg-[#004ac6]/10
               "
             >
-              <Icon name="star" size={14} className="text-[#538CDB]" />
+              <Icon name="star" size={14} className="text-[#004ac6]" />
             </span>
-            <h3 className="text-[15px] font-bold text-[#20242D]">
+            <h3 className="text-[15px] font-bold text-[#101319]">
               Kasih Ulasan
             </h3>
           </div>
@@ -85,8 +85,8 @@ const ReviewModal: React.FC<ReviewModalProps> = ({
             type="button"
             onClick={onClose}
             className="
-              rounded-full p-1.5 text-[#737A87] transition-colors
-              hover:bg-[#F5F7FB] hover:text-[#20242D]
+              rounded-full p-1.5 text-[#737686] transition-colors
+              hover:bg-[#F5F7FB] hover:text-[#101319]
             "
             aria-label="Tutup"
           >
@@ -105,12 +105,12 @@ const ReviewModal: React.FC<ReviewModalProps> = ({
               <div
                 className="
                   flex h-11 w-11 shrink-0 items-center justify-center
-                  rounded-xl bg-white ring-1 ring-[#E8ECF4]
+                  rounded-xl bg-white ring-1 ring-[#e0e3e5]
                 "
               >
-                <Icon name="orders" size={18} className="text-[#538CDB]" />
+                <Icon name="orders" size={18} className="text-[#004ac6]" />
               </div>
-              <p className="min-w-0 truncate text-[12px] font-semibold text-[#20242D]">
+              <p className="min-w-0 truncate text-[12px] font-semibold text-[#101319]">
                 {targetItem.productName}
               </p>
             </div>
@@ -120,7 +120,7 @@ const ReviewModal: React.FC<ReviewModalProps> = ({
             <p
               className="
                 mb-2 text-[10px] font-bold uppercase tracking-[0.16em]
-                text-[#737A87]
+                text-[#737686]
               "
             >
               Rating
@@ -142,12 +142,12 @@ const ReviewModal: React.FC<ReviewModalProps> = ({
                     size={30}
                     className={`
                       transition-colors
-                      ${n <= rating ? 'text-[#FFD500]' : 'text-[#E8ECF4]'}
+                      ${n <= rating ? 'text-[#FFD500]' : 'text-[#e0e3e5]'}
                     `}
                   />
                 </button>
               ))}
-              <span className="ml-2 text-[12px] font-semibold text-[#20242D]">
+              <span className="ml-2 text-[12px] font-semibold text-[#101319]">
                 {rating}/5
               </span>
             </div>
@@ -158,7 +158,7 @@ const ReviewModal: React.FC<ReviewModalProps> = ({
               htmlFor="review-comment"
               className="
                 mb-2 block text-[10px] font-bold uppercase tracking-[0.16em]
-                text-[#737A87]
+                text-[#737686]
               "
             >
               Komentar{' '}
@@ -173,10 +173,10 @@ const ReviewModal: React.FC<ReviewModalProps> = ({
               placeholder="Bagikan pengalamanmu tentang produk ini..."
               rows={4}
               className="
-                w-full resize-none rounded-xl border border-[#E8ECF4]
-                bg-[#F5F7FB] px-4 py-3 text-[13px] text-[#20242D]
+                w-full resize-none rounded-xl border border-[#e0e3e5]
+                bg-[#F5F7FB] px-4 py-3 text-[13px] text-[#101319]
                 outline-none placeholder:text-[#A2A8B3] transition-all
-                duration-200 focus:border-[#538CDB] focus:bg-white
+                duration-200 focus:border-[#004ac6] focus:bg-white
                 focus:shadow-[0_4px_16px_rgba(83,140,219,0.10)]
               "
             />
@@ -186,7 +186,7 @@ const ReviewModal: React.FC<ReviewModalProps> = ({
             <p
               className="
                 mb-2 text-[10px] font-bold uppercase tracking-[0.16em]
-                text-[#737A87]
+                text-[#737686]
               "
             >
               Lampiran{' '}
@@ -202,14 +202,14 @@ const ReviewModal: React.FC<ReviewModalProps> = ({
                     key={file.url}
                     className="
                       relative aspect-square overflow-hidden rounded-xl
-                      border border-[#E8ECF4] bg-[#F5F7FB]
+                      border border-[#e0e3e5] bg-[#F5F7FB]
                     "
                   >
                     {file.kind === 'VIDEO' ? (
                       <span
                         className="
                           flex h-full w-full items-center justify-center
-                          bg-[#20242D] text-white
+                          bg-[#101319] text-white
                         "
                       >
                         <Icon name="eye" size={18} />
@@ -227,9 +227,9 @@ const ReviewModal: React.FC<ReviewModalProps> = ({
                       aria-label="Hapus lampiran"
                       className="
                         absolute right-1 top-1 flex h-5 w-5 items-center
-                        justify-center rounded-full bg-[#20242D]/70
+                        justify-center rounded-full bg-[#101319]/70
                         text-white backdrop-blur-sm transition-colors
-                        hover:bg-[#FF4646]
+                        hover:bg-[#ba1a1a]
                       "
                     >
                       <Icon name="close" size={11} />
@@ -254,9 +254,9 @@ const ReviewModal: React.FC<ReviewModalProps> = ({
               htmlFor="review-media"
               className="
                 inline-flex cursor-pointer items-center gap-2 rounded-full
-                border border-[#E8ECF4] bg-white px-4 py-2 text-[12px]
-                font-semibold text-[#20242D] transition-all duration-200
-                hover:border-[#538CDB] hover:text-[#538CDB]
+                border border-[#e0e3e5] bg-white px-4 py-2 text-[12px]
+                font-semibold text-[#101319] transition-all duration-200
+                hover:border-[#004ac6] hover:text-[#004ac6]
               "
             >
               <Icon name="upload" size={14} />
@@ -268,16 +268,16 @@ const ReviewModal: React.FC<ReviewModalProps> = ({
           </div>
         </div>
 
-        <div className="border-t border-[#E8ECF4] bg-white/95 px-5 py-4">
+        <div className="border-t border-[#e0e3e5] bg-white/95 px-5 py-4">
           <button
             type="button"
             onClick={onSubmit}
             disabled={busy || uploadingMedia || !targetItem}
             className="
               flex h-11 w-full items-center justify-center gap-2
-              rounded-full bg-[#538CDB] px-6 text-[14px] font-semibold
+              rounded-full bg-[#004ac6] px-6 text-[14px] font-semibold
               text-white shadow-[0_7px_18px_rgba(83,140,219,0.25)]
-              transition-all duration-200 hover:bg-[#467BC7]
+              transition-all duration-200 hover:bg-[#004ac6]
               hover:shadow-[0_9px_22px_rgba(83,140,219,0.30)]
               active:scale-[0.99] disabled:cursor-not-allowed
               disabled:bg-[#A2A8B3] disabled:shadow-none

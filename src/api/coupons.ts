@@ -9,9 +9,9 @@ export const COUPON_SKIN: Record<
   CouponCategory,
   { stub: string; ink: string; edge: string; label: string }
 > = {
-  SHIPPING: { stub: '#e3f2ec', ink: '#0e7a5f', edge: '#b7ddcf', label: 'Gratis ongkir' },
-  CASHBACK: { stub: '#efe7fb', ink: '#6b3fc7', edge: '#d6c6f2', label: 'Cashback' },
-  DISCOUNT: { stub: '#fff0e9', ink: '#ff5a1f', edge: '#ffcbb5', label: 'Potongan' },
+  SHIPPING: { stub: '#e6f4ee', ink: '#12805c', edge: '#e0e3e5', label: 'Gratis ongkir' },
+  CASHBACK: { stub: '#dbe1ff', ink: '#004ac6', edge: '#e0e3e5', label: 'Cashback' },
+  DISCOUNT: { stub: '#fff0e9', ink: '#ff5a1f', edge: '#e0e3e5', label: 'Potongan' },
 };
 
 export interface Coupon {

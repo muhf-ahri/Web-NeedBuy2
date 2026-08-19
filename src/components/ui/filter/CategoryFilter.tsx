@@ -27,8 +27,8 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
               animate-pulse
             "
           >
-            <div className="ml-2.5 h-4 w-4 shrink-0 rounded-md bg-[#E8ECF4]" />
-            <div className="h-2.5 w-24 rounded-full bg-[#E8ECF4]" />
+            <div className="ml-2.5 h-4 w-4 shrink-0 rounded-md bg-[#e0e3e5]" />
+            <div className="h-2.5 w-24 rounded-full bg-[#e0e3e5]" />
           </div>
         ))}
       </div>
@@ -57,7 +57,7 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
               py-2 text-left transition-all duration-200
               ${
                 active
-                  ? 'bg-[#538CDB]/10'
+                  ? 'bg-[#004ac6]/10'
                   : 'hover:bg-[#F5F7FB]'
               }
             `}
@@ -68,8 +68,8 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
                 rounded-md border transition-all duration-200
                 ${
                   active
-                    ? 'border-[#538CDB] bg-[#538CDB]'
-                    : 'border-[#D8DEE9] bg-white group-hover:border-[#538CDB]/60'
+                    ? 'border-[#004ac6] bg-[#004ac6]'
+                    : 'border-[#e0e3e5] bg-white group-hover:border-[#004ac6]/60'
                 }
               `}
             >
@@ -82,8 +82,8 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
                 duration-200
                 ${
                   active
-                    ? 'font-semibold text-[#538CDB]'
-                    : 'font-medium text-[#20242D] group-hover:text-[#538CDB]'
+                    ? 'font-semibold text-[#004ac6]'
+                    : 'font-medium text-[#101319] group-hover:text-[#004ac6]'
                 }
               `}
             >

@@ -18,20 +18,20 @@ export const statusLabel: Record<OrderStatus, string> = {
 };
 
 const statusColor: Record<OrderStatus, string> = {
-  WAITING_PAYMENT: 'bg-[#fff4e0] text-[#b45309]',
-  PROCESSING: 'bg-[#cfe8ff] text-[#0057b8]',
-  SHIPPED: 'bg-[#e3e0ff] text-[#4338ca]',
-  DELIVERED: 'bg-[#e0f2f1] text-[#0f766e]',
-  COMPLETED: 'bg-[#d7f5dc] text-[#156b32]',
-  CANCELLED: 'bg-[#ffe0e0] text-[#a33131]',
+  WAITING_PAYMENT: 'bg-[#fff7e0] text-[#b45309]',
+  PROCESSING: 'bg-[#dbe1ff] text-[#004ac6]',
+  SHIPPED: 'bg-[#dbe1ff] text-[#004ac6]',
+  DELIVERED: 'bg-[#e6f4ee] text-[#12805c]',
+  COMPLETED: 'bg-[#e6f4ee] text-[#12805c]',
+  CANCELLED: 'bg-[#fff0f0] text-[#93000a]',
 };
 
 const paymentColor: Record<PaymentStatus, string> = {
-  PAID: 'bg-[#d7f5dc] text-[#156b32]',
-  PENDING: 'bg-[#fff4e0] text-[#b45309]',
-  FAILED: 'bg-[#ffe0e0] text-[#a33131]',
+  PAID: 'bg-[#e6f4ee] text-[#12805c]',
+  PENDING: 'bg-[#fff7e0] text-[#b45309]',
+  FAILED: 'bg-[#fff0f0] text-[#93000a]',
   EXPIRED: 'bg-[#f2f4f6] text-[#737686]',
-  REFUNDED: 'bg-[#e3e0ff] text-[#4338ca]',
+  REFUNDED: 'bg-[#dbe1ff] text-[#004ac6]',
 };
 
 export const paymentLabel: Record<PaymentStatus, string> = {
@@ -71,10 +71,10 @@ const OrderTable: React.FC<OrderTableProps> = ({
   return (
     <>
       {orders.map((order) => (
-        <tr key={order.id} className="text-[13px] transition-colors hover:bg-[#f8f9fb]">
+        <tr key={order.id} className="text-[13px] transition-colors hover:bg-[#f5f7fb]">
           <td className="py-2.5 pr-2 font-medium text-[#004ac6]">{order.orderNumber}</td>
           <td className="py-2.5 pr-2">
-            <div className="font-medium text-[#191c1e]">{order.user.name}</div>
+            <div className="font-medium text-[#101319]">{order.user.name}</div>
             <div className="text-[11px] text-[#737686]">{order.user.email}</div>
           </td>
           <td className="py-2.5 pr-2 text-[#434655]">{order.seller.storeName}</td>

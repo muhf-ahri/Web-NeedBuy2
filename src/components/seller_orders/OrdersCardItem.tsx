@@ -6,12 +6,12 @@ import { formatRupiah } from '../../utils/currency';
 import type { OrderStatus, SellerOrder } from '../../api/orders';
 
 const STATUS_CLASS: Record<OrderStatus, string> = {
-  WAITING_PAYMENT: 'bg-[#F5F7FB] text-[#737A87]',
+  WAITING_PAYMENT: 'bg-[#F5F7FB] text-[#737686]',
   PROCESSING: 'bg-[#FFF7E0] text-[#B45309]',
-  SHIPPED: 'bg-[#EEF5FF] text-[#538CDB]',
-  DELIVERED: 'bg-[#DCFCE7] text-[#166534]',
-  COMPLETED: 'bg-[#F0FDF4] text-[#166534]',
-  CANCELLED: 'bg-[#FFF0F0] text-[#C73535]',
+  SHIPPED: 'bg-[#f5f7fb] text-[#004ac6]',
+  DELIVERED: 'bg-[#e6f4ee] text-[#12805c]',
+  COMPLETED: 'bg-[#e6f4ee] text-[#12805c]',
+  CANCELLED: 'bg-[#FFF0F0] text-[#ba1a1a]',
 };
 
 interface SellerAction {
@@ -52,7 +52,7 @@ const OrdersCardItem: React.FC<OrdersCardItemProps> = ({
     <div className="flex items-start justify-between gap-2 p-3.5 sm:p-4">
       <div className="min-w-0 flex-1">
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-          <span className="font-mono text-[11px] font-bold text-[#538CDB]">
+          <span className="font-mono text-[11px] font-bold text-[#004ac6]">
             #{order.orderNumber}
           </span>
           <span
@@ -66,17 +66,17 @@ const OrdersCardItem: React.FC<OrdersCardItemProps> = ({
           </span>
         </div>
 
-        <p className="mt-1.5 truncate text-[13px] font-bold text-[#20242D] sm:text-[14px]">
+        <p className="mt-1.5 truncate text-[13px] font-bold text-[#101319] sm:text-[14px]">
           {order.user.name}
         </p>
-        <p className="truncate text-[11px] text-[#737A87]">{order.user.email}</p>
+        <p className="truncate text-[11px] text-[#737686]">{order.user.email}</p>
 
         <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1">
-          <span className="text-[13px] font-extrabold text-[#20242D] tabular-nums sm:text-[14px]">
+          <span className="text-[13px] font-extrabold text-[#101319] tabular-nums sm:text-[14px]">
             {formatRupiah(Number(order.total))}
           </span>
-          <span className="h-1 w-1 shrink-0 rounded-full bg-[#D8DEE9]" />
-          <span className="text-[10px] text-[#737A87]">
+          <span className="h-1 w-1 shrink-0 rounded-full bg-[#e0e3e5]" />
+          <span className="text-[10px] text-[#737686]">
             {order.totalBarang} barang · {formatDate(order.createdAt)}
           </span>
         </div>
@@ -91,9 +91,9 @@ const OrdersCardItem: React.FC<OrdersCardItemProps> = ({
           disabled={isBusy}
           className="
             flex flex-1 items-center justify-center gap-1.5 rounded-full
-            bg-[#538CDB] py-2 text-[11px] font-semibold text-white
+            bg-[#004ac6] py-2 text-[11px] font-semibold text-white
             shadow-[0_4px_12px_rgba(83,140,219,0.25)] transition-all
-            duration-200 hover:bg-[#467BC7]
+            duration-200 hover:bg-[#004ac6]
             hover:shadow-[0_6px_16px_rgba(83,140,219,0.30)]
             active:scale-[0.98] disabled:cursor-not-allowed
             disabled:bg-[#A2A8B3] disabled:shadow-none
@@ -120,8 +120,8 @@ const OrdersCardItem: React.FC<OrdersCardItemProps> = ({
           active:scale-[0.98]
           ${
             isExpanded
-              ? 'border-[#538CDB] bg-[#EEF5FF] text-[#538CDB]'
-              : 'border-[#E8ECF4] bg-white text-[#20242D] hover:border-[#538CDB] hover:text-[#538CDB]'
+              ? 'border-[#004ac6] bg-[#f5f7fb] text-[#004ac6]'
+              : 'border-[#e0e3e5] bg-white text-[#101319] hover:border-[#004ac6] hover:text-[#004ac6]'
           }
         `}
       >
@@ -131,7 +131,7 @@ const OrdersCardItem: React.FC<OrdersCardItemProps> = ({
     </div>
 
     {isExpanded && (
-      <div className="border-t border-[#F5F7FB] bg-[#F5F5FF]/50 p-3.5 sm:p-4">
+      <div className="border-t border-[#F5F7FB] bg-[#f5f7fb]/50 p-3.5 sm:p-4">
         <OrdersExpandedDetail order={order} />
       </div>
     )}

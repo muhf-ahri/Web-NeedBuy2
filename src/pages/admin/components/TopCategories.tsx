@@ -29,7 +29,7 @@ const TopCategories: React.FC<TopCategoriesProps> = ({ categories }) => {
           <div className="flex items-center justify-between text-[13px]">
             <span className="text-[#434655]">{cat.name}</span>
             <div className="flex items-center gap-4">
-              <span className="font-semibold text-[#191c1e]">{formatRupiah(cat.revenue)}</span>
+              <span className="font-semibold text-[#101319]">{formatRupiah(cat.revenue)}</span>
               <span className="w-10 text-right text-[11px] text-[#737686]">{cat.percentage}%</span>
             </div>
           </div>

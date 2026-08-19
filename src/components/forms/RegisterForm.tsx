@@ -75,8 +75,8 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
         onChange={handleChange}
         error={errors.username}
         className="
-          rounded-xl border-[#E8ECF4] bg-white py-2.5 text-sm
-          transition focus:border-[#538CDB] focus:ring-2 focus:ring-[#538CDB]/15
+          rounded-xl border-[#e0e3e5] bg-white py-2.5 text-sm
+          transition focus:border-[#004ac6] focus:ring-2 focus:ring-[#004ac6]/15
         "
       />
 
@@ -89,8 +89,8 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
         onChange={handleChange}
         error={errors.email}
         className="
-          rounded-xl border-[#E8ECF4] bg-white py-2.5 text-sm
-          transition focus:border-[#538CDB] focus:ring-2 focus:ring-[#538CDB]/15
+          rounded-xl border-[#e0e3e5] bg-white py-2.5 text-sm
+          transition focus:border-[#004ac6] focus:ring-2 focus:ring-[#004ac6]/15
         "
       />
 
@@ -105,11 +105,11 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
             onChange={handleChange}
             error={errors.password}
             className="
-              rounded-xl border-[#E8ECF4] bg-white py-2.5 text-sm
-              transition focus:border-[#538CDB] focus:ring-2 focus:ring-[#538CDB]/15
+              rounded-xl border-[#e0e3e5] bg-white py-2.5 text-sm
+              transition focus:border-[#004ac6] focus:ring-2 focus:ring-[#004ac6]/15
             "
           />
-          <p className="mt-1.5 text-[10px] text-[#737A87]">Minimal 8 karakter</p>
+          <p className="mt-1.5 text-[10px] text-[#737686]">Minimal 8 karakter</p>
         </div>
 
         <Input
@@ -121,14 +121,14 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
           onChange={handleChange}
           error={errors.confirmPassword}
           className="
-            rounded-xl border-[#E8ECF4] bg-white py-2.5 text-sm
-            transition focus:border-[#538CDB] focus:ring-2 focus:ring-[#538CDB]/15
+            rounded-xl border-[#e0e3e5] bg-white py-2.5 text-sm
+            transition focus:border-[#004ac6] focus:ring-2 focus:ring-[#004ac6]/15
           "
         />
       </div>
 
       {error && (
-        <div className="rounded-xl bg-[#FFF0F0] px-3 py-2 text-xs text-[#C73535]">
+        <div className="rounded-xl bg-[#FFF0F0] px-3 py-2 text-xs text-[#ba1a1a]">
           {error}
         </div>
       )}
@@ -139,10 +139,10 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
         variant="primary"
         disabled={isLoading}
         className="
-          rounded-full bg-[#538CDB] py-2.5 text-sm font-semibold text-white
+          rounded-full bg-[#004ac6] py-2.5 text-sm font-semibold text-white
           shadow-[0_6px_16px_rgba(83,140,219,0.20)] transition
-          hover:bg-[#467BC7] hover:shadow-[0_8px_20px_rgba(83,140,219,0.25)]
-          focus:ring-4 focus:ring-[#538CDB]/15 active:scale-[0.98]
+          hover:bg-[#004ac6] hover:shadow-[0_8px_20px_rgba(83,140,219,0.25)]
+          focus:ring-4 focus:ring-[#004ac6]/15 active:scale-[0.98]
         "
       >
         {isLoading ? 'Membuat akun...' : 'Buat akun'}

@@ -70,30 +70,30 @@ const Pagination: React.FC<PaginationProps> = ({
           <span
             className="
               flex h-7 w-7 items-center justify-center rounded-lg
-              bg-[#538CDB]/10
+              bg-[#004ac6]/10
             "
           >
-            <Icon name="product" size={14} className="text-[#538CDB]" />
+            <Icon name="product" size={14} className="text-[#004ac6]" />
           </span>
-          <p className="text-[12px] text-[#737A87]">
+          <p className="text-[12px] text-[#737686]">
             Menampilkan{' '}
-            <span className="font-bold text-[#20242D]">{startItem}</span>
+            <span className="font-bold text-[#101319]">{startItem}</span>
             {' '}sampai{' '}
-            <span className="font-bold text-[#20242D]">{endItem}</span>
+            <span className="font-bold text-[#101319]">{endItem}</span>
             {' '}dari{' '}
-            <span className="font-bold text-[#20242D]">{totalItems}</span>
+            <span className="font-bold text-[#101319]">{totalItems}</span>
             {' '}produk
           </p>
         </div>
       )}
 
       {showTotal && totalItems !== undefined && (
-        <p className="text-[11px] text-[#737A87] sm:hidden">
-          <span className="font-bold text-[#20242D] tabular-nums">
+        <p className="text-[11px] text-[#737686] sm:hidden">
+          <span className="font-bold text-[#101319] tabular-nums">
             {startItem} sampai {endItem}
           </span>{' '}
           dari{' '}
-          <span className="font-bold text-[#20242D] tabular-nums">
+          <span className="font-bold text-[#101319] tabular-nums">
             {totalItems}
           </span>{' '}
           produk
@@ -107,12 +107,12 @@ const Pagination: React.FC<PaginationProps> = ({
           disabled={currentPage <= 1}
           className="
             flex h-8 w-8 items-center justify-center rounded-full
-            border border-[#E8ECF4] bg-white text-[#737A87]
-            transition-all duration-200 hover:border-[#538CDB]
-            hover:text-[#538CDB] hover:shadow-[0_4px_12px_rgba(83,140,219,0.15)]
+            border border-[#e0e3e5] bg-white text-[#737686]
+            transition-all duration-200 hover:border-[#004ac6]
+            hover:text-[#004ac6] hover:shadow-[0_4px_12px_rgba(83,140,219,0.15)]
             active:scale-[0.95] disabled:cursor-not-allowed
-            disabled:border-[#E8ECF4] disabled:bg-[#F5F7FB]
-            disabled:text-[#D8DEE9] disabled:shadow-none sm:h-9 sm:w-9
+            disabled:border-[#e0e3e5] disabled:bg-[#F5F7FB]
+            disabled:text-[#e0e3e5] disabled:shadow-none sm:h-9 sm:w-9
           "
           aria-label="Halaman sebelumnya"
         >
@@ -147,8 +147,8 @@ const Pagination: React.FC<PaginationProps> = ({
                 sm:px-2 sm:text-[13px]
                 ${
                   isActive
-                    ? 'bg-[#538CDB] text-white shadow-[0_6px_16px_rgba(83,140,219,0.30)]'
-                    : 'border border-transparent text-[#737A87] hover:border-[#E8ECF4] hover:bg-white hover:text-[#538CDB] hover:shadow-[0_3px_10px_rgba(83,140,219,0.10)]'
+                    ? 'bg-[#004ac6] text-white shadow-[0_6px_16px_rgba(83,140,219,0.30)]'
+                    : 'border border-transparent text-[#737686] hover:border-[#e0e3e5] hover:bg-white hover:text-[#004ac6] hover:shadow-[0_3px_10px_rgba(83,140,219,0.10)]'
                 }
               `}
               aria-current={isActive ? 'page' : undefined}
@@ -164,12 +164,12 @@ const Pagination: React.FC<PaginationProps> = ({
           disabled={currentPage >= totalPages}
           className="
             flex h-8 w-8 items-center justify-center rounded-full
-            border border-[#E8ECF4] bg-white text-[#737A87]
-            transition-all duration-200 hover:border-[#538CDB]
-            hover:text-[#538CDB] hover:shadow-[0_4px_12px_rgba(83,140,219,0.15)]
+            border border-[#e0e3e5] bg-white text-[#737686]
+            transition-all duration-200 hover:border-[#004ac6]
+            hover:text-[#004ac6] hover:shadow-[0_4px_12px_rgba(83,140,219,0.15)]
             active:scale-[0.95] disabled:cursor-not-allowed
-            disabled:border-[#E8ECF4] disabled:bg-[#F5F7FB]
-            disabled:text-[#D8DEE9] disabled:shadow-none sm:h-9 sm:w-9
+            disabled:border-[#e0e3e5] disabled:bg-[#F5F7FB]
+            disabled:text-[#e0e3e5] disabled:shadow-none sm:h-9 sm:w-9
           "
           aria-label="Halaman berikutnya"
         >

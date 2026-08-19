@@ -34,11 +34,11 @@ const Modal: React.FC<ModalProps> = ({
           animate-slideDown
         `}
       >
-        <div className="flex items-center justify-between border-b border-[#E8ECF4] px-6 py-4">
-          <h3 className="text-lg font-bold text-[#20242D]">{title}</h3>
+        <div className="flex items-center justify-between border-b border-[#e0e3e5] px-6 py-4">
+          <h3 className="text-lg font-bold text-[#101319]">{title}</h3>
           <button
             onClick={onClose}
-            className="rounded-full p-1.5 text-[#737A87] transition-colors hover:bg-[#F5F5FF] hover:text-[#538CDB]"
+            className="rounded-full p-1.5 text-[#737686] transition-colors hover:bg-[#f5f7fb] hover:text-[#004ac6]"
           >
             <Icon name="close" size={20} className="" />
           </button>

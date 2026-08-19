@@ -26,7 +26,7 @@ const Th: React.FC<{ children: React.ReactNode; align?: 'left' | 'right' }> = ({
   <th
     className={`
       px-4 py-3 text-${align} text-[10px] font-bold uppercase tracking-wider
-      text-[#737A87]
+      text-[#737686]
     `}
   >
     {children}
@@ -44,7 +44,7 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
   onAdvance,
 }) => (
   <div className="overflow-x-auto">
-    <table className="w-full">
+    <table className="stack-table w-full">
       <thead>
         <tr className="border-b border-[#F5F7FB] bg-[#F5F7FB]/50">
           <Th>ID Order</Th>

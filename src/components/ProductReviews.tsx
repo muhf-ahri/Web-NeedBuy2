@@ -13,7 +13,7 @@ const Stars: React.FC<{ value: number; size?: number }> = ({ value, size = 14 })
         key={star}
         name="star"
         size={size}
-        className={star <= Math.round(value) ? 'text-[#f59e0b]' : 'text-[#e0e3e5]'}
+        className={star <= Math.round(value) ? 'text-[#ffd500]' : 'text-[#e0e3e5]'}
       />
     ))}
   </span>
@@ -59,19 +59,19 @@ const ProductReviews: React.FC<{ productId: string }> = ({ productId }) => {
 
   return (
     <section>
-      <h2 className="mb-4 text-[15px] font-bold text-[#191c1e]">Ulasan pembeli</h2>
+      <h2 className="mb-4 text-[15px] font-bold text-[#101319]">Ulasan pembeli</h2>
 
       {error && <p className="mb-3 text-[13px] text-[#ba1a1a]">{error}</p>}
 
       {total === 0 ? (
-        <p className="rounded-2xl bg-[#f8f9fb] px-4 py-6 text-center text-[13px] text-[#737686]">
+        <p className="rounded-2xl bg-[#f5f7fb] px-4 py-6 text-center text-[13px] text-[#737686]">
           Belum ada ulasan. Ulasan cuma bisa ditulis pembeli yang pesanannya udah selesai.
         </p>
       ) : (
         <>
-          <div className="mb-6 flex flex-col gap-5 rounded-2xl bg-[#f8f9fb] p-5 sm:flex-row sm:items-center">
+          <div className="mb-6 flex flex-col gap-5 rounded-2xl bg-[#f5f7fb] p-5 sm:flex-row sm:items-center">
             <div className="shrink-0 text-center sm:w-32">
-              <p className="text-[40px] font-bold leading-none text-[#191c1e]">
+              <p className="text-[40px] font-bold leading-none text-[#101319]">
                 {(meta?.average ?? 0).toFixed(1)}
               </p>
               <div className="mt-1">
@@ -86,7 +86,7 @@ const ProductReviews: React.FC<{ productId: string }> = ({ productId }) => {
                   <span className="w-8 shrink-0 text-[#737686]">{star}★</span>
                   <span className="h-2 flex-1 overflow-hidden rounded-full bg-[#e0e3e5]">
                     <span
-                      className="block h-full rounded-full bg-[#f59e0b]"
+                      className="block h-full rounded-full bg-[#ffd500]"
                       style={{ width: total === 0 ? '0%' : `${(count / total) * 100}%` }}
                     />
                   </span>
@@ -104,7 +104,7 @@ const ProductReviews: React.FC<{ productId: string }> = ({ productId }) => {
                     <Icon name="user" size={16} className="" />
                   </span>
                   <div className="min-w-0 flex-1">
-                    <p className="text-[13px] font-semibold text-[#191c1e]">
+                    <p className="text-[13px] font-semibold text-[#101319]">
                       {review.user?.name ?? 'Pembeli'}
                     </p>
                     <p className="flex items-center gap-2 text-[11px] text-[#737686]">

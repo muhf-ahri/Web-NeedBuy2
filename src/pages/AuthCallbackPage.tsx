@@ -50,7 +50,7 @@ const AuthCallbackPage: React.FC = () => {
   }, [params, navigate, refreshUser]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-6 bg-[#f7f9fc] font-sans">
+    <div className="min-h-screen flex items-center justify-center p-6 bg-[#f5f7fb] font-sans">
       <div className="bg-white rounded-2xl shadow-sm border border-[#e0e3e5] p-8 max-w-sm w-full text-center">
         {error ? (
           <>

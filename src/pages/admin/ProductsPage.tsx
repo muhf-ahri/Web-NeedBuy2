@@ -78,7 +78,7 @@ const ProductsPage: React.FC = () => {
     <AdminLayout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-[28px] font-bold text-[#191c1e]">Produk</h1>
+          <h1 className="text-[28px] font-bold text-[#101319]">Produk</h1>
           <p className="text-[15px] text-[#737686]">
             Pantau dan moderasi semua produk yang ada di marketplace.
           </p>
@@ -95,7 +95,7 @@ const ProductsPage: React.FC = () => {
               className={`border-b-2 px-4 py-2 text-sm font-semibold transition-colors ${
                 tab === value
                   ? 'border-[#004ac6] text-[#004ac6]'
-                  : 'border-transparent text-[#737686] hover:text-[#191c1e]'
+                  : 'border-transparent text-[#737686] hover:text-[#101319]'
               }`}
             >
               {label}
@@ -133,14 +133,14 @@ const ProductsPage: React.FC = () => {
         </div>
 
         {error && (
-          <div className="rounded-2xl border border-[#ffcdd2] bg-[#fff5f5] p-4 text-[13px] text-[#a33131]">
+          <div className="rounded-2xl border border-[#ffdad6] bg-[#fff0f0] p-4 text-[13px] text-[#93000a]">
             {error}
           </div>
         )}
 
         <div className="overflow-hidden rounded-2xl border border-[#e0e3e5] bg-white p-5">
           <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+            <table className="stack-table w-full text-sm">
               <thead>
                 <tr className="border-b border-[#f2f4f6] text-[11px] font-semibold uppercase text-[#737686]">
                   <th className="pb-2 pr-2 text-left">Produk</th>
@@ -172,8 +172,8 @@ const ProductsPage: React.FC = () => {
                   </tr>
                 ) : (
                   items.map((product) => (
-                    <tr key={product.id} className="text-[13px] transition-colors hover:bg-[#f8f9fb]">
-                      <td className="py-2.5 pr-2 font-medium text-[#191c1e]">
+                    <tr key={product.id} className="text-[13px] transition-colors hover:bg-[#f5f7fb]">
+                      <td className="py-2.5 pr-2 font-medium text-[#101319]">
                         <div>{product.name}</div>
                         {product.sku && (
                           <div className="text-[11px] font-normal text-[#737686]">{product.sku}</div>
@@ -189,8 +189,8 @@ const ProductsPage: React.FC = () => {
                         <span
                           className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${
                             product.isActive
-                              ? 'bg-[#d7f5dc] text-[#156b32]'
-                              : 'bg-[#fff4e0] text-[#b45309]'
+                              ? 'bg-[#e6f4ee] text-[#12805c]'
+                              : 'bg-[#fff7e0] text-[#b45309]'
                           }`}
                         >
                           {product.isActive ? 'Aktif' : 'Belum Aktif'}
@@ -202,7 +202,7 @@ const ProductsPage: React.FC = () => {
                           disabled={pendingId === product.id}
                           className={`rounded-full px-3 py-1 text-[12px] font-semibold text-white transition-colors disabled:opacity-50 ${
                             product.isActive
-                              ? 'bg-[#ba1a1a] hover:bg-[#9a1515]'
+                              ? 'bg-[#ba1a1a] hover:bg-[#93000a]'
                               : 'bg-[#004ac6] hover:bg-[#003ea8]'
                           }`}
                         >

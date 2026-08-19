@@ -29,7 +29,7 @@ const PriceRow: React.FC<{ product: Product }> = ({
           rounded-xl
           px-3 py-3
           transition-all duration-200
-          hover:bg-[#f4f8ff]
+          hover:bg-[#f5f7fb]
           focus-visible:outline-2
           focus-visible:outline-offset-2
           focus-visible:outline-[#004ac6]
@@ -42,7 +42,7 @@ const PriceRow: React.FC<{ product: Product }> = ({
                 truncate
                 text-[13px]
                 font-semibold
-                text-[#191c1e]
+                text-[#101319]
                 group-hover:text-[#004ac6]
               "
             >
@@ -64,14 +64,14 @@ const PriceRow: React.FC<{ product: Product }> = ({
           className="
             hidden flex-1
             border-b border-dashed
-            border-[#cbd7ea]
+            border-[#e0e3e5]
             sm:block
           "
           aria-hidden="true"
         />
 
         <span className="shrink-0 text-right">
-          <span className="block text-[13px] font-bold text-[#191c1e]">
+          <span className="block text-[13px] font-bold text-[#101319]">
             {formatRupiah(product.price)}
           </span>
 

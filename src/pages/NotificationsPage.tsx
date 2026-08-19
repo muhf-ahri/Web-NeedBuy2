@@ -117,7 +117,7 @@ const NotificationsPage: React.FC = () => {
 
   return (
     <div
-      className="min-h-screen flex flex-col bg-[#F5F5FF]"
+      className="min-h-screen flex flex-col bg-[#f5f7fb]"
       style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
     >
       <Navbar />
@@ -127,9 +127,9 @@ const NotificationsPage: React.FC = () => {
         <Reveal direction="up">
           <div className="mb-6">
             <div className="mb-2 flex items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-[#538CDB]/10 px-2.5 py-1">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-[#004ac6]/10 px-2.5 py-1">
                 <span className="h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
-                <p className="text-[9px] font-bold uppercase tracking-[0.20em] text-[#538CDB]">
+                <p className="text-[9px] font-bold uppercase tracking-[0.20em] text-[#004ac6]">
                   Pusat kabar
                 </p>
               </span>
@@ -140,12 +140,12 @@ const NotificationsPage: React.FC = () => {
                 <h1
                   className="
                     text-[26px] font-extrabold leading-tight tracking-tight
-                    text-[#20242D] sm:text-[32px]
+                    text-[#101319] sm:text-[32px]
                   "
                 >
                   Notifikasi
                 </h1>
-                <p className="mt-2 max-w-xl text-[13px] leading-relaxed text-[#737A87]">
+                <p className="mt-2 max-w-xl text-[13px] leading-relaxed text-[#737686]">
                   Semua kabar penting tentang pesanan, pembayaran, dan stok dalam satu tempat.
                 </p>
               </div>
@@ -158,26 +158,26 @@ const NotificationsPage: React.FC = () => {
             <div
               className="
                 mb-5 flex items-center gap-3 rounded-2xl border
-                border-[#FF4646]/20 bg-[#FFF0F0] px-4 py-3 backdrop-blur-sm
+                border-[#ba1a1a]/20 bg-[#FFF0F0] px-4 py-3 backdrop-blur-sm
               "
             >
               <span
                 className="
                   flex h-8 w-8 shrink-0 items-center justify-center
-                  rounded-full bg-[#FF4646]/15
+                  rounded-full bg-[#ba1a1a]/15
                 "
               >
-                <Icon name="alert" size={15} className="text-[#FF4646]" />
+                <Icon name="alert" size={15} className="text-[#ba1a1a]" />
               </span>
-              <p className="flex-1 text-[13px] font-medium text-[#C73535]">
+              <p className="flex-1 text-[13px] font-medium text-[#ba1a1a]">
                 {error}
               </p>
               <button
                 type="button"
                 onClick={loadInitial}
                 className="
-                  shrink-0 rounded-full bg-[#FF4646] px-3 py-1 text-[11px]
-                  font-semibold text-white transition-colors hover:bg-[#E03131]
+                  shrink-0 rounded-full bg-[#ba1a1a] px-3 py-1 text-[11px]
+                  font-semibold text-white transition-colors hover:bg-[#ba1a1a]
                 "
               >
                 Coba lagi
@@ -209,8 +209,8 @@ const NotificationsPage: React.FC = () => {
                       text-[12px] font-semibold transition-all duration-200
                       ${
                         active
-                          ? 'bg-[#538CDB] text-white shadow-[0_4px_12px_rgba(83,140,219,0.25)]'
-                          : 'text-[#737A87] hover:bg-[#F5F7FB] hover:text-[#20242D]'
+                          ? 'bg-[#004ac6] text-white shadow-[0_4px_12px_rgba(83,140,219,0.25)]'
+                          : 'text-[#737686] hover:bg-[#F5F7FB] hover:text-[#101319]'
                       }
                     `}
                   >
@@ -222,7 +222,7 @@ const NotificationsPage: React.FC = () => {
                           ${
                             active
                               ? 'bg-white/20 text-white'
-                              : 'bg-[#F5F7FB] text-[#737A87]'
+                              : 'bg-[#F5F7FB] text-[#737686]'
                           }
                         `}
                       >
@@ -240,8 +240,8 @@ const NotificationsPage: React.FC = () => {
                 onClick={handleMarkAllRead}
                 className="
                   flex items-center gap-1.5 rounded-xl px-3 py-2 text-[12px]
-                  font-semibold text-[#538CDB] transition-colors
-                  hover:bg-[#EEF5FF]
+                  font-semibold text-[#004ac6] transition-colors
+                  hover:bg-[#f5f7fb]
                 "
               >
                 <Icon name="check" size={13} />
@@ -306,9 +306,9 @@ const NotificationsPage: React.FC = () => {
                     disabled={loadingMore}
                     className="
                       flex items-center gap-2 rounded-full border
-                      border-[#E8ECF4] bg-white px-6 py-2.5 text-[13px]
-                      font-semibold text-[#20242D] transition-all duration-200
-                      hover:border-[#538CDB] hover:text-[#538CDB]
+                      border-[#e0e3e5] bg-white px-6 py-2.5 text-[13px]
+                      font-semibold text-[#101319] transition-all duration-200
+                      hover:border-[#004ac6] hover:text-[#004ac6]
                       active:scale-[0.99] disabled:cursor-not-allowed
                       disabled:opacity-50
                     "

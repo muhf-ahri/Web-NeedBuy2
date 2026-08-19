@@ -42,14 +42,14 @@ const SettingsPage: React.FC = () => {
       <div className="space-y-6">
         
         <div>
-          <h1 className="text-[28px] font-bold text-[#191c1e]">Pengaturan</h1>
+          <h1 className="text-[28px] font-bold text-[#101319]">Pengaturan</h1>
           <p className="text-[15px] text-[#737686]">
             Kelola konfigurasi dan preferensi marketplace.
           </p>
         </div>
 
         {error && (
-          <div className="rounded-xl border border-[#ffbcbc] bg-[#ffe0e0] p-3 text-[13px] text-[#a33131]">
+          <div className="rounded-xl border border-[#ffdad6] bg-[#fff0f0] p-3 text-[13px] text-[#93000a]">
             {error}
           </div>
         )}
@@ -64,7 +64,7 @@ const SettingsPage: React.FC = () => {
           <>
             
             <div className="rounded-2xl border border-[#e0e3e5] bg-white p-5">
-              <h2 className="mb-4 flex items-center gap-2 text-[15px] font-bold text-[#191c1e]">
+              <h2 className="mb-4 flex items-center gap-2 text-[15px] font-bold text-[#101319]">
                 <Icon name="settings" size={18} className="text-[#004ac6]" />
                 Informasi Marketplace
               </h2>
@@ -72,7 +72,7 @@ const SettingsPage: React.FC = () => {
             </div>
 
             <div className="rounded-2xl border border-[#e0e3e5] bg-white p-5">
-              <h2 className="mb-4 flex items-center gap-2 text-[15px] font-bold text-[#191c1e]">
+              <h2 className="mb-4 flex items-center gap-2 text-[15px] font-bold text-[#101319]">
                 <Icon name="upload" size={18} className="text-[#004ac6]" />
                 Branding
               </h2>
@@ -80,7 +80,7 @@ const SettingsPage: React.FC = () => {
             </div>
 
             <div className="rounded-2xl border border-[#e0e3e5] bg-white p-5">
-              <h2 className="mb-4 flex items-center gap-2 text-[15px] font-bold text-[#191c1e]">
+              <h2 className="mb-4 flex items-center gap-2 text-[15px] font-bold text-[#101319]">
                 <Icon name="globe" size={18} className="text-[#004ac6]" />
                 Regional Settings
               </h2>

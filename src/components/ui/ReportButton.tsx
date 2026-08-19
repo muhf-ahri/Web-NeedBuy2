@@ -120,8 +120,8 @@ const ReportButton: React.FC<ReportButtonProps> = ({
       <Modal isOpen={open} onClose={() => setOpen(false)} title={`Laporkan ${word}`}>
         {done ? (
           <div className="space-y-4 text-center">
-            <Icon name="check" size={32} className="mx-auto text-[#156b32]" />
-            <p className="text-[14px] text-[#191c1e]">Laporan kamu udah masuk.</p>
+            <Icon name="check" size={32} className="mx-auto text-[#12805c]" />
+            <p className="text-[14px] text-[#101319]">Laporan kamu udah masuk.</p>
             <p className="text-[12px] text-[#737686]">
               Tim kami bakal ninjau dan nindaklanjuti kalau memang melanggar. Kamu nggak perlu
               ngirim laporan yang sama lagi.
@@ -137,7 +137,7 @@ const ReportButton: React.FC<ReportButtonProps> = ({
             </p>
 
             {error && (
-              <div className="rounded-lg border border-[#ffbcbc] bg-[#ffe0e0] p-2.5 text-xs text-[#a33131]">
+              <div className="rounded-lg border border-[#ffdad6] bg-[#fff0f0] p-2.5 text-xs text-[#93000a]">
                 {error}
               </div>
             )}
@@ -150,7 +150,7 @@ const ReportButton: React.FC<ReportButtonProps> = ({
                 {[...REASONS[targetType], OTHER].map((item) => (
                   <label
                     key={item}
-                    className="flex cursor-pointer items-center gap-2.5 rounded-lg px-2 py-1.5 text-[13px] text-[#191c1e] transition-colors hover:bg-[#f8f9fb]"
+                    className="flex cursor-pointer items-center gap-2.5 rounded-lg px-2 py-1.5 text-[13px] text-[#101319] transition-colors hover:bg-[#f5f7fb]"
                   >
                     <input
                       type="radio"

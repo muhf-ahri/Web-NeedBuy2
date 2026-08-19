@@ -64,7 +64,7 @@ const PaymentsPage: React.FC = () => {
     <AdminLayout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-[28px] font-bold text-[#191c1e]">Pembayaran</h1>
+          <h1 className="text-[28px] font-bold text-[#101319]">Pembayaran</h1>
           <p className="text-[15px] text-[#737686]">
             Pantau semua transaksi pembayaran pelanggan.
           </p>
@@ -95,14 +95,14 @@ const PaymentsPage: React.FC = () => {
         />
 
         {error && (
-          <div className="rounded-2xl border border-[#ffcdd2] bg-[#fff5f5] p-4 text-[13px] text-[#a33131]">
+          <div className="rounded-2xl border border-[#ffdad6] bg-[#fff0f0] p-4 text-[13px] text-[#93000a]">
             {error}
           </div>
         )}
 
         <div className="overflow-hidden rounded-2xl border border-[#e0e3e5] bg-white p-5">
           <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+            <table className="stack-table w-full text-sm">
               <thead>
                 <tr className="border-b border-[#f2f4f6] text-[11px] font-semibold uppercase text-[#737686]">
                   <th className="pb-2 pr-2 text-left">ID Transaksi</th>

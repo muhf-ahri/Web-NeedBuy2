@@ -29,7 +29,7 @@ const SortIndicator: React.FC<{ active: boolean; asc: boolean }> = ({
       size={9}
       className={`
         -mb-0.5 transition-colors
-        ${active && asc ? 'text-[#538CDB]' : 'text-[#D8DEE9]'}
+        ${active && asc ? 'text-[#004ac6]' : 'text-[#e0e3e5]'}
       `}
     />
     <Icon
@@ -37,7 +37,7 @@ const SortIndicator: React.FC<{ active: boolean; asc: boolean }> = ({
       size={9}
       className={`
         -mt-0.5 transition-colors
-        ${active && !asc ? 'text-[#538CDB]' : 'text-[#D8DEE9]'}
+        ${active && !asc ? 'text-[#004ac6]' : 'text-[#e0e3e5]'}
       `}
     />
   </div>
@@ -54,8 +54,8 @@ const Th: React.FC<{
   <th
     className={`
       px-4 py-3 text-center text-[10px] font-bold uppercase tracking-wider
-      text-[#737A87] transition-colors
-      ${sortable ? 'cursor-pointer select-none hover:text-[#538CDB]' : ''}
+      text-[#737686] transition-colors
+      ${sortable ? 'cursor-pointer select-none hover:text-[#004ac6]' : ''}
     `}
     onClick={sortable ? onClick : undefined}
   >
@@ -80,10 +80,10 @@ const ProductsTable: React.FC<ProductsTableProps> = ({
   onDelete,
 }) => (
   <div className="overflow-x-auto">
-    <table className="w-full">
+    <table className="stack-table w-full">
       <thead>
         <tr className="border-b border-[#F5F7FB] bg-[#F5F7FB]/50">
-          <th className="w-[72px] px-4 py-3 text-center text-[10px] font-bold uppercase tracking-wider text-[#737A87]">
+          <th className="w-[72px] px-4 py-3 text-center text-[10px] font-bold uppercase tracking-wider text-[#737686]">
             Gambar
           </th>
           <Th
@@ -95,7 +95,7 @@ const ProductsTable: React.FC<ProductsTableProps> = ({
           >
             Nama Produk
           </Th>
-          <th className="px-4 py-3 text-center text-[10px] font-bold uppercase tracking-wider text-[#737A87]">
+          <th className="px-4 py-3 text-center text-[10px] font-bold uppercase tracking-wider text-[#737686]">
             Kategori
           </th>
           <Th
@@ -116,10 +116,10 @@ const ProductsTable: React.FC<ProductsTableProps> = ({
           >
             Sisa Stok
           </Th>
-          <th className="px-4 py-3 text-center text-[10px] font-bold uppercase tracking-wider text-[#737A87]">
+          <th className="px-4 py-3 text-center text-[10px] font-bold uppercase tracking-wider text-[#737686]">
             Status
           </th>
-          <th className="w-[120px] px-4 py-3 text-center text-[10px] font-bold uppercase tracking-wider text-[#737A87]">
+          <th className="w-[120px] px-4 py-3 text-center text-[10px] font-bold uppercase tracking-wider text-[#737686]">
             Aksi
           </th>
         </tr>

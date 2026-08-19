@@ -13,9 +13,9 @@ interface ProductsTableRowProps {
 }
 
 const STATUS_CLASS: Record<ProductStatus, string> = {
-  Tayang: 'bg-[#DCFCE7] text-[#166534]',
-  'Stok Habis': 'bg-[#FFF0F0] text-[#C73535]',
-  Draf: 'bg-[#F5F7FB] text-[#737A87]',
+  Tayang: 'bg-[#e6f4ee] text-[#12805c]',
+  'Stok Habis': 'bg-[#FFF0F0] text-[#ba1a1a]',
+  Draf: 'bg-[#F5F7FB] text-[#737686]',
 };
 
 const ProductsTableRow: React.FC<ProductsTableRowProps> = ({
@@ -28,14 +28,14 @@ const ProductsTableRow: React.FC<ProductsTableRowProps> = ({
     product.images?.find((img) => img.isPrimary)?.url || product.images?.[0]?.url;
 
   return (
-    <tr className="group border-b border-[#F5F7FB] transition-colors last:border-0 hover:bg-[#F5F5FF]/60">
+    <tr className="group border-b border-[#F5F7FB] transition-colors last:border-0 hover:bg-[#f5f7fb]/60">
 
       <td className="px-4 py-3 text-center">
         <div className="flex justify-center">
           <div
             className="
               flex h-12 w-12 items-center justify-center overflow-hidden
-              rounded-xl bg-[#F5F7FB] ring-1 ring-[#E8ECF4]
+              rounded-xl bg-[#F5F7FB] ring-1 ring-[#e0e3e5]
             "
           >
             {image ? (
@@ -52,16 +52,16 @@ const ProductsTableRow: React.FC<ProductsTableRowProps> = ({
       </td>
 
       <td className="px-4 py-3 text-center">
-        <p className="truncate text-[13px] font-semibold text-[#20242D]">
+        <p className="truncate text-[13px] font-semibold text-[#101319]">
           {product.name}
         </p>
       </td>
 
-      <td className="px-4 py-3 text-center text-[12px] text-[#737A87]">
+      <td className="px-4 py-3 text-center text-[12px] text-[#737686]">
         {product.category?.name ?? 'Tanpa kategori'}
       </td>
 
-      <td className="px-4 py-3 text-center text-[13px] font-bold text-[#538CDB] tabular-nums">
+      <td className="px-4 py-3 text-center text-[13px] font-bold text-[#004ac6] tabular-nums">
         {formatRupiah(Number(product.price))}
       </td>
 
@@ -72,10 +72,10 @@ const ProductsTableRow: React.FC<ProductsTableRowProps> = ({
             text-[11px] font-semibold tabular-nums
             ${
               product.stock === 0
-                ? 'bg-[#FFF0F0] text-[#C73535]'
+                ? 'bg-[#FFF0F0] text-[#ba1a1a]'
                 : product.stock < 10
                   ? 'bg-[#FFF7E0] text-[#B45309]'
-                  : 'bg-[#F5F7FB] text-[#20242D]'
+                  : 'bg-[#F5F7FB] text-[#101319]'
             }
           `}
         >
@@ -84,10 +84,10 @@ const ProductsTableRow: React.FC<ProductsTableRowProps> = ({
               h-1 w-1 rounded-full
               ${
                 product.stock === 0
-                  ? 'bg-[#FF4646]'
+                  ? 'bg-[#ba1a1a]'
                   : product.stock < 10
                     ? 'bg-[#FFD500]'
-                    : 'bg-[#22C55E]'
+                    : 'bg-[#12805c]'
               }
             `}
           />
@@ -113,8 +113,8 @@ const ProductsTableRow: React.FC<ProductsTableRowProps> = ({
             onClick={onEdit}
             className="
               flex h-8 w-8 items-center justify-center rounded-lg
-              text-[#737A87] transition-all duration-200
-              hover:bg-[#EEF5FF] hover:text-[#538CDB]
+              text-[#737686] transition-all duration-200
+              hover:bg-[#f5f7fb] hover:text-[#004ac6]
             "
             aria-label={`Edit ${product.name}`}
             title="Edit"
@@ -126,8 +126,8 @@ const ProductsTableRow: React.FC<ProductsTableRowProps> = ({
             to={`/products/${product.slug}`}
             className="
               flex h-8 w-8 items-center justify-center rounded-lg
-              text-[#737A87] transition-all duration-200
-              hover:bg-[#EEF5FF] hover:text-[#538CDB]
+              text-[#737686] transition-all duration-200
+              hover:bg-[#f5f7fb] hover:text-[#004ac6]
             "
             aria-label={`Lihat ${product.name} di toko`}
             title="Lihat di toko"
@@ -140,8 +140,8 @@ const ProductsTableRow: React.FC<ProductsTableRowProps> = ({
             onClick={onDelete}
             className="
               flex h-8 w-8 items-center justify-center rounded-lg
-              text-[#737A87] transition-all duration-200
-              hover:bg-[#FFF0F0] hover:text-[#FF4646]
+              text-[#737686] transition-all duration-200
+              hover:bg-[#FFF0F0] hover:text-[#ba1a1a]
             "
             aria-label={`Hapus ${product.name}`}
             title="Hapus"

@@ -35,7 +35,7 @@ const Sheet: React.FC<SheetProps> = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
 
       <div
-        className="absolute inset-0 bg-[#20242D]/50 backdrop-blur-sm"
+        className="absolute inset-0 bg-[#101319]/50 backdrop-blur-sm"
         onClick={onClose}
       />
 
@@ -49,7 +49,7 @@ const Sheet: React.FC<SheetProps> = ({
       >
         <div
           className="
-            flex items-center justify-between border-b border-[#E8ECF4]
+            flex items-center justify-between border-b border-[#e0e3e5]
             px-5 py-4
           "
         >
@@ -57,20 +57,20 @@ const Sheet: React.FC<SheetProps> = ({
             <span
               className="
                 flex h-8 w-8 items-center justify-center rounded-lg
-                bg-[#538CDB]/10
+                bg-[#004ac6]/10
               "
             >
               <span className="h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
             </span>
-            <h3 className="text-[15px] font-bold text-[#20242D]">{title}</h3>
+            <h3 className="text-[15px] font-bold text-[#101319]">{title}</h3>
           </div>
           <button
             type="button"
             onClick={onClose}
             className="
               flex h-8 w-8 items-center justify-center rounded-full
-              text-[#737A87] transition-colors hover:bg-[#F5F7FB]
-              hover:text-[#20242D]
+              text-[#737686] transition-colors hover:bg-[#F5F7FB]
+              hover:text-[#101319]
             "
             aria-label="Tutup"
           >

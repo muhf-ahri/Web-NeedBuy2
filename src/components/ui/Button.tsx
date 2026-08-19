@@ -26,19 +26,19 @@ const Button: React.FC<ButtonProps> = ({
 
   const variants = {
     primary:
-      'bg-[#538CDB] text-white hover:bg-[#467BC7] focus:ring-[#538CDB]',
+      'bg-[#004ac6] text-white hover:bg-[#004ac6] focus:ring-[#004ac6]',
     secondary:
-      'bg-[#F5F5FF] text-[#538CDB] hover:bg-[#E8ECF8] focus:ring-[#538CDB] border border-[#E8ECF4]',
+      'bg-[#f5f7fb] text-[#004ac6] hover:bg-[#f5f7fb] focus:ring-[#004ac6] border border-[#e0e3e5]',
     outline:
-      'bg-white text-[#538CDB] border border-[#538CDB] hover:bg-[#F5F5FF] focus:ring-[#538CDB]',
+      'bg-white text-[#004ac6] border border-[#004ac6] hover:bg-[#f5f7fb] focus:ring-[#004ac6]',
     google:
-      'bg-white text-[#20242D] border border-[#E8ECF4] hover:border-[#538CDB] hover:bg-[#F5F5FF] focus:ring-[#538CDB]',
+      'bg-white text-[#101319] border border-[#e0e3e5] hover:border-[#004ac6] hover:bg-[#f5f7fb] focus:ring-[#004ac6]',
     apple:
-      'bg-[#20242D] text-white hover:bg-[#3a3f4a] focus:ring-[#20242D] border border-[#20242D]',
+      'bg-[#101319] text-white hover:bg-[#434655] focus:ring-[#101319] border border-[#101319]',
     danger:
-      'bg-[#FF4646] text-white hover:bg-[#E63E3E] focus:ring-[#FF4646]',
+      'bg-[#ba1a1a] text-white hover:bg-[#ba1a1a] focus:ring-[#ba1a1a]',
     success:
-      'bg-[#2ECC71] text-white hover:bg-[#27AE60] focus:ring-[#2ECC71]',
+      'bg-[#12805c] text-white hover:bg-[#12805c] focus:ring-[#12805c]',
   };
 
   return (

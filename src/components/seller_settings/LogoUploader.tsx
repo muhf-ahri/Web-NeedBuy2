@@ -30,15 +30,15 @@ const LogoUploader: React.FC<LogoUploaderProps> = ({
       <div
         className="
           relative flex h-24 w-24 shrink-0 items-center justify-center
-          overflow-hidden rounded-2xl bg-gradient-to-br from-[#5B93E0]/10
-          to-[#3A66AC]/10 ring-2 ring-[#E8ECF4] transition-all
+          overflow-hidden rounded-2xl bg-gradient-to-br from-[#004ac6]/10
+          to-[#003ea8]/10 ring-2 ring-[#e0e3e5] transition-all
           sm:h-28 sm:w-28
         "
       >
         {uploading ? (
           <div className="flex flex-col items-center gap-1.5">
-            <Icon name="clock" size={20} className="animate-spin text-[#538CDB]" />
-            <span className="text-[9px] font-bold uppercase tracking-wider text-[#538CDB]">
+            <Icon name="clock" size={20} className="animate-spin text-[#004ac6]" />
+            <span className="text-[9px] font-bold uppercase tracking-wider text-[#004ac6]">
               Upload
             </span>
           </div>
@@ -83,9 +83,9 @@ const LogoUploader: React.FC<LogoUploaderProps> = ({
             onClick={() => inputRef.current?.click()}
             className="
               inline-flex h-9 items-center gap-1.5 rounded-full border
-              border-[#E8ECF4] bg-white px-4 text-[12px] font-semibold
-              text-[#20242D] transition-all duration-200 hover:border-[#538CDB]
-              hover:text-[#538CDB] active:scale-[0.98]
+              border-[#e0e3e5] bg-white px-4 text-[12px] font-semibold
+              text-[#101319] transition-all duration-200 hover:border-[#004ac6]
+              hover:text-[#004ac6] active:scale-[0.98]
               disabled:cursor-not-allowed disabled:opacity-50
             "
           >
@@ -100,7 +100,7 @@ const LogoUploader: React.FC<LogoUploaderProps> = ({
               className="
                 inline-flex h-9 items-center gap-1.5 rounded-full border
                 border-transparent px-3 text-[12px] font-semibold
-                text-[#FF4646] transition-all duration-200
+                text-[#ba1a1a] transition-all duration-200
                 hover:bg-[#FFF0F0]
               "
             >
@@ -110,9 +110,9 @@ const LogoUploader: React.FC<LogoUploaderProps> = ({
           )}
         </div>
 
-        <p className="mt-2 text-[11px] leading-relaxed text-[#737A87]">
+        <p className="mt-2 text-[11px] leading-relaxed text-[#737686]">
           Format PNG, JPG, WebP, atau GIF, maksimal 3 MB. Logo akan disimpan bersama
-          setelan lainnya saat kamu tekan <span className="font-semibold text-[#538CDB]">Simpan</span>.
+          setelan lainnya saat kamu tekan <span className="font-semibold text-[#004ac6]">Simpan</span>.
         </p>
       </div>
     </div>

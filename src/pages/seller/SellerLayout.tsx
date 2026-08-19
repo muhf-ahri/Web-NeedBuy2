@@ -62,7 +62,7 @@ const SellerLayout: React.FC<SellerLayoutProps> = ({
     <div
       className="
         min-h-screen
-        bg-[#F5F5FF]
+        bg-[#f5f7fb]
       "
       style={{
         fontFamily:
@@ -126,13 +126,13 @@ const SellerLayout: React.FC<SellerLayoutProps> = ({
                 justify-center
                 rounded-full
 
-                text-[#20242D]
+                text-[#101319]
 
                 transition-all
                 duration-200
 
                 hover:bg-[#F5F7FB]
-                hover:text-[#538CDB]
+                hover:text-[#004ac6]
 
                 active:scale-[0.95]
 
@@ -169,7 +169,7 @@ const SellerLayout: React.FC<SellerLayoutProps> = ({
                     text-[15px]
                     font-extrabold
                     tracking-tight
-                    text-[#538CDB]
+                    text-[#004ac6]
                   "
                 >
                   NeedBuy
@@ -182,7 +182,7 @@ const SellerLayout: React.FC<SellerLayoutProps> = ({
                     font-bold
                     uppercase
                     tracking-[0.18em]
-                    text-[#538CDB]
+                    text-[#004ac6]
                   "
                 >
                   Seller Center
@@ -215,22 +215,22 @@ const SellerLayout: React.FC<SellerLayoutProps> = ({
                 rounded-full
 
                 border
-                border-[#E8ECF4]
+                border-[#e0e3e5]
 
                 bg-white
                 px-3.5
 
                 text-[12px]
                 font-semibold
-                text-[#538CDB]
+                text-[#004ac6]
 
                 shadow-sm
 
                 transition-all
                 duration-200
 
-                hover:border-[#538CDB]
-                hover:bg-[#EEF5FF]
+                hover:border-[#004ac6]
+                hover:bg-[#f5f7fb]
                 hover:shadow-[0_4px_12px_rgba(83,140,219,0.12)]
 
                 active:scale-[0.98]

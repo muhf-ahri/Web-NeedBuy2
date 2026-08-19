@@ -9,8 +9,8 @@ import { formatRupiah } from '../../utils/currency';
 const PAGE_SIZE = 10;
 
 const statusColor: Record<SellerStatus, string> = {
-  ACTIVE: 'bg-[#d7f5dc] text-[#156b32]',
-  SUSPENDED: 'bg-[#ffe0e0] text-[#a33131]',
+  ACTIVE: 'bg-[#e6f4ee] text-[#12805c]',
+  SUSPENDED: 'bg-[#fff0f0] text-[#93000a]',
 };
 
 const statusLabel: Record<SellerStatus, string> = {
@@ -92,7 +92,7 @@ const StoresPage: React.FC = () => {
     <AdminLayout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-[28px] font-bold text-[#191c1e]">Toko</h1>
+          <h1 className="text-[28px] font-bold text-[#101319]">Toko</h1>
           <p className="text-[15px] text-[#737686]">Kelola dan pantau toko, rating, serta performanya.</p>
         </div>
 
@@ -133,14 +133,14 @@ const StoresPage: React.FC = () => {
         </div>
 
         {error && (
-          <div className="rounded-2xl border border-[#ffcdd2] bg-[#fff5f5] p-4 text-[13px] text-[#a33131]">
+          <div className="rounded-2xl border border-[#ffdad6] bg-[#fff0f0] p-4 text-[13px] text-[#93000a]">
             {error}
           </div>
         )}
 
         <div className="overflow-hidden rounded-2xl border border-[#e0e3e5] bg-white p-5">
           <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+            <table className="stack-table w-full text-sm">
               <thead>
                 <tr className="border-b border-[#f2f4f6] text-[11px] font-semibold uppercase text-[#737686]">
                   <th className="pb-2 pr-2 text-left">Toko</th>
@@ -172,8 +172,8 @@ const StoresPage: React.FC = () => {
                   </tr>
                 ) : (
                   items.map((store) => (
-                    <tr key={store.id} className="text-[13px] transition-colors hover:bg-[#f8f9fb]">
-                      <td className="py-2.5 pr-2 text-left font-medium text-[#191c1e]">
+                    <tr key={store.id} className="text-[13px] transition-colors hover:bg-[#f5f7fb]">
+                      <td className="py-2.5 pr-2 text-left font-medium text-[#101319]">
                         {store.storeName}
                         {store.vacationMode && (
                           <span className="ml-1 rounded-full bg-[#f2f4f6] px-2 py-0.5 text-[10px] text-[#737686]">
@@ -193,7 +193,7 @@ const StoresPage: React.FC = () => {
                       </td>
                       <td className="py-2.5 pr-2 text-left">
                         <span className="inline-flex items-center gap-1">
-                          <Icon name="star" size={14} className="text-[#f59e0b]" />
+                          <Icon name="star" size={14} className="text-[#ffd500]" />
                           {store.rating.toFixed(1)}
                         </span>
                       </td>
@@ -209,7 +209,7 @@ const StoresPage: React.FC = () => {
                           disabled={pendingId === store.id}
                           className={`rounded-full px-3 py-1 text-[12px] font-semibold text-white transition-colors disabled:opacity-50 ${
                             store.status === 'ACTIVE'
-                              ? 'bg-[#ba1a1a] hover:bg-[#9a1515]'
+                              ? 'bg-[#ba1a1a] hover:bg-[#93000a]'
                               : 'bg-[#004ac6] hover:bg-[#003ea8]'
                           }`}
                         >

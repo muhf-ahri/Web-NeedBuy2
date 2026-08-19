@@ -57,11 +57,11 @@ const DiscountBadge: React.FC<{
       </span>
 
       <span
-        className="pointer-events-none absolute left-0 top-full mt-1.5 w-max max-w-[11rem] rounded-lg bg-[#191c1e] px-2.5 py-1.5 text-[11px] leading-tight text-white opacity-0 shadow-lg transition-opacity duration-200 group-hover/disc:opacity-100"
+        className="pointer-events-none absolute left-0 top-full mt-1.5 w-max max-w-[11rem] rounded-lg bg-[#101319] px-2.5 py-1.5 text-[11px] leading-tight text-white opacity-0 shadow-lg transition-opacity duration-200 group-hover/disc:opacity-100"
         role="note"
       >
         <span className="block text-white/60 line-through">{formatRupiah(before)}</span>
-        <span className="block font-semibold text-[#7ee08a]">Hemat {formatRupiah(saved)}</span>
+        <span className="block font-semibold text-[#7fe8b2]">Hemat {formatRupiah(saved)}</span>
       </span>
     </div>
   );

@@ -28,10 +28,10 @@ const ChatsSearch: React.FC<ChatsSearchProps> = ({
       onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder}
       className="
-        w-full rounded-full border border-[#E8ECF4] bg-[#F5F7FB] py-2
-        pl-9 pr-9 text-[12px] text-[#20242D] outline-none
+        w-full rounded-full border border-[#e0e3e5] bg-[#F5F7FB] py-2
+        pl-9 pr-9 text-[12px] text-[#101319] outline-none
         placeholder:text-[#A2A8B3] transition-all duration-200
-        focus:border-[#538CDB] focus:bg-white
+        focus:border-[#004ac6] focus:bg-white
         focus:shadow-[0_4px_12px_rgba(83,140,219,0.10)]
       "
     />
@@ -42,7 +42,7 @@ const ChatsSearch: React.FC<ChatsSearchProps> = ({
         className="
           absolute right-2 top-1/2 flex h-6 w-6 -translate-y-1/2
           items-center justify-center rounded-full text-[#A2A8B3]
-          transition-colors hover:bg-white hover:text-[#20242D]
+          transition-colors hover:bg-white hover:text-[#101319]
         "
         aria-label="Hapus pencarian"
       >

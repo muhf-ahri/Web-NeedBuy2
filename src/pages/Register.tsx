@@ -34,7 +34,7 @@ const Register: React.FC = () => {
   };
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-[#F5F5FF]">
+    <main className="relative min-h-screen overflow-hidden bg-[#f5f7fb]">
       
       <div
         className="
@@ -42,12 +42,12 @@ const Register: React.FC = () => {
           bg-[radial-gradient(circle_at_15%_20%,rgba(83,140,219,0.20),transparent_32%),radial-gradient(circle_at_85%_15%,rgba(255,213,0,0.12),transparent_25%),radial-gradient(circle_at_80%_85%,rgba(255,70,70,0.10),transparent_28%),linear-gradient(135deg,#F5F5FF_0%,#FFFFFF_45%,#EEF5FF_100%)]
         "
       />
-      <div className="pointer-events-none absolute -left-32 top-1/3 h-72 w-72 rounded-full bg-[#538CDB]/10 blur-3xl" />
+      <div className="pointer-events-none absolute -left-32 top-1/3 h-72 w-72 rounded-full bg-[#004ac6]/10 blur-3xl" />
       <div className="pointer-events-none absolute right-0 top-10 h-64 w-64 rounded-full bg-[#FFD500]/10 blur-3xl" />
-      <div className="pointer-events-none absolute bottom-0 right-1/4 h-72 w-72 rounded-full bg-[#FF4646]/5 blur-3xl" />
+      <div className="pointer-events-none absolute bottom-0 right-1/4 h-72 w-72 rounded-full bg-[#ba1a1a]/5 blur-3xl" />
       <div className="pointer-events-none absolute left-[7%] top-[15%] h-2.5 w-2.5 rounded-full bg-[#FFD500]" />
-      <div className="pointer-events-none absolute right-[10%] top-[18%] h-4 w-4 rotate-12 rounded-[4px] bg-[#FF4646]" />
-      <div className="pointer-events-none absolute bottom-[18%] left-[12%] h-3 w-3 rounded-full bg-[#538CDB]" />
+      <div className="pointer-events-none absolute right-[10%] top-[18%] h-4 w-4 rotate-12 rounded-[4px] bg-[#ba1a1a]" />
+      <div className="pointer-events-none absolute bottom-[18%] left-[12%] h-3 w-3 rounded-full bg-[#004ac6]" />
       <div className="pointer-events-none absolute bottom-[13%] right-[18%] h-2.5 w-2.5 rounded-full bg-[#FFD500]" />
 
       <img
@@ -66,9 +66,9 @@ const Register: React.FC = () => {
           <div className="overflow-hidden rounded-[24px] border border-white/80 bg-white/95 shadow-[0_18px_50px_rgba(32,36,45,0.10)] backdrop-blur-sm">
             <div className="grid md:grid-cols-[0.9fr_1.1fr]">
               
-              <section className="relative hidden overflow-hidden bg-gradient-to-br from-[#538CDB] via-[#4A7ECB] to-[#3A66AC] px-8 py-10 md:flex md:flex-col md:justify-between">
+              <section className="relative hidden overflow-hidden bg-gradient-to-br from-[#004ac6] via-[#004ac6] to-[#003ea8] px-8 py-10 md:flex md:flex-col md:justify-between">
                 <svg
-                  className="pointer-events-none absolute inset-y-0 right-0 h-full w-16 text-[#F5F5FF] md:w-20"
+                  className="pointer-events-none absolute inset-y-0 right-0 h-full w-16 text-[#f5f7fb] md:w-20"
                   viewBox="0 0 100 400"
                   preserveAspectRatio="none"
                   fill="none"
@@ -112,24 +112,24 @@ const Register: React.FC = () => {
                 <div className="mx-auto w-full max-w-sm">
                   
                   <div className="mb-6 md:hidden">
-                    <p className="text-xs font-semibold text-[#538CDB]">NeedBuy</p>
+                    <p className="text-xs font-semibold text-[#004ac6]">NeedBuy</p>
                   </div>
 
                   <div className="mb-6">
-                    <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#538CDB]">
+                    <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#004ac6]">
                       Create account
                     </p>
-                    <h1 className="text-[24px] font-bold leading-tight tracking-tight text-[#20242D] sm:text-[26px]">
+                    <h1 className="text-[24px] font-bold leading-tight tracking-tight text-[#101319] sm:text-[26px]">
                       Mulai perjalananmu.
                     </h1>
-                    <p className="mt-2 max-w-xs text-[13px] leading-5 text-[#737A87]">
+                    <p className="mt-2 max-w-xs text-[13px] leading-5 text-[#737686]">
                       Buat akun NeedBuy dan mulai temukan produk yang benar-benar kamu butuhkan.
                     </p>
                   </div>
 
                   {error && (
-                    <div className="mb-4 rounded-xl border border-[#FF4646]/15 bg-[#FFF0F0] px-3.5 py-3">
-                      <p className="text-xs leading-5 text-[#C73535]">{error}</p>
+                    <div className="mb-4 rounded-xl border border-[#ba1a1a]/15 bg-[#FFF0F0] px-3.5 py-3">
+                      <p className="text-xs leading-5 text-[#ba1a1a]">{error}</p>
                     </div>
                   )}
 
@@ -142,11 +142,11 @@ const Register: React.FC = () => {
                   <Divider text="atau" />
                   <SocialLogin />
 
-                  <p className="mt-5 text-center text-xs text-[#737A87]">
+                  <p className="mt-5 text-center text-xs text-[#737686]">
                     Sudah punya akun?{' '}
                     <Link
                       to="/login"
-                      className="font-semibold text-[#538CDB] transition-colors hover:text-[#467BC7]"
+                      className="font-semibold text-[#004ac6] transition-colors hover:text-[#004ac6]"
                     >
                       Masuk
                     </Link>
@@ -156,7 +156,7 @@ const Register: React.FC = () => {
             </div>
           </div>
 
-          <p className="mt-3 text-center text-[10px] text-[#737A87]">
+          <p className="mt-3 text-center text-[10px] text-[#737686]">
             Bergabung dengan NeedBuy untuk pengalaman belanja yang lebih sederhana dan terarah.
           </p>
         </div>

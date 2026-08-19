@@ -17,27 +17,27 @@ const ProductsStatsCards: React.FC<ProductsStatsCardsProps> = ({
       title: 'Produk Tayang',
       value: stats?.active ?? 0,
       icon: 'eye' as const,
-      iconBg: 'bg-[#F0FDF4]',
-      iconText: 'text-[#166534]',
-      valueColor: 'text-[#20242D]',
-      accent: '#22C55E',
+      iconBg: 'bg-[#e6f4ee]',
+      iconText: 'text-[#12805c]',
+      valueColor: 'text-[#101319]',
+      accent: '#12805c',
     },
     {
       title: 'Stok Habis',
       value: stats?.outOfStock ?? 0,
       icon: 'alert' as const,
       iconBg: 'bg-[#FFF0F0]',
-      iconText: 'text-[#FF4646]',
-      valueColor: 'text-[#FF4646]',
-      accent: '#FF4646',
+      iconText: 'text-[#ba1a1a]',
+      valueColor: 'text-[#ba1a1a]',
+      accent: '#ba1a1a',
     },
     {
       title: 'Draf',
       value: stats?.drafts ?? 0,
       icon: 'edit' as const,
       iconBg: 'bg-[#F5F7FB]',
-      iconText: 'text-[#737A87]',
-      valueColor: 'text-[#20242D]',
+      iconText: 'text-[#737686]',
+      valueColor: 'text-[#101319]',
       accent: '#A2A8B3',
     },
   ];
@@ -83,7 +83,7 @@ const ProductsStatsCards: React.FC<ProductsStatsCardsProps> = ({
           <p
             className="
               mt-2 text-[9px] font-bold uppercase tracking-[0.14em]
-              text-[#737A87] sm:text-[10px]
+              text-[#737686] sm:text-[10px]
             "
           >
             {card.title}

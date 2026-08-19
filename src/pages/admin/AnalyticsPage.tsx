@@ -18,11 +18,11 @@ const STATUS_LABEL: Record<OrderStatusCode, string> = {
 
 const STATUS_COLOR: Record<OrderStatusCode, string> = {
   WAITING_PAYMENT: '#b45309',
-  PROCESSING: '#0057b8',
-  SHIPPED: '#4338ca',
-  DELIVERED: '#0f766e',
-  COMPLETED: '#156b32',
-  CANCELLED: '#a33131',
+  PROCESSING: '#004ac6',
+  SHIPPED: '#004ac6',
+  DELIVERED: '#12805c',
+  COMPLETED: '#12805c',
+  CANCELLED: '#93000a',
 };
 
 const AnalyticsPage: React.FC = () => {
@@ -82,7 +82,7 @@ const AnalyticsPage: React.FC = () => {
     <AdminLayout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-[28px] font-bold text-[#191c1e]">Analytics</h1>
+          <h1 className="text-[28px] font-bold text-[#101319]">Analytics</h1>
           <p className="text-[15px] text-[#737686]">
             Performa marketplace {data ? `${data.windowDays} hari terakhir` : '30 hari terakhir'},
             dibanding periode sebelumnya.
@@ -90,7 +90,7 @@ const AnalyticsPage: React.FC = () => {
         </div>
 
         {error && (
-          <div className="rounded-2xl border border-[#ffcdd2] bg-[#fff5f5] p-4 text-[13px] text-[#a33131]">
+          <div className="rounded-2xl border border-[#ffdad6] bg-[#fff0f0] p-4 text-[13px] text-[#93000a]">
             {error}
           </div>
         )}
@@ -117,14 +117,14 @@ const AnalyticsPage: React.FC = () => {
 
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
               <div className="rounded-2xl border border-[#e0e3e5] bg-white p-5 lg:col-span-2">
-                <h2 className="text-[15px] font-bold text-[#191c1e]">
+                <h2 className="text-[15px] font-bold text-[#101319]">
                   Pendapatan Platform (12 bulan)
                 </h2>
                 <RevenueChart data={data.revenueSeries} />
               </div>
 
               <div className="rounded-2xl border border-[#e0e3e5] bg-white p-5">
-                <h2 className="text-[15px] font-bold text-[#191c1e]">Status Pesanan</h2>
+                <h2 className="text-[15px] font-bold text-[#101319]">Status Pesanan</h2>
                 <div className="mt-3">
                   <OrderStatus
                     data={data.ordersByStatus.map((row) => ({
@@ -139,14 +139,14 @@ const AnalyticsPage: React.FC = () => {
 
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
               <div className="rounded-2xl border border-[#e0e3e5] bg-white p-5">
-                <h2 className="text-[15px] font-bold text-[#191c1e]">Kategori Terlaris</h2>
+                <h2 className="text-[15px] font-bold text-[#101319]">Kategori Terlaris</h2>
                 <div className="mt-3">
                   <TopCategories categories={data.topCategories} />
                 </div>
               </div>
 
               <div className="rounded-2xl border border-[#e0e3e5] bg-white p-5">
-                <h2 className="text-[15px] font-bold text-[#191c1e]">Toko Terbaik</h2>
+                <h2 className="text-[15px] font-bold text-[#101319]">Toko Terbaik</h2>
                 <div className="mt-3">
                   <TopStores stores={data.topStores} />
                 </div>

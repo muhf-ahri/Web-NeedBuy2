@@ -10,18 +10,18 @@ const LABEL_STYLE: Record<
 > = {
   BEST_MATCH: {
     label: 'Paling Cocok',
-    bg: 'bg-[#538CDB]',
+    bg: 'bg-[#004ac6]',
     text: 'text-white',
   },
   GOOD_MATCH: {
     label: 'Cocok',
-    bg: 'bg-[#538CDB]/15',
-    text: 'text-[#538CDB]',
+    bg: 'bg-[#004ac6]/15',
+    text: 'text-[#004ac6]',
   },
   ALTERNATIVE: {
     label: 'Alternatif',
     bg: 'bg-[#F5F7FB]',
-    text: 'text-[#737A87]',
+    text: 'text-[#737686]',
   },
 };
 
@@ -49,8 +49,8 @@ const RecommendationRow: React.FC<RecommendationRowProps> = ({
       onClick={onOpen}
       className="
         group flex cursor-pointer flex-col gap-3 rounded-2xl border
-        border-[#E8ECF4] bg-white p-3 transition-all duration-200
-        hover:border-[#538CDB]/40
+        border-[#e0e3e5] bg-white p-3 transition-all duration-200
+        hover:border-[#004ac6]/40
         hover:shadow-[0_6px_18px_rgba(83,140,219,0.10)] sm:flex-row
         sm:items-center
       "
@@ -59,7 +59,7 @@ const RecommendationRow: React.FC<RecommendationRowProps> = ({
       <div
         className="
           relative h-20 w-full shrink-0 overflow-hidden rounded-xl
-          bg-[#F5F7FB] ring-1 ring-[#E8ECF4] sm:h-16 sm:w-16
+          bg-[#F5F7FB] ring-1 ring-[#e0e3e5] sm:h-16 sm:w-16
         "
       >
         {primaryImage ? (
@@ -76,7 +76,7 @@ const RecommendationRow: React.FC<RecommendationRowProps> = ({
 
         <span
           className="
-            absolute left-1.5 top-1.5 rounded-full bg-[#20242D]/85 px-1.5
+            absolute left-1.5 top-1.5 rounded-full bg-[#101319]/85 px-1.5
             py-0.5 text-[9px] font-bold text-white backdrop-blur-sm
           "
         >
@@ -105,25 +105,25 @@ const RecommendationRow: React.FC<RecommendationRowProps> = ({
 
         <p
           className="
-            mt-1 truncate text-[13px] font-semibold text-[#20242D]
-            transition-colors duration-200 group-hover:text-[#538CDB]
+            mt-1 truncate text-[13px] font-semibold text-[#101319]
+            transition-colors duration-200 group-hover:text-[#004ac6]
           "
         >
           {rec.product.name}
         </p>
 
-        <div className="mt-0.5 flex flex-wrap items-center gap-2 text-[11px] text-[#737A87]">
+        <div className="mt-0.5 flex flex-wrap items-center gap-2 text-[11px] text-[#737686]">
           <span className="inline-flex items-center gap-0.5">
             <Icon name="star" size={11} className="text-[#FFD500]" />
             {Number(rec.product.rating).toFixed(1)}
           </span>
-          <span className="h-1 w-1 shrink-0 rounded-full bg-[#D8DEE9]" />
+          <span className="h-1 w-1 shrink-0 rounded-full bg-[#e0e3e5]" />
           <span className="truncate">{rec.product.seller?.storeName ?? 'Toko'}</span>
         </div>
       </div>
 
       <div className="flex items-center justify-between gap-2 sm:flex-col sm:items-end sm:justify-center">
-        <p className="text-[14px] font-bold text-[#538CDB]">
+        <p className="text-[14px] font-bold text-[#004ac6]">
           {formatRupiah(rec.product.price)}
         </p>
         <button
@@ -131,10 +131,10 @@ const RecommendationRow: React.FC<RecommendationRowProps> = ({
           onClick={(e) => onAddToCart(e, rec.product.id)}
           disabled={busy}
           className="
-            flex h-8 items-center gap-1.5 rounded-full bg-[#538CDB] px-3
+            flex h-8 items-center gap-1.5 rounded-full bg-[#004ac6] px-3
             text-[11px] font-semibold text-white
             shadow-[0_4px_12px_rgba(83,140,219,0.25)] transition-all
-            duration-200 hover:bg-[#467BC7] active:scale-[0.97]
+            duration-200 hover:bg-[#004ac6] active:scale-[0.97]
             disabled:cursor-not-allowed disabled:bg-[#A2A8B3]
             disabled:shadow-none
           "

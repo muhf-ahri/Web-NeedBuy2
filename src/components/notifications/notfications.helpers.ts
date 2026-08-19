@@ -42,29 +42,29 @@ export function metaFor(notification: Notification): {
     case 'PAYMENT':
       return {
         icon: 'card',
-        bg: 'bg-[#DCFCE7]',
-        text: 'text-[#166534]',
+        bg: 'bg-[#e6f4ee]',
+        text: 'text-[#12805c]',
         label: 'Pembayaran',
       };
     case 'ORDER_NEW':
       return {
         icon: 'orders',
-        bg: 'bg-[#EEF5FF]',
-        text: 'text-[#538CDB]',
+        bg: 'bg-[#f5f7fb]',
+        text: 'text-[#004ac6]',
         label: 'Pesanan baru',
       };
     case 'ORDER_STATUS':
       return {
         icon: 'truck',
-        bg: 'bg-[#EEF5FF]',
-        text: 'text-[#538CDB]',
+        bg: 'bg-[#f5f7fb]',
+        text: 'text-[#004ac6]',
         label: 'Update pesanan',
       };
     default:
       return {
         icon: 'bell',
         bg: 'bg-[#F5F7FB]',
-        text: 'text-[#737A87]',
+        text: 'text-[#737686]',
         label: 'Info',
       };
   }

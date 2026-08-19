@@ -189,7 +189,7 @@ const ProductDetailPage: React.FC = () => {
       <main className="flex-1 max-w-6xl mx-auto w-full px-5 sm:px-10 py-8">
         <button
           onClick={() => navigate(-1)}
-          className="flex items-center gap-1 text-[#737686] hover:text-[#191c1e] mb-6 transition-colors"
+          className="flex items-center gap-1 text-[#737686] hover:text-[#101319] mb-6 transition-colors"
         >
           <Icon name="chevronLeft" size={16} className="" />
           <span className="text-[13px]">Balik</span>
@@ -202,14 +202,14 @@ const ProductDetailPage: React.FC = () => {
                 {heroImage ? (
                   <img src={heroImage} alt={product.name} className="w-full h-full object-cover" />
                 ) : (
-                  <div className="flex h-full w-full flex-col items-center justify-center gap-2 text-[#a6a9b6]">
+                  <div className="flex h-full w-full flex-col items-center justify-center gap-2 text-[#a2a8b3]">
                     <Icon name="product" size={40} className="" />
                     <span className="text-[12px]">Penjual belum menambahkan foto</span>
                   </div>
                 )}
 
                 {onSale && (
-                  <span className="absolute left-4 top-4 rounded-full bg-[#FF4646] px-2.5 py-1 text-[11px] font-bold text-white">
+                  <span className="absolute left-4 top-4 rounded-full bg-[#ba1a1a] px-2.5 py-1 text-[11px] font-bold text-white">
                     -{product.discountPercent}%
                   </span>
                 )}
@@ -239,7 +239,7 @@ const ProductDetailPage: React.FC = () => {
                 {product.category?.name}
               </p>
               <div className="mt-1 flex items-start justify-between gap-3">
-                <h1 className="text-[26px] sm:text-[30px] font-bold leading-tight text-[#191c1e]">
+                <h1 className="text-[26px] sm:text-[30px] font-bold leading-tight text-[#101319]">
                   {product.name}
                 </h1>
                 <ReportButton
@@ -257,22 +257,22 @@ const ProductDetailPage: React.FC = () => {
             <section className="grid grid-cols-2 gap-2.5 sm:grid-cols-6">
               <div
                 className={`
-                  rounded-2xl border border-[#E8ECF4] bg-white p-5
+                  rounded-2xl border border-[#e0e3e5] bg-white p-5
                   ${onSale ? 'col-span-2 sm:col-span-4' : 'col-span-2 sm:col-span-6'}
                 `}
               >
-                <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#737A87]">
+                <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#737686]">
                   {onSale ? 'Harga promo' : 'Harga'}
                 </p>
-                <p className="mt-2 text-[30px] font-extrabold leading-none tracking-tight text-[#20242D] sm:text-[34px]">
+                <p className="mt-2 text-[30px] font-extrabold leading-none tracking-tight text-[#101319] sm:text-[34px]">
                   {formatRupiah(product.price)}
                 </p>
                 {onSale && (
                   <p className="mt-2.5 flex flex-wrap items-baseline gap-x-2.5 gap-y-1 text-[13px]">
-                    <span className="text-[#737A87] line-through">
+                    <span className="text-[#737686] line-through">
                       {formatRupiah(strikePrice(product.price, product.discountPercent))}
                     </span>
-                    <span className="font-semibold text-[#C73535]">
+                    <span className="font-semibold text-[#ba1a1a]">
                       hemat {formatRupiah(savedAmount)}
                     </span>
                   </p>
@@ -281,44 +281,44 @@ const ProductDetailPage: React.FC = () => {
 
               {onSale && (
                 <div className="col-span-2 flex flex-col items-center justify-center rounded-2xl bg-[#FFF0F0] p-5 text-center">
-                  <p className="text-[28px] font-extrabold leading-none text-[#C73535]">
+                  <p className="text-[28px] font-extrabold leading-none text-[#ba1a1a]">
                     -{product.discountPercent}%
                   </p>
-                  <p className="mt-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-[#C73535]/70">
+                  <p className="mt-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-[#ba1a1a]/70">
                     Potongan
                   </p>
                 </div>
               )}
 
-              <div className="col-span-1 rounded-2xl bg-[#F5F5FF] px-4 py-3.5 sm:col-span-2">
-                <p className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-[#737A87]">
+              <div className="col-span-1 rounded-2xl bg-[#f5f7fb] px-4 py-3.5 sm:col-span-2">
+                <p className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-[#737686]">
                   <Icon name="star" size={12} className="text-[#FFD500]" />
                   Rating
                 </p>
-                <p className="mt-1.5 text-[17px] font-extrabold leading-none text-[#20242D]">
+                <p className="mt-1.5 text-[17px] font-extrabold leading-none text-[#101319]">
                   {Number(product.rating).toFixed(1)}
-                  <span className="ml-1.5 text-[11px] font-semibold text-[#737A87]">
+                  <span className="ml-1.5 text-[11px] font-semibold text-[#737686]">
                     · {product.reviewCount ?? 0} ulasan
                   </span>
                 </p>
               </div>
 
-              <div className="col-span-1 rounded-2xl bg-[#F5F5FF] px-4 py-3.5 sm:col-span-2">
-                <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#737A87]">
+              <div className="col-span-1 rounded-2xl bg-[#f5f7fb] px-4 py-3.5 sm:col-span-2">
+                <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#737686]">
                   Terjual
                 </p>
-                <p className="mt-1.5 text-[17px] font-extrabold leading-none text-[#20242D]">
+                <p className="mt-1.5 text-[17px] font-extrabold leading-none text-[#101319]">
                   {product.soldCount.toLocaleString('id-ID')}
                 </p>
               </div>
 
-              <div className="col-span-2 rounded-2xl bg-[#F5F5FF] px-4 py-3.5">
-                <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#737A87]">
+              <div className="col-span-2 rounded-2xl bg-[#f5f7fb] px-4 py-3.5">
+                <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#737686]">
                   Stok
                 </p>
                 <p
                   className={`mt-1.5 text-[17px] font-extrabold leading-none ${
-                    product.stock > 0 ? 'text-[#20242D]' : 'text-[#FF4646]'
+                    product.stock > 0 ? 'text-[#101319]' : 'text-[#ba1a1a]'
                   }`}
                 >
                   {product.stock > 0 ? product.stock.toLocaleString('id-ID') : 'Habis'}
@@ -328,11 +328,11 @@ const ProductDetailPage: React.FC = () => {
 
             {options.length > 0 && (
               <div className="space-y-4">
-                <h2 className="text-[15px] font-bold text-[#191c1e]">Pilih model</h2>
+                <h2 className="text-[15px] font-bold text-[#101319]">Pilih model</h2>
                 {options.map(([key, values]) => (
                   <div key={key}>
                     <p className="mb-2 text-[12px] text-[#737686]">
-                      {key}: <span className="font-semibold text-[#191c1e]">{picked[key]}</span>
+                      {key}: <span className="font-semibold text-[#101319]">{picked[key]}</span>
                     </p>
                     <div className="flex flex-wrap gap-2">
                       {values.map((value) => {
@@ -369,7 +369,7 @@ const ProductDetailPage: React.FC = () => {
 
             {product.description && (
               <div className="border-t border-[#e0e3e5] pt-6">
-                <h2 className="mb-2 text-[15px] font-bold text-[#191c1e]">Deskripsi</h2>
+                <h2 className="mb-2 text-[15px] font-bold text-[#101319]">Deskripsi</h2>
                 <p className="whitespace-pre-wrap text-[14px] leading-relaxed text-[#434655]">
                   {product.description}
                 </p>
@@ -378,12 +378,12 @@ const ProductDetailPage: React.FC = () => {
 
             {facts.length > 0 && (
               <div className="border-t border-[#e0e3e5] pt-6">
-                <h2 className="mb-3 text-[15px] font-bold text-[#191c1e]">Spesifikasi</h2>
+                <h2 className="mb-3 text-[15px] font-bold text-[#101319]">Spesifikasi</h2>
                 <dl className="divide-y divide-[#f2f4f6]">
                   {facts.map(([key, values]) => (
                     <div key={key} className="flex gap-4 py-2 text-[13px]">
                       <dt className="w-32 shrink-0 text-[#737686]">{key}</dt>
-                      <dd className="text-[#191c1e]">{values[0]}</dd>
+                      <dd className="text-[#101319]">{values[0]}</dd>
                     </div>
                   ))}
                 </dl>
@@ -400,14 +400,14 @@ const ProductDetailPage: React.FC = () => {
               {product.bulkMinQty != null && product.bulkDiscountPercent != null && (
                 <div
                   className={`mb-4 rounded-2xl p-4 transition-colors ${
-                    bulkReady ? 'bg-[#d7f5dc]' : 'bg-[#f2f4f6]'
+                    bulkReady ? 'bg-[#e6f4ee]' : 'bg-[#f2f4f6]'
                   }`}
                 >
-                  <p className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-[#156b32]">
-                    <Icon name="tag" size={12} className="text-[#156b32]" />
+                  <p className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-[#12805c]">
+                    <Icon name="tag" size={12} className="text-[#12805c]" />
                     Diskon grosir
                   </p>
-                  <p className="mt-1 text-[13px] text-[#191c1e]">
+                  <p className="mt-1 text-[13px] text-[#101319]">
                     Beli minimal{' '}
                     <span className="font-bold">{product.bulkMinQty} pcs</span>, potongan{' '}
                     <span className="font-bold">{product.bulkDiscountPercent}%</span>.
@@ -416,7 +416,7 @@ const ProductDetailPage: React.FC = () => {
                     {bulkReady ? (
                       <>
                         Aktif: kamu hemat{' '}
-                        <span className="font-bold text-[#156b32]">
+                        <span className="font-bold text-[#12805c]">
                           {formatRupiah(gross - payable)}
                         </span>
                         .
@@ -526,8 +526,8 @@ const ProductDetailPage: React.FC = () => {
                 <p
                   className={`mt-3 rounded-lg px-3 py-2 text-[12px] ${
                     cartError || wishlistError
-                      ? 'bg-[#ffe0e0] text-[#a33131]'
-                      : 'bg-[#d7f5dc] text-[#156b32]'
+                      ? 'bg-[#fff0f0] text-[#93000a]'
+                      : 'bg-[#e6f4ee] text-[#12805c]'
                   }`}
                 >
                   {cartError ?? wishlistError ?? shareNote}

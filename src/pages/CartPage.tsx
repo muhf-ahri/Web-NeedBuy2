@@ -101,14 +101,14 @@ const CartPage: React.FC = () => {
   if (loading) {
     return (
       <div
-        className="min-h-screen flex flex-col bg-[#F5F5FF]"
+        className="min-h-screen flex flex-col bg-[#f5f7fb]"
         style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
       >
         <Navbar />
         <main className="flex-1 mx-auto w-full max-w-6xl px-4 py-8 sm:px-8">
           <div className="animate-pulse space-y-4">
-            <div className="h-8 w-48 rounded-full bg-[#E8ECF4]" />
-            <div className="h-4 w-72 rounded-full bg-[#E8ECF4]" />
+            <div className="h-8 w-48 rounded-full bg-[#e0e3e5]" />
+            <div className="h-4 w-72 rounded-full bg-[#e0e3e5]" />
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
               <div className="h-80 rounded-[24px] bg-white/95 lg:col-span-2" />
               <div className="h-64 rounded-[24px] bg-white/95" />
@@ -132,7 +132,7 @@ const CartPage: React.FC = () => {
 
   return (
     <div
-      className="min-h-screen flex flex-col bg-[#F5F5FF]"
+      className="min-h-screen flex flex-col bg-[#f5f7fb]"
       style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
     >
       <Navbar />
@@ -142,17 +142,17 @@ const CartPage: React.FC = () => {
         <Reveal direction="up">
           <div className="mb-6">
             <div className="mb-2 flex items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-[#538CDB]/10 px-2.5 py-1">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-[#004ac6]/10 px-2.5 py-1">
                 <span className="h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
-                <p className="text-[9px] font-bold uppercase tracking-[0.20em] text-[#538CDB]">
+                <p className="text-[9px] font-bold uppercase tracking-[0.20em] text-[#004ac6]">
                   Keranjang belanja
                 </p>
               </span>
             </div>
-            <h1 className="text-[26px] font-extrabold leading-tight tracking-tight text-[#20242D] sm:text-[32px]">
+            <h1 className="text-[26px] font-extrabold leading-tight tracking-tight text-[#101319] sm:text-[32px]">
               Keranjang
             </h1>
-            <p className="mt-2 max-w-xl text-[13px] leading-relaxed text-[#737A87]">
+            <p className="mt-2 max-w-xl text-[13px] leading-relaxed text-[#737686]">
               Centang barang yang mau dibayar sekarang. Sisanya tetap
               tersimpan rapi di sini.
             </p>
@@ -164,13 +164,13 @@ const CartPage: React.FC = () => {
             <div
               className="
                 mb-5 flex items-center gap-3 rounded-2xl border
-                border-[#FF4646]/20 bg-[#FFF0F0] px-4 py-3 backdrop-blur-sm
+                border-[#ba1a1a]/20 bg-[#FFF0F0] px-4 py-3 backdrop-blur-sm
               "
             >
-              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#FF4646]/15">
-                <Icon name="alert" size={15} className="text-[#FF4646]" />
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#ba1a1a]/15">
+                <Icon name="alert" size={15} className="text-[#ba1a1a]" />
               </span>
-              <p className="text-[13px] font-medium text-[#C73535]">{error}</p>
+              <p className="text-[13px] font-medium text-[#ba1a1a]">{error}</p>
             </div>
           </Reveal>
         )}
@@ -194,7 +194,7 @@ const CartPage: React.FC = () => {
                 <div
                   className="
                     flex items-center justify-between gap-3 border-b
-                    border-[#E8ECF4] bg-[#F5F7FB]/60 px-4 py-3.5 sm:px-5
+                    border-[#e0e3e5] bg-[#F5F7FB]/60 px-4 py-3.5 sm:px-5
                   "
                 >
                   <label className="flex cursor-pointer items-center gap-2.5">
@@ -209,9 +209,9 @@ const CartPage: React.FC = () => {
                       onChange={(e) =>
                         setSelectedIds(e.target.checked ? new Set(allSelectable) : new Set())
                       }
-                      className="h-4 w-4 cursor-pointer accent-[#538CDB]"
+                      className="h-4 w-4 cursor-pointer accent-[#004ac6]"
                     />
-                    <span className="text-[13px] font-bold text-[#20242D]">
+                    <span className="text-[13px] font-bold text-[#101319]">
                       {selectedIds.size} dari {cart.items.length} item dipilih
                     </span>
                   </label>
@@ -221,7 +221,7 @@ const CartPage: React.FC = () => {
                     onClick={handleClear}
                     disabled={busy}
                     className="
-                      text-[11px] font-semibold text-[#FF4646]
+                      text-[11px] font-semibold text-[#ba1a1a]
                       hover:underline disabled:opacity-50
                     "
                   >

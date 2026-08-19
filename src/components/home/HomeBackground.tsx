@@ -4,11 +4,11 @@ const HomeBackground: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   return (
-    <main className="relative flex-1 overflow-hidden bg-[#F5F5FF]">
+    <main className="relative flex-1 overflow-hidden bg-[#f5f7fb]">
       
-      <div className="pointer-events-none absolute -left-32 top-1/3 h-72 w-72 rounded-full bg-[#538CDB]/10 blur-3xl" />
-      <div className="pointer-events-none absolute right-0 top-10 h-64 w-64 rounded-full bg-[#538CDB]/8 blur-3xl" />
-      <div className="pointer-events-none absolute bottom-0 right-1/4 h-72 w-72 rounded-full bg-[#538CDB]/5 blur-3xl" />
+      <div className="pointer-events-none absolute -left-32 top-1/3 h-72 w-72 rounded-full bg-[#004ac6]/10 blur-3xl" />
+      <div className="pointer-events-none absolute right-0 top-10 h-64 w-64 rounded-full bg-[#004ac6]/8 blur-3xl" />
+      <div className="pointer-events-none absolute bottom-0 right-1/4 h-72 w-72 rounded-full bg-[#004ac6]/5 blur-3xl" />
 
       <div
         className="
@@ -19,7 +19,7 @@ const HomeBackground: React.FC<{ children: React.ReactNode }> = ({
           h-[560px]
           w-[560px]
           rounded-full
-          bg-[#538CDB]/8
+          bg-[#004ac6]/8
           blur-[140px]
         "
       />
@@ -34,7 +34,7 @@ const HomeBackground: React.FC<{ children: React.ReactNode }> = ({
           w-[700px]
           -translate-x-1/2
           rounded-full
-          bg-[#538CDB]/12
+          bg-[#004ac6]/12
           blur-[100px]
         "
       />

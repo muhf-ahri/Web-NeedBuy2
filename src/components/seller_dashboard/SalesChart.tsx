@@ -86,14 +86,14 @@ const SalesChart: React.FC<SalesChartProps> = ({ points, granularity }) => {
       <div
         className="
           flex h-48 items-center justify-center rounded-2xl border
-          border-dashed border-[#D8DEE9] bg-[#F5F7FB]/50 sm:h-60
+          border-dashed border-[#e0e3e5] bg-[#F5F7FB]/50 sm:h-60
         "
       >
         <div className="px-4 text-center">
-          <p className="text-[13px] font-semibold text-[#20242D]">
+          <p className="text-[13px] font-semibold text-[#101319]">
             Belum ada penjualan
           </p>
-          <p className="mt-0.5 text-[11px] text-[#737A87]">
+          <p className="mt-0.5 text-[11px] text-[#737686]">
             Data grafik akan muncul begitu ada transaksi.
           </p>
         </div>
@@ -169,7 +169,7 @@ const SalesChart: React.FC<SalesChartProps> = ({ points, granularity }) => {
           <div
             className="
               pointer-events-none absolute z-20 w-max max-w-[200px]
-              rounded-xl border border-white/80 bg-[#20242D]/95 px-3 py-2
+              rounded-xl border border-white/80 bg-[#101319]/95 px-3 py-2
               text-white shadow-[0_8px_24px_rgba(32,36,45,0.25)]
               backdrop-blur-sm
             "
@@ -205,8 +205,8 @@ const SalesChart: React.FC<SalesChartProps> = ({ points, granularity }) => {
         >
           <defs>
             <linearGradient id="revenue-gradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#538CDB" stopOpacity="0.35" />
-              <stop offset="100%" stopColor="#538CDB" stopOpacity="0" />
+              <stop offset="0%" stopColor="#004ac6" stopOpacity="0.35" />
+              <stop offset="100%" stopColor="#004ac6" stopOpacity="0" />
             </linearGradient>
           </defs>
 
@@ -217,7 +217,7 @@ const SalesChart: React.FC<SalesChartProps> = ({ points, granularity }) => {
                 y1={g.y}
                 x2={width - paddingX}
                 y2={g.y}
-                stroke="#E8ECF4"
+                stroke="#e0e3e5"
                 strokeWidth={1}
                 strokeDasharray={i === gridLines.length - 1 ? '0' : '4 4'}
               />
@@ -245,7 +245,7 @@ const SalesChart: React.FC<SalesChartProps> = ({ points, granularity }) => {
           <path
             d={revenuePath}
             fill="none"
-            stroke="#538CDB"
+            stroke="#004ac6"
             strokeWidth={2.5}
             vectorEffect="non-scaling-stroke"
             strokeLinecap="round"
@@ -270,7 +270,7 @@ const SalesChart: React.FC<SalesChartProps> = ({ points, granularity }) => {
               cy={pt.y}
               r={hoverIndex === i ? 5 : 3}
               fill="white"
-              stroke="#538CDB"
+              stroke="#004ac6"
               strokeWidth={2}
               vectorEffect="non-scaling-stroke"
               style={{ transition: 'r 0.15s ease' }}
@@ -283,7 +283,7 @@ const SalesChart: React.FC<SalesChartProps> = ({ points, granularity }) => {
               y1={paddingY}
               x2={hoveredXY.x}
               y2={height - paddingY}
-              stroke="#538CDB"
+              stroke="#004ac6"
               strokeWidth={1}
               strokeDasharray="3 3"
               opacity={0.5}
@@ -300,7 +300,7 @@ const SalesChart: React.FC<SalesChartProps> = ({ points, granularity }) => {
           {xAxisLabels.map(({ p, i }) => (
             <span
               key={i}
-              className={hoverIndex === i ? 'font-bold text-[#538CDB]' : ''}
+              className={hoverIndex === i ? 'font-bold text-[#004ac6]' : ''}
             >
               {labelFor(p.bucket)}
             </span>
@@ -309,11 +309,11 @@ const SalesChart: React.FC<SalesChartProps> = ({ points, granularity }) => {
       </div>
 
       <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-[#F5F7FB] pt-3">
-        <span className="flex items-center gap-2 text-[10px] font-medium text-[#737A87] sm:text-[11px]">
-          <span className="h-0.5 w-5 rounded-full bg-[#538CDB]" />
+        <span className="flex items-center gap-2 text-[10px] font-medium text-[#737686] sm:text-[11px]">
+          <span className="h-0.5 w-5 rounded-full bg-[#004ac6]" />
           Pemasukan (Rp)
         </span>
-        <span className="flex items-center gap-2 text-[10px] font-medium text-[#737A87] sm:text-[11px]">
+        <span className="flex items-center gap-2 text-[10px] font-medium text-[#737686] sm:text-[11px]">
           <span
             className="
               h-0.5 w-5 rounded-full border-t border-dashed border-[#FFD500]

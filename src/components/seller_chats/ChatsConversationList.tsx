@@ -26,7 +26,7 @@ const ChatsConversationList: React.FC<ChatsConversationListProps> = ({
     
     <div className="shrink-0 border-b border-[#F5F7FB] p-3">
       <div className="mb-2 flex items-center justify-between">
-        <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#737A87]">
+        <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#737686]">
           Semua Chat
         </p>
         <span className="text-[10px] font-semibold text-[#A2A8B3] tabular-nums">
@@ -63,10 +63,10 @@ const ChatsConversationList: React.FC<ChatsConversationListProps> = ({
               className="text-[#A2A8B3]"
             />
           </span>
-          <p className="mt-3 text-[13px] font-semibold text-[#20242D]">
+          <p className="mt-3 text-[13px] font-semibold text-[#101319]">
             {search ? 'Tidak ada hasil' : 'Belum ada chat'}
           </p>
-          <p className="mt-1 text-[11px] text-[#737A87]">
+          <p className="mt-1 text-[11px] text-[#737686]">
             {search
               ? `Tidak ada chat dari "${search}"`
               : 'Pembeli yang chat kamu akan muncul di sini'}

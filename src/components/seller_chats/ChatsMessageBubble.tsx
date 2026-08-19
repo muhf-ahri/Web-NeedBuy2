@@ -25,8 +25,8 @@ const ChatsMessageBubble: React.FC<ChatsMessageBubbleProps> = ({
         relative max-w-[85%] rounded-2xl px-3.5 py-2 shadow-sm sm:max-w-[70%]
         ${
           mine
-            ? 'rounded-br-sm bg-gradient-to-br from-[#5B93E0] to-[#3A66AC] text-white'
-            : 'rounded-bl-sm border border-[#E8ECF4] bg-white text-[#20242D]'
+            ? 'rounded-br-sm bg-gradient-to-br from-[#004ac6] to-[#003ea8] text-white'
+            : 'rounded-bl-sm border border-[#e0e3e5] bg-white text-[#101319]'
         }
       `}
     >

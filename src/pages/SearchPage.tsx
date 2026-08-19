@@ -185,15 +185,15 @@ const SearchPage: React.FC = () => {
             <span
               className="
                 flex h-6 w-6 items-center justify-center rounded-lg
-                bg-[#538CDB]/10
+                bg-[#004ac6]/10
               "
             >
-              <Icon name="store" size={13} className="text-[#538CDB]" />
+              <Icon name="store" size={13} className="text-[#004ac6]" />
             </span>
             <p
               className="
                 text-[11px] font-bold uppercase tracking-[0.16em]
-                text-[#737A87]
+                text-[#737686]
               "
             >
               Toko ({stores.length})

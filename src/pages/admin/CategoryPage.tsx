@@ -20,7 +20,7 @@ type TabType = 'parent' | 'child';
 const PAGE_SIZE = 10;
 
 const statusColor: Record<'active' | 'inactive', string> = {
-  active: 'bg-[#d7f5dc] text-[#156b32]',
+  active: 'bg-[#e6f4ee] text-[#12805c]',
   inactive: 'bg-[#f2f4f6] text-[#737686]',
 };
 
@@ -161,7 +161,7 @@ const CategoriesPage: React.FC = () => {
       <div className="space-y-6">
 
         <div>
-          <h1 className="text-[28px] font-bold text-[#191c1e]">Kategori</h1>
+          <h1 className="text-[28px] font-bold text-[#101319]">Kategori</h1>
           <p className="text-[15px] text-[#737686]">
             Kelola kategori produk dan subkategori marketplace.
           </p>
@@ -173,7 +173,7 @@ const CategoriesPage: React.FC = () => {
             className={`px-4 py-2 text-sm font-semibold transition-colors border-b-2 ${
               activeTab === 'parent'
                 ? 'border-[#004ac6] text-[#004ac6]'
-                : 'border-transparent text-[#737686] hover:text-[#191c1e]'
+                : 'border-transparent text-[#737686] hover:text-[#101319]'
             }`}
           >
             Kategori Induk
@@ -183,7 +183,7 @@ const CategoriesPage: React.FC = () => {
             className={`px-4 py-2 text-sm font-semibold transition-colors border-b-2 ${
               activeTab === 'child'
                 ? 'border-[#004ac6] text-[#004ac6]'
-                : 'border-transparent text-[#737686] hover:text-[#191c1e]'
+                : 'border-transparent text-[#737686] hover:text-[#101319]'
             }`}
           >
             Subkategori
@@ -220,7 +220,7 @@ const CategoriesPage: React.FC = () => {
         </div>
 
         {error && (
-          <div className="rounded-2xl border border-[#ffcdd2] bg-[#fff5f5] p-4 text-[13px] text-[#a33131]">
+          <div className="rounded-2xl border border-[#ffdad6] bg-[#fff0f0] p-4 text-[13px] text-[#93000a]">
             {error}
           </div>
         )}

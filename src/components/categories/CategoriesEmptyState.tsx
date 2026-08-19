@@ -121,12 +121,12 @@ const CategoriesEmptyState: React.FC<CategoriesEmptyStateProps> = ({
           draggable={false}
           className="absolute inset-0 h-full w-full select-none object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#20242D]/55 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#101319]/55 via-transparent to-transparent" />
         <div
           className="
             absolute left-4 top-4 inline-flex items-center gap-1.5
             rounded-full bg-white/90 px-3 py-1 text-[10px] font-semibold
-            uppercase tracking-[0.18em] text-[#538CDB] backdrop-blur-sm
+            uppercase tracking-[0.18em] text-[#004ac6] backdrop-blur-sm
           "
         >
           Kategori
@@ -144,7 +144,7 @@ const CategoriesEmptyState: React.FC<CategoriesEmptyStateProps> = ({
             <p
               className="
                 mb-2 text-[10px] font-semibold uppercase tracking-[0.18em]
-                text-[#538CDB]
+                text-[#004ac6]
               "
             >
               {config.eyebrow}
@@ -153,13 +153,13 @@ const CategoriesEmptyState: React.FC<CategoriesEmptyStateProps> = ({
             <h3
               className="
                 text-[22px] font-bold leading-tight tracking-tight
-                text-[#20242D] sm:text-[26px]
+                text-[#101319] sm:text-[26px]
               "
             >
               {config.title}
             </h3>
 
-            <p className="mt-2 max-w-sm text-[13px] leading-5 text-[#737A87]">
+            <p className="mt-2 max-w-sm text-[13px] leading-5 text-[#737686]">
               {config.subtitle}
             </p>
 
@@ -167,7 +167,7 @@ const CategoriesEmptyState: React.FC<CategoriesEmptyStateProps> = ({
               <p
                 className="
                   text-[10px] font-semibold uppercase tracking-[0.18em]
-                  text-[#737A87]
+                  text-[#737686]
                 "
               >
                 {config.tipsTitle}
@@ -179,12 +179,12 @@ const CategoriesEmptyState: React.FC<CategoriesEmptyStateProps> = ({
                       className="
                         flex h-7 w-7 shrink-0 items-center justify-center
                         rounded-full bg-white text-[10px] font-bold
-                        text-[#538CDB] ring-1 ring-[#E8ECF4]
+                        text-[#004ac6] ring-1 ring-[#e0e3e5]
                       "
                     >
                       {i + 1}
                     </span>
-                    <span className="text-[12px] font-medium text-[#20242D]">
+                    <span className="text-[12px] font-medium text-[#101319]">
                       {tip}
                     </span>
                   </li>
@@ -199,9 +199,9 @@ const CategoriesEmptyState: React.FC<CategoriesEmptyStateProps> = ({
                   onClick={primary.onClick}
                   className="
                     inline-flex h-11 items-center justify-center gap-2
-                    rounded-full bg-[#538CDB] px-6 text-sm font-semibold
+                    rounded-full bg-[#004ac6] px-6 text-sm font-semibold
                     text-white shadow-[0_7px_18px_rgba(83,140,219,0.20)]
-                    transition-all duration-200 hover:bg-[#467BC7]
+                    transition-all duration-200 hover:bg-[#004ac6]
                     hover:shadow-[0_9px_22px_rgba(83,140,219,0.25)]
                     active:scale-[0.99]
                   "
@@ -217,9 +217,9 @@ const CategoriesEmptyState: React.FC<CategoriesEmptyStateProps> = ({
                   onClick={secondary.onClick}
                   className="
                     inline-flex h-11 items-center justify-center gap-2
-                    rounded-full border border-[#E8ECF4] bg-white px-6
-                    text-sm font-semibold text-[#20242D] transition-all
-                    duration-200 hover:border-[#538CDB] hover:text-[#538CDB]
+                    rounded-full border border-[#e0e3e5] bg-white px-6
+                    text-sm font-semibold text-[#101319] transition-all
+                    duration-200 hover:border-[#004ac6] hover:text-[#004ac6]
                     active:scale-[0.99]
                   "
                 >
@@ -241,7 +241,7 @@ const CategoriesEmptyState: React.FC<CategoriesEmptyStateProps> = ({
               transition-transform duration-700 hover:scale-[1.03]
             "
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#20242D]/55 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#101319]/55 via-transparent to-transparent" />
 
           <svg
             className="
@@ -263,7 +263,7 @@ const CategoriesEmptyState: React.FC<CategoriesEmptyStateProps> = ({
             className="
               absolute right-6 top-6 z-10 inline-flex items-center gap-1.5
               rounded-full bg-white/90 px-3 py-1 text-[10px] font-semibold
-              uppercase tracking-[0.18em] text-[#538CDB] backdrop-blur-sm
+              uppercase tracking-[0.18em] text-[#004ac6] backdrop-blur-sm
             "
           >
             <span className="h-1.5 w-1.5 rounded-full bg-[#FFD500]" />

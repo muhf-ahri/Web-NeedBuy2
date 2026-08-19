@@ -39,16 +39,16 @@ const ActiveOrders: React.FC<ActiveOrdersProps> = ({
         <span
           className="
             flex h-8 w-8 items-center justify-center rounded-lg
-            bg-[#538CDB]/10
+            bg-[#004ac6]/10
           "
         >
-          <Icon name="orders" size={15} className="text-[#538CDB]" />
+          <Icon name="orders" size={15} className="text-[#004ac6]" />
         </span>
         <div>
-          <h3 className="text-[14px] font-bold text-[#20242D] sm:text-[15px]">
+          <h3 className="text-[14px] font-bold text-[#101319] sm:text-[15px]">
             Order yang Jalan
           </h3>
-          <p className="text-[10px] text-[#737A87]">
+          <p className="text-[10px] text-[#737686]">
             Pesanan yang sedang diproses
           </p>
         </div>
@@ -57,11 +57,11 @@ const ActiveOrders: React.FC<ActiveOrdersProps> = ({
       {!loading && !error && totalActive > 0 && (
         <span
           className="
-            inline-flex items-center gap-1 rounded-full bg-[#EEF5FF]
-            px-2 py-0.5 text-[10px] font-semibold text-[#538CDB]
+            inline-flex items-center gap-1 rounded-full bg-[#f5f7fb]
+            px-2 py-0.5 text-[10px] font-semibold text-[#004ac6]
           "
         >
-          <span className="h-1 w-1 animate-pulse rounded-full bg-[#538CDB]" />
+          <span className="h-1 w-1 animate-pulse rounded-full bg-[#004ac6]" />
           {totalActive} aktif
         </span>
       )}
@@ -79,8 +79,8 @@ const ActiveOrders: React.FC<ActiveOrdersProps> = ({
     ) : error ? (
       <div
         className="
-          rounded-xl border border-[#FF4646]/20 bg-[#FFF0F0] px-3 py-2
-          text-[12px] font-medium text-[#C73535]
+          rounded-xl border border-[#ba1a1a]/20 bg-[#FFF0F0] px-3 py-2
+          text-[12px] font-medium text-[#ba1a1a]
         "
       >
         {error}
@@ -100,10 +100,10 @@ const ActiveOrders: React.FC<ActiveOrdersProps> = ({
           <Icon name="orders" size={16} className="text-[#A2A8B3]" />
         </span>
         <div>
-          <p className="text-[13px] font-semibold text-[#20242D]">
+          <p className="text-[13px] font-semibold text-[#101319]">
             Belum ada order aktif
           </p>
-          <p className="text-[11px] text-[#737A87]">
+          <p className="text-[11px] text-[#737686]">
             Order yang masuk akan muncul di sini.
           </p>
         </div>
@@ -117,19 +117,19 @@ const ActiveOrders: React.FC<ActiveOrdersProps> = ({
               className="
                 flex items-center justify-between gap-3 rounded-xl border
                 border-[#F5F7FB] px-3 py-2.5 transition-colors
-                hover:border-[#538CDB]/30 hover:bg-[#EEF5FF]/50
+                hover:border-[#004ac6]/30 hover:bg-[#f5f7fb]/50
               "
             >
               <div className="min-w-0 flex-1">
-                <p className="truncate font-mono text-[11px] font-bold text-[#538CDB]">
+                <p className="truncate font-mono text-[11px] font-bold text-[#004ac6]">
                   #{order.orderNumber}
                 </p>
-                <p className="mt-0.5 truncate text-[11px] text-[#737A87]">
+                <p className="mt-0.5 truncate text-[11px] text-[#737686]">
                   {order.customer} · {order.itemCount} barang
                 </p>
               </div>
               <div className="shrink-0 text-right">
-                <p className="text-[12px] font-bold text-[#20242D] tabular-nums">
+                <p className="text-[12px] font-bold text-[#101319] tabular-nums">
                   {formatRupiah(order.amount)}
                 </p>
                 <span
@@ -151,9 +151,9 @@ const ActiveOrders: React.FC<ActiveOrdersProps> = ({
           to="/seller/orders"
           className="
             mt-4 flex h-10 w-full items-center justify-center gap-2
-            rounded-full border border-[#E8ECF4] bg-white text-[12px]
-            font-semibold text-[#20242D] transition-all duration-200
-            hover:border-[#538CDB] hover:text-[#538CDB] active:scale-[0.99]
+            rounded-full border border-[#e0e3e5] bg-white text-[12px]
+            font-semibold text-[#101319] transition-all duration-200
+            hover:border-[#004ac6] hover:text-[#004ac6] active:scale-[0.99]
           "
         >
           Lihat semua order

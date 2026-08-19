@@ -42,7 +42,7 @@ const StatCard: React.FC<StatCardProps> = ({
     <span
       className="
         pointer-events-none absolute -right-10 -top-10 h-24 w-24
-        rounded-full border border-[#538CDB]/10
+        rounded-full border border-[#004ac6]/10
       "
     />
     <span
@@ -67,7 +67,7 @@ const StatCard: React.FC<StatCardProps> = ({
     <p
       className="
         relative mt-4 text-[10px] font-bold uppercase tracking-[0.16em]
-        text-[#737A87]
+        text-[#737686]
       "
     >
       {title}
@@ -79,19 +79,19 @@ const StatCard: React.FC<StatCardProps> = ({
         <div className="h-3 w-20 animate-pulse rounded-full bg-[#F5F7FB]" />
       </div>
     ) : error ? (
-      <p className="mt-2 text-[12px] font-medium text-[#C73535]">{error}</p>
+      <p className="mt-2 text-[12px] font-medium text-[#ba1a1a]">{error}</p>
     ) : (
       <>
         <p
           className="
             mt-1.5 truncate text-[20px] font-extrabold leading-tight
-            tracking-tight text-[#20242D] tabular-nums sm:text-[26px]
+            tracking-tight text-[#101319] tabular-nums sm:text-[26px]
           "
         >
           {value}
         </p>
         {subtitle && (
-          <p className="mt-1 text-[11px] text-[#737A87]">{subtitle}</p>
+          <p className="mt-1 text-[11px] text-[#737686]">{subtitle}</p>
         )}
         {children}
       </>

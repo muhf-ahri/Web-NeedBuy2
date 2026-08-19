@@ -62,10 +62,10 @@ const CategoryForm: React.FC<CategoryFormProps> = ({
       <div className="w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl bg-white shadow-xl">
         
         <div className="flex items-center justify-between border-b border-[#e0e3e5] px-5 py-4">
-          <h2 className="text-[16px] font-bold text-[#191c1e]">{title}</h2>
+          <h2 className="text-[16px] font-bold text-[#101319]">{title}</h2>
           <button
             onClick={onClose}
-            className="rounded-full p-1 text-[#737686] transition-colors hover:bg-[#f2f4f6] hover:text-[#191c1e]"
+            className="rounded-full p-1 text-[#737686] transition-colors hover:bg-[#f2f4f6] hover:text-[#101319]"
           >
             <Icon name="close" size={18} />
           </button>
@@ -73,7 +73,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({
 
         <form onSubmit={handleSubmit} className="p-5 space-y-4">
           {error && (
-            <div className="rounded-lg border border-[#ffcdd2] bg-[#fff5f5] p-3 text-[13px] text-[#a33131]">
+            <div className="rounded-lg border border-[#ffdad6] bg-[#fff0f0] p-3 text-[13px] text-[#93000a]">
               {error}
             </div>
           )}

@@ -48,7 +48,7 @@ const ProfileHero: React.FC<ProfileHeroProps> = ({
       <div
         className="
           relative overflow-hidden rounded-[24px] bg-gradient-to-br
-          from-[#5B93E0] to-[#3A66AC] p-5 text-white
+          from-[#004ac6] to-[#003ea8] p-5 text-white
           shadow-[0_18px_50px_rgba(83,140,219,0.30)] sm:p-6
         "
       >
@@ -172,13 +172,13 @@ const ProfileHero: React.FC<ProfileHeroProps> = ({
                 <span
                   className={`
                     inline-flex items-center gap-1
-                    ${seller.status === 'ACTIVE' ? 'text-[#DCFCE7]' : 'text-[#FFF7E0]'}
+                    ${seller.status === 'ACTIVE' ? 'text-[#e6f4ee]' : 'text-[#FFF7E0]'}
                   `}
                 >
                   <span
                     className={`
                       h-1 w-1 rounded-full
-                      ${seller.status === 'ACTIVE' ? 'bg-[#22C55E]' : 'bg-[#FFD500]'}
+                      ${seller.status === 'ACTIVE' ? 'bg-[#12805c]' : 'bg-[#FFD500]'}
                     `}
                   />
                   {seller.status === 'ACTIVE' ? 'Aktif' : 'Disuspend'}
@@ -254,8 +254,8 @@ const ProfileHero: React.FC<ProfileHeroProps> = ({
                   flex h-8 w-8 items-center justify-center rounded-xl
                   ${
                     link.danger
-                      ? 'bg-[#FFF0F0] text-[#C73535]'
-                      : 'bg-[#538CDB]/10 text-[#538CDB]'
+                      ? 'bg-[#FFF0F0] text-[#ba1a1a]'
+                      : 'bg-[#004ac6]/10 text-[#004ac6]'
                   }
                 `}
               >
@@ -264,7 +264,7 @@ const ProfileHero: React.FC<ProfileHeroProps> = ({
               <span
                 className={`
                   text-[13px] font-semibold
-                  ${link.danger ? 'text-[#C73535]' : 'text-[#20242D]'}
+                  ${link.danger ? 'text-[#ba1a1a]' : 'text-[#101319]'}
                 `}
               >
                 {link.label}
@@ -275,7 +275,7 @@ const ProfileHero: React.FC<ProfileHeroProps> = ({
                 <span
                   className="
                     flex h-5 min-w-5 items-center justify-center rounded-full
-                    bg-[#538CDB] px-1.5 text-[10px] font-bold text-white
+                    bg-[#004ac6] px-1.5 text-[10px] font-bold text-white
                   "
                 >
                   {link.badge}
@@ -286,7 +286,7 @@ const ProfileHero: React.FC<ProfileHeroProps> = ({
                 size={14}
                 className="
                   text-[#A2A8B3] transition-transform duration-200
-                  group-hover:translate-x-0.5 group-hover:text-[#538CDB]
+                  group-hover:translate-x-0.5 group-hover:text-[#004ac6]
                 "
               />
             </div>

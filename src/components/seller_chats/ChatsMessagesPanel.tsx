@@ -44,7 +44,7 @@ const ChatsMessagesPanel: React.FC<ChatsMessagesPanelProps> = ({
   }, [messages]);
 
   return (
-    <div className="flex h-full flex-col bg-[#F5F5FF]">
+    <div className="flex h-full flex-col bg-[#f5f7fb]">
       
       <div
         className="
@@ -59,8 +59,8 @@ const ChatsMessagesPanel: React.FC<ChatsMessagesPanelProps> = ({
               onClick={onBack}
               className="
                 flex h-9 w-9 shrink-0 items-center justify-center
-                rounded-full text-[#737A87] transition-colors
-                hover:bg-[#F5F7FB] hover:text-[#538CDB]
+                rounded-full text-[#737686] transition-colors
+                hover:bg-[#F5F7FB] hover:text-[#004ac6]
               "
               aria-label="Kembali ke daftar chat"
             >
@@ -75,11 +75,11 @@ const ChatsMessagesPanel: React.FC<ChatsMessagesPanelProps> = ({
           />
 
           <div className="min-w-0 flex-1">
-            <p className="truncate text-[14px] font-bold text-[#20242D]">
+            <p className="truncate text-[14px] font-bold text-[#101319]">
               {conversation.buyer.name}
             </p>
-            <p className="flex items-center gap-1 text-[11px] text-[#22C55E]">
-              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#22C55E]" />
+            <p className="flex items-center gap-1 text-[11px] text-[#12805c]">
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#12805c]" />
               Online
             </p>
           </div>
@@ -98,10 +98,10 @@ const ChatsMessagesPanel: React.FC<ChatsMessagesPanelProps> = ({
               >
                 <Icon name="chat" size={22} className="text-[#A2A8B3]" />
               </span>
-              <p className="mt-3 text-[13px] font-semibold text-[#20242D]">
+              <p className="mt-3 text-[13px] font-semibold text-[#101319]">
                 Belum ada pesan
               </p>
-              <p className="mt-1 text-[11px] text-[#737A87]">
+              <p className="mt-1 text-[11px] text-[#737686]">
                 Mulai percakapan dengan mengirim salam.
               </p>
             </div>

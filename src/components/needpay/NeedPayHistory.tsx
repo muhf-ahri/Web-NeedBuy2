@@ -30,9 +30,9 @@ const STATUS_STYLE: Record<
   { bg: string; text: string }
 > = {
   PENDING: { bg: 'bg-[#FFF7E0]', text: 'text-[#B45309]' },
-  SUCCESS: { bg: 'bg-[#DCFCE7]', text: 'text-[#166534]' },
-  FAILED: { bg: 'bg-[#FFF0F0]', text: 'text-[#C73535]' },
-  EXPIRED: { bg: 'bg-[#F5F7FB]', text: 'text-[#737A87]' },
+  SUCCESS: { bg: 'bg-[#e6f4ee]', text: 'text-[#12805c]' },
+  FAILED: { bg: 'bg-[#FFF0F0]', text: 'text-[#ba1a1a]' },
+  EXPIRED: { bg: 'bg-[#F5F7FB]', text: 'text-[#737686]' },
 };
 
 const TransactionRow: React.FC<{ tx: WalletTransaction }> = ({ tx }) => {
@@ -47,10 +47,10 @@ const TransactionRow: React.FC<{ tx: WalletTransaction }> = ({ tx }) => {
           flex h-10 w-10 shrink-0 items-center justify-center rounded-xl
           ${
             isCredit && settled
-              ? 'bg-[#DCFCE7] text-[#166534]'
+              ? 'bg-[#e6f4ee] text-[#12805c]'
               : !settled
                 ? 'bg-[#FFF7E0] text-[#B45309]'
-                : 'bg-[#F5F7FB] text-[#737A87]'
+                : 'bg-[#F5F7FB] text-[#737686]'
           }
         `}
       >
@@ -59,7 +59,7 @@ const TransactionRow: React.FC<{ tx: WalletTransaction }> = ({ tx }) => {
 
       <div className="min-w-0 flex-1">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="text-[13px] font-semibold text-[#20242D]">
+          <span className="text-[13px] font-semibold text-[#101319]">
             {TX_LABEL[tx.type]}
           </span>
           {!settled && (
@@ -74,7 +74,7 @@ const TransactionRow: React.FC<{ tx: WalletTransaction }> = ({ tx }) => {
           )}
         </div>
         {tx.type === 'WITHDRAWAL' && tx.bankName && (
-          <span className="mt-0.5 block truncate font-mono text-[10px] text-[#737A87]">
+          <span className="mt-0.5 block truncate font-mono text-[10px] text-[#737686]">
             {tx.bankName} · {tx.bankAccount} a.n. {tx.bankAccountName}
           </span>
         )}
@@ -95,10 +95,10 @@ const TransactionRow: React.FC<{ tx: WalletTransaction }> = ({ tx }) => {
             block text-[14px] font-bold
             ${
               !settled
-                ? 'text-[#737A87]'
+                ? 'text-[#737686]'
                 : isCredit
-                  ? 'text-[#166534]'
-                  : 'text-[#20242D]'
+                  ? 'text-[#12805c]'
+                  : 'text-[#101319]'
             }
           `}
         >
@@ -135,12 +135,12 @@ const NeedPayHistory: React.FC<NeedPayHistoryProps> = ({
         <p
           className="
             mb-1 text-[10px] font-semibold uppercase tracking-[0.18em]
-            text-[#538CDB]
+            text-[#004ac6]
           "
         >
           Aktivitas akun
         </p>
-        <h2 className="text-[17px] font-bold text-[#20242D]">
+        <h2 className="text-[17px] font-bold text-[#101319]">
           Riwayat Transaksi
         </h2>
       </div>
@@ -168,7 +168,7 @@ const NeedPayHistory: React.FC<NeedPayHistoryProps> = ({
           >
             <Icon name="wallet" size={22} className="text-[#A2A8B3]" />
           </div>
-          <p className="mt-3 text-[13px] font-semibold text-[#20242D]">
+          <p className="mt-3 text-[13px] font-semibold text-[#101319]">
             Belum ada transaksi
           </p>
           <p className="mt-1 text-[11px] text-[#A2A8B3]">

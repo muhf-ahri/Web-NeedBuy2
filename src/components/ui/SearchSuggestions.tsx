@@ -19,13 +19,13 @@ const StoreAvatar: React.FC<{ store: Seller }> = ({ store }) => (
   <span
     className="
       flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden
-      rounded-lg border border-[#E8ECF4] bg-[#F5F7FB]
+      rounded-lg border border-[#e0e3e5] bg-[#F5F7FB]
     "
   >
     {store.logoUrl ? (
       <img src={store.logoUrl} alt="" loading="lazy" className="h-full w-full object-cover" />
     ) : (
-      <span className="text-[16px] font-bold text-[#538CDB]">
+      <span className="text-[16px] font-bold text-[#004ac6]">
         {store.storeName.charAt(0).toUpperCase()}
       </span>
     )}
@@ -53,7 +53,7 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({
     <div
       className={`
         absolute left-0 right-0 top-full z-50 mt-2 overflow-hidden
-        rounded-2xl border border-[#E8ECF4] bg-white
+        rounded-2xl border border-[#e0e3e5] bg-white
         shadow-[0_18px_50px_rgba(32,36,45,0.15)] ${className}
       `}
     >
@@ -70,7 +70,7 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({
           ))}
         </div>
       ) : isEmpty ? (
-        <p className="px-4 py-3 text-[13px] text-[#737A87]">
+        <p className="px-4 py-3 text-[13px] text-[#737686]">
           Tidak ada produk atau toko untuk "{query}".
         </p>
       ) : (
@@ -79,7 +79,7 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({
             <li
               className="
                 px-3 pb-1 pt-2 text-[10px] font-bold uppercase
-                tracking-[0.16em] text-[#737A87]
+                tracking-[0.16em] text-[#737686]
               "
             >
               Toko
@@ -100,7 +100,7 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({
                 <StoreAvatar store={store} />
                 <span className="min-w-0 flex-1">
                   <span className="flex items-center gap-1.5">
-                    <span className="truncate text-[13px] font-medium text-[#20242D]">
+                    <span className="truncate text-[13px] font-medium text-[#101319]">
                       {store.storeName}
                     </span>
                     {store.vacationMode && (
@@ -114,7 +114,7 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({
                       </span>
                     )}
                   </span>
-                  <span className="mt-0.5 block truncate text-[11px] text-[#737A87]">
+                  <span className="mt-0.5 block truncate text-[11px] text-[#737686]">
                     {store.description || `${store._count?.products ?? 0} produk`}
                   </span>
                 </span>
@@ -126,8 +126,8 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({
           {stores.length > 0 && products.length > 0 && (
             <li
               className="
-                mt-1 border-t border-[#E8ECF4] px-3 pb-1 pt-2 text-[10px]
-                font-bold uppercase tracking-[0.16em] text-[#737A87]
+                mt-1 border-t border-[#e0e3e5] px-3 pb-1 pt-2 text-[10px]
+                font-bold uppercase tracking-[0.16em] text-[#737686]
               "
             >
               Produk
@@ -158,14 +158,14 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({
                     className="h-11 w-11 shrink-0 rounded-lg bg-[#F5F7FB] object-cover"
                   />
                   <span className="min-w-0 flex-1">
-                    <span className="block truncate text-[13px] font-medium text-[#20242D]">
+                    <span className="block truncate text-[13px] font-medium text-[#101319]">
                       {product.name}
                     </span>
                     <span className="mt-0.5 flex items-center gap-2">
-                      <span className="text-[13px] font-bold text-[#538CDB]">
+                      <span className="text-[13px] font-bold text-[#004ac6]">
                         {formatRupiah(product.price)}
                       </span>
-                      <span className="inline-flex items-center gap-0.5 text-[11px] text-[#737A87]">
+                      <span className="inline-flex items-center gap-0.5 text-[11px] text-[#737686]">
                         <Icon name="star" size={11} className="text-[#FFD500]" />
                         {Number(product.rating).toFixed(1)}
                       </span>
@@ -173,7 +173,7 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({
                         <span
                           className="
                             rounded-full bg-[#FFF0F0] px-1.5 py-0.5
-                            text-[10px] font-bold text-[#FF4646]
+                            text-[10px] font-bold text-[#ba1a1a]
                           "
                         >
                           -{product.discountPercent}%
@@ -194,8 +194,8 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({
         onClick={() => go(`/search?q=${encodeURIComponent(query)}`)}
         className="
           flex w-full items-center justify-between gap-2 border-t
-          border-[#E8ECF4] px-4 py-2.5 text-[12px] font-semibold
-          text-[#538CDB] transition-colors hover:bg-[#F5F7FB]
+          border-[#e0e3e5] px-4 py-2.5 text-[12px] font-semibold
+          text-[#004ac6] transition-colors hover:bg-[#F5F7FB]
         "
       >
         Lihat semua hasil untuk "{query}"

@@ -39,7 +39,7 @@ const SellerCard: React.FC<{ seller: ProductDetailSeller }> = ({ seller }) => {
           {seller.logoUrl ? (
             <img src={seller.logoUrl} alt="" className="h-full w-full object-cover" />
           ) : (
-            <span className="flex h-full w-full items-center justify-center text-[#a6a9b6]">
+            <span className="flex h-full w-full items-center justify-center text-[#a2a8b3]">
               <Icon name="shop" size={22} className="" />
             </span>
           )}
@@ -49,7 +49,7 @@ const SellerCard: React.FC<{ seller: ProductDetailSeller }> = ({ seller }) => {
           <div className="flex flex-wrap items-center gap-2">
             <Link
               to={`/search?seller=${seller.id}`}
-              className="text-[15px] font-bold text-[#191c1e] hover:text-[#004ac6] transition-colors"
+              className="text-[15px] font-bold text-[#101319] hover:text-[#004ac6] transition-colors"
             >
               {seller.storeName}
             </Link>
@@ -62,7 +62,7 @@ const SellerCard: React.FC<{ seller: ProductDetailSeller }> = ({ seller }) => {
 
           <p className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] text-[#737686]">
             <span className="inline-flex items-center gap-1">
-              <Icon name="star" size={12} className="text-[#f59e0b]" />
+              <Icon name="star" size={12} className="text-[#ffd500]" />
               {Number(seller.rating).toFixed(1)}
             </span>
             <span>{seller._count?.products ?? 0} produk</span>

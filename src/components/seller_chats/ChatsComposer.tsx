@@ -44,17 +44,17 @@ const ChatsComposer: React.FC<ChatsComposerProps> = ({
         <div
           className="
             mb-2 flex items-center gap-2 rounded-xl border
-            border-[#FF4646]/20 bg-[#FFF0F0] px-3 py-2
+            border-[#ba1a1a]/20 bg-[#FFF0F0] px-3 py-2
           "
         >
-          <Icon name="alert" size={12} className="shrink-0 text-[#FF4646]" />
-          <p className="flex-1 text-[11px] font-medium text-[#C73535]">
+          <Icon name="alert" size={12} className="shrink-0 text-[#ba1a1a]" />
+          <p className="flex-1 text-[11px] font-medium text-[#ba1a1a]">
             {error}
           </p>
           <button
             type="button"
             onClick={() => onError(null)}
-            className="text-[#C73535] hover:text-[#20242D]"
+            className="text-[#ba1a1a] hover:text-[#101319]"
             aria-label="Tutup"
           >
             <Icon name="close" size={12} />
@@ -77,8 +77,8 @@ const ChatsComposer: React.FC<ChatsComposerProps> = ({
 
         <div
           className="
-            relative flex-1 rounded-full border border-[#E8ECF4] bg-[#F5F7FB]
-            transition-all duration-200 focus-within:border-[#538CDB]
+            relative flex-1 rounded-full border border-[#e0e3e5] bg-[#F5F7FB]
+            transition-all duration-200 focus-within:border-[#004ac6]
             focus-within:bg-white
             focus-within:shadow-[0_4px_14px_rgba(83,140,219,0.10)]
           "
@@ -98,7 +98,7 @@ const ChatsComposer: React.FC<ChatsComposerProps> = ({
             disabled={sending || disabled}
             className="
               w-full resize-none bg-transparent px-4 py-2.5 text-[13px]
-              text-[#20242D] outline-none placeholder:text-[#A2A8B3]
+              text-[#101319] outline-none placeholder:text-[#A2A8B3]
               disabled:cursor-not-allowed
             "
             style={{ minHeight: '40px', maxHeight: '120px' }}
@@ -110,11 +110,11 @@ const ChatsComposer: React.FC<ChatsComposerProps> = ({
           disabled={!canSend}
           className="
             flex h-11 w-11 shrink-0 items-center justify-center rounded-full
-            bg-gradient-to-br from-[#5B93E0] to-[#3A66AC] text-white
+            bg-gradient-to-br from-[#004ac6] to-[#003ea8] text-white
             shadow-[0_6px_16px_rgba(83,140,219,0.30)] transition-all
             duration-200 hover:shadow-[0_8px_20px_rgba(83,140,219,0.40)]
             active:scale-[0.95] disabled:cursor-not-allowed
-            disabled:from-[#D8DEE9] disabled:to-[#A2A8B3] disabled:shadow-none
+            disabled:from-[#e0e3e5] disabled:to-[#A2A8B3] disabled:shadow-none
           "
           aria-label="Kirim pesan"
         >

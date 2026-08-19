@@ -49,19 +49,19 @@ const SocialLogin: React.FC = () => {
         gap-3
         rounded-full
         border
-        border-[#E8ECF4]
+        border-[#e0e3e5]
         bg-white
         px-5
         text-sm
         font-medium
-        text-[#20242D]
+        text-[#101319]
         transition-all
         duration-200
-        hover:border-[#538CDB]/40
-        hover:bg-[#F5F5FF]
-        hover:text-[#538CDB]
+        hover:border-[#004ac6]/40
+        hover:bg-[#f5f7fb]
+        hover:text-[#004ac6]
         focus:ring-4
-        focus:ring-[#538CDB]/10
+        focus:ring-[#004ac6]/10
         active:scale-[0.99]
       "
     >

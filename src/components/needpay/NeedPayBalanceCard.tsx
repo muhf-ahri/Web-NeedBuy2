@@ -40,12 +40,12 @@ const NeedPayBalanceCard: React.FC<NeedPayBalanceCardProps> = ({
           draggable={false}
           className="absolute inset-0 h-full w-full select-none object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#20242D]/55 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#101319]/55 via-transparent to-transparent" />
         <div
           className="
             absolute left-4 top-4 inline-flex items-center gap-1.5
             rounded-full bg-white/90 px-3 py-1 text-[10px] font-semibold
-            uppercase tracking-[0.18em] text-[#538CDB] backdrop-blur-sm
+            uppercase tracking-[0.18em] text-[#004ac6] backdrop-blur-sm
           "
         >
           <span className="h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
@@ -68,7 +68,7 @@ const NeedPayBalanceCard: React.FC<NeedPayBalanceCardProps> = ({
               transition-transform duration-700 hover:scale-[1.03]
             "
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#20242D]/55 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#101319]/55 via-transparent to-transparent" />
 
           <svg
             className="pointer-events-none absolute inset-y-0 right-0 h-full w-16 md:w-20"
@@ -87,7 +87,7 @@ const NeedPayBalanceCard: React.FC<NeedPayBalanceCardProps> = ({
             className="
               absolute left-6 top-6 z-10 inline-flex items-center gap-1.5
               rounded-full bg-white/90 px-3 py-1 text-[10px] font-semibold
-              uppercase tracking-[0.18em] text-[#538CDB] backdrop-blur-sm
+              uppercase tracking-[0.18em] text-[#004ac6] backdrop-blur-sm
             "
           >
             <span className="h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
@@ -103,13 +103,13 @@ const NeedPayBalanceCard: React.FC<NeedPayBalanceCardProps> = ({
         <section className="flex items-center bg-white px-6 py-7 sm:px-8 lg:px-10">
           <div className="mx-auto w-full max-w-lg">
             <div className="mb-4 md:hidden">
-              <p className="text-xs font-semibold text-[#538CDB]">NeedPay</p>
+              <p className="text-xs font-semibold text-[#004ac6]">NeedPay</p>
             </div>
 
             <p
               className="
                 mb-2 text-[10px] font-semibold uppercase tracking-[0.18em]
-                text-[#538CDB]
+                text-[#004ac6]
               "
             >
               Saldo NeedPay
@@ -118,7 +118,7 @@ const NeedPayBalanceCard: React.FC<NeedPayBalanceCardProps> = ({
             <h3
               className="
                 text-[22px] font-bold leading-tight tracking-tight
-                text-[#20242D] sm:text-[26px]
+                text-[#101319] sm:text-[26px]
               "
             >
               Saldo kamu, siap dipakai.
@@ -131,12 +131,12 @@ const NeedPayBalanceCard: React.FC<NeedPayBalanceCardProps> = ({
               "
             >
               {loading ? (
-                <div className="h-8 w-32 animate-pulse rounded-lg bg-[#538CDB]/15" />
+                <div className="h-8 w-32 animate-pulse rounded-lg bg-[#004ac6]/15" />
               ) : (
                 <p
                   className="
                     truncate text-[26px] font-extrabold tracking-tight
-                    text-[#20242D] sm:text-[28px]
+                    text-[#101319] sm:text-[28px]
                   "
                   title={formatted}
                 >
@@ -148,10 +148,10 @@ const NeedPayBalanceCard: React.FC<NeedPayBalanceCardProps> = ({
                 className="
                   inline-flex shrink-0 items-center gap-1.5 rounded-full
                   bg-white px-2.5 py-1 text-[10px] font-semibold
-                  text-[#20242D] ring-1 ring-[#E8ECF4]
+                  text-[#101319] ring-1 ring-[#e0e3e5]
                 "
               >
-                <span className="h-1.5 w-1.5 rounded-full bg-[#22C55E]" />
+                <span className="h-1.5 w-1.5 rounded-full bg-[#12805c]" />
                 Aktif
               </span>
 
@@ -165,7 +165,7 @@ const NeedPayBalanceCard: React.FC<NeedPayBalanceCardProps> = ({
                 <p
                   className="
                     text-[10px] font-semibold uppercase tracking-[0.18em]
-                    text-[#737A87]
+                    text-[#737686]
                   "
                 >
                   Isi saldo lewat
@@ -181,9 +181,9 @@ const NeedPayBalanceCard: React.FC<NeedPayBalanceCardProps> = ({
                     key={method.label}
                     className="
                       flex flex-col items-center gap-1.5 rounded-xl border
-                      border-[#E8ECF4] bg-white px-1.5 py-2.5 shadow-sm
+                      border-[#e0e3e5] bg-white px-1.5 py-2.5 shadow-sm
                       transition-all duration-200 hover:-translate-y-0.5
-                      hover:border-[#538CDB]/40
+                      hover:border-[#004ac6]/40
                       hover:shadow-[0_6px_16px_rgba(83,140,219,0.12)]
                     "
                   >
@@ -191,7 +191,7 @@ const NeedPayBalanceCard: React.FC<NeedPayBalanceCardProps> = ({
                       className="
                         flex h-8 w-10 items-center justify-center
                         overflow-hidden rounded-lg bg-white ring-1
-                        ring-[#E8ECF4]
+                        ring-[#e0e3e5]
                       "
                     >
                       <img
@@ -202,7 +202,7 @@ const NeedPayBalanceCard: React.FC<NeedPayBalanceCardProps> = ({
                         className="h-full w-full select-none object-contain p-1"
                       />
                     </span>
-                    <span className="text-[10px] font-semibold leading-none text-[#20242D]">
+                    <span className="text-[10px] font-semibold leading-none text-[#101319]">
                       {method.label}
                     </span>
                     <span className="text-[8px] uppercase tracking-wider text-[#A2A8B3]">
@@ -218,9 +218,9 @@ const NeedPayBalanceCard: React.FC<NeedPayBalanceCardProps> = ({
               onClick={onTopUp}
               className="
                 mt-5 inline-flex h-11 w-full items-center justify-center
-                gap-2 rounded-full bg-[#538CDB] px-6 text-sm font-semibold
+                gap-2 rounded-full bg-[#004ac6] px-6 text-sm font-semibold
                 text-white shadow-[0_7px_18px_rgba(83,140,219,0.20)]
-                transition-all duration-200 hover:bg-[#467BC7]
+                transition-all duration-200 hover:bg-[#004ac6]
                 hover:shadow-[0_9px_22px_rgba(83,140,219,0.25)]
                 active:scale-[0.99]
               "

@@ -55,17 +55,17 @@ const RevenueChart: React.FC<RevenueChartProps> = ({
       <div
         className="
           flex h-60 items-center justify-center rounded-2xl border
-          border-dashed border-[#D8DEE9] bg-[#F5F7FB]/50
+          border-dashed border-[#e0e3e5] bg-[#F5F7FB]/50
         "
       >
         <div className="text-center">
           <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-white">
             <Icon name="analytics" size={20} className="text-[#A2A8B3]" />
           </div>
-          <p className="mt-3 text-[13px] font-semibold text-[#20242D]">
+          <p className="mt-3 text-[13px] font-semibold text-[#101319]">
             Belum ada pendapatan
           </p>
-          <p className="mt-1 text-[11px] text-[#737A87]">
+          <p className="mt-1 text-[11px] text-[#737686]">
             Data grafik akan muncul begitu ada transaksi.
           </p>
         </div>
@@ -84,16 +84,16 @@ const RevenueChart: React.FC<RevenueChartProps> = ({
   return (
     <div ref={containerRef}>
       {total && (
-        <div className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-[#737A87]">
+        <div className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-[#737686]">
           <span>
             Total{' '}
-            <span className="font-bold text-[#538CDB] tabular-nums">
+            <span className="font-bold text-[#004ac6] tabular-nums">
               {formatRupiah(Number(total.revenue))}
             </span>
           </span>
-          <span className="h-1 w-1 rounded-full bg-[#D8DEE9]" />
+          <span className="h-1 w-1 rounded-full bg-[#e0e3e5]" />
           <span>
-            <span className="font-bold text-[#20242D] tabular-nums">
+            <span className="font-bold text-[#101319] tabular-nums">
               {total.orders}
             </span>{' '}
             order
@@ -120,7 +120,7 @@ const RevenueChart: React.FC<RevenueChartProps> = ({
                 <div
                   className="
                     pointer-events-none absolute -top-16 z-10 w-max
-                    rounded-lg border border-white/80 bg-[#20242D]/95 px-2.5
+                    rounded-lg border border-white/80 bg-[#101319]/95 px-2.5
                     py-1.5 text-center shadow-[0_6px_16px_rgba(32,36,45,0.20)]
                     backdrop-blur-sm
                   "
@@ -140,7 +140,7 @@ const RevenueChart: React.FC<RevenueChartProps> = ({
                   duration-300 sm:text-[9px]
                   ${
                     isHovered
-                      ? 'text-[#538CDB] opacity-100'
+                      ? 'text-[#004ac6] opacity-100'
                       : 'text-[#A2A8B3] opacity-0 group-hover:opacity-100'
                   }
                 `}
@@ -154,8 +154,8 @@ const RevenueChart: React.FC<RevenueChartProps> = ({
                   transition-all duration-200
                   ${
                     isHovered
-                      ? 'bg-gradient-to-t from-[#3A66AC] to-[#5B93E0] shadow-[0_-4px_12px_rgba(83,140,219,0.40)]'
-                      : 'bg-gradient-to-t from-[#538CDB] to-[#5B93E0]/80'
+                      ? 'bg-gradient-to-t from-[#003ea8] to-[#004ac6] shadow-[0_-4px_12px_rgba(83,140,219,0.40)]'
+                      : 'bg-gradient-to-t from-[#004ac6] to-[#004ac6]/80'
                   }
                 `}
                 style={{
@@ -185,7 +185,7 @@ const RevenueChart: React.FC<RevenueChartProps> = ({
             key={i}
             className={`
               text-[9px] tabular-nums transition-colors sm:text-[10px]
-              ${hoverIndex === i ? 'font-bold text-[#538CDB]' : 'text-[#A2A8B3]'}
+              ${hoverIndex === i ? 'font-bold text-[#004ac6]' : 'text-[#A2A8B3]'}
             `}
           >
             {labelFor(p.bucket, granularity)}

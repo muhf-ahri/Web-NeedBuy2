@@ -13,9 +13,9 @@ interface ProductsCardItemProps {
 }
 
 const STATUS_CLASS: Record<ProductStatus, string> = {
-  Tayang: 'bg-[#DCFCE7] text-[#166534]',
-  'Stok Habis': 'bg-[#FFF0F0] text-[#C73535]',
-  Draf: 'bg-[#F5F7FB] text-[#737A87]',
+  Tayang: 'bg-[#e6f4ee] text-[#12805c]',
+  'Stok Habis': 'bg-[#FFF0F0] text-[#ba1a1a]',
+  Draf: 'bg-[#F5F7FB] text-[#737686]',
 };
 
 const ProductsCardItem: React.FC<ProductsCardItemProps> = ({
@@ -42,7 +42,7 @@ const ProductsCardItem: React.FC<ProductsCardItemProps> = ({
           to={`/products/${product.slug}`}
           className="
             flex h-20 w-20 shrink-0 items-center justify-center
-            overflow-hidden rounded-xl bg-[#F5F7FB] ring-1 ring-[#E8ECF4]
+            overflow-hidden rounded-xl bg-[#F5F7FB] ring-1 ring-[#e0e3e5]
             sm:h-24 sm:w-24
           "
         >
@@ -59,7 +59,7 @@ const ProductsCardItem: React.FC<ProductsCardItemProps> = ({
 
         <div className="min-w-0 flex-1">
           <Link to={`/products/${product.slug}`}>
-            <p className="line-clamp-2 text-[13px] font-bold leading-snug text-[#20242D] transition-colors hover:text-[#538CDB] sm:text-[14px]">
+            <p className="line-clamp-2 text-[13px] font-bold leading-snug text-[#101319] transition-colors hover:text-[#004ac6] sm:text-[14px]">
               {product.name}
             </p>
           </Link>
@@ -82,20 +82,20 @@ const ProductsCardItem: React.FC<ProductsCardItemProps> = ({
           </div>
 
           <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1">
-            <span className="text-[13px] font-bold text-[#538CDB] tabular-nums sm:text-[14px]">
+            <span className="text-[13px] font-bold text-[#004ac6] tabular-nums sm:text-[14px]">
               {formatRupiah(Number(product.price))}
             </span>
-            <span className="h-1 w-1 shrink-0 rounded-full bg-[#D8DEE9]" />
+            <span className="h-1 w-1 shrink-0 rounded-full bg-[#e0e3e5]" />
             <span
               className={`
                 inline-flex items-center gap-1 text-[11px] font-semibold
                 tabular-nums
                 ${
                   product.stock === 0
-                    ? 'text-[#C73535]'
+                    ? 'text-[#ba1a1a]'
                     : product.stock < 10
                       ? 'text-[#B45309]'
-                      : 'text-[#737A87]'
+                      : 'text-[#737686]'
                 }
               `}
             >
@@ -104,10 +104,10 @@ const ProductsCardItem: React.FC<ProductsCardItemProps> = ({
                   h-1 w-1 rounded-full
                   ${
                     product.stock === 0
-                      ? 'bg-[#FF4646]'
+                      ? 'bg-[#ba1a1a]'
                       : product.stock < 10
                         ? 'bg-[#FFD500]'
-                        : 'bg-[#22C55E]'
+                        : 'bg-[#12805c]'
                   }
                 `}
               />
@@ -123,9 +123,9 @@ const ProductsCardItem: React.FC<ProductsCardItemProps> = ({
           onClick={onEdit}
           className="
             flex flex-1 items-center justify-center gap-1.5 rounded-full
-            border border-[#E8ECF4] bg-white py-2 text-[11px] font-semibold
-            text-[#20242D] transition-all duration-200 hover:border-[#538CDB]
-            hover:text-[#538CDB] active:scale-[0.98]
+            border border-[#e0e3e5] bg-white py-2 text-[11px] font-semibold
+            text-[#101319] transition-all duration-200 hover:border-[#004ac6]
+            hover:text-[#004ac6] active:scale-[0.98]
           "
         >
           <Icon name="edit" size={12} />
@@ -136,9 +136,9 @@ const ProductsCardItem: React.FC<ProductsCardItemProps> = ({
           to={`/products/${product.slug}`}
           className="
             flex flex-1 items-center justify-center gap-1.5 rounded-full
-            border border-[#E8ECF4] bg-white py-2 text-[11px] font-semibold
-            text-[#20242D] transition-all duration-200 hover:border-[#538CDB]
-            hover:text-[#538CDB] active:scale-[0.98]
+            border border-[#e0e3e5] bg-white py-2 text-[11px] font-semibold
+            text-[#101319] transition-all duration-200 hover:border-[#004ac6]
+            hover:text-[#004ac6] active:scale-[0.98]
           "
         >
           <Icon name="eye" size={12} />
@@ -150,9 +150,9 @@ const ProductsCardItem: React.FC<ProductsCardItemProps> = ({
           onClick={onDelete}
           className="
             flex h-9 w-9 shrink-0 items-center justify-center rounded-full
-            border border-[#E8ECF4] bg-white text-[#A2A8B3] transition-all
-            duration-200 hover:border-[#FF4646]/40 hover:bg-[#FFF0F0]
-            hover:text-[#FF4646] active:scale-[0.95]
+            border border-[#e0e3e5] bg-white text-[#A2A8B3] transition-all
+            duration-200 hover:border-[#ba1a1a]/40 hover:bg-[#FFF0F0]
+            hover:text-[#ba1a1a] active:scale-[0.95]
           "
           aria-label="Hapus produk"
         >

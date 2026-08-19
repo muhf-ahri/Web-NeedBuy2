@@ -12,7 +12,7 @@ const HeroPanel: React.FC = () => {
         hidden
         min-h-[500px]
         overflow-hidden
-        bg-[#538CDB]
+        bg-[#004ac6]
         p-7
         md:flex
         md:flex-col
@@ -23,7 +23,7 @@ const HeroPanel: React.FC = () => {
 
       <div className="absolute -right-8 top-14 h-20 w-20 rounded-full bg-[#FFD500]" />
 
-      <div className="absolute -bottom-5 -left-5 h-20 w-20 rotate-12 rounded-xl bg-[#FF4646]" />
+      <div className="absolute -bottom-5 -left-5 h-20 w-20 rotate-12 rounded-xl bg-[#ba1a1a]" />
 
       <div className="absolute -bottom-24 right-10 h-56 w-56 rounded-full bg-white/10 blur-3xl" />
 
@@ -74,7 +74,7 @@ const HeroPanel: React.FC = () => {
             bg-white
             text-sm
             font-bold
-            text-[#538CDB]
+            text-[#004ac6]
             shadow-sm
           ">
             N
@@ -109,7 +109,7 @@ const HeroPanel: React.FC = () => {
             py-1
             text-[10px]
             font-semibold
-            text-[#538CDB]
+            text-[#004ac6]
           "
         >
           Belanja lebih bijak

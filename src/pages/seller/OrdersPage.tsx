@@ -134,19 +134,19 @@ const OrdersPage: React.FC = () => {
             <div
               className="
                 flex items-center gap-3 rounded-2xl border
-                border-[#FF4646]/20 bg-[#FFF0F0] px-4 py-3 backdrop-blur-sm
+                border-[#ba1a1a]/20 bg-[#FFF0F0] px-4 py-3 backdrop-blur-sm
               "
             >
-              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#FF4646]/15">
-                <Icon name="alert" size={15} className="text-[#FF4646]" />
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#ba1a1a]/15">
+                <Icon name="alert" size={15} className="text-[#ba1a1a]" />
               </span>
-              <p className="flex-1 text-[13px] font-medium text-[#C73535]">
+              <p className="flex-1 text-[13px] font-medium text-[#ba1a1a]">
                 {actionError}
               </p>
               <button
                 type="button"
                 onClick={() => setActionError(null)}
-                className="shrink-0 rounded-full p-1 text-[#C73535] hover:bg-white"
+                className="shrink-0 rounded-full p-1 text-[#ba1a1a] hover:bg-white"
                 aria-label="Tutup"
               >
                 <Icon name="close" size={14} />

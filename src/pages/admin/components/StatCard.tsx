@@ -36,12 +36,12 @@ const StatCard: React.FC<StatCardProps> = ({
           <p className="truncate text-[10px] font-semibold uppercase tracking-wider text-[#737686] sm:text-[11px]">
             {title}
           </p>
-          <p className="mt-1 truncate text-xl font-bold leading-tight text-[#191c1e] sm:text-2xl">
+          <p className="mt-1 truncate text-xl font-bold leading-tight text-[#101319] sm:text-2xl">
             {displayValue}
           </p>
           <p
             className={`mt-1 truncate text-[11px] font-medium sm:text-[12px] ${
-              change === null ? 'text-[#737686]' : change >= 0 ? 'text-[#156b32]' : 'text-[#ba1a1a]'
+              change === null ? 'text-[#737686]' : change >= 0 ? 'text-[#12805c]' : 'text-[#ba1a1a]'
             }`}
           >
             {change === null

@@ -90,9 +90,9 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
     return (
       <Shell>
         <div className="space-y-4">
-          <div className="h-4 w-32 animate-pulse rounded-full bg-[#E8ECF4]" />
-          <div className="h-8 w-64 animate-pulse rounded-full bg-[#E8ECF4]" />
-          <div className="h-6 w-40 animate-pulse rounded-full bg-[#E8ECF4]" />
+          <div className="h-4 w-32 animate-pulse rounded-full bg-[#e0e3e5]" />
+          <div className="h-8 w-64 animate-pulse rounded-full bg-[#e0e3e5]" />
+          <div className="h-6 w-40 animate-pulse rounded-full bg-[#e0e3e5]" />
           <div className="mt-6 h-80 animate-pulse rounded-[24px] bg-white/95" />
         </div>
       </Shell>
@@ -109,9 +109,9 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
               rounded-full bg-[#FFF0F0]
             "
           >
-            <Icon name="alert" size={22} className="text-[#FF4646]" />
+            <Icon name="alert" size={22} className="text-[#ba1a1a]" />
           </div>
-          <p className="mt-4 text-[14px] font-semibold text-[#C73535]">
+          <p className="mt-4 text-[14px] font-semibold text-[#ba1a1a]">
             {error ?? 'Kategorinya nggak ketemu'}
           </p>
           <button
@@ -119,9 +119,9 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
             onClick={onBack}
             className="
               mt-4 inline-flex items-center gap-1.5 rounded-full
-              bg-[#538CDB] px-4 py-2 text-[12px] font-semibold text-white
+              bg-[#004ac6] px-4 py-2 text-[12px] font-semibold text-white
               shadow-[0_6px_16px_rgba(83,140,219,0.25)] transition-all
-              hover:bg-[#467BC7]
+              hover:bg-[#004ac6]
             "
           >
             <Icon name="arrowLeft" size={13} />
@@ -140,7 +140,7 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
 
   return (
     <div
-      className="min-h-screen flex flex-col bg-[#F5F5FF]"
+      className="min-h-screen flex flex-col bg-[#f5f7fb]"
       style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
     >
       <Navbar />
@@ -151,8 +151,8 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
           onClick={onBack}
           className="
             mb-4 inline-flex items-center gap-1.5 rounded-full bg-white
-            px-3.5 py-1.5 text-[12px] font-semibold text-[#737A87]
-            shadow-sm transition-all duration-200 hover:text-[#538CDB]
+            px-3.5 py-1.5 text-[12px] font-semibold text-[#737686]
+            shadow-sm transition-all duration-200 hover:text-[#004ac6]
             hover:shadow-[0_4px_12px_rgba(83,140,219,0.12)]
           "
         >
@@ -174,12 +174,12 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
               draggable={false}
               className="absolute inset-0 h-full w-full select-none object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#20242D]/55 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#101319]/55 via-transparent to-transparent" />
             <div
               className="
                 absolute left-4 top-4 inline-flex items-center gap-1.5
                 rounded-full bg-white/90 px-3 py-1 text-[10px] font-semibold
-                uppercase tracking-[0.18em] text-[#538CDB] backdrop-blur-sm
+                uppercase tracking-[0.18em] text-[#004ac6] backdrop-blur-sm
               "
             >
               <span className="h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
@@ -198,7 +198,7 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
                   transition-transform duration-700 hover:scale-[1.03]
                 "
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#20242D]/55 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#101319]/55 via-transparent to-transparent" />
 
               <svg
                 className="
@@ -220,7 +220,7 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
                 className="
                   absolute left-6 top-6 z-10 inline-flex items-center
                   gap-1.5 rounded-full bg-white/90 px-3 py-1 text-[10px]
-                  font-semibold uppercase tracking-[0.18em] text-[#538CDB]
+                  font-semibold uppercase tracking-[0.18em] text-[#004ac6]
                   backdrop-blur-sm
                 "
               >
@@ -246,7 +246,7 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
                   <p
                     className="
                       text-[10px] font-semibold uppercase tracking-[0.18em]
-                      text-[#538CDB]
+                      text-[#004ac6]
                     "
                   >
                     Rencana Belanja
@@ -256,19 +256,19 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
                 <h1
                   className="
                     text-[22px] font-extrabold leading-tight
-                    tracking-tight text-[#20242D] sm:text-[28px]
+                    tracking-tight text-[#101319] sm:text-[28px]
                   "
                 >
                   {planTitle(plan)}
                 </h1>
 
-                <div className="mt-1.5 flex flex-wrap items-center gap-2 text-[12px] text-[#737A87]">
-                  <span className="font-semibold text-[#20242D]">
+                <div className="mt-1.5 flex flex-wrap items-center gap-2 text-[12px] text-[#737686]">
+                  <span className="font-semibold text-[#101319]">
                     {plan.items.length} produk
                   </span>
                   {budgetNum > 0 && (
                     <>
-                      <span className="h-1 w-1 rounded-full bg-[#D8DEE9]" />
+                      <span className="h-1 w-1 rounded-full bg-[#e0e3e5]" />
                       <span>Anggaran {formatRupiah(budgetNum)}</span>
                     </>
                   )}
@@ -280,7 +280,7 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
                       <div
                         className={`
                           h-full rounded-full transition-all duration-700
-                          ${overBudget ? 'bg-[#FF4646]' : 'bg-[#538CDB]'}
+                          ${overBudget ? 'bg-[#ba1a1a]' : 'bg-[#004ac6]'}
                         `}
                         style={{ width: `${pct}%` }}
                       />
@@ -293,7 +293,7 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
                       <span
                         className={`
                           font-semibold
-                          ${overBudget ? 'text-[#FF4646]' : 'text-[#538CDB]'}
+                          ${overBudget ? 'text-[#ba1a1a]' : 'text-[#004ac6]'}
                         `}
                       >
                         {formatRupiah(totalNum)} terpakai
@@ -311,10 +311,10 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
                     onClick={() => setShowEdit(true)}
                     className="
                       flex h-10 items-center gap-1.5 rounded-full border
-                      border-[#E8ECF4] bg-white px-4 text-[12px]
-                      font-semibold text-[#20242D] transition-all
-                      duration-200 hover:border-[#538CDB]
-                      hover:text-[#538CDB]
+                      border-[#e0e3e5] bg-white px-4 text-[12px]
+                      font-semibold text-[#101319] transition-all
+                      duration-200 hover:border-[#004ac6]
+                      hover:text-[#004ac6]
                     "
                   >
                     <Icon name="edit" size={13} />
@@ -325,9 +325,9 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
                     onClick={() => setShowAdd(true)}
                     className="
                       flex h-10 items-center gap-1.5 rounded-full
-                      bg-[#538CDB] px-4 text-[12px] font-semibold
+                      bg-[#004ac6] px-4 text-[12px] font-semibold
                       text-white shadow-[0_6px_16px_rgba(83,140,219,0.25)]
-                      transition-all duration-200 hover:bg-[#467BC7]
+                      transition-all duration-200 hover:bg-[#004ac6]
                       hover:shadow-[0_8px_20px_rgba(83,140,219,0.30)]
                       active:scale-[0.99]
                     "
@@ -345,11 +345,11 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
           <div
             className="
               mt-4 flex items-center gap-2 rounded-2xl border
-              border-[#FF4646]/20 bg-[#FFF0F0] px-4 py-3 backdrop-blur-sm
+              border-[#ba1a1a]/20 bg-[#FFF0F0] px-4 py-3 backdrop-blur-sm
             "
           >
-            <Icon name="alert" size={15} className="shrink-0 text-[#FF4646]" />
-            <p className="text-[13px] font-medium text-[#C73535]">
+            <Icon name="alert" size={15} className="shrink-0 text-[#ba1a1a]" />
+            <p className="text-[13px] font-medium text-[#ba1a1a]">
               {actionError}
             </p>
           </div>
@@ -405,7 +405,7 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
         <span
           className="
             pointer-events-none absolute -right-8 -top-8 h-20 w-20
-            rounded-full border border-[#538CDB]/10
+            rounded-full border border-[#004ac6]/10
           "
         />
         <span
@@ -418,14 +418,14 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
         <span
           className="
             inline-flex items-center gap-1.5 rounded-full
-            bg-[#538CDB]/10 px-2.5 py-1
+            bg-[#004ac6]/10 px-2.5 py-1
           "
         >
           <span className="h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
           <p
             className="
               text-[9px] font-bold uppercase tracking-[0.20em]
-              text-[#538CDB]
+              text-[#004ac6]
             "
           >
             Belum ada produk
@@ -435,13 +435,13 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
         <h3
           className="
             mt-3 text-[20px] font-extrabold leading-tight tracking-tight
-            text-[#20242D] sm:text-[24px]
+            text-[#101319] sm:text-[24px]
           "
         >
           Kategori ini masih kosong
         </h3>
 
-        <p className="mt-2 text-[13px] leading-relaxed text-[#737A87]">
+        <p className="mt-2 text-[13px] leading-relaxed text-[#737686]">
           Yuk, mulai belanja terarah. Tambahkan produk-produk pilihanmu
           ke kategori ini dan checkout semuanya sekaligus tanpa ribet.
         </p>
@@ -451,9 +451,9 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
           onClick={() => setShowAdd(true)}
           className="
             mt-5 inline-flex items-center gap-1.5 rounded-full
-            bg-[#538CDB] px-5 py-2.5 text-[12px] font-semibold
+            bg-[#004ac6] px-5 py-2.5 text-[12px] font-semibold
             text-white shadow-[0_7px_18px_rgba(83,140,219,0.25)]
-            transition-all duration-200 hover:bg-[#467BC7]
+            transition-all duration-200 hover:bg-[#004ac6]
             hover:shadow-[0_9px_22px_rgba(83,140,219,0.30)]
             active:scale-[0.99]
           "
@@ -471,7 +471,7 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
           <span className="inline-flex items-center gap-1">
             <Icon name="cart" size={11} />0 produk
           </span>
-          <span className="h-1 w-1 rounded-full bg-[#D8DEE9]" />
+          <span className="h-1 w-1 rounded-full bg-[#e0e3e5]" />
           <span className="inline-flex items-center gap-1">
             <Icon name="card" size={11} />
             Total {formatRupiah(0)}
@@ -485,19 +485,19 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
               <div
                 className="
                   mb-2 flex items-center justify-between border-b
-                  border-[#E8ECF4] py-3
+                  border-[#e0e3e5] py-3
                 "
               >
                 <div className="flex items-center gap-2">
                   <span
                     className="
                       flex h-7 w-7 items-center justify-center rounded-lg
-                      bg-[#538CDB]/10
+                      bg-[#004ac6]/10
                     "
                   >
-                    <Icon name="grid" size={13} className="text-[#538CDB]" />
+                    <Icon name="grid" size={13} className="text-[#004ac6]" />
                   </span>
-                  <p className="text-[12px] font-bold text-[#20242D]">
+                  <p className="text-[12px] font-bold text-[#101319]">
                     Daftar Produk
                   </p>
                 </div>
@@ -532,7 +532,7 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
 
       <div
         className="
-          sticky bottom-0 z-30 border-t border-[#E8ECF4] bg-white/95
+          sticky bottom-0 z-30 border-t border-[#e0e3e5] bg-white/95
           backdrop-blur-md
         "
       >
@@ -546,7 +546,7 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
             <p
               className="
                 text-[10px] font-semibold uppercase tracking-[0.18em]
-                text-[#737A87]
+                text-[#737686]
               "
             >
               Total kategori
@@ -554,7 +554,7 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
             <p
               className={`
                 text-[20px] font-extrabold tracking-tight
-                ${overBudget ? 'text-[#FF4646]' : 'text-[#20242D]'}
+                ${overBudget ? 'text-[#ba1a1a]' : 'text-[#101319]'}
               `}
             >
               {formatRupiah(totalNum)}
@@ -568,9 +568,9 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
               disabled={busy}
               className="
                 flex h-11 items-center gap-1.5 rounded-full border
-                border-[#FF4646]/30 bg-white px-4 text-[13px] font-semibold
-                text-[#C73535] transition-all duration-200
-                hover:border-[#FF4646] hover:bg-[#FFF0F0]
+                border-[#ba1a1a]/30 bg-white px-4 text-[13px] font-semibold
+                text-[#ba1a1a] transition-all duration-200
+                hover:border-[#ba1a1a] hover:bg-[#FFF0F0]
                 active:scale-[0.99] disabled:cursor-not-allowed
                 disabled:opacity-50
               "
@@ -583,10 +583,10 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
               onClick={handleCheckoutAll}
               disabled={busy || plan.items.length === 0}
               className="
-                flex h-11 items-center gap-2 rounded-full bg-[#538CDB]
+                flex h-11 items-center gap-2 rounded-full bg-[#004ac6]
                 px-6 text-[13px] font-semibold text-white
                 shadow-[0_7px_18px_rgba(83,140,219,0.25)] transition-all
-                duration-200 hover:bg-[#467BC7]
+                duration-200 hover:bg-[#004ac6]
                 hover:shadow-[0_9px_22px_rgba(83,140,219,0.30)]
                 active:scale-[0.99] disabled:cursor-not-allowed
                 disabled:bg-[#A2A8B3] disabled:shadow-none
@@ -632,7 +632,7 @@ const PlanDetail: React.FC<PlanDetailProps> = ({ planId, onBack }) => {
 
 const Shell: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <div
-    className="min-h-screen flex flex-col bg-[#F5F5FF]"
+    className="min-h-screen flex flex-col bg-[#f5f7fb]"
     style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
   >
     <Navbar />

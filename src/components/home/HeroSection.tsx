@@ -87,8 +87,8 @@ const HeroSection: React.FC<{
                   y2="400"
                   gradientUnits="userSpaceOnUse"
                 >
-                  <stop stopColor="#5B93E0" />
-                  <stop offset="1" stopColor="#3A66AC" />
+                  <stop stopColor="#004ac6" />
+                  <stop offset="1" stopColor="#003ea8" />
                 </linearGradient>
               </defs>
               <path
@@ -97,13 +97,13 @@ const HeroSection: React.FC<{
               />
             </svg>
 
-            <div className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full border border-[#538CDB]/10" />
+            <div className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full border border-[#004ac6]/10" />
             <div className="pointer-events-none absolute right-6 top-6 h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
 
             <div className="relative z-10 px-6 py-7 pl-9 sm:px-8 sm:pl-10">
               <div className="flex items-center gap-2">
                 <span
-                  className="text-[15px] font-bold tracking-tight text-[#538CDB]"
+                  className="text-[15px] font-bold tracking-tight text-[#004ac6]"
                   style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
                 >
                   NeedBuy
@@ -113,7 +113,7 @@ const HeroSection: React.FC<{
               <p
                 className="
                   mt-4 text-[10px] font-semibold uppercase tracking-[0.18em]
-                  text-[#538CDB]
+                  text-[#004ac6]
                 "
               >
                 Selamat datang di NeedBuy
@@ -122,13 +122,13 @@ const HeroSection: React.FC<{
               <h1
                 className="
                   mt-2 text-[24px] font-extrabold leading-[1.2]
-                  tracking-tight text-[#20242D] sm:text-[27px]
+                  tracking-tight text-[#101319] sm:text-[27px]
                 "
               >
                 Belanja cerdas,
                 <span className="block h-[1.35em] overflow-hidden">
                   <span key={index} className="hero-slogan-in block">
-                    <span className="relative inline-block text-[#538CDB]">
+                    <span className="relative inline-block text-[#004ac6]">
                       {ROTATING_LINES[index]}
                       <span
                         aria-hidden="true"
@@ -143,7 +143,7 @@ const HeroSection: React.FC<{
 
               <p
                 className="
-                  mt-2 text-[12px] leading-relaxed text-[#737A87] sm:text-[13px]
+                  mt-2 text-[12px] leading-relaxed text-[#737686] sm:text-[13px]
                 "
               >
                 NeedBuy bantu kamu belanja sesuai kebutuhan terarah, hemat,
@@ -156,9 +156,9 @@ const HeroSection: React.FC<{
                   onClick={() => navigate('/categories')}
                   className="
                     flex h-11 w-full items-center justify-center gap-2
-                    rounded-full bg-[#538CDB] px-6 text-sm font-semibold
+                    rounded-full bg-[#004ac6] px-6 text-sm font-semibold
                     text-white shadow-[0_7px_18px_rgba(83,140,219,0.20)]
-                    transition-all duration-200 hover:bg-[#467BC7]
+                    transition-all duration-200 hover:bg-[#004ac6]
                     hover:shadow-[0_9px_22px_rgba(83,140,219,0.25)]
                     active:scale-[0.99]
                   "
@@ -172,10 +172,10 @@ const HeroSection: React.FC<{
                   onClick={() => navigate('/coupons')}
                   className="
                     flex h-11 w-full items-center justify-center rounded-full
-                    border border-[#D8DEE9] bg-white px-6 text-sm
-                    font-semibold text-[#2F5AA0] shadow-sm transition-all
-                    duration-200 hover:border-[#538CDB] hover:bg-[#F5F7FB]
-                    hover:text-[#1E4080] active:scale-[0.99]
+                    border border-[#e0e3e5] bg-white px-6 text-sm
+                    font-semibold text-[#003ea8] shadow-sm transition-all
+                    duration-200 hover:border-[#004ac6] hover:bg-[#F5F7FB]
+                    hover:text-[#003ea8] active:scale-[0.99]
                   "
                 >
                   Lihat Promo
@@ -194,8 +194,8 @@ const HeroSection: React.FC<{
                       h-1.5 rounded-full transition-all duration-300
                       ${
                         i === index
-                          ? 'w-7 bg-[#538CDB]'
-                          : 'w-1.5 bg-[#538CDB]/25 hover:bg-[#538CDB]/50'
+                          ? 'w-7 bg-[#004ac6]'
+                          : 'w-1.5 bg-[#004ac6]/25 hover:bg-[#004ac6]/50'
                       }
                     `}
                   />

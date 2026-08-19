@@ -245,7 +245,7 @@ const ChatsPage: React.FC = () => {
                   showBack
                 />
               ) : (
-                <div className="flex h-full items-center justify-center bg-[#F5F5FF]/50">
+                <div className="flex h-full items-center justify-center bg-[#f5f7fb]/50">
                   <div className="text-center">
                     <span
                       className="
@@ -255,10 +255,10 @@ const ChatsPage: React.FC = () => {
                     >
                       <Icon name="chat" size={26} className="text-[#A2A8B3]" />
                     </span>
-                    <p className="mt-3 text-[14px] font-semibold text-[#20242D]">
+                    <p className="mt-3 text-[14px] font-semibold text-[#101319]">
                       Pilih percakapan
                     </p>
-                    <p className="mt-1 text-[12px] text-[#737A87]">
+                    <p className="mt-1 text-[12px] text-[#737686]">
                       Pilih chat dari daftar di kiri untuk mulai balas
                     </p>
                   </div>

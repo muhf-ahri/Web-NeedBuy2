@@ -181,20 +181,20 @@ const Navbar: React.FC<NavbarProps> = ({
       className="
         flex w-full items-center
         rounded-full
-        border border-[#E8ECF4]
+        border border-[#e0e3e5]
         bg-white/95
         px-3
         shadow-[0_4px_14px_rgba(32,36,45,0.08)]
         backdrop-blur-xl
         transition-all duration-300
-        focus-within:border-[#538CDB]
+        focus-within:border-[#004ac6]
         focus-within:shadow-[0_6px_18px_rgba(83,140,219,0.15)]
       "
     >
       <Icon
         name="search"
         size={15}
-        className="shrink-0 text-[#737A87]"
+        className="shrink-0 text-[#737686]"
       />
 
       <input
@@ -211,9 +211,9 @@ const Navbar: React.FC<NavbarProps> = ({
           px-2
           py-2
           text-[12px]
-          text-[#20242D]
+          text-[#101319]
           outline-none
-          placeholder:text-[#A0A6B1]
+          placeholder:text-[#a2a8b3]
         "
       />
 
@@ -223,9 +223,9 @@ const Navbar: React.FC<NavbarProps> = ({
           onClick={() => setSearchQuery('')}
           className="
             shrink-0
-            text-[#A0A6B1]
+            text-[#a2a8b3]
             transition-colors
-            hover:text-[#538CDB]
+            hover:text-[#004ac6]
           "
           aria-label="Hapus kata kunci"
         >
@@ -250,8 +250,8 @@ const Navbar: React.FC<NavbarProps> = ({
           ${
             scrolled
               ? `
-                border-[#467BC7]/50
-                bg-[#538CDB]/95
+                border-[#004ac6]/50
+                bg-[#004ac6]/95
                 text-white
                 shadow-[0_8px_24px_rgba(83,140,219,0.25)]
               `
@@ -260,8 +260,8 @@ const Navbar: React.FC<NavbarProps> = ({
                 bg-white/25
                 shadow-[0_4px_16px_rgba(32,36,45,0.04)]
 
-                group-hover:border-[#467BC7]/50
-                group-hover:bg-[#538CDB]/95
+                group-hover:border-[#004ac6]/50
+                group-hover:bg-[#004ac6]/95
                 group-hover:text-white
                 group-hover:shadow-[0_8px_24px_rgba(83,140,219,0.25)]
               `
@@ -323,7 +323,7 @@ const Navbar: React.FC<NavbarProps> = ({
                     blueMode
                       ? 'text-white'
                       : `
-                        text-[#20242D]
+                        text-[#101319]
                         group-hover:text-white
                       `
                   }
@@ -350,7 +350,7 @@ const Navbar: React.FC<NavbarProps> = ({
                     blueMode
                       ? 'text-white/70'
                       : `
-                        text-[#8A91A0]
+                        text-[#737686]
                         group-hover:text-white/70
                       `
                   }
@@ -427,7 +427,7 @@ const Navbar: React.FC<NavbarProps> = ({
                           ? blueMode
                             ? 'text-white'
                             : `
-                              text-[#538CDB]
+                              text-[#004ac6]
                               group-hover:text-white
                             `
                           : blueMode
@@ -436,8 +436,8 @@ const Navbar: React.FC<NavbarProps> = ({
                               hover:text-white
                             `
                             : `
-                              text-[#737A87]
-                              hover:text-[#538CDB]
+                              text-[#737686]
+                              hover:text-[#004ac6]
                               group-hover:text-white/80
                               group-hover:hover:text-white
                             `
@@ -458,7 +458,7 @@ const Navbar: React.FC<NavbarProps> = ({
                             ? blueMode
                               ? 'bg-white/15'
                               : `
-                                bg-[#F5F5FF]
+                                bg-[#f5f7fb]
                                 group-hover:bg-white/15
                               `
                             : blueMode
@@ -468,7 +468,7 @@ const Navbar: React.FC<NavbarProps> = ({
                                 group-hover/link:opacity-100
                               `
                               : `
-                                bg-[#F5F5FF]
+                                bg-[#f5f7fb]
                                 opacity-0
                                 group-hover/link:opacity-100
                                 group-hover:bg-white/10
@@ -516,7 +516,7 @@ const Navbar: React.FC<NavbarProps> = ({
                           blueMode
                             ? 'bg-white'
                             : `
-                              bg-[#538CDB]
+                              bg-[#004ac6]
                               group-hover:bg-white
                             `
                         }
@@ -634,11 +634,11 @@ const Navbar: React.FC<NavbarProps> = ({
                       ? blueMode
                         ? `
                           bg-white
-                          text-[#538CDB]
+                          text-[#004ac6]
                           shadow-[0_4px_12px_rgba(255,255,255,0.25)]
                         `
                         : `
-                          bg-[#538CDB]
+                          bg-[#004ac6]
                           text-white
                           shadow-[0_4px_12px_rgba(83,140,219,0.25)]
                         `
@@ -649,9 +649,9 @@ const Navbar: React.FC<NavbarProps> = ({
                           hover:text-white
                         `
                         : `
-                          text-[#737A87]
-                          hover:bg-[#F5F5FF]
-                          hover:text-[#538CDB]
+                          text-[#737686]
+                          hover:bg-[#f5f7fb]
+                          hover:text-[#004ac6]
 
                           group-hover:text-white/90
                           group-hover:hover:bg-white/15
@@ -701,15 +701,15 @@ const Navbar: React.FC<NavbarProps> = ({
                     blueMode
                       ? `
                         bg-white
-                        text-[#538CDB]
+                        text-[#004ac6]
                         shadow-[0_6px_16px_rgba(255,255,255,0.20)]
                         hover:bg-white/90
                       `
                       : `
-                        bg-[#538CDB]
+                        bg-[#004ac6]
                         text-white
                         shadow-[0_6px_16px_rgba(83,140,219,0.20)]
-                        hover:bg-[#467BC7]
+                        hover:bg-[#004ac6]
                       `
                   }
                 `}
@@ -724,7 +724,7 @@ const Navbar: React.FC<NavbarProps> = ({
                   size={15}
                   className={
                     blueMode
-                      ? 'text-[#538CDB]'
+                      ? 'text-[#004ac6]'
                       : 'text-white'
                   }
                 />
@@ -761,9 +761,9 @@ const Navbar: React.FC<NavbarProps> = ({
                       hover:text-white
                     `
                     : `
-                      text-[#737A87]
-                      hover:bg-[#F5F5FF]
-                      hover:text-[#538CDB]
+                      text-[#737686]
+                      hover:bg-[#f5f7fb]
+                      hover:text-[#004ac6]
 
                       group-hover:text-white/90
                       group-hover:hover:bg-white/15
@@ -799,9 +799,9 @@ const Navbar: React.FC<NavbarProps> = ({
                       hover:text-white
                     `
                     : `
-                      text-[#737A87]
-                      hover:bg-[#F5F5FF]
-                      hover:text-[#538CDB]
+                      text-[#737686]
+                      hover:bg-[#f5f7fb]
+                      hover:text-[#004ac6]
 
                       group-hover:text-white/90
                       group-hover:hover:bg-white/15
@@ -838,9 +838,9 @@ const Navbar: React.FC<NavbarProps> = ({
                       hover:text-white
                     `
                     : `
-                      text-[#737A87]
-                      hover:bg-[#F5F5FF]
-                      hover:text-[#538CDB]
+                      text-[#737686]
+                      hover:bg-[#f5f7fb]
+                      hover:text-[#004ac6]
 
                       group-hover:text-white/90
                       group-hover:hover:bg-white/15
@@ -868,14 +868,14 @@ const Navbar: React.FC<NavbarProps> = ({
                     items-center
                     justify-center
                     rounded-full
-                    bg-[#FF4646]
+                    bg-[#ba1a1a]
                     px-1
                     text-[8px]
                     font-bold
                     leading-none
                     text-white
                     ring-2
-                    ring-[#538CDB]
+                    ring-[#004ac6]
                     group-hover:ring-white
                   "
                 >
@@ -913,9 +913,9 @@ const Navbar: React.FC<NavbarProps> = ({
                       hover:bg-white/25
                     `
                     : `
-                      border-[#DCE5F5]
-                      bg-[#F5F5FF]
-                      hover:border-[#538CDB]
+                      border-[#e0e3e5]
+                      bg-[#f5f7fb]
+                      hover:border-[#004ac6]
 
                       group-hover:border-white/40
                       group-hover:bg-white/15
@@ -937,7 +937,7 @@ const Navbar: React.FC<NavbarProps> = ({
                   className={
                     blueMode
                       ? 'text-white'
-                      : 'text-[#737A87] group-hover:text-white'
+                      : 'text-[#737686] group-hover:text-white'
                   }
                 />
               )}
@@ -955,7 +955,7 @@ const Navbar: React.FC<NavbarProps> = ({
                 top-full
                 z-10
                 border-b
-                border-[#E8ECF4]
+                border-[#e0e3e5]
                 bg-white/95
                 px-3
                 pb-3
@@ -1008,14 +1008,14 @@ const Navbar: React.FC<NavbarProps> = ({
               blueMode
                 ? `
                   border-white/15
-                  bg-[#467BC7]/95
+                  bg-[#004ac6]/95
                 `
                 : `
-                  border-[#E8ECF4]
-                  bg-[#FDFCFF]
+                  border-[#e0e3e5]
+                  bg-[#f5f7fb]
 
                   group-hover:border-white/15
-                  group-hover:bg-[#467BC7]/95
+                  group-hover:bg-[#004ac6]/95
                 `
             }
           `}
@@ -1072,13 +1072,13 @@ const Navbar: React.FC<NavbarProps> = ({
                               ? blueMode
                                 ? `
                                   bg-white
-                                  text-[#538CDB]
+                                  text-[#004ac6]
                                   shadow-[0_4px_10px_rgba(255,255,255,0.20)]
                                 `
                                 : `
                                   bg-gradient-to-br
-                                  from-[#5B93E0]
-                                  to-[#3A66AC]
+                                  from-[#004ac6]
+                                  to-[#003ea8]
                                   text-white
                                   shadow-[0_4px_10px_rgba(83,140,219,0.22)]
                                 `
@@ -1093,12 +1093,12 @@ const Navbar: React.FC<NavbarProps> = ({
                                 `
                                 : `
                                   bg-white
-                                  text-[#737A87]
+                                  text-[#737686]
                                   ring-1
-                                  ring-[#E8ECF4]
+                                  ring-[#e0e3e5]
 
-                                  group-hover/action:bg-[#F5F5FF]
-                                  group-hover/action:text-[#538CDB]
+                                  group-hover/action:bg-[#f5f7fb]
+                                  group-hover/action:text-[#004ac6]
 
                                   group-hover:bg-white/10
                                   group-hover:text-white/90
@@ -1129,11 +1129,11 @@ const Navbar: React.FC<NavbarProps> = ({
                             active
                               ? blueMode
                                 ? 'text-white'
-                                : 'text-[#538CDB]'
+                                : 'text-[#004ac6]'
                               : blueMode
                                 ? 'text-white/80'
                                 : `
-                                  text-[#737A87]
+                                  text-[#737686]
                                   group-hover:text-white/80
                                 `
                           }

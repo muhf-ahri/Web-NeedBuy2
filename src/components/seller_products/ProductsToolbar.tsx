@@ -41,10 +41,10 @@ const ProductsToolbar: React.FC<ProductsToolbarProps> = ({
         onChange={(e) => onSearchChange(e.target.value)}
         placeholder="Cari produk..."
         className="
-          w-full rounded-full border border-[#E8ECF4] bg-[#F5F7FB] py-2.5
-          pl-10 pr-10 text-[13px] text-[#20242D] outline-none
+          w-full rounded-full border border-[#e0e3e5] bg-[#F5F7FB] py-2.5
+          pl-10 pr-10 text-[13px] text-[#101319] outline-none
           placeholder:text-[#A2A8B3] transition-all duration-200
-          focus:border-[#538CDB] focus:bg-white
+          focus:border-[#004ac6] focus:bg-white
           focus:shadow-[0_4px_14px_rgba(83,140,219,0.10)]
         "
       />
@@ -55,7 +55,7 @@ const ProductsToolbar: React.FC<ProductsToolbarProps> = ({
           className="
             absolute right-2.5 top-1/2 flex h-7 w-7 -translate-y-1/2
             items-center justify-center rounded-full text-[#A2A8B3]
-            transition-colors hover:bg-white hover:text-[#20242D]
+            transition-colors hover:bg-white hover:text-[#101319]
           "
           aria-label="Hapus pencarian"
         >
@@ -65,10 +65,10 @@ const ProductsToolbar: React.FC<ProductsToolbarProps> = ({
     </div>
 
     <div className="flex items-center gap-2 sm:gap-3">
-      <p className="text-[11px] text-[#737A87] sm:text-[12px]">
+      <p className="text-[11px] text-[#737686] sm:text-[12px]">
         {loading ? 'Memuat...' : (
           <span>
-            <span className="font-bold text-[#20242D] tabular-nums">
+            <span className="font-bold text-[#101319] tabular-nums">
               {totalProducts}
             </span>{' '}
             produk
@@ -80,10 +80,10 @@ const ProductsToolbar: React.FC<ProductsToolbarProps> = ({
         variant="primary"
         onClick={onAddNew}
         className="
-          inline-flex h-10 items-center gap-1.5 rounded-full bg-[#538CDB]
+          inline-flex h-10 items-center gap-1.5 rounded-full bg-[#004ac6]
           px-4 text-[12px] font-semibold text-white
           shadow-[0_6px_16px_rgba(83,140,219,0.25)] transition-all
-          hover:bg-[#467BC7] hover:shadow-[0_8px_20px_rgba(83,140,219,0.30)]
+          hover:bg-[#004ac6] hover:shadow-[0_8px_20px_rgba(83,140,219,0.30)]
           active:scale-[0.99] lg:hidden
         "
       >

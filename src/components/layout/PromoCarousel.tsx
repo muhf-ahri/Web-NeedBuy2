@@ -71,8 +71,8 @@ const IllustrationPanel: React.FC<{
 }> = ({ icon, image, alt = '' }) => (
   <section
     className="
-      relative hidden overflow-hidden bg-gradient-to-br from-[#538CDB]
-      via-[#4A7ECB] to-[#3A66AC] md:flex
+      relative hidden overflow-hidden bg-gradient-to-br from-[#004ac6]
+      via-[#004ac6] to-[#003ea8] md:flex
     "
   >
 
@@ -152,28 +152,28 @@ const SaleSlide: React.FC<{ product: Product }> = ({ product }) => {
                 className="
                   inline-flex items-center gap-1.5 rounded-full bg-[#FFF0F0]
                   px-3 py-1 text-[10px] font-semibold uppercase
-                  tracking-[0.18em] text-[#FF4646]
+                  tracking-[0.18em] text-[#ba1a1a]
                 "
               >
-                <span className="h-1.5 w-1.5 rounded-full bg-[#FF4646]" />
+                <span className="h-1.5 w-1.5 rounded-full bg-[#ba1a1a]" />
                 Diskon {product.discountPercent}%
               </span>
 
               <h3
                 className="
                   mt-3 text-[22px] font-bold leading-tight tracking-tight
-                  text-[#20242D] sm:text-[26px]
+                  text-[#101319] sm:text-[26px]
                 "
               >
                 {product.name}
               </h3>
 
-              <p className="mt-1 text-[12px] font-medium text-[#737A87]">
+              <p className="mt-1 text-[12px] font-medium text-[#737686]">
                 {product.category?.name}
               </p>
 
               <div className="mt-4 flex items-baseline gap-2.5">
-                <span className="text-2xl font-extrabold text-[#538CDB]">
+                <span className="text-2xl font-extrabold text-[#004ac6]">
                   {formatRupiah(product.price)}
                 </span>
                 <span className="text-xs text-[#A2A8B3] line-through">
@@ -186,10 +186,10 @@ const SaleSlide: React.FC<{ product: Product }> = ({ product }) => {
               <Link
                 to={`/products/${product.slug}`}
                 className="
-                  mt-5 inline-flex items-center gap-2 rounded-full bg-[#538CDB]
+                  mt-5 inline-flex items-center gap-2 rounded-full bg-[#004ac6]
                   px-5 py-2.5 text-[12px] font-semibold text-white
                   shadow-[0_7px_18px_rgba(83,140,219,0.20)] transition-all
-                  duration-200 hover:gap-3 hover:bg-[#467BC7]
+                  duration-200 hover:gap-3 hover:bg-[#004ac6]
                   hover:shadow-[0_9px_22px_rgba(83,140,219,0.25)]
                   active:scale-[0.99]
                 "
@@ -225,7 +225,7 @@ const AppSlide: React.FC<{ promo: AppPromo }> = ({ promo }) => (
             <p
               className="
                 mb-2 text-[10px] font-semibold uppercase tracking-[0.18em]
-                text-[#538CDB]
+                text-[#004ac6]
               "
             >
               {promo.eyebrow}
@@ -234,23 +234,23 @@ const AppSlide: React.FC<{ promo: AppPromo }> = ({ promo }) => (
             <h3
               className="
                 text-[22px] font-bold leading-tight tracking-tight
-                text-[#20242D] sm:text-[26px]
+                text-[#101319] sm:text-[26px]
               "
             >
               {promo.title}
             </h3>
 
-            <p className="mt-2 max-w-sm text-[13px] leading-5 text-[#737A87]">
+            <p className="mt-2 max-w-sm text-[13px] leading-5 text-[#737686]">
               {promo.body}
             </p>
 
             <Link
               to={promo.to}
               className="
-                mt-5 inline-flex items-center gap-2 rounded-full bg-[#538CDB]
+                mt-5 inline-flex items-center gap-2 rounded-full bg-[#004ac6]
                 px-5 py-2.5 text-[12px] font-semibold text-white
                 shadow-[0_7px_18px_rgba(83,140,219,0.20)] transition-all
-                duration-200 hover:gap-3 hover:bg-[#467BC7]
+                duration-200 hover:gap-3 hover:bg-[#004ac6]
                 hover:shadow-[0_9px_22px_rgba(83,140,219,0.25)]
                 active:scale-[0.99]
               "
@@ -358,7 +358,7 @@ const PromoCarousel: React.FC<{
             flex snap-x snap-mandatory overflow-x-auto scroll-smooth
             rounded-[24px] [scrollbar-width:none]
             [&::-webkit-scrollbar]:hidden focus-visible:outline-2
-            focus-visible:outline-offset-2 focus-visible:outline-[#538CDB]
+            focus-visible:outline-offset-2 focus-visible:outline-[#004ac6]
           "
         >
           {slides.map(({ key, node }) => (
@@ -377,8 +377,8 @@ const PromoCarousel: React.FC<{
               className="
                 absolute -left-4 top-1/2 hidden h-10 w-10 -translate-y-1/2
                 items-center justify-center rounded-full border border-white/80
-                bg-white/95 text-[#538CDB] shadow-[0_8px_24px_rgba(32,36,45,0.12)]
-                backdrop-blur-sm transition-all hover:bg-[#F5F5FF]
+                bg-white/95 text-[#004ac6] shadow-[0_8px_24px_rgba(32,36,45,0.12)]
+                backdrop-blur-sm transition-all hover:bg-[#f5f7fb]
                 hover:shadow-[0_10px_28px_rgba(32,36,45,0.15)] sm:flex
               "
             >
@@ -392,8 +392,8 @@ const PromoCarousel: React.FC<{
               className="
                 absolute -right-4 top-1/2 hidden h-10 w-10 -translate-y-1/2
                 items-center justify-center rounded-full border border-white/80
-                bg-white/95 text-[#538CDB] shadow-[0_8px_24px_rgba(32,36,45,0.12)]
-                backdrop-blur-sm transition-all hover:bg-[#F5F5FF]
+                bg-white/95 text-[#004ac6] shadow-[0_8px_24px_rgba(32,36,45,0.12)]
+                backdrop-blur-sm transition-all hover:bg-[#f5f7fb]
                 hover:shadow-[0_10px_28px_rgba(32,36,45,0.15)] sm:flex
               "
             >
@@ -416,8 +416,8 @@ const PromoCarousel: React.FC<{
                 h-1.5 rounded-full transition-all duration-300
                 ${
                   index === active
-                    ? 'w-7 bg-[#538CDB]'
-                    : 'w-1.5 bg-[#D8DEE9] hover:bg-[#8FAED8]'
+                    ? 'w-7 bg-[#004ac6]'
+                    : 'w-1.5 bg-[#e0e3e5] hover:bg-[#004ac6]'
                 }
               `}
             />

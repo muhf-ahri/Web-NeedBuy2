@@ -26,10 +26,10 @@ const SEVERITY_STYLE: Record<
   }
 > = {
   critical: {
-    box: 'border-[#FF4646]/20 bg-[#FFF0F0]',
-    iconBg: 'bg-[#FF4646]/15',
-    iconText: 'text-[#FF4646]',
-    dotColor: 'bg-[#FF4646]',
+    box: 'border-[#ba1a1a]/20 bg-[#FFF0F0]',
+    iconBg: 'bg-[#ba1a1a]/15',
+    iconText: 'text-[#ba1a1a]',
+    dotColor: 'bg-[#ba1a1a]',
     label: 'Kritis',
   },
   warning: {
@@ -40,17 +40,17 @@ const SEVERITY_STYLE: Record<
     label: 'Perhatian',
   },
   positive: {
-    box: 'border-[#22C55E]/20 bg-[#F0FDF4]',
-    iconBg: 'bg-[#22C55E]/15',
-    iconText: 'text-[#166534]',
-    dotColor: 'bg-[#22C55E]',
+    box: 'border-[#12805c]/20 bg-[#e6f4ee]',
+    iconBg: 'bg-[#12805c]/15',
+    iconText: 'text-[#12805c]',
+    dotColor: 'bg-[#12805c]',
     label: 'Positif',
   },
   info: {
-    box: 'border-[#538CDB]/20 bg-[#EEF5FF]',
-    iconBg: 'bg-[#538CDB]/15',
-    iconText: 'text-[#538CDB]',
-    dotColor: 'bg-[#538CDB]',
+    box: 'border-[#004ac6]/20 bg-[#f5f7fb]',
+    iconBg: 'bg-[#004ac6]/15',
+    iconText: 'text-[#004ac6]',
+    dotColor: 'bg-[#004ac6]',
     label: 'Info',
   },
 };
@@ -71,8 +71,8 @@ const ShopInsightsCard: React.FC<ShopInsightsCardProps> = ({
   return (
     <div
       className="
-        relative overflow-hidden rounded-[24px] border border-[#538CDB]/20
-        bg-gradient-to-br from-[#EEF5FF] via-white to-[#F5F5FF] p-5
+        relative overflow-hidden rounded-[24px] border border-[#004ac6]/20
+        bg-gradient-to-br from-[#f5f7fb] via-white to-[#f5f7fb] p-5
         shadow-[0_8px_24px_rgba(32,36,45,0.06)] backdrop-blur-sm sm:p-6
       "
     >
@@ -80,7 +80,7 @@ const ShopInsightsCard: React.FC<ShopInsightsCardProps> = ({
       <span
         className="
           pointer-events-none absolute -right-16 -top-16 h-40 w-40
-          rounded-full border border-[#538CDB]/15
+          rounded-full border border-[#004ac6]/15
         "
       />
       <span
@@ -92,7 +92,7 @@ const ShopInsightsCard: React.FC<ShopInsightsCardProps> = ({
       <span
         className="
           pointer-events-none absolute right-24 top-20 h-1 w-1 rounded-full
-          bg-[#538CDB]/50
+          bg-[#004ac6]/50
         "
       />
 
@@ -100,17 +100,17 @@ const ShopInsightsCard: React.FC<ShopInsightsCardProps> = ({
         <span
           className="
             flex h-9 w-9 items-center justify-center rounded-xl
-            bg-gradient-to-br from-[#5B93E0] to-[#3A66AC]
+            bg-gradient-to-br from-[#004ac6] to-[#003ea8]
             shadow-[0_6px_16px_rgba(83,140,219,0.30)]
           "
         >
           <Icon name="analytics" size={16} className="text-white" />
         </span>
         <div>
-          <h3 className="text-[14px] font-bold text-[#20242D] sm:text-[15px]">
+          <h3 className="text-[14px] font-bold text-[#101319] sm:text-[15px]">
             Shop Insights
           </h3>
-          <p className="text-[10px] text-[#737A87]">
+          <p className="text-[10px] text-[#737686]">
             Dihitung otomatis dari data toko kamu pada periode terpilih
           </p>
         </div>
@@ -126,7 +126,7 @@ const ShopInsightsCard: React.FC<ShopInsightsCardProps> = ({
           ))}
         </div>
       ) : error ? (
-        <div className="rounded-xl border border-[#FF4646]/20 bg-[#FFF0F0] px-3 py-2 text-[12px] font-medium text-[#C73535]">
+        <div className="rounded-xl border border-[#ba1a1a]/20 bg-[#FFF0F0] px-3 py-2 text-[12px] font-medium text-[#ba1a1a]">
           {error}
         </div>
       ) : insights.length === 0 ? (
@@ -135,10 +135,10 @@ const ShopInsightsCard: React.FC<ShopInsightsCardProps> = ({
             <Icon name="analytics" size={16} className="text-[#A2A8B3]" />
           </span>
           <div>
-            <p className="text-[13px] font-semibold text-[#20242D]">
+            <p className="text-[13px] font-semibold text-[#101319]">
               Belum ada insight
             </p>
-            <p className="text-[11px] text-[#737A87]">
+            <p className="text-[11px] text-[#737686]">
               Coba pilih periode yang lebih panjang biar datanya cukup.
             </p>
           </div>
@@ -188,7 +188,7 @@ const ShopInsightsCard: React.FC<ShopInsightsCardProps> = ({
                 </span>
 
                 <div className="min-w-0 flex-1">
-                  <p className="text-[11px] text-[#20242D] sm:text-[12px]">
+                  <p className="text-[11px] text-[#101319] sm:text-[12px]">
                     {insight.message}
                   </p>
                 </div>

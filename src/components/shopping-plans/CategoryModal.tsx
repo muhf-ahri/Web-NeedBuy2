@@ -60,12 +60,12 @@ const CategoryModal: React.FC<CategoryModalProps> = ({
         {error && (
           <div
             className="
-              flex items-center gap-2 rounded-2xl border border-[#FF4646]/20
+              flex items-center gap-2 rounded-2xl border border-[#ba1a1a]/20
               bg-[#FFF0F0] px-4 py-3
             "
           >
-            <Icon name="alert" size={15} className="shrink-0 text-[#FF4646]" />
-            <p className="text-[13px] font-medium text-[#C73535]">{error}</p>
+            <Icon name="alert" size={15} className="shrink-0 text-[#ba1a1a]" />
+            <p className="text-[13px] font-medium text-[#ba1a1a]">{error}</p>
           </div>
         )}
 
@@ -74,7 +74,7 @@ const CategoryModal: React.FC<CategoryModalProps> = ({
             htmlFor="cat-name"
             className="
               mb-1.5 block text-[10px] font-semibold uppercase
-              tracking-[0.16em] text-[#737A87]
+              tracking-[0.16em] text-[#737686]
             "
           >
             Nama Kategori
@@ -88,10 +88,10 @@ const CategoryModal: React.FC<CategoryModalProps> = ({
             onKeyDown={(e) => e.key === 'Enter' && save()}
             placeholder="Contoh: Kamar, Dapur, Setup WFH..."
             className="
-              w-full rounded-xl border border-[#E8ECF4] bg-[#F5F7FB] px-4
-              py-3 text-[13px] text-[#20242D] outline-none
+              w-full rounded-xl border border-[#e0e3e5] bg-[#F5F7FB] px-4
+              py-3 text-[13px] text-[#101319] outline-none
               placeholder:text-[#A2A8B3] transition-all duration-200
-              focus:border-[#538CDB] focus:bg-white
+              focus:border-[#004ac6] focus:bg-white
               focus:shadow-[0_4px_16px_rgba(83,140,219,0.10)]
             "
           />
@@ -102,7 +102,7 @@ const CategoryModal: React.FC<CategoryModalProps> = ({
             htmlFor="cat-budget"
             className="
               mb-1.5 block text-[10px] font-semibold uppercase
-              tracking-[0.16em] text-[#737A87]
+              tracking-[0.16em] text-[#737686]
             "
           >
             Anggaran{' '}
@@ -114,7 +114,7 @@ const CategoryModal: React.FC<CategoryModalProps> = ({
             <span
               className="
                 absolute left-4 top-1/2 -translate-y-1/2 text-[12px]
-                font-semibold text-[#737A87]
+                font-semibold text-[#737686]
               "
             >
               Rp
@@ -127,10 +127,10 @@ const CategoryModal: React.FC<CategoryModalProps> = ({
               onChange={(e) => setBudget(e.target.value)}
               placeholder="Kosongkan kalau nggak pakai anggaran"
               className="
-                w-full rounded-xl border border-[#E8ECF4] bg-[#F5F7FB]
-                py-3 pl-10 pr-4 text-[13px] text-[#20242D] outline-none
+                w-full rounded-xl border border-[#e0e3e5] bg-[#F5F7FB]
+                py-3 pl-10 pr-4 text-[13px] text-[#101319] outline-none
                 placeholder:text-[#A2A8B3] transition-all duration-200
-                focus:border-[#538CDB] focus:bg-white
+                focus:border-[#004ac6] focus:bg-white
                 focus:shadow-[0_4px_16px_rgba(83,140,219,0.10)]
                 [appearance:textfield]
                 [&::-webkit-inner-spin-button]:appearance-none
@@ -139,9 +139,9 @@ const CategoryModal: React.FC<CategoryModalProps> = ({
             />
           </div>
           {budget && Number(budget) > 0 && (
-            <p className="mt-1.5 text-[11px] text-[#737A87]">
+            <p className="mt-1.5 text-[11px] text-[#737686]">
               Anggaran:{' '}
-              <span className="font-semibold text-[#20242D]">
+              <span className="font-semibold text-[#101319]">
                 {formatRupiah(Number(budget))}
               </span>
             </p>
@@ -154,9 +154,9 @@ const CategoryModal: React.FC<CategoryModalProps> = ({
           disabled={saving}
           className="
             flex h-11 w-full items-center justify-center gap-2
-            rounded-full bg-[#538CDB] text-[14px] font-semibold text-white
+            rounded-full bg-[#004ac6] text-[14px] font-semibold text-white
             shadow-[0_7px_18px_rgba(83,140,219,0.25)] transition-all
-            duration-200 hover:bg-[#467BC7]
+            duration-200 hover:bg-[#004ac6]
             hover:shadow-[0_9px_22px_rgba(83,140,219,0.30)]
             active:scale-[0.99] disabled:cursor-not-allowed
             disabled:bg-[#A2A8B3] disabled:shadow-none

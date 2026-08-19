@@ -42,7 +42,7 @@ const OrderCard: React.FC<OrderCardProps> = ({ order, onOpen }) => {
             <span className="h-1 w-1 rounded-full bg-current opacity-60" />
             {STATUS_LABEL[order.status]}
           </span>
-          <span className="font-mono text-[11px] font-semibold text-[#737A87]">
+          <span className="font-mono text-[11px] font-semibold text-[#737686]">
             #{order.orderNumber}
           </span>
         </div>
@@ -51,7 +51,7 @@ const OrderCard: React.FC<OrderCardProps> = ({ order, onOpen }) => {
           size={16}
           className="
             shrink-0 text-[#A2A8B3] transition-transform duration-200
-            group-hover:translate-x-0.5 group-hover:text-[#538CDB]
+            group-hover:translate-x-0.5 group-hover:text-[#004ac6]
           "
         />
       </div>
@@ -87,20 +87,20 @@ const OrderCard: React.FC<OrderCardProps> = ({ order, onOpen }) => {
           </div>
 
           <div className="min-w-0">
-            <p className="truncate text-[13px] font-semibold text-[#20242D]">
+            <p className="truncate text-[13px] font-semibold text-[#101319]">
               {order.items[0]?.productName ?? 'Produk'}
               {order.totalBarang > 1
                 ? ` + ${order.totalBarang - 1} lainnya`
                 : ''}
             </p>
-            <p className="mt-0.5 truncate text-[11px] text-[#737A87]">
+            <p className="mt-0.5 truncate text-[11px] text-[#737686]">
               {order.seller.storeName} · {dateLabel(order.createdAt)}
             </p>
           </div>
         </div>
 
         <div className="shrink-0 text-right">
-          <p className="text-[14px] font-bold text-[#20242D] sm:text-[15px]">
+          <p className="text-[14px] font-bold text-[#101319] sm:text-[15px]">
             {formatRupiah(order.total)}
           </p>
           {order.status === 'WAITING_PAYMENT' ? (
@@ -124,7 +124,7 @@ const OrderCard: React.FC<OrderCardProps> = ({ order, onOpen }) => {
               }}
               className="
                 mt-0.5 inline-flex cursor-pointer items-center gap-1
-                text-[11px] font-semibold text-[#538CDB] hover:underline
+                text-[11px] font-semibold text-[#004ac6] hover:underline
               "
             >
               <Icon name="truck" size={12} />

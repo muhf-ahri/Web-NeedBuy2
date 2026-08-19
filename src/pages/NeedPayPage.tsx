@@ -176,7 +176,7 @@ const NeedPayPage: React.FC = () => {
 
   return (
     <div
-      className="min-h-screen flex flex-col bg-[#F5F5FF]"
+      className="min-h-screen flex flex-col bg-[#f5f7fb]"
       style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
     >
       <Navbar />
@@ -187,12 +187,12 @@ const NeedPayPage: React.FC = () => {
             <p
               className="
                 text-[10px] font-semibold uppercase tracking-[0.18em]
-                text-[#538CDB]
+                text-[#004ac6]
               "
             >
               Dompet digital
             </p>
-            <h1 className="text-[24px] font-extrabold leading-tight text-[#20242D] sm:text-[28px]">
+            <h1 className="text-[24px] font-extrabold leading-tight text-[#101319] sm:text-[28px]">
               NeedPay
             </h1>
           </div>
@@ -202,18 +202,18 @@ const NeedPayPage: React.FC = () => {
           <div
             className="
               mb-4 flex items-center gap-3 rounded-2xl border
-              border-[#FF4646]/20 bg-[#FFF0F0] px-4 py-3 backdrop-blur-sm
+              border-[#ba1a1a]/20 bg-[#FFF0F0] px-4 py-3 backdrop-blur-sm
             "
           >
             <span
               className="
                 flex h-8 w-8 shrink-0 items-center justify-center
-                rounded-full bg-[#FF4646]/15
+                rounded-full bg-[#ba1a1a]/15
               "
             >
-              <Icon name="alert" size={15} className="text-[#FF4646]" />
+              <Icon name="alert" size={15} className="text-[#ba1a1a]" />
             </span>
-            <p className="text-[13px] font-medium text-[#C73535]">{error}</p>
+            <p className="text-[13px] font-medium text-[#ba1a1a]">{error}</p>
           </div>
         )}
 
@@ -221,18 +221,18 @@ const NeedPayPage: React.FC = () => {
           <div
             className="
               mb-4 flex items-center gap-3 rounded-2xl border
-              border-[#22C55E]/20 bg-[#F0FDF4] px-4 py-3 backdrop-blur-sm
+              border-[#12805c]/20 bg-[#e6f4ee] px-4 py-3 backdrop-blur-sm
             "
           >
             <span
               className="
                 flex h-8 w-8 shrink-0 items-center justify-center
-                rounded-full bg-[#22C55E]/15
+                rounded-full bg-[#12805c]/15
               "
             >
-              <Icon name="check" size={15} className="text-[#22C55E]" />
+              <Icon name="check" size={15} className="text-[#12805c]" />
             </span>
-            <p className="text-[13px] font-medium text-[#166534]">{notice}</p>
+            <p className="text-[13px] font-medium text-[#12805c]">{notice}</p>
           </div>
         )}
 

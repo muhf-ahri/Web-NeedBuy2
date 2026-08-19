@@ -53,7 +53,7 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({
     <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center sm:p-4">
       
       <div
-        className="absolute inset-0 bg-[#20242D]/50 backdrop-blur-sm delete-dialog-backdrop"
+        className="absolute inset-0 bg-[#101319]/50 backdrop-blur-sm delete-dialog-backdrop"
         onClick={() => !busy && onClose()}
       />
 
@@ -66,12 +66,12 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({
         "
       >
         
-        <div className="relative border-b border-[#E8ECF4] bg-white/95 px-5 py-4 backdrop-blur-sm">
+        <div className="relative border-b border-[#e0e3e5] bg-white/95 px-5 py-4 backdrop-blur-sm">
           
           <span
             className="
               pointer-events-none absolute -right-8 -top-8 h-20 w-20
-              rounded-full border border-[#FF4646]/15
+              rounded-full border border-[#ba1a1a]/15
             "
           />
           <span
@@ -85,7 +85,7 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({
             <span
               className="
                 flex h-11 w-11 shrink-0 items-center justify-center
-                rounded-2xl bg-gradient-to-br from-[#FF6B6B] to-[#D32F2F]
+                rounded-2xl bg-gradient-to-br from-[#ba1a1a] to-[#ba1a1a]
                 shadow-[0_8px_20px_rgba(255,70,70,0.30)]
               "
             >
@@ -93,10 +93,10 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({
             </span>
 
             <div className="min-w-0 flex-1 pt-0.5">
-              <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#FF4646]">
+              <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#ba1a1a]">
                 Konfirmasi hapus
               </p>
-              <h2 className="mt-0.5 text-[16px] font-bold leading-tight text-[#20242D] sm:text-[18px]">
+              <h2 className="mt-0.5 text-[16px] font-bold leading-tight text-[#101319] sm:text-[18px]">
                 Yakin hapus produk ini?
               </h2>
             </div>
@@ -105,8 +105,8 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({
               type="button"
               onClick={() => !busy && onClose()}
               className="
-                -mr-1 -mt-1 shrink-0 rounded-full p-1.5 text-[#737A87]
-                transition-colors hover:bg-[#F5F7FB] hover:text-[#20242D]
+                -mr-1 -mt-1 shrink-0 rounded-full p-1.5 text-[#737686]
+                transition-colors hover:bg-[#F5F7FB] hover:text-[#101319]
                 disabled:cursor-not-allowed disabled:opacity-50
               "
               aria-label="Tutup"
@@ -120,12 +120,12 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({
         <div className="space-y-4 px-5 py-5 sm:px-6">
           
           <p className="text-[13px] leading-relaxed text-[#434655]">
-            Produk ini akan dihapus <span className="font-bold text-[#20242D]">permanen</span> dari toko kamu. Tindakan ini tidak bisa dibatalkan.
+            Produk ini akan dihapus <span className="font-bold text-[#101319]">permanen</span> dari toko kamu. Tindakan ini tidak bisa dibatalkan.
           </p>
 
           <div
             className="
-              flex items-center gap-3 rounded-2xl border border-[#E8ECF4]
+              flex items-center gap-3 rounded-2xl border border-[#e0e3e5]
               bg-[#F5F7FB] p-3
             "
           >
@@ -133,7 +133,7 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({
             <div
               className="
                 h-14 w-14 shrink-0 overflow-hidden rounded-xl bg-white
-                ring-1 ring-[#E8ECF4]
+                ring-1 ring-[#e0e3e5]
               "
             >
               {primaryImage ? (
@@ -150,14 +150,14 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({
             </div>
 
             <div className="min-w-0 flex-1">
-              <p className="truncate text-[13px] font-semibold text-[#20242D]">
+              <p className="truncate text-[13px] font-semibold text-[#101319]">
                 {product.name}
               </p>
-              <div className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px] text-[#737A87]">
-                <span className="font-bold text-[#538CDB] tabular-nums">
+              <div className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px] text-[#737686]">
+                <span className="font-bold text-[#004ac6] tabular-nums">
                   {formatRupiah(product.price)}
                 </span>
-                <span className="h-1 w-1 rounded-full bg-[#D8DEE9]" />
+                <span className="h-1 w-1 rounded-full bg-[#e0e3e5]" />
                 <span>Stok {product.stock}</span>
               </div>
             </div>
@@ -165,7 +165,7 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({
             <span
               className="
                 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg
-                bg-[#FFF0F0] text-[#FF4646]
+                bg-[#FFF0F0] text-[#ba1a1a]
               "
             >
               <Icon name="trash" size={14} />
@@ -176,18 +176,18 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({
             <div
               className="
                 flex items-center gap-2.5 rounded-xl border
-                border-[#FF4646]/20 bg-[#FFF0F0] px-3 py-2.5 backdrop-blur-sm
+                border-[#ba1a1a]/20 bg-[#FFF0F0] px-3 py-2.5 backdrop-blur-sm
               "
             >
               <span
                 className="
                   flex h-7 w-7 shrink-0 items-center justify-center
-                  rounded-full bg-[#FF4646]/15
+                  rounded-full bg-[#ba1a1a]/15
                 "
               >
-                <Icon name="alert" size={13} className="text-[#FF4646]" />
+                <Icon name="alert" size={13} className="text-[#ba1a1a]" />
               </span>
-              <p className="flex-1 text-[12px] font-medium text-[#C73535]">
+              <p className="flex-1 text-[12px] font-medium text-[#ba1a1a]">
                 {error}
               </p>
             </div>
@@ -212,7 +212,7 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({
 
         <div
           className="
-            flex flex-col-reverse gap-2 border-t border-[#E8ECF4] bg-white/95
+            flex flex-col-reverse gap-2 border-t border-[#e0e3e5] bg-white/95
             p-4 backdrop-blur-sm sm:flex-row sm:gap-3 sm:px-6
           "
         >
@@ -232,9 +232,9 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({
             disabled={busy}
             className="
               flex flex-1 items-center justify-center gap-2 rounded-full
-              bg-[#FF4646] px-5 py-2.5 text-[13px] font-semibold text-white
+              bg-[#ba1a1a] px-5 py-2.5 text-[13px] font-semibold text-white
               shadow-[0_6px_16px_rgba(255,70,70,0.25)] transition-all
-              duration-200 hover:bg-[#E03131]
+              duration-200 hover:bg-[#ba1a1a]
               hover:shadow-[0_8px_20px_rgba(255,70,70,0.35)] active:scale-[0.99]
               disabled:cursor-not-allowed disabled:bg-[#A2A8B3]
               disabled:shadow-none sm:flex-none

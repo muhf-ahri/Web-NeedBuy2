@@ -31,12 +31,12 @@ const VerifyEmailPage: React.FC = () => {
   }, [token, navigate, refreshUser]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#f8f9fb] p-4">
+    <div className="flex min-h-screen items-center justify-center bg-[#f5f7fb] p-4">
       <div className="w-full max-w-md rounded-2xl border border-[#e0e3e5] bg-white p-8 text-center">
         {error ? (
           <>
             <Icon name="alert" size={36} className="mx-auto text-[#ba1a1a]" />
-            <h1 className="mt-4 text-[20px] font-bold text-[#191c1e]">Verifikasi gagal</h1>
+            <h1 className="mt-4 text-[20px] font-bold text-[#101319]">Verifikasi gagal</h1>
             <p className="mt-2 text-[14px] text-[#737686]">{error}</p>
             
             <p className="mt-2 text-[12px] leading-relaxed text-[#737686]">
@@ -56,7 +56,7 @@ const VerifyEmailPage: React.FC = () => {
         ) : (
           <>
             <Icon name="clock" size={36} className="mx-auto animate-spin text-[#004ac6]" />
-            <h1 className="mt-4 text-[20px] font-bold text-[#191c1e]">Lagi verifikasi…</h1>
+            <h1 className="mt-4 text-[20px] font-bold text-[#101319]">Lagi verifikasi…</h1>
             <p className="mt-2 text-[14px] text-[#737686]">Bentar ya, sedetik lagi juga kelar.</p>
           </>
         )}

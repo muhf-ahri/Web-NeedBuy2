@@ -47,17 +47,17 @@ const NeedsCreateForm: React.FC<NeedsCreateFormProps> = ({
         <span
           className="
             flex h-9 w-9 shrink-0 items-center justify-center
-            rounded-xl bg-gradient-to-br from-[#5B93E0] to-[#3A66AC]
+            rounded-xl bg-gradient-to-br from-[#004ac6] to-[#003ea8]
             shadow-[0_4px_12px_rgba(83,140,219,0.25)]
           "
         >
           <Icon name="layers" size={16} className="text-white" />
         </span>
         <div className="min-w-0">
-          <h3 className="text-[15px] font-bold text-[#20242D]">
+          <h3 className="text-[15px] font-bold text-[#101319]">
             Tulis Kebutuhan Belanja
           </h3>
-          <p className="text-[11px] text-[#737A87]">
+          <p className="text-[11px] text-[#737686]">
             Sistem mencocokkan produk terbaik sesuai deskripsi kebutuhan kamu.
           </p>
         </div>
@@ -71,10 +71,10 @@ const NeedsCreateForm: React.FC<NeedsCreateFormProps> = ({
         <Icon
           name="alert"
           size={13}
-          className="mt-0.5 shrink-0 text-[#538CDB]"
+          className="mt-0.5 shrink-0 text-[#004ac6]"
         />
-        <p className="text-[11px] leading-relaxed text-[#737A87]">
-          <span className="font-semibold text-[#20242D]">Contoh:</span>{' '}
+        <p className="text-[11px] leading-relaxed text-[#737686]">
+          <span className="font-semibold text-[#101319]">Contoh:</span>{' '}
           "Saya butuh laptop untuk editing video budget 15 juta, ram minimal
           16GB."
         </p>
@@ -93,10 +93,10 @@ const NeedsCreateForm: React.FC<NeedsCreateFormProps> = ({
           rows={3}
           placeholder="Ceritain kebutuhanmu... (tekan Enter buat dianalisis)"
           className="
-            w-full resize-none rounded-xl border border-[#E8ECF4]
-            bg-[#F5F7FB] px-4 py-3 text-[13px] text-[#20242D] outline-none
+            w-full resize-none rounded-xl border border-[#e0e3e5]
+            bg-[#F5F7FB] px-4 py-3 text-[13px] text-[#101319] outline-none
             placeholder:text-[#A2A8B3] transition-all duration-200
-            focus:border-[#538CDB] focus:bg-white
+            focus:border-[#004ac6] focus:bg-white
             focus:shadow-[0_4px_16px_rgba(83,140,219,0.10)]
           "
         />
@@ -106,10 +106,10 @@ const NeedsCreateForm: React.FC<NeedsCreateFormProps> = ({
             type="submit"
             disabled={creating || !rawInput.trim()}
             className="
-              flex h-10 items-center gap-2 rounded-full bg-[#538CDB] px-5
+              flex h-10 items-center gap-2 rounded-full bg-[#004ac6] px-5
               text-[12px] font-semibold text-white
               shadow-[0_6px_16px_rgba(83,140,219,0.25)] transition-all
-              duration-200 hover:bg-[#467BC7]
+              duration-200 hover:bg-[#004ac6]
               hover:shadow-[0_8px_20px_rgba(83,140,219,0.30)]
               active:scale-[0.99] disabled:cursor-not-allowed
               disabled:bg-[#A2A8B3] disabled:shadow-none
@@ -125,21 +125,21 @@ const NeedsCreateForm: React.FC<NeedsCreateFormProps> = ({
       {parsed && (
         <div
           className="
-            mt-5 overflow-hidden rounded-2xl border border-[#E8ECF4]
+            mt-5 overflow-hidden rounded-2xl border border-[#e0e3e5]
             bg-[#F5F7FB]
           "
         >
-          <div className="border-b border-[#E8ECF4] bg-white px-4 py-3">
+          <div className="border-b border-[#e0e3e5] bg-white px-4 py-3">
             <div className="flex items-center gap-2">
               <span
                 className="
                   flex h-6 w-6 items-center justify-center rounded-lg
-                  bg-[#22C55E]/15
+                  bg-[#12805c]/15
                 "
               >
-                <Icon name="check" size={13} className="text-[#22C55E]" />
+                <Icon name="check" size={13} className="text-[#12805c]" />
               </span>
-              <p className="text-[13px] font-bold text-[#20242D]">
+              <p className="text-[13px] font-bold text-[#101319]">
                 Hasil Analisis
               </p>
             </div>
@@ -147,28 +147,28 @@ const NeedsCreateForm: React.FC<NeedsCreateFormProps> = ({
 
           <div className="space-y-2 px-4 py-3 text-[12px]">
             <div className="flex gap-2">
-              <span className="shrink-0 font-semibold text-[#737A87]">
+              <span className="shrink-0 font-semibold text-[#737686]">
                 Kebutuhan:
               </span>
-              <span className="text-[#20242D]">
+              <span className="text-[#101319]">
                 {parsed.need.goal ?? 'Belum kebaca'}
               </span>
             </div>
             <div className="flex gap-2">
-              <span className="shrink-0 font-semibold text-[#737A87]">
+              <span className="shrink-0 font-semibold text-[#737686]">
                 Budget:
               </span>
-              <span className="text-[#20242D]">
+              <span className="text-[#101319]">
                 {parsed.need.budget
                   ? formatRupiah(parsed.need.budget)
                   : 'Belum kebaca'}
               </span>
             </div>
             <div className="flex gap-2">
-              <span className="shrink-0 font-semibold text-[#737A87]">
+              <span className="shrink-0 font-semibold text-[#737686]">
                 Lokasi:
               </span>
-              <span className="text-[#20242D]">
+              <span className="text-[#101319]">
                 {parsed.need.location ?? 'Belum kebaca'}
               </span>
             </div>
@@ -209,7 +209,7 @@ const NeedsCreateForm: React.FC<NeedsCreateFormProps> = ({
 
           <div
             className="
-              flex flex-wrap gap-2 border-t border-[#E8ECF4] bg-white
+              flex flex-wrap gap-2 border-t border-[#e0e3e5] bg-white
               px-4 py-3
             "
           >
@@ -218,10 +218,10 @@ const NeedsCreateForm: React.FC<NeedsCreateFormProps> = ({
               onClick={() => onConfirm(parsed.need.id)}
               disabled={busyType === 'confirm'}
               className="
-                flex h-9 items-center gap-1.5 rounded-full bg-[#538CDB]
+                flex h-9 items-center gap-1.5 rounded-full bg-[#004ac6]
                 px-4 text-[12px] font-semibold text-white
                 shadow-[0_4px_12px_rgba(83,140,219,0.25)] transition-all
-                duration-200 hover:bg-[#467BC7] active:scale-[0.99]
+                duration-200 hover:bg-[#004ac6] active:scale-[0.99]
                 disabled:cursor-not-allowed disabled:bg-[#A2A8B3]
                 disabled:shadow-none
               "
@@ -237,8 +237,8 @@ const NeedsCreateForm: React.FC<NeedsCreateFormProps> = ({
               disabled={busyType === 'process'}
               className="
                 flex h-9 items-center gap-1.5 rounded-full border
-                border-[#538CDB] bg-white px-4 text-[12px] font-semibold
-                text-[#538CDB] transition-all duration-200 hover:bg-[#538CDB]
+                border-[#004ac6] bg-white px-4 text-[12px] font-semibold
+                text-[#004ac6] transition-all duration-200 hover:bg-[#004ac6]
                 hover:text-white active:scale-[0.99]
                 disabled:cursor-not-allowed disabled:opacity-50
               "

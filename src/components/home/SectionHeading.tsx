@@ -29,7 +29,7 @@ const SectionHeading: React.FC<SectionHeadingProps> = ({
         <div className="flex items-center gap-2">
           <span
             className="
-              inline-flex items-center gap-1.5 rounded-full bg-[#538CDB]/10
+              inline-flex items-center gap-1.5 rounded-full bg-[#004ac6]/10
               px-2.5 py-1
             "
           >
@@ -37,7 +37,7 @@ const SectionHeading: React.FC<SectionHeadingProps> = ({
             <p
               className="
                 text-[9px] font-bold uppercase tracking-[0.20em]
-                text-[#538CDB]
+                text-[#004ac6]
               "
             >
               {eyebrow}
@@ -51,8 +51,8 @@ const SectionHeading: React.FC<SectionHeadingProps> = ({
             sm:text-[24px]
             ${
               variant === 'default'
-                ? 'text-[#20242D]'
-                : 'text-[#20242D]'
+                ? 'text-[#101319]'
+                : 'text-[#101319]'
             }
           `}
         >
@@ -70,7 +70,7 @@ const SectionHeading: React.FC<SectionHeadingProps> = ({
         </h2>
 
         {description && (
-          <p className="mt-1.5 max-w-xl text-[12px] leading-relaxed text-[#737A87] sm:text-[13px]">
+          <p className="mt-1.5 max-w-xl text-[12px] leading-relaxed text-[#737686] sm:text-[13px]">
             {description}
           </p>
         )}
@@ -81,9 +81,9 @@ const SectionHeading: React.FC<SectionHeadingProps> = ({
           to={link}
           className="
             group inline-flex shrink-0 items-center gap-1.5 rounded-full
-            bg-[#538CDB]/10 px-3.5 py-1.5 text-[11px] font-semibold
-            text-[#538CDB] transition-all duration-200
-            hover:bg-[#538CDB] hover:text-white hover:shadow-[0_6px_16px_rgba(83,140,219,0.25)]
+            bg-[#004ac6]/10 px-3.5 py-1.5 text-[11px] font-semibold
+            text-[#004ac6] transition-all duration-200
+            hover:bg-[#004ac6] hover:text-white hover:shadow-[0_6px_16px_rgba(83,140,219,0.25)]
             active:scale-[0.98]
           "
         >

@@ -4,13 +4,13 @@
 @layer base {
   :root {
     --color-primary: #004ac6;
-    --color-secondary: #565e74;
+    --color-secondary: #434655;
     --color-on-primary: #ffffff;
     --color-on-surface-variant: #434655;
     --color-surface-container-lowest: #ffffff;
     --color-surface-container-low: #f2f4f6;
     --color-outline-variant: #c3c6d7;
-    --color-surface-container: #eceef0;
+    --color-surface-container: #f2f4f6;
     --color-error: #ba1a1a;
 
     /* ── Palet NeedBuy (dikunci) ────────────────────────────────────────────
@@ -47,7 +47,7 @@
   body {
     font-family: 'Plus Jakarta Sans', sans-serif;
     background-color: var(--color-surface-container-lowest);
-    color: #191c1e;
+    color: #101319;
   }
 }
 
@@ -246,4 +246,52 @@ input[type="number"] {
     transform: none !important;
     transition: none !important;
   }
+}
+/* ── Tabel yang menumpuk jadi kartu di layar sempit ──────────────────────────
+   Dipakai untuk tabel dasbor (admin & seller). Di HP, menggeser tabel ke
+   samping itu pekerjaan; jadi tiap baris berubah jadi kartu dan tiap sel
+   membawa nama kolomnya lewat data-label. Sel tanpa data-label tetap tampil
+   normal, jadi tabel yang belum dilabeli tidak rusak.                        */
+@media (max-width: 767px) {
+  .stack-table { min-width: 0 !important; }
+
+  .stack-table thead { display: none; }
+
+  .stack-table tbody,
+  .stack-table tr,
+  .stack-table td { display: block; width: 100%; }
+
+  .stack-table tr {
+    margin-bottom: 0.75rem;
+    border: 1px solid var(--nb-line);
+    border-radius: 16px;
+    background: #ffffff;
+    padding: 0.25rem 0;
+    overflow: hidden;
+  }
+
+  .stack-table td {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    border: 0;
+    padding: 0.5rem 1rem;
+    text-align: right !important;
+    white-space: normal !important;
+  }
+
+  .stack-table td[data-label]::before {
+    content: attr(data-label);
+    flex: 0 0 auto;
+    text-align: left;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--nb-muted);
+  }
+
+  /* Sel aksi biasanya berisi tombol — biarkan melebar penuh. */
+  .stack-table td[data-label=""] { justify-content: flex-end; }
 }

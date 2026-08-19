@@ -29,16 +29,16 @@ export interface IllustratedCardProps {
 
 const PILL_COLORS = {
   blue: {
-    text: 'text-[#538CDB]',
+    text: 'text-[#004ac6]',
     dot: 'bg-[#FFD500]',
-    eyebrow: 'text-[#538CDB]',
-    ring: 'bg-[#538CDB]/10',
+    eyebrow: 'text-[#004ac6]',
+    ring: 'bg-[#004ac6]/10',
   },
   red: {
-    text: 'text-[#C73535]',
-    dot: 'bg-[#FF4646]',
-    eyebrow: 'text-[#C73535]',
-    ring: 'bg-[#FF4646]/10',
+    text: 'text-[#ba1a1a]',
+    dot: 'bg-[#ba1a1a]',
+    eyebrow: 'text-[#ba1a1a]',
+    ring: 'bg-[#ba1a1a]/10',
   },
 };
 
@@ -72,7 +72,7 @@ const IllustratedCard: React.FC<IllustratedCardProps> = ({
           draggable={false}
           className="absolute inset-0 h-full w-full select-none object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#20242D]/55 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#101319]/55 via-transparent to-transparent" />
 
         <div
           className={`
@@ -108,19 +108,19 @@ const IllustratedCard: React.FC<IllustratedCardProps> = ({
             <h3
               className="
                 text-[22px] font-bold leading-tight tracking-tight
-                text-[#20242D] sm:text-[26px]
+                text-[#101319] sm:text-[26px]
               "
             >
               {title}
             </h3>
 
-            <p className="mt-2 max-w-sm text-[13px] leading-5 text-[#737A87]">
+            <p className="mt-2 max-w-sm text-[13px] leading-5 text-[#737686]">
               {subtitle}
             </p>
 
             {tips && tips.length > 0 && (
               <div className="mt-5 rounded-2xl bg-[#F5F7FB] px-5 py-4">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#737A87]">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#737686]">
                   Cek dulu ini
                 </p>
                 <ul className="mt-3 space-y-2.5">
@@ -130,12 +130,12 @@ const IllustratedCard: React.FC<IllustratedCardProps> = ({
                         className="
                           flex h-7 w-7 shrink-0 items-center justify-center
                           rounded-full bg-white text-[10px] font-bold
-                          text-[#538CDB] ring-1 ring-[#E8ECF4]
+                          text-[#004ac6] ring-1 ring-[#e0e3e5]
                         "
                       >
                         {i + 1}
                       </span>
-                      <span className="text-[12px] font-medium text-[#20242D]">
+                      <span className="text-[12px] font-medium text-[#101319]">
                         {tip}
                       </span>
                     </li>
@@ -152,9 +152,9 @@ const IllustratedCard: React.FC<IllustratedCardProps> = ({
                     onClick={primaryAction.onClick}
                     className="
                       inline-flex h-11 items-center justify-center gap-2
-                      rounded-full bg-[#538CDB] px-5 text-sm font-semibold
+                      rounded-full bg-[#004ac6] px-5 text-sm font-semibold
                       text-white shadow-[0_7px_18px_rgba(83,140,219,0.20)]
-                      transition-all duration-200 hover:bg-[#467BC7]
+                      transition-all duration-200 hover:bg-[#004ac6]
                       hover:shadow-[0_9px_22px_rgba(83,140,219,0.25)]
                       active:scale-[0.99]
                     "
@@ -174,10 +174,10 @@ const IllustratedCard: React.FC<IllustratedCardProps> = ({
                     onClick={secondaryAction.onClick}
                     className="
                       inline-flex h-11 items-center justify-center gap-2
-                      rounded-full border border-[#E8ECF4] bg-white px-5
-                      text-sm font-semibold text-[#20242D] transition-all
-                      duration-200 hover:border-[#538CDB]
-                      hover:text-[#538CDB] active:scale-[0.99]
+                      rounded-full border border-[#e0e3e5] bg-white px-5
+                      text-sm font-semibold text-[#101319] transition-all
+                      duration-200 hover:border-[#004ac6]
+                      hover:text-[#004ac6] active:scale-[0.99]
                     "
                   >
                     <Icon name={secondaryAction.icon} size={15} />
@@ -199,7 +199,7 @@ const IllustratedCard: React.FC<IllustratedCardProps> = ({
               transition-transform duration-700 hover:scale-[1.03]
             "
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#20242D]/55 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#101319]/55 via-transparent to-transparent" />
 
           <svg
             className="

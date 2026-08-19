@@ -57,8 +57,8 @@ const EMPTY_FORM: FormState = {
 const MAX_IMAGES = 5;
 
 const inputCls =
-  'w-full rounded-xl border border-[#E8ECF4] bg-[#F5F7FB] px-3.5 py-2.5 text-[13px] text-[#20242D] outline-none placeholder:text-[#A2A8B3] transition-all duration-200 focus:border-[#538CDB] focus:bg-white focus:shadow-[0_4px_16px_rgba(83,140,219,0.10)] [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none';
-const inputErrorCls = '!border-[#FF4646] focus:!border-[#FF4646] focus:!shadow-[0_4px_16px_rgba(255,70,70,0.10)]';
+  'w-full rounded-xl border border-[#e0e3e5] bg-[#F5F7FB] px-3.5 py-2.5 text-[13px] text-[#101319] outline-none placeholder:text-[#A2A8B3] transition-all duration-200 focus:border-[#004ac6] focus:bg-white focus:shadow-[0_4px_16px_rgba(83,140,219,0.10)] [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none';
+const inputErrorCls = '!border-[#ba1a1a] focus:!border-[#ba1a1a] focus:!shadow-[0_4px_16px_rgba(255,70,70,0.10)]';
 
 const Section: React.FC<{
   eyebrow: string;
@@ -72,10 +72,10 @@ const Section: React.FC<{
       <div className="flex items-center gap-2.5">
         {icon}
         <div>
-          <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#538CDB]">
+          <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#004ac6]">
             {eyebrow}
           </p>
-          <p className="text-[13px] font-bold text-[#20242D]">{title}</p>
+          <p className="text-[13px] font-bold text-[#101319]">{title}</p>
         </div>
       </div>
       {rightAction}
@@ -258,7 +258,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center sm:p-4">
       <div
-        className="absolute inset-0 bg-[#20242D]/50 backdrop-blur-sm product-form-backdrop"
+        className="absolute inset-0 bg-[#101319]/50 backdrop-blur-sm product-form-backdrop"
         onClick={onClose}
       />
 
@@ -270,15 +270,15 @@ const ProductForm: React.FC<ProductFormProps> = ({
           backdrop-blur-sm max-h-[92vh] sm:rounded-[24px]
         "
       >
-        <div className="relative flex items-center justify-between border-b border-[#E8ECF4] bg-white/95 px-5 py-4 backdrop-blur-sm sm:px-6">
-          <span className="pointer-events-none absolute -right-8 -top-8 h-20 w-20 rounded-full border border-[#538CDB]/10" />
+        <div className="relative flex items-center justify-between border-b border-[#e0e3e5] bg-white/95 px-5 py-4 backdrop-blur-sm sm:px-6">
+          <span className="pointer-events-none absolute -right-8 -top-8 h-20 w-20 rounded-full border border-[#004ac6]/10" />
           <span className="pointer-events-none absolute right-12 top-5 h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
 
           <div className="relative flex items-center gap-3">
             <span
               className="
                 flex h-10 w-10 items-center justify-center rounded-xl
-                bg-gradient-to-br from-[#5B93E0] to-[#3A66AC]
+                bg-gradient-to-br from-[#004ac6] to-[#003ea8]
                 shadow-[0_6px_16px_rgba(83,140,219,0.30)]
               "
             >
@@ -289,10 +289,10 @@ const ProductForm: React.FC<ProductFormProps> = ({
               />
             </span>
             <div>
-              <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#538CDB]">
+              <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#004ac6]">
                 {editing ? 'Ubah produk' : 'Produk baru'}
               </p>
-              <h3 className="text-[16px] font-bold text-[#20242D] sm:text-[18px]">
+              <h3 className="text-[16px] font-bold text-[#101319] sm:text-[18px]">
                 {editing ? 'Ubah Produk' : 'Tambah Produk Baru'}
               </h3>
             </div>
@@ -302,8 +302,8 @@ const ProductForm: React.FC<ProductFormProps> = ({
             type="button"
             onClick={onClose}
             className="
-              relative rounded-full p-2 text-[#737A87] transition-colors
-              hover:bg-[#F5F7FB] hover:text-[#20242D]
+              relative rounded-full p-2 text-[#737686] transition-colors
+              hover:bg-[#F5F7FB] hover:text-[#101319]
             "
             aria-label="Tutup"
           >
@@ -319,18 +319,18 @@ const ProductForm: React.FC<ProductFormProps> = ({
             <div
               className="
                 flex items-center gap-3 rounded-2xl border
-                border-[#FF4646]/20 bg-[#FFF0F0] px-4 py-3 backdrop-blur-sm
+                border-[#ba1a1a]/20 bg-[#FFF0F0] px-4 py-3 backdrop-blur-sm
               "
             >
               <span
                 className="
                   flex h-8 w-8 shrink-0 items-center justify-center
-                  rounded-full bg-[#FF4646]/15
+                  rounded-full bg-[#ba1a1a]/15
                 "
               >
-                <Icon name="alert" size={15} className="text-[#FF4646]" />
+                <Icon name="alert" size={15} className="text-[#ba1a1a]" />
               </span>
-              <p className="text-[12px] font-medium text-[#C73535]">
+              <p className="text-[12px] font-medium text-[#ba1a1a]">
                 {submitError}
               </p>
             </div>
@@ -340,8 +340,8 @@ const ProductForm: React.FC<ProductFormProps> = ({
             eyebrow="Bagian 1"
             title="Informasi Dasar"
             icon={
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#538CDB]/10">
-                <Icon name="product" size={14} className="text-[#538CDB]" />
+              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#004ac6]/10">
+                <Icon name="product" size={14} className="text-[#004ac6]" />
               </span>
             }
           >
@@ -357,8 +357,8 @@ const ProductForm: React.FC<ProductFormProps> = ({
               />
 
               <div>
-                <label className="mb-1.5 block text-[10px] font-semibold uppercase tracking-[0.14em] text-[#737A87]">
-                  Kategori <span className="text-[#FF4646]">*</span>
+                <label className="mb-1.5 block text-[10px] font-semibold uppercase tracking-[0.14em] text-[#737686]">
+                  Kategori <span className="text-[#ba1a1a]">*</span>
                 </label>
                 <select
                   value={form.categoryId}
@@ -373,7 +373,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
                   ))}
                 </select>
                 {errors.categoryId && (
-                  <p className="mt-1 text-[11px] text-[#FF4646]">
+                  <p className="mt-1 text-[11px] text-[#ba1a1a]">
                     {errors.categoryId}
                   </p>
                 )}
@@ -420,8 +420,8 @@ const ProductForm: React.FC<ProductFormProps> = ({
             eyebrow="Bagian 3"
             title="Diskon & Grosir"
             icon={
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#F0FDF4]">
-                <Icon name="tag" size={14} className="text-[#166534]" />
+              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#e6f4ee]">
+                <Icon name="tag" size={14} className="text-[#12805c]" />
               </span>
             }
           >
@@ -461,14 +461,14 @@ const ProductForm: React.FC<ProductFormProps> = ({
 
               {errors.bulk ? (
                 <div className="flex items-center gap-2 rounded-lg bg-[#FFF0F0] px-3 py-2">
-                  <Icon name="alert" size={12} className="shrink-0 text-[#FF4646]" />
-                  <p className="text-[11px] font-medium text-[#C73535]">
+                  <Icon name="alert" size={12} className="shrink-0 text-[#ba1a1a]" />
+                  <p className="text-[11px] font-medium text-[#ba1a1a]">
                     {errors.bulk}
                   </p>
                 </div>
               ) : (
-                <p className="flex items-start gap-2 text-[11px] leading-relaxed text-[#737A87]">
-                  <Icon name="alert" size={12} className="mt-0.5 shrink-0 text-[#538CDB]" />
+                <p className="flex items-start gap-2 text-[11px] leading-relaxed text-[#737686]">
+                  <Icon name="alert" size={12} className="mt-0.5 shrink-0 text-[#004ac6]" />
                   <span>
                     Kosongkan dua-duanya kalau nggak ada harga grosir. Potongan
                     dihitung server saat pembeli nambah jumlah.
@@ -482,13 +482,13 @@ const ProductForm: React.FC<ProductFormProps> = ({
             eyebrow="Bagian 4"
             title="Gambar Produk"
             icon={
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#EEF5FF]">
-                <Icon name="upload" size={14} className="text-[#538CDB]" />
+              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#f5f7fb]">
+                <Icon name="upload" size={14} className="text-[#004ac6]" />
               </span>
             }
             rightAction={
               imageUrls.length > 0 && (
-                <span className="text-[10px] font-semibold text-[#737A87]">
+                <span className="text-[10px] font-semibold text-[#737686]">
                   {imageUrls.length}/{MAX_IMAGES}
                 </span>
               )
@@ -501,7 +501,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
                     key={url}
                     className="
                       group relative aspect-square overflow-hidden rounded-xl
-                      border border-[#E8ECF4] bg-[#F5F7FB]
+                      border border-[#e0e3e5] bg-[#F5F7FB]
                     "
                   >
                     <img
@@ -513,7 +513,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
                       <span
                         className="
                           absolute inset-x-0 bottom-0 bg-gradient-to-t
-                          from-[#538CDB] to-[#538CDB]/80 py-0.5 text-center
+                          from-[#004ac6] to-[#004ac6]/80 py-0.5 text-center
                           text-[8px] font-bold uppercase tracking-wider
                           text-white
                         "
@@ -528,8 +528,8 @@ const ProductForm: React.FC<ProductFormProps> = ({
                       }
                       className="
                         absolute right-1 top-1 flex h-5 w-5 items-center
-                        justify-center rounded-full bg-[#20242D]/70 text-white
-                        opacity-0 transition-opacity hover:bg-[#FF4646]
+                        justify-center rounded-full bg-[#101319]/70 text-white
+                        opacity-0 transition-opacity hover:bg-[#ba1a1a]
                         group-hover:opacity-100
                       "
                       aria-label="Hapus gambar"
@@ -547,12 +547,12 @@ const ProductForm: React.FC<ProductFormProps> = ({
                 p-5 text-center transition-all duration-200
                 ${
                   errors.images || imageError
-                    ? 'border-[#FF4646]/50 bg-[#FFF0F0]/40'
-                    : 'border-[#D8DEE9] hover:border-[#538CDB]/50 hover:bg-[#EEF5FF]/50'
+                    ? 'border-[#ba1a1a]/50 bg-[#FFF0F0]/40'
+                    : 'border-[#e0e3e5] hover:border-[#004ac6]/50 hover:bg-[#f5f7fb]/50'
                 }
               `}
             >
-              <span className="pointer-events-none absolute -right-6 -top-6 h-16 w-16 rounded-full border border-[#538CDB]/10" />
+              <span className="pointer-events-none absolute -right-6 -top-6 h-16 w-16 rounded-full border border-[#004ac6]/10" />
 
               <input
                 ref={fileInputRef}
@@ -574,8 +574,8 @@ const ProductForm: React.FC<ProductFormProps> = ({
                     transition-colors
                     ${
                       errors.images || imageError
-                        ? 'bg-[#FF4646]/15 text-[#FF4646]'
-                        : 'bg-[#538CDB]/10 text-[#538CDB]'
+                        ? 'bg-[#ba1a1a]/15 text-[#ba1a1a]'
+                        : 'bg-[#004ac6]/10 text-[#004ac6]'
                     }
                   `}
                 >
@@ -585,21 +585,21 @@ const ProductForm: React.FC<ProductFormProps> = ({
                     <Icon name="upload" size={20} />
                   )}
                 </span>
-                <p className="text-[13px] font-semibold text-[#20242D]">
+                <p className="text-[13px] font-semibold text-[#101319]">
                   {uploading
                     ? 'Sedang mengunggah…'
                     : imageUrls.length > 0
                       ? 'Tambah gambar lagi'
                       : 'Klik atau seret gambarnya ke sini'}
                 </p>
-                <p className="text-[11px] text-[#737A87]">
+                <p className="text-[11px] text-[#737686]">
                   Maks {MAX_IMAGES} gambar · 3 MB per berkas · PNG, JPG, WebP, GIF
                 </p>
               </label>
             </div>
 
             {(errors.images || imageError) && (
-              <p className="mt-2 flex items-center gap-1.5 text-[11px] text-[#FF4646]">
+              <p className="mt-2 flex items-center gap-1.5 text-[11px] text-[#ba1a1a]">
                 <Icon name="alert" size={11} />
                 {errors.images || imageError}
               </p>
@@ -619,9 +619,9 @@ const ProductForm: React.FC<ProductFormProps> = ({
                 type="button"
                 onClick={() => setSpecs((prev) => [...prev, { key: '', value: '' }])}
                 className="
-                  flex items-center gap-1 rounded-full bg-[#538CDB]/10 px-2.5
-                  py-1 text-[11px] font-semibold text-[#538CDB]
-                  transition-colors hover:bg-[#538CDB]/15
+                  flex items-center gap-1 rounded-full bg-[#004ac6]/10 px-2.5
+                  py-1 text-[11px] font-semibold text-[#004ac6]
+                  transition-colors hover:bg-[#004ac6]/15
                 "
               >
                 <Icon name="plus" size={11} />
@@ -629,9 +629,9 @@ const ProductForm: React.FC<ProductFormProps> = ({
               </button>
             }
           >
-            <p className="mb-3 text-[11px] leading-relaxed text-[#737A87]">
+            <p className="mb-3 text-[11px] leading-relaxed text-[#737686]">
               Isi beberapa baris dengan nama sama (mis. dua baris{' '}
-              <code className="rounded bg-[#F5F7FB] px-1.5 py-0.5 font-mono text-[10px] text-[#538CDB]">
+              <code className="rounded bg-[#F5F7FB] px-1.5 py-0.5 font-mono text-[10px] text-[#004ac6]">
                 warna
               </code>
               ) supaya pembeli dapat pilihan model di halaman produk.
@@ -640,7 +640,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
             {specs.length === 0 ? (
               <div
                 className="
-                  rounded-xl border border-dashed border-[#D8DEE9] bg-[#F5F7FB]/50
+                  rounded-xl border border-dashed border-[#e0e3e5] bg-[#F5F7FB]/50
                   py-6 text-center
                 "
               >
@@ -651,7 +651,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
                   type="button"
                   onClick={() => setSpecs([{ key: '', value: '' }])}
                   className="
-                    mt-2 text-[11px] font-semibold text-[#538CDB]
+                    mt-2 text-[11px] font-semibold text-[#004ac6]
                     hover:underline
                   "
                 >
@@ -664,7 +664,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
                   <div
                     key={index}
                     className="
-                      flex items-center gap-2 rounded-xl border border-[#E8ECF4]
+                      flex items-center gap-2 rounded-xl border border-[#e0e3e5]
                       bg-white p-1.5
                     "
                   >
@@ -681,9 +681,9 @@ const ProductForm: React.FC<ProductFormProps> = ({
                       maxLength={60}
                       className="
                         min-w-0 w-1/3 rounded-lg border-0 bg-[#F5F7FB] px-3
-                        py-2 text-[12px] text-[#20242D] outline-none
+                        py-2 text-[12px] text-[#101319] outline-none
                         placeholder:text-[#A2A8B3] focus:bg-white
-                        focus:ring-1 focus:ring-[#538CDB]
+                        focus:ring-1 focus:ring-[#004ac6]
                       "
                     />
                     <input
@@ -699,9 +699,9 @@ const ProductForm: React.FC<ProductFormProps> = ({
                       maxLength={200}
                       className="
                         min-w-0 flex-1 rounded-lg border-0 bg-[#F5F7FB] px-3
-                        py-2 text-[12px] text-[#20242D] outline-none
+                        py-2 text-[12px] text-[#101319] outline-none
                         placeholder:text-[#A2A8B3] focus:bg-white
-                        focus:ring-1 focus:ring-[#538CDB]
+                        focus:ring-1 focus:ring-[#004ac6]
                       "
                     />
                     <button
@@ -712,7 +712,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
                       className="
                         flex h-8 w-8 shrink-0 items-center justify-center
                         rounded-lg text-[#A2A8B3] transition-colors
-                        hover:bg-[#FFF0F0] hover:text-[#FF4646]
+                        hover:bg-[#FFF0F0] hover:text-[#ba1a1a]
                       "
                       aria-label="Hapus baris spesifikasi"
                     >
@@ -728,14 +728,14 @@ const ProductForm: React.FC<ProductFormProps> = ({
             eyebrow="Bagian 6"
             title="Deskripsi & Status"
             icon={
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#F0FDF4]">
-                <Icon name="edit" size={14} className="text-[#166534]" />
+              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#e6f4ee]">
+                <Icon name="edit" size={14} className="text-[#12805c]" />
               </span>
             }
           >
             <div className="space-y-3">
               <div>
-                <label className="mb-1.5 block text-[10px] font-semibold uppercase tracking-[0.14em] text-[#737A87]">
+                <label className="mb-1.5 block text-[10px] font-semibold uppercase tracking-[0.14em] text-[#737686]">
                   Deskripsi
                 </label>
                 <textarea
@@ -747,18 +747,18 @@ const ProductForm: React.FC<ProductFormProps> = ({
                 />
               </div>
 
-              <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-[#E8ECF4] bg-white p-3 transition-colors hover:border-[#538CDB]/40 hover:bg-[#EEF5FF]/50">
+              <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-[#e0e3e5] bg-white p-3 transition-colors hover:border-[#004ac6]/40 hover:bg-[#f5f7fb]/50">
                 <input
                   type="checkbox"
                   checked={form.isActive}
                   onChange={(e) => setField('isActive', e.target.checked)}
-                  className="mt-0.5 h-4 w-4 shrink-0 cursor-pointer accent-[#538CDB]"
+                  className="mt-0.5 h-4 w-4 shrink-0 cursor-pointer accent-[#004ac6]"
                 />
                 <div className="min-w-0 flex-1">
-                  <p className="text-[12px] font-semibold text-[#20242D]">
+                  <p className="text-[12px] font-semibold text-[#101319]">
                     Tayangkan produk
                   </p>
-                  <p className="mt-0.5 text-[11px] text-[#737A87]">
+                  <p className="mt-0.5 text-[11px] text-[#737686]">
                     Kalau dimatikan, produk jadi Draf dan tidak muncul di
                     pencarian.
                   </p>
@@ -770,7 +770,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
           <div className="h-2" />
         </form>
 
-        <div className="flex gap-2 border-t border-[#E8ECF4] bg-white/95 p-4 backdrop-blur-sm sm:gap-3 sm:px-6">
+        <div className="flex gap-2 border-t border-[#e0e3e5] bg-white/95 p-4 backdrop-blur-sm sm:gap-3 sm:px-6">
           <Button
             type="button"
             variant="outline"
@@ -787,9 +787,9 @@ const ProductForm: React.FC<ProductFormProps> = ({
             disabled={saving || uploading}
             className="
               flex flex-1 items-center justify-center gap-2 rounded-full
-              bg-[#538CDB] py-2.5 text-[13px] font-semibold text-white
+              bg-[#004ac6] py-2.5 text-[13px] font-semibold text-white
               shadow-[0_6px_16px_rgba(83,140,219,0.25)] transition-all
-              hover:bg-[#467BC7] hover:shadow-[0_8px_20px_rgba(83,140,219,0.30)]
+              hover:bg-[#004ac6] hover:shadow-[0_8px_20px_rgba(83,140,219,0.30)]
               active:scale-[0.99] disabled:cursor-not-allowed
               disabled:bg-[#A2A8B3] disabled:shadow-none
             "

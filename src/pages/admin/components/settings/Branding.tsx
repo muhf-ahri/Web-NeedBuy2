@@ -77,7 +77,7 @@ const Branding: React.FC<SettingsCardProps> = ({ values, onSave }) => {
   return (
     <div className="space-y-6">
       {error && (
-        <div className="rounded-lg border border-[#ffbcbc] bg-[#ffe0e0] p-2.5 text-xs text-[#a33131]">
+        <div className="rounded-lg border border-[#ffdad6] bg-[#fff0f0] p-2.5 text-xs text-[#93000a]">
           {error}
         </div>
       )}
@@ -88,12 +88,12 @@ const Branding: React.FC<SettingsCardProps> = ({ values, onSave }) => {
 
         return (
           <div key={slot.key} className={index > 0 ? 'border-t border-[#e0e3e5] pt-4' : undefined}>
-            <h3 className="mb-2 text-[14px] font-bold text-[#191c1e]">{slot.title}</h3>
+            <h3 className="mb-2 text-[14px] font-bold text-[#101319]">{slot.title}</h3>
 
             <div className="flex flex-col items-start gap-5 sm:flex-row sm:items-center">
               <div
                 className={`flex shrink-0 items-center justify-center overflow-hidden border-2 border-dashed transition-colors ${slot.box} ${
-                  url ? 'border-[#004ac6] bg-[#f2f6ff]' : 'border-[#c3c6d7] bg-[#f8f9fb]'
+                  url ? 'border-[#004ac6] bg-[#f5f7fb]' : 'border-[#c3c6d7] bg-[#f5f7fb]'
                 }`}
               >
                 {busy ? (
@@ -131,7 +131,7 @@ const Branding: React.FC<SettingsCardProps> = ({ values, onSave }) => {
                       type="button"
                       variant="outline"
                       onClick={() => store(slot.key, '')}
-                      className="border-[#ba1a1a]/30 text-sm text-[#ba1a1a] hover:bg-[#ffe0e0]"
+                      className="border-[#ba1a1a]/30 text-sm text-[#ba1a1a] hover:bg-[#fff0f0]"
                     >
                       <Icon name="trash" size={14} className="mr-1" />
                       Hapus

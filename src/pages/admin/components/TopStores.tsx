@@ -28,7 +28,7 @@ const TopStores: React.FC<TopStoresProps> = ({ stores }) => {
           key={store.name}
           className="flex items-center justify-between border-b border-[#f2f4f6] pb-2 last:border-0 last:pb-0"
         >
-          <p className="text-[13px] font-medium text-[#191c1e]">{store.name}</p>
+          <p className="text-[13px] font-medium text-[#101319]">{store.name}</p>
           <div className="flex items-center gap-4 text-right">
             <span className="text-[13px] font-semibold text-[#004ac6]">
               {formatRupiah(store.sales)}
@@ -38,7 +38,7 @@ const TopStores: React.FC<TopStoresProps> = ({ stores }) => {
                 store.growth === null
                   ? 'text-[#737686]'
                   : store.growth >= 0
-                  ? 'text-[#156b32]'
+                  ? 'text-[#12805c]'
                   : 'text-[#ba1a1a]'
               }`}
             >

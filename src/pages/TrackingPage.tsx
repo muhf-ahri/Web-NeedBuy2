@@ -40,12 +40,12 @@ const StageRail: React.FC<{
   const reachedIndex = reached ? stages.indexOf(reached) : -1;
   const last = stages.length - 1;
   const progress = last > 0 ? Math.max(reachedIndex, 0) / last : 0;
-  const accent = isBadStage(reached) ? '#FF4646' : '#538CDB';
+  const accent = isBadStage(reached) ? '#ba1a1a' : '#004ac6';
 
   return (
     <div className="relative">
       {/* jalur kurir: garis putus-putus yang terisi seiring paket jalan */}
-      <div className="absolute inset-x-[7%] top-[18px] h-1 rounded-full bg-[#E8ECF4]" />
+      <div className="absolute inset-x-[7%] top-[18px] h-1 rounded-full bg-[#e0e3e5]" />
       <motion.div
         className="absolute left-[7%] top-[18px] h-1 origin-left rounded-full"
         style={{ width: '86%', backgroundColor: accent }}
@@ -64,7 +64,7 @@ const StageRail: React.FC<{
           transition={{ delay: reduceMotion ? 0 : 0.7 }}
         >
           <motion.span
-            className="flex h-[30px] w-[30px] items-center justify-center rounded-full bg-[#FFD500] text-[#20242D] shadow-[0_6px_14px_rgba(255,213,0,0.45)]"
+            className="flex h-[30px] w-[30px] items-center justify-center rounded-full bg-[#FFD500] text-[#101319] shadow-[0_6px_14px_rgba(255,213,0,0.45)]"
             animate={reduceMotion ? undefined : { y: [0, -3, 0] }}
             transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
           >
@@ -89,7 +89,7 @@ const StageRail: React.FC<{
                   border-[3px] border-white transition-colors
                   ${done
                     ? 'text-white shadow-[0_6px_16px_rgba(83,140,219,0.35)]'
-                    : 'bg-[#EEF1F7] text-[#A2A8B3]'}
+                    : 'bg-[#e0e3e5] text-[#A2A8B3]'}
                   ${current ? 'ring-4 ring-[#FFD500]/45' : ''}
                 `}
                 style={done ? { backgroundColor: accent } : undefined}
@@ -100,7 +100,7 @@ const StageRail: React.FC<{
               <span
                 className={`
                   mt-2 px-0.5 text-[10px] leading-tight sm:text-[11px]
-                  ${done ? 'font-bold text-[#20242D]' : 'text-[#737A87]'}
+                  ${done ? 'font-bold text-[#101319]' : 'text-[#737686]'}
                 `}
               >
                 {STAGE_LABEL[stage]}
@@ -186,16 +186,16 @@ const TrackingPage: React.FC = () => {
     return (
       <Shell>
         <div className="rounded-[28px] border border-white bg-white/95 px-6 py-16 text-center shadow-[0_10px_30px_rgba(32,36,45,0.07)]">
-          <span className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#F5F5FF]">
-            <Icon name="lock" size={26} className="text-[#538CDB]" />
+          <span className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#f5f7fb]">
+            <Icon name="lock" size={26} className="text-[#004ac6]" />
           </span>
-          <p className="text-[16px] font-extrabold text-[#20242D]">Login dulu buat lacak paketmu</p>
-          <p className="mt-1.5 text-[13px] text-[#737A87]">
+          <p className="text-[16px] font-extrabold text-[#101319]">Login dulu buat lacak paketmu</p>
+          <p className="mt-1.5 text-[13px] text-[#737686]">
             Jejak pengiriman cuma bisa dilihat pemilik pesanan.
           </p>
           <button
             onClick={() => navigate('/login')}
-            className="mt-6 rounded-full bg-[#538CDB] px-7 py-3 text-[14px] font-bold text-white shadow-[0_8px_20px_rgba(83,140,219,0.35)] transition hover:bg-[#4176c2] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#20242D]"
+            className="mt-6 rounded-full bg-[#004ac6] px-7 py-3 text-[14px] font-bold text-white shadow-[0_8px_20px_rgba(83,140,219,0.35)] transition hover:bg-[#004ac6] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#101319]"
           >
             Login
           </button>
@@ -220,17 +220,17 @@ const TrackingPage: React.FC = () => {
       <Shell>
         <div className="rounded-[28px] border border-white bg-white/95 px-6 py-16 text-center shadow-[0_10px_30px_rgba(32,36,45,0.07)]">
           <span className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#FFF0F0]">
-            <Icon name="alert" size={26} className="text-[#FF4646]" />
+            <Icon name="alert" size={26} className="text-[#ba1a1a]" />
           </span>
-          <p className="text-[15px] font-bold text-[#20242D]">
+          <p className="text-[15px] font-bold text-[#101319]">
             {error ?? 'Pesanannya nggak ketemu'}
           </p>
-          <p className="mt-1.5 text-[13px] text-[#737A87]">
+          <p className="mt-1.5 text-[13px] text-[#737686]">
             Cek lagi dari daftar pesanan kamu ya.
           </p>
           <button
             onClick={() => navigate('/orders')}
-            className="mt-6 rounded-full border border-[#E8ECF4] px-6 py-2.5 text-[13px] font-bold text-[#538CDB] transition hover:bg-[#F5F5FF]"
+            className="mt-6 rounded-full border border-[#e0e3e5] px-6 py-2.5 text-[13px] font-bold text-[#004ac6] transition hover:bg-[#f5f7fb]"
           >
             Balik ke daftar pesanan
           </button>
@@ -239,14 +239,14 @@ const TrackingPage: React.FC = () => {
     );
   }
 
-  const accent = isBadStage(data.currentStage) ? '#FF4646' : '#538CDB';
+  const accent = isBadStage(data.currentStage) ? '#ba1a1a' : '#004ac6';
   const stageNow = data.currentStage ? STAGE_LABEL[data.currentStage] : 'Belum jalan';
 
   return (
     <Shell>
       <button
         onClick={() => navigate('/orders')}
-        className="mb-5 flex items-center gap-1.5 rounded-full text-[#737A87] transition-colors hover:text-[#20242D] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#538CDB]"
+        className="mb-5 flex items-center gap-1.5 rounded-full text-[#737686] transition-colors hover:text-[#101319] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#004ac6]"
       >
         <Icon name="chevronLeft" size={16} />
         <span className="text-[13px] font-semibold">Balik ke pesanan</span>
@@ -261,7 +261,7 @@ const TrackingPage: React.FC = () => {
       >
         <div
           className="relative px-5 pb-8 pt-6 text-white sm:px-7"
-          style={{ background: `linear-gradient(135deg, ${accent} 0%, #2F5FA8 100%)` }}
+          style={{ background: `linear-gradient(135deg, ${accent} 0%, #003ea8 100%)` }}
         >
           {/* garis rute dekoratif di latar */}
           <svg
@@ -325,9 +325,9 @@ const TrackingPage: React.FC = () => {
 
         {/* sobekan tiket */}
         <div className="relative h-0">
-          <span className="absolute -left-3 -top-3 h-6 w-6 rounded-full bg-[#F5F5FF]" />
-          <span className="absolute -right-3 -top-3 h-6 w-6 rounded-full bg-[#F5F5FF]" />
-          <span className="absolute inset-x-6 top-[-1px] border-t-2 border-dashed border-[#E8ECF4]" />
+          <span className="absolute -left-3 -top-3 h-6 w-6 rounded-full bg-[#f5f7fb]" />
+          <span className="absolute -right-3 -top-3 h-6 w-6 rounded-full bg-[#f5f7fb]" />
+          <span className="absolute inset-x-6 top-[-1px] border-t-2 border-dashed border-[#e0e3e5]" />
         </div>
 
         <div className="px-3 pb-6 pt-8 sm:px-7">
@@ -339,7 +339,7 @@ const TrackingPage: React.FC = () => {
               <span className="h-1.5 w-1.5 rounded-full bg-current" />
               {stageNow}
             </span>
-            <span className="text-[11px] font-semibold text-[#737A87]">
+            <span className="text-[11px] font-semibold text-[#737686]">
               {data.finished ? 'Perjalanan selesai' : 'Paket masih jalan'}
             </span>
           </div>
@@ -350,12 +350,12 @@ const TrackingPage: React.FC = () => {
 
       {/* ── riwayat perjalanan ── */}
       <section className="mt-6 overflow-hidden rounded-[28px] border border-white bg-white/95 shadow-[0_10px_30px_rgba(32,36,45,0.06)]">
-        <header className="flex items-center justify-between gap-3 border-b border-[#E8ECF4] bg-[#F5F5FF] px-5 py-4 sm:px-7">
-          <h2 className="flex items-center gap-2 text-[14px] font-extrabold text-[#20242D]">
-            <Icon name="activity" size={16} className="text-[#538CDB]" />
+        <header className="flex items-center justify-between gap-3 border-b border-[#e0e3e5] bg-[#f5f7fb] px-5 py-4 sm:px-7">
+          <h2 className="flex items-center gap-2 text-[14px] font-extrabold text-[#101319]">
+            <Icon name="activity" size={16} className="text-[#004ac6]" />
             Riwayat perjalanan
           </h2>
-          <span className="rounded-full bg-white px-2.5 py-1 text-[11px] font-bold text-[#737A87]">
+          <span className="rounded-full bg-white px-2.5 py-1 text-[11px] font-bold text-[#737686]">
             {data.events.length} jejak
           </span>
         </header>
@@ -363,11 +363,11 @@ const TrackingPage: React.FC = () => {
         <div className="px-5 py-6 sm:px-7">
           {timeline.length === 0 ? (
             <div className="py-10 text-center">
-              <span className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-[#FFFCD5]">
+              <span className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-[#fff7e0]">
                 <Icon name="clock" size={24} className="text-[#B45309]" />
               </span>
-              <p className="text-[13px] font-bold text-[#20242D]">Belum ada jejak</p>
-              <p className="mt-1 text-[12px] text-[#737A87]">
+              <p className="text-[13px] font-bold text-[#101319]">Belum ada jejak</p>
+              <p className="mt-1 text-[12px] text-[#737686]">
                 Bakal muncul di sini begitu penjual mulai nyiapin paketmu.
               </p>
             </div>
@@ -376,7 +376,7 @@ const TrackingPage: React.FC = () => {
               {timeline.map((event, index) => {
                 const newest = index === 0;
                 const bad = isBadStage(event.stage);
-                const dot = bad ? '#FF4646' : newest ? '#538CDB' : '#C7D2E4';
+                const dot = bad ? '#ba1a1a' : newest ? '#004ac6' : '#e0e3e5';
 
                 return (
                   <motion.li
@@ -390,7 +390,7 @@ const TrackingPage: React.FC = () => {
                       <span
                         className={`
                           flex h-9 w-9 shrink-0 items-center justify-center rounded-full
-                          ${newest ? 'text-white' : 'bg-[#F5F7FB] text-[#737A87]'}
+                          ${newest ? 'text-white' : 'bg-[#F5F7FB] text-[#737686]'}
                         `}
                         style={
                           newest
@@ -402,24 +402,24 @@ const TrackingPage: React.FC = () => {
                         <Icon name={STAGE_ICON[event.stage]} size={15} />
                       </span>
                       {index < timeline.length - 1 && (
-                        <span className="mt-1.5 w-0.5 flex-1 rounded-full bg-gradient-to-b from-[#E8ECF4] to-[#F5F5FF]" aria-hidden="true" />
+                        <span className="mt-1.5 w-0.5 flex-1 rounded-full bg-gradient-to-b from-[#e0e3e5] to-[#f5f7fb]" aria-hidden="true" />
                       )}
                     </div>
 
                     <div
                       className={`
                         min-w-0 flex-1 rounded-2xl px-4 py-3
-                        ${newest ? 'bg-[#F5F5FF]' : 'bg-transparent'}
+                        ${newest ? 'bg-[#f5f7fb]' : 'bg-transparent'}
                       `}
                     >
                       <div className="flex flex-wrap items-center gap-2">
                         <p
-                          className={`text-[13px] ${newest ? 'font-extrabold text-[#20242D]' : 'font-bold text-[#434655]'}`}
+                          className={`text-[13px] ${newest ? 'font-extrabold text-[#101319]' : 'font-bold text-[#434655]'}`}
                         >
                           {STAGE_LABEL[event.stage]}
                         </p>
                         {newest && (
-                          <span className="rounded-full bg-[#FFD500] px-2 py-0.5 text-[9px] font-extrabold uppercase tracking-wider text-[#20242D]">
+                          <span className="rounded-full bg-[#FFD500] px-2 py-0.5 text-[9px] font-extrabold uppercase tracking-wider text-[#101319]">
                             Terbaru
                           </span>
                         )}
@@ -427,7 +427,7 @@ const TrackingPage: React.FC = () => {
                       <p className="mt-1 text-[13px] leading-relaxed text-[#434655]">
                         {event.description}
                       </p>
-                      <p className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] text-[#737A87]">
+                      <p className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] text-[#737686]">
                         <span className="inline-flex items-center gap-1">
                           <Icon name="clock" size={11} />
                           {timeOf(event.createdAt)}
@@ -448,7 +448,7 @@ const TrackingPage: React.FC = () => {
         </div>
       </section>
 
-      <p className="mt-5 text-center text-[11px] leading-relaxed text-[#737A87]">
+      <p className="mt-5 text-center text-[11px] leading-relaxed text-[#737686]">
         Jejak berasal dari penjual dan sistem NeedBuy, belum terhubung ke sistem kurir.
       </p>
     </Shell>
@@ -457,7 +457,7 @@ const TrackingPage: React.FC = () => {
 
 const Shell: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <div
-    className="relative flex min-h-screen flex-col bg-[#F5F5FF]"
+    className="relative flex min-h-screen flex-col bg-[#f5f7fb]"
     style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
   >
     <Navbar />

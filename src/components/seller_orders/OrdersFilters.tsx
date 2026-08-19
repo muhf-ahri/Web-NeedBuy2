@@ -63,10 +63,10 @@ const OrdersFilters: React.FC<OrdersFiltersProps> = ({
           onChange={(e) => onSearchChange(e.target.value)}
           placeholder="Cari no. order, pembeli, atau produk..."
           className="
-            w-full rounded-full border border-[#E8ECF4] bg-[#F5F7FB] py-2.5
-            pl-10 pr-10 text-[13px] text-[#20242D] outline-none
+            w-full rounded-full border border-[#e0e3e5] bg-[#F5F7FB] py-2.5
+            pl-10 pr-10 text-[13px] text-[#101319] outline-none
             placeholder:text-[#A2A8B3] transition-all duration-200
-            focus:border-[#538CDB] focus:bg-white
+            focus:border-[#004ac6] focus:bg-white
             focus:shadow-[0_4px_14px_rgba(83,140,219,0.10)]
           "
         />
@@ -77,7 +77,7 @@ const OrdersFilters: React.FC<OrdersFiltersProps> = ({
             className="
               absolute right-2.5 top-1/2 flex h-7 w-7 -translate-y-1/2
               items-center justify-center rounded-full text-[#A2A8B3]
-              transition-colors hover:bg-white hover:text-[#20242D]
+              transition-colors hover:bg-white hover:text-[#101319]
             "
             aria-label="Hapus pencarian"
           >
@@ -106,8 +106,8 @@ const OrdersFilters: React.FC<OrdersFiltersProps> = ({
                 transition-all duration-200 active:scale-[0.97] sm:text-[12px]
                 ${
                   active
-                    ? 'bg-[#538CDB] text-white shadow-[0_4px_12px_rgba(83,140,219,0.30)]'
-                    : 'border border-[#E8ECF4] bg-white text-[#737A87] hover:border-[#538CDB]/50 hover:text-[#538CDB]'
+                    ? 'bg-[#004ac6] text-white shadow-[0_4px_12px_rgba(83,140,219,0.30)]'
+                    : 'border border-[#e0e3e5] bg-white text-[#737686] hover:border-[#004ac6]/50 hover:text-[#004ac6]'
                 }
               `}
             >

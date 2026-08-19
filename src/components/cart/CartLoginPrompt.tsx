@@ -11,7 +11,7 @@ const CartLoginPrompt: React.FC = () => {
 
   return (
     <div
-      className="min-h-screen flex flex-col bg-[#F5F5FF]"
+      className="min-h-screen flex flex-col bg-[#f5f7fb]"
       style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
     >
       <Navbar />
@@ -33,12 +33,12 @@ const CartLoginPrompt: React.FC = () => {
                 draggable={false}
                 className="absolute inset-0 h-full w-full select-none object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#20242D]/55 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#101319]/55 via-transparent to-transparent" />
               <div
                 className="
                   absolute left-4 top-4 inline-flex items-center gap-1.5
                   rounded-full bg-white/90 px-3 py-1 text-[10px] font-semibold
-                  uppercase tracking-[0.18em] text-[#538CDB] backdrop-blur-sm
+                  uppercase tracking-[0.18em] text-[#004ac6] backdrop-blur-sm
                 "
               >
                 <span className="h-1.5 w-1.5 rounded-full bg-[#FFD500]" />
@@ -55,19 +55,19 @@ const CartLoginPrompt: React.FC = () => {
               <section className="flex items-center bg-white px-6 py-8 sm:px-8 lg:px-10">
                 <div className="mx-auto w-full max-w-md">
 
-                    <h1 className="text-[30px] font-bold leading-tight tracking-tight text-[#538CBD] hover:text-[#467BC7] sm:text-[34px]">
+                    <h1 className="text-[30px] font-bold leading-tight tracking-tight text-[#004ac6] hover:text-[#004ac6] sm:text-[34px]">
                     Halaman Keranjang
                     </h1>
 
-                  <p className="mt-4 mb-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#538CDB]">
+                  <p className="mt-4 mb-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#004ac6]">
                     Area member
                   </p>
 
-                  <h2 className="text-[22px] font-bold leading-tight tracking-tight text-[#20242D] sm:text-[26px]">
+                  <h2 className="text-[22px] font-bold leading-tight tracking-tight text-[#101319] sm:text-[26px]">
                     Login untuk Lihat Keranjang
                   </h2>
 
-                  <p className="mt-2 text-[13px] leading-5 text-[#737A87]">
+                  <p className="mt-2 text-[13px] leading-5 text-[#737686]">
                     Login dulu ya buat lihat isi keranjang kamu dan lanjut
                     checkout dengan aman.
                   </p>
@@ -77,9 +77,9 @@ const CartLoginPrompt: React.FC = () => {
                     onClick={() => navigate('/login')}
                     className="
                       mt-5 inline-flex h-11 w-full items-center justify-center
-                      gap-2 rounded-full bg-[#538CDB] px-6 text-sm font-semibold
+                      gap-2 rounded-full bg-[#004ac6] px-6 text-sm font-semibold
                       text-white shadow-[0_7px_18px_rgba(83,140,219,0.20)]
-                      transition-all duration-200 hover:bg-[#467BC7]
+                      transition-all duration-200 hover:bg-[#004ac6]
                       hover:shadow-[0_9px_22px_rgba(83,140,219,0.25)]
                       active:scale-[0.99]
                     "
@@ -88,9 +88,9 @@ const CartLoginPrompt: React.FC = () => {
                     <Icon name="arrowRight" size={15} className="text-white" />
                   </button>
 
-                  <p className="mt-3 text-center text-[12px] text-[#737A87]">
+                  <p className="mt-3 text-center text-[12px] text-[#737686]">
                     Belum punya akun?{' '}
-                    <Link to="/register" className="font-semibold text-[#538CDB] hover:underline">
+                    <Link to="/register" className="font-semibold text-[#004ac6] hover:underline">
                       Daftar gratis
                     </Link>
                   </p>
@@ -107,7 +107,7 @@ const CartLoginPrompt: React.FC = () => {
                     transition-transform duration-700 hover:scale-[1.03]
                   "
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#20242D]/55 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#101319]/55 via-transparent to-transparent" />
                 <svg
                   className="pointer-events-none absolute inset-y-0 left-0 h-full w-16 -scale-x-100 md:w-20"
                   viewBox="0 0 100 400"
@@ -124,7 +124,7 @@ const CartLoginPrompt: React.FC = () => {
                   className="
                     absolute right-6 top-6 z-10 inline-flex items-center gap-1.5
                     rounded-full bg-white/90 px-3 py-1 text-[10px] font-semibold
-                    uppercase tracking-[0.18em] text-[#538CDB] backdrop-blur-sm
+                    uppercase tracking-[0.18em] text-[#004ac6] backdrop-blur-sm
                   "
                 >
                   <span className="h-1.5 w-1.5 rounded-full bg-[#FFD500]" />

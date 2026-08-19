@@ -7,8 +7,8 @@ import { formatRupiah } from '../../utils/currency';
 const PAGE_SIZE = 10;
 
 const statusColor: Record<string, string> = {
-  ACTIVE: 'bg-[#d7f5dc] text-[#156b32]',
-  SUSPENDED: 'bg-[#ffe0e0] text-[#a33131]',
+  ACTIVE: 'bg-[#e6f4ee] text-[#12805c]',
+  SUSPENDED: 'bg-[#fff0f0] text-[#93000a]',
 };
 
 const statusLabel: Record<string, string> = {
@@ -68,7 +68,7 @@ const UsersPage: React.FC = () => {
     <AdminLayout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-[28px] font-bold text-[#191c1e]">Pengguna</h1>
+          <h1 className="text-[28px] font-bold text-[#101319]">Pengguna</h1>
           <p className="text-[15px] text-[#737686]">
             {activeTab === 'BUYER'
               ? 'Kelola dan pantau seluruh pembeli terdaftar.'
@@ -84,7 +84,7 @@ const UsersPage: React.FC = () => {
               className={`border-b-2 px-4 py-2 text-sm font-semibold transition-colors ${
                 activeTab === tab
                   ? 'border-[#004ac6] text-[#004ac6]'
-                  : 'border-transparent text-[#737686] hover:text-[#191c1e]'
+                  : 'border-transparent text-[#737686] hover:text-[#101319]'
               }`}
             >
               {tab === 'BUYER' ? 'Pembeli' : 'Penjual'}
@@ -105,14 +105,14 @@ const UsersPage: React.FC = () => {
         </div>
 
         {error && (
-          <div className="rounded-2xl border border-[#ffcdd2] bg-[#fff5f5] p-4 text-[13px] text-[#a33131]">
+          <div className="rounded-2xl border border-[#ffdad6] bg-[#fff0f0] p-4 text-[13px] text-[#93000a]">
             {error}
           </div>
         )}
 
         <div className="overflow-hidden rounded-2xl border border-[#e0e3e5] bg-white p-5">
           <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+            <table className="stack-table w-full text-sm">
               <thead>
                 <tr className="border-b border-[#f2f4f6] text-[11px] font-semibold uppercase text-[#737686]">
                   {activeTab === 'BUYER' ? (
@@ -156,7 +156,7 @@ const UsersPage: React.FC = () => {
                     <tr key={user.id} className="text-[13px]">
                       {activeTab === 'BUYER' ? (
                         <>
-                          <td className="py-2.5 text-center font-medium text-[#191c1e]">{user.name}</td>
+                          <td className="py-2.5 text-center font-medium text-[#101319]">{user.name}</td>
                           <td className="py-2.5 text-center text-[#737686]">{user.email}</td>
                           <td className="py-2.5 text-center">{user.totalOrders}</td>
                           <td className="py-2.5 text-center font-semibold">{formatRupiah(user.totalSpent)}</td>
@@ -169,7 +169,7 @@ const UsersPage: React.FC = () => {
                         </>
                       ) : (
                         <>
-                          <td className="py-2.5 text-center font-medium text-[#191c1e]">{user.name}</td>
+                          <td className="py-2.5 text-center font-medium text-[#101319]">{user.name}</td>
                           <td className="py-2.5 text-center font-medium text-[#004ac6]">
                             {user.seller?.storeName ?? 'Belum ada toko'}
                           </td>
