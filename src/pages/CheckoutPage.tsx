@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Icon from '../components/ui/Icon';
 import Navbar from '../components/layout/Navbar';
@@ -131,11 +131,22 @@ const CheckoutPage: React.FC = () => {
     }
   };
 
+  const [placingOrder, setPlacingOrder] = useState(false);
+  const checkoutKeyRef = useRef<string | null>(null);
+
   const handleCheckout = async () => {
     if (!selectedAddressId) return;
+    // Klik dobel dulu menembakkan dua checkout penuh. Idempotency-Key memang
+    // sudah dikirim, tapi dibuat baru di setiap klik sehingga server melihat
+    // dua pesanan berbeda — hasilnya order ganda dan kartu pesanan dobel di
+    // chat. Dua lapis penjaga: kunci in-flight, dan kunci idempotensi yang
+    // dipakai ulang selama percobaan checkout ini belum berhasil.
+    if (placingOrder) return;
+    setPlacingOrder(true);
     setError(null);
     try {
-      const idempotencyKey = crypto.randomUUID();
+      if (!checkoutKeyRef.current) checkoutKeyRef.current = crypto.randomUUID();
+      const idempotencyKey = checkoutKeyRef.current;
       const res = await confirmCheckout(
         {
           addressId: selectedAddressId,
@@ -147,9 +158,14 @@ const CheckoutPage: React.FC = () => {
         idempotencyKey
       );
       setCreatedOrders(res.data.data.orders);
+      // Pesanan sudah jadi; kunci berikutnya harus baru supaya checkout
+      // selanjutnya tidak dianggap pengulangan yang ini.
+      checkoutKeyRef.current = null;
       await refreshCartCount();
     } catch (err: any) {
       setError(err.message ?? 'Checkoutnya gagal, coba lagi ya');
+    } finally {
+      setPlacingOrder(false);
     }
   };
 
@@ -678,11 +694,11 @@ const CheckoutPage: React.FC = () => {
                 <div className="p-4 sm:p-5">
                   <button
                     onClick={handleCheckout}
-                    disabled={!canCheckout}
+                    disabled={!canCheckout || placingOrder}
                     className="flex w-full items-center justify-center gap-2 rounded-full bg-[#4077a6] px-6 py-3.5 text-[15px] font-bold text-white transition-colors hover:bg-[#284a67] disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4077a6]"
                   >
-                    <Icon name="lock" size={16} />
-                    Checkout · {formatRupiah(payable)}
+                    <Icon name={placingOrder ? 'clock' : 'lock'} size={16} className={placingOrder ? 'animate-spin' : ''} />
+                    {placingOrder ? 'Memproses pesanan...' : `Checkout · ${formatRupiah(payable)}`}
                   </button>
 
                   <p className="mt-2.5 text-center text-[11px] text-[#737686]">
