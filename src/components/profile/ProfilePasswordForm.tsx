@@ -3,6 +3,9 @@ import React from 'react';
 import Icon from '../ui/Icon';
 
 interface ProfilePasswordFormProps {
+  /** Akun Google belum punya password sama sekali. */
+  hasPassword: boolean;
+  emailVerified: boolean;
   currentPassword: string;
   newPassword: string;
   onCurrentChange: (v: string) => void;
@@ -12,6 +15,8 @@ interface ProfilePasswordFormProps {
 }
 
 const ProfilePasswordForm: React.FC<ProfilePasswordFormProps> = ({
+  hasPassword,
+  emailVerified,
   currentPassword,
   newPassword,
   onCurrentChange,
@@ -41,15 +46,30 @@ const ProfilePasswordForm: React.FC<ProfilePasswordFormProps> = ({
         </span>
         <div>
           <h3 className="text-[15px] font-bold text-[#101319]">
-            Ganti Password
+            {hasPassword ? 'Ganti Password' : 'Atur Password'}
           </h3>
           <p className="text-[11px] text-[#737686]">
-            Minimal 8 karakter untuk keamanan akun
+            {hasPassword
+              ? 'Minimal 8 karakter untuk keamanan akun'
+              : 'Kamu daftar lewat Google, jadi belum punya password. Bikin satu biar bisa login pakai email juga.'}
           </p>
         </div>
       </div>
 
+      {!emailVerified && (
+        <div className="mb-4 rounded-2xl border border-[#fff7e0] bg-[#fff7e0] px-4 py-3">
+          <p className="text-[12px] font-semibold text-[#b45309]">
+            Verifikasi emailmu dulu
+          </p>
+          <p className="mt-0.5 text-[11px] text-[#b45309]">
+            Password cuma bisa diatur setelah email kamu terbukti aktif. Cek kotak
+            masuk, atau minta kirim ulang link verifikasinya.
+          </p>
+        </div>
+      )}
+
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        {hasPassword && (
         <div>
           <label
             htmlFor="pw-current"
@@ -68,6 +88,7 @@ const ProfilePasswordForm: React.FC<ProfilePasswordFormProps> = ({
             className={inputCls}
           />
         </div>
+        )}
         <div>
           <label
             htmlFor="pw-new"
@@ -91,7 +112,7 @@ const ProfilePasswordForm: React.FC<ProfilePasswordFormProps> = ({
       <button
         type="button"
         onClick={onSubmit}
-        disabled={saving || !currentPassword || !newPassword}
+        disabled={saving || !emailVerified || (hasPassword && !currentPassword) || !newPassword}
         className="
           mt-5 inline-flex h-11 items-center gap-2 rounded-full bg-[#101319]
           px-5 text-[13px] font-semibold text-white shadow-[0_6px_16px_rgba(32,36,45,0.15)]

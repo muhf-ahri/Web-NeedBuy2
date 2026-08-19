@@ -20,6 +20,7 @@ import {
   getUserProfile,
   updateProfile,
   changePassword,
+  setPassword,
   type User as UserType,
 } from '../api/auth';
 import {
@@ -37,6 +38,8 @@ import { ACCEPTED_IMAGE_TYPES, MAX_IMAGE_BYTES, uploadImage } from '../api/uploa
 import { useAuth } from '../contexts/AuthContext';
 
 interface ProfileData extends UserType {
+  hasPassword?: boolean;
+  emailVerified?: boolean;
   seller?: {
     id: string;
     storeName: string;
@@ -174,11 +177,23 @@ const ProfilePage: React.FC = () => {
   };
 
   const handleChangePassword = async () => {
-    if (!pw.currentPassword || !pw.newPassword) return;
+    const punyaPassword = profile?.hasPassword !== false;
+    if (!pw.newPassword || (punyaPassword && !pw.currentPassword)) return;
     setSavingPw(true);
     setError(null);
     setSavedMessage(null);
     try {
+      // Akun Google belum punya password, jadi tidak ada password lama untuk
+      // dicocokkan. Jalurnya beda: bikin baru, bukan mengganti.
+      if (!punyaPassword) {
+        await setPassword(pw.newPassword);
+        setProfile((prev) => (prev ? { ...prev, hasPassword: true } : prev));
+        setPw({ currentPassword: '', newPassword: '' });
+        setSavedMessage('Password udah dibuat. Sekarang kamu bisa login pakai email juga.');
+        setTimeout(() => setSavedMessage(null), 3000);
+        return;
+      }
+
       const res = await changePassword({
         currentPassword: pw.currentPassword,
         newPassword: pw.newPassword,
@@ -457,6 +472,8 @@ const ProfilePage: React.FC = () => {
 
             <Reveal direction="up" delay={320}>
               <ProfilePasswordForm
+                hasPassword={profile?.hasPassword !== false}
+                emailVerified={profile?.emailVerified !== false}
                 currentPassword={pw.currentPassword}
                 newPassword={pw.newPassword}
                 onCurrentChange={(v) =>

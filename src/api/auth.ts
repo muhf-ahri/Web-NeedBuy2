@@ -84,6 +84,10 @@ export const getUserProfile = () =>
   apiClient.get<{
     success: boolean;
     data: User & {
+      // Dipakai untuk memilih antara "Atur Password" dan "Ganti Password".
+      // Akun yang daftar lewat Google tidak punya password sama sekali.
+      hasPassword: boolean;
+      emailVerified: boolean;
       seller?: {
         id: string;
         storeName: string;
@@ -104,6 +108,12 @@ export const updateProfile = (data: {
   avatarUrl?: string | null;
 }) =>
   apiClient.patch<{ success: boolean; data: User }>('/users/me', data);
+
+export const setPassword = (newPassword: string) =>
+  apiClient.post<{ success: boolean; data: { hasPassword: boolean } }>(
+    '/users/me/set-password',
+    { newPassword }
+  );
 
 export const changePassword = (data: { currentPassword: string; newPassword: string }) =>
   apiClient.post<{
